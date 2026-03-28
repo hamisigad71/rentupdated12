@@ -197,11 +197,11 @@ function HeroCarousel() {
           <img
             src={slide.img}
             alt=""
-            className="w-full h-full object-cover brightness-[0.85]"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-linear-to-r from-background/95 via-background/40 to-transparent" />
-          <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-black/60 via-black/20 to-transparent" />
         </motion.div>
+
       </AnimatePresence>
 
       <div className="container relative z-10 px-6 md:px-8 max-w-7xl mx-auto">
@@ -231,7 +231,7 @@ function HeroCarousel() {
 
                 {/* Headline */}
                 <div className="space-y-1">
-                  <h1 className="text-[2.8rem] md:text-[5rem] lg:text-[5.8rem] font-black tracking-[-0.04em] leading-[0.9] text-foreground">
+                  <h1 className="text-[2.8rem] md:text-[5rem] lg:text-[5.8rem] font-black tracking-[-0.04em] leading-[0.9] text-white">
                     {slide.headline[0]}
                   </h1>
                   <h1 className="text-[2.8rem] md:text-[5rem] lg:text-[5.8rem] font-black tracking-[-0.04em] leading-[0.9] gradient-text">
@@ -240,7 +240,7 @@ function HeroCarousel() {
                 </div>
 
                 {/* Sub */}
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light max-w-xl">
+                <p className="text-lg md:text-xl text-white/90 leading-relaxed font-light max-w-xl">
                   {slide.sub}
                 </p>
 
@@ -292,13 +292,13 @@ function HeroCarousel() {
                         />
                       ))}
                     </div>
-                    <p className="text-xs font-medium text-muted-foreground">
+                    <p className="text-xs font-medium text-white/70">
                       Trusted by 2,000+ property professionals
                     </p>
                   </div>
-                  <div className="hidden sm:block h-8 w-px bg-border" />
+                  <div className="hidden sm:block h-8 w-px bg-white/10" />
                   <div className="hidden sm:block">
-                    <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">
+                    <p className="text-xs text-white/50 font-medium uppercase tracking-widest">
                       {slide.stat.label}
                     </p>
                     <p className="text-lg font-bold text-primary">
@@ -360,7 +360,7 @@ function HeroCarousel() {
       </div>
 
       {/* Slide number */}
-      <div className="absolute top-26 right-6 z-20 md:top-auto md:bottom-10 md:right-8 text-[10px] md:text-xs font-bold text-muted-foreground/60 tracking-[0.2em] tabular-nums">
+      <div className="absolute top-26 right-6 z-20 md:top-auto md:bottom-10 md:right-8 text-[10px] md:text-xs font-bold text-white/40 tracking-[0.2em] tabular-nums">
         0{active + 1} / 0{SLIDES.length}
       </div>
     </section>
