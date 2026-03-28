@@ -108,7 +108,7 @@ const SLIDES = [
 function HeroCarousel() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const timer = useRef<ReturnType<typeof setInterval>>();
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const next = useCallback(() => setActive((p) => (p + 1) % SLIDES.length), []);
   const prev = useCallback(() => setActive((p) => (p - 1 + SLIDES.length) % SLIDES.length), []);
