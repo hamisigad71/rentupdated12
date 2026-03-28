@@ -606,7 +606,7 @@ export default function TenantDashboard() {
                       <div>
                         <p className="text-xs text-muted-foreground font-medium">Your Residence</p>
                         <p className="text-sm font-bold text-foreground leading-tight">
-                          {currentTenant?.property}
+                          {currentTenant?.roomNumber || currentTenant?.unitId}
                         </p>
                       </div>
                     </div>
