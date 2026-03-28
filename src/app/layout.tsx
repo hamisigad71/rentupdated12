@@ -19,7 +19,8 @@ import { ActionProvider } from "@/context/ActionContext";
 
 export const metadata: Metadata = {
   title: "Nexus Rent | Smart Property Ecosystem",
-  description: "Modern property management platform designed for the Kenyan market.",
+  description:
+    "Modern property management platform designed for the Kenyan market.",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
@@ -39,7 +40,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="font-sans h-full overflow-hidden flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+        >
           <AuthProvider>
             <ActionProvider>
               <TooltipProvider>{children}</TooltipProvider>

@@ -5,12 +5,7 @@ import TenantLayout from "@/components/TenantLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Tooltip,
   TooltipContent,
@@ -111,7 +106,7 @@ function StatCard({
     <Card
       className={cn(
         "rounded-2xl border shadow-sm overflow-hidden relative",
-        accent ? "bg-[#1B5E45] border-[#1B5E45]" : "bg-white border-border"
+        accent ? "bg-[#1B5E45] border-[#1B5E45]" : "bg-white border-border",
       )}
     >
       {accent && (
@@ -122,11 +117,14 @@ function StatCard({
           <div
             className={cn(
               "h-10 w-10 rounded-xl flex items-center justify-center",
-              accent ? "bg-white/15" : "bg-[#E8F5EE]"
+              accent ? "bg-white/15" : "bg-[#E8F5EE]",
             )}
           >
             <Icon
-              className={cn("h-4.5 w-4.5", accent ? "text-white" : "text-[#1B5E45]")}
+              className={cn(
+                "h-4.5 w-4.5",
+                accent ? "text-white" : "text-[#1B5E45]",
+              )}
               strokeWidth={1.8}
             />
           </div>
@@ -136,7 +134,7 @@ function StatCard({
                 "text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full",
                 badge.danger
                   ? "bg-red-50 text-red-600"
-                  : "bg-[#E8F5EE] text-[#1B5E45]"
+                  : "bg-[#E8F5EE] text-[#1B5E45]",
               )}
             >
               {badge.label}
@@ -146,7 +144,7 @@ function StatCard({
         <p
           className={cn(
             "text-2xl font-bold tracking-tight",
-            accent ? "text-white" : "text-foreground"
+            accent ? "text-white" : "text-foreground",
           )}
         >
           {value}
@@ -154,20 +152,30 @@ function StatCard({
         <p
           className={cn(
             "text-xs font-medium mt-1",
-            accent ? "text-white/60" : "text-muted-foreground"
+            accent ? "text-white/60" : "text-muted-foreground",
           )}
         >
           {label}
         </p>
         {sub && (
-          <p className={cn("text-xs mt-1.5", accent ? "text-white/40" : "text-muted-foreground/60")}>
+          <p
+            className={cn(
+              "text-xs mt-1.5",
+              accent ? "text-white/40" : "text-muted-foreground/60",
+            )}
+          >
             {sub}
           </p>
         )}
         {typeof progress !== "undefined" && (
           <div className="mt-3">
             <ProgressBar pct={progress} />
-            <p className={cn("text-[10px] mt-1.5 font-medium", accent ? "text-white/50" : "text-muted-foreground/60")}>
+            <p
+              className={cn(
+                "text-[10px] mt-1.5 font-medium",
+                accent ? "text-white/50" : "text-muted-foreground/60",
+              )}
+            >
               {progress}% completed
             </p>
           </div>
@@ -200,19 +208,26 @@ function MethodButton({
         "relative w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 text-left group",
         active
           ? "border-[#1B5E45] bg-[#F0F5F1]"
-          : "border-border bg-white hover:border-[#1B5E45]/30 hover:bg-[#FAFAF8]"
+          : "border-border bg-white hover:border-[#1B5E45]/30 hover:bg-[#FAFAF8]",
       )}
     >
       <div
         className={cn(
           "h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-colors",
-          active ? "bg-[#1B5E45] text-white" : "bg-[#E8F5EE] text-[#1B5E45] group-hover:bg-[#1B5E45] group-hover:text-white"
+          active
+            ? "bg-[#1B5E45] text-white"
+            : "bg-[#E8F5EE] text-[#1B5E45] group-hover:bg-[#1B5E45] group-hover:text-white",
         )}
       >
         <Icon className="h-5 w-5" strokeWidth={1.8} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className={cn("text-sm font-semibold", active ? "text-[#1B5E45]" : "text-foreground")}>
+        <p
+          className={cn(
+            "text-sm font-semibold",
+            active ? "text-[#1B5E45]" : "text-foreground",
+          )}
+        >
           {label}
         </p>
         <p className="text-xs text-muted-foreground">{sub}</p>
@@ -233,12 +248,12 @@ const inputCls =
 export default function TenantPaymentsPage() {
   const currentTenant = mockTenants[0];
   const tenantPayments = mockPayments.filter(
-    (p) => p.tenantId === currentTenant.id
+    (p) => p.tenantId === currentTenant.id,
   );
 
   const [method, setMethod] = useState<"mpesa" | "card" | "bank">("mpesa");
   const [amount, setAmount] = useState(
-    currentTenant.arrears > 0 ? currentTenant.arrears : currentTenant.rent
+    currentTenant.arrears > 0 ? currentTenant.arrears : currentTenant.rent,
   );
   const [refId, setRefId] = useState("");
   const [copied, setCopied] = useState(false);
@@ -246,7 +261,7 @@ export default function TenantPaymentsPage() {
 
   useEffect(() => {
     setRefId(
-      `${currentTenant.id.split("-").pop()}-${new Date().getMonth() + 1}`
+      `${currentTenant.id.split("-").pop()}-${new Date().getMonth() + 1}`,
     );
   }, [currentTenant.id]);
 
@@ -276,7 +291,7 @@ export default function TenantPaymentsPage() {
 
   const settlePct = Math.min(
     100,
-    Math.round((currentTenant.paidAmount / currentTenant.rent) * 100)
+    Math.round((currentTenant.paidAmount / currentTenant.rent) * 100),
   );
   const allClear = currentTenant.arrears === 0;
   const totalPaid = tenantPayments
@@ -287,7 +302,6 @@ export default function TenantPaymentsPage() {
     <TenantLayout>
       <TooltipProvider>
         <div className="min-h-screen bg-[#FAFAF8]">
-
           {/* ── Top Nav ───────────────────────────────────────── */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between gap-4">
@@ -311,7 +325,6 @@ export default function TenantPaymentsPage() {
           </header>
 
           <main className="max-w-7xl mx-auto px-6 md:px-10 py-8 space-y-8">
-
             {/* ── Hero Banner ───────────────────────────────────── */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-[#1B5E45] px-8 py-8">
@@ -322,13 +335,16 @@ export default function TenantPaymentsPage() {
                   <div>
                     <div className="inline-flex items-center gap-2 bg-[#3DBE7A]/20 border border-[#3DBE7A]/30 rounded-full px-3 py-1 mb-3">
                       <ShieldCheck className="h-3.5 w-3.5 text-[#3DBE7A]" />
-                      <span className="text-[#3DBE7A] text-xs font-semibold tracking-wide">Secure Payment Portal</span>
+                      <span className="text-[#3DBE7A] text-xs font-semibold tracking-wide">
+                        Secure Payment Portal
+                      </span>
                     </div>
                     <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
                       Payments & Billing
                     </h1>
                     <p className="text-white/60 text-sm mt-2 max-w-sm leading-relaxed">
-                      Manage your rent, view transaction history, and track your payment status.
+                      Manage your rent, view transaction history, and track your
+                      payment status.
                     </p>
                   </div>
 
@@ -338,7 +354,7 @@ export default function TenantPaymentsPage() {
                       "shrink-0 rounded-xl px-6 py-4 border min-w-50",
                       allClear
                         ? "bg-[#3DBE7A]/15 border-[#3DBE7A]/30"
-                        : "bg-red-500/10 border-red-400/30"
+                        : "bg-red-500/10 border-red-400/30",
                     )}
                   >
                     <p className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">
@@ -347,7 +363,7 @@ export default function TenantPaymentsPage() {
                     <p
                       className={cn(
                         "text-3xl font-bold tracking-tight",
-                        allClear ? "text-[#3DBE7A]" : "text-red-300"
+                        allClear ? "text-[#3DBE7A]" : "text-red-300",
                       )}
                     >
                       KSh {currentTenant.arrears.toLocaleString()}
@@ -356,12 +372,16 @@ export default function TenantPaymentsPage() {
                       {allClear ? (
                         <>
                           <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A]" />
-                          <span className="text-[#3DBE7A] text-xs font-medium">Account Settled</span>
+                          <span className="text-[#3DBE7A] text-xs font-medium">
+                            Account Settled
+                          </span>
                         </>
                       ) : (
                         <>
                           <AlertCircle className="h-3.5 w-3.5 text-red-300" />
-                          <span className="text-red-300 text-xs font-medium">Settlement Required</span>
+                          <span className="text-red-300 text-xs font-medium">
+                            Settlement Required
+                          </span>
                         </>
                       )}
                     </div>
@@ -416,10 +436,8 @@ export default function TenantPaymentsPage() {
 
             {/* ── Main Grid ────────────────────────────────────── */}
             <div className="grid lg:grid-cols-12 gap-6">
-
               {/* Left — Payment Terminal */}
               <div className="lg:col-span-8 space-y-6">
-
                 {/* Amount Input */}
                 <Reveal delay={0.2}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
@@ -445,10 +463,15 @@ export default function TenantPaymentsPage() {
 
                       {/* Quick Amounts */}
                       <div className="flex flex-wrap gap-2">
-                        <p className="w-full text-xs font-medium text-muted-foreground mb-1">Quick select:</p>
+                        <p className="w-full text-xs font-medium text-muted-foreground mb-1">
+                          Quick select:
+                        </p>
                         {[
                           { label: "Full Rent", val: currentTenant.rent },
-                          { label: "50%", val: Math.round(currentTenant.rent / 2) },
+                          {
+                            label: "50%",
+                            val: Math.round(currentTenant.rent / 2),
+                          },
                           { label: "Arrears", val: currentTenant.arrears },
                           { label: "KSh 5,000", val: 5000 },
                         ].map((q) => (
@@ -459,7 +482,7 @@ export default function TenantPaymentsPage() {
                               "px-4 py-2 rounded-lg border text-xs font-semibold transition-all",
                               amount === q.val
                                 ? "border-[#1B5E45] bg-[#E8F5EE] text-[#1B5E45]"
-                                : "border-border bg-white text-muted-foreground hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
+                                : "border-border bg-white text-muted-foreground hover:border-[#1B5E45]/30 hover:text-[#1B5E45]",
                             )}
                           >
                             {q.label}
@@ -470,8 +493,12 @@ export default function TenantPaymentsPage() {
                       {/* Reference */}
                       <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-[#F0F5F1] border border-[#1B5E45]/10">
                         <div>
-                          <p className="text-xs font-medium text-muted-foreground">Payment Reference</p>
-                          <p className="text-sm font-semibold text-foreground font-mono">{refId}</p>
+                          <p className="text-xs font-medium text-muted-foreground">
+                            Payment Reference
+                          </p>
+                          <p className="text-sm font-semibold text-foreground font-mono">
+                            {refId}
+                          </p>
                         </div>
                         <Tooltip>
                           <TooltipTrigger>
@@ -486,7 +513,9 @@ export default function TenantPaymentsPage() {
                               )}
                             </button>
                           </TooltipTrigger>
-                          <TooltipContent>{copied ? "Copied!" : "Copy reference"}</TooltipContent>
+                          <TooltipContent>
+                            {copied ? "Copied!" : "Copy reference"}
+                          </TooltipContent>
                         </Tooltip>
                       </div>
                     </CardContent>
@@ -560,7 +589,8 @@ export default function TenantPaymentsPage() {
                             <div className="flex items-start gap-3 p-4 rounded-xl bg-[#E8F5EE] border border-[#1B5E45]/10">
                               <Info className="h-4 w-4 text-[#1B5E45] shrink-0 mt-0.5" />
                               <p className="text-xs text-[#1B5E45] leading-relaxed">
-                                An STK push will be sent to your phone. Confirm the prompt on your device to complete payment.
+                                An STK push will be sent to your phone. Confirm
+                                the prompt on your device to complete payment.
                               </p>
                             </div>
                             <Button
@@ -591,7 +621,10 @@ export default function TenantPaymentsPage() {
                                 <input
                                   type="text"
                                   placeholder="4242 4242 4242 4242"
-                                  className={cn(inputCls, "pl-11 font-mono tracking-widest")}
+                                  className={cn(
+                                    inputCls,
+                                    "pl-11 font-mono tracking-widest",
+                                  )}
                                 />
                               </div>
                             </div>
@@ -610,13 +643,21 @@ export default function TenantPaymentsPage() {
                                 <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-muted-foreground">
                                   Expiry
                                 </label>
-                                <input type="text" placeholder="MM / YY" className={inputCls} />
+                                <input
+                                  type="text"
+                                  placeholder="MM / YY"
+                                  className={inputCls}
+                                />
                               </div>
                               <div>
                                 <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-muted-foreground">
                                   CVV
                                 </label>
-                                <input type="password" placeholder="•••" className={inputCls} />
+                                <input
+                                  type="password"
+                                  placeholder="•••"
+                                  className={inputCls}
+                                />
                               </div>
                             </div>
                             <Button
@@ -641,7 +682,10 @@ export default function TenantPaymentsPage() {
                             <div className="rounded-xl border border-border bg-[#FAFAF8] divide-y divide-border overflow-hidden">
                               {[
                                 { label: "Bank", value: "Equity Bank" },
-                                { label: "Account Name", value: "Nova Realty Ltd" },
+                                {
+                                  label: "Account Name",
+                                  value: "Nova Realty Ltd",
+                                },
                                 { label: "Account No.", value: "880977221100" },
                                 { label: "Reference", value: refId },
                               ].map((row) => (
@@ -669,7 +713,9 @@ export default function TenantPaymentsPage() {
                             <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-50 border border-amber-200/60">
                               <Info className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
                               <p className="text-xs text-amber-700 leading-relaxed">
-                                Use the reference code above when making the transfer. Allow 1–2 business days for processing.
+                                Use the reference code above when making the
+                                transfer. Allow 1–2 business days for
+                                processing.
                               </p>
                             </div>
                             <Button
@@ -677,7 +723,8 @@ export default function TenantPaymentsPage() {
                               variant="outline"
                               className="w-full h-12 rounded-xl border-[#1B5E45] text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold text-sm"
                             >
-                              Confirm Bank Transfer · KSh {amount.toLocaleString()}
+                              Confirm Bank Transfer · KSh{" "}
+                              {amount.toLocaleString()}
                             </Button>
                           </motion.div>
                         )}
@@ -750,7 +797,6 @@ export default function TenantPaymentsPage() {
 
               {/* Right Sidebar */}
               <div className="lg:col-span-4 space-y-6">
-
                 {/* Security */}
                 <Reveal delay={0.2}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
@@ -783,8 +829,12 @@ export default function TenantPaymentsPage() {
                             <item.icon className="h-4 w-4 text-[#1B5E45]" />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                            <p className="text-xs text-muted-foreground">{item.desc}</p>
+                            <p className="text-sm font-semibold text-foreground">
+                              {item.title}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {item.desc}
+                            </p>
                           </div>
                         </div>
                       ))}
@@ -803,18 +853,30 @@ export default function TenantPaymentsPage() {
                     </CardHeader>
                     <CardContent className="px-6 pb-6 space-y-3">
                       {[
-                        { label: "Subtotal", value: `KSh ${amount.toLocaleString()}` },
+                        {
+                          label: "Subtotal",
+                          value: `KSh ${amount.toLocaleString()}`,
+                        },
                         { label: "Processing Fee", value: "KSh 0" },
                         { label: "VAT (0%)", value: "KSh 0" },
                       ].map((row) => (
-                        <div key={row.label} className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">{row.label}</span>
-                          <span className="text-sm font-medium text-foreground">{row.value}</span>
+                        <div
+                          key={row.label}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="text-sm text-muted-foreground">
+                            {row.label}
+                          </span>
+                          <span className="text-sm font-medium text-foreground">
+                            {row.value}
+                          </span>
                         </div>
                       ))}
                       <Separator />
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-foreground">Total</span>
+                        <span className="text-sm font-bold text-foreground">
+                          Total
+                        </span>
                         <span className="text-base font-bold text-[#1B5E45]">
                           KSh {amount.toLocaleString()}
                         </span>
@@ -851,9 +913,16 @@ export default function TenantPaymentsPage() {
                           { label: "Next Due", val: "1 Apr 2025" },
                           { label: "Lease End", val: "14 Mar 2027" },
                         ].map((row) => (
-                          <div key={row.label} className="flex items-center justify-between">
-                            <span className="text-xs text-muted-foreground">{row.label}</span>
-                            <span className="text-xs font-semibold text-foreground">{row.val}</span>
+                          <div
+                            key={row.label}
+                            className="flex items-center justify-between"
+                          >
+                            <span className="text-xs text-muted-foreground">
+                              {row.label}
+                            </span>
+                            <span className="text-xs font-semibold text-foreground">
+                              {row.val}
+                            </span>
                           </div>
                         ))}
                       </div>

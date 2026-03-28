@@ -5,12 +5,7 @@ import TenantLayout from "@/components/TenantLayout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Tooltip,
   TooltipContent,
@@ -145,7 +140,11 @@ function StatRow({
       <span
         className={cn(
           "text-sm font-semibold",
-          danger ? "text-red-600" : success ? "text-[#1B5E45]" : "text-foreground"
+          danger
+            ? "text-red-600"
+            : success
+              ? "text-[#1B5E45]"
+              : "text-foreground",
         )}
       >
         {value}
@@ -157,7 +156,8 @@ function StatRow({
 // ─── Main Page ─────────────────────────────────────────────────────────────
 export default function TenantProfilePage() {
   const currentTenant = mockTenants[0];
-  const { displayImage, updateProfileImage, userName, updateUserName } = useAuth();
+  const { displayImage, updateProfileImage, userName, updateUserName } =
+    useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
@@ -171,15 +171,35 @@ export default function TenantProfilePage() {
   });
 
   const [notifications, setNotifications] = useState([
-    { id: "rent", label: "Rent reminders", desc: "Get notified before rent is due", enabled: true },
-    { id: "maintenance", label: "Maintenance updates", desc: "Status changes on your requests", enabled: true },
-    { id: "building", label: "Building announcements", desc: "News and notices from management", enabled: false },
-    { id: "receipts", label: "Payment receipts", desc: "Email confirmation on every payment", enabled: true },
+    {
+      id: "rent",
+      label: "Rent reminders",
+      desc: "Get notified before rent is due",
+      enabled: true,
+    },
+    {
+      id: "maintenance",
+      label: "Maintenance updates",
+      desc: "Status changes on your requests",
+      enabled: true,
+    },
+    {
+      id: "building",
+      label: "Building announcements",
+      desc: "News and notices from management",
+      enabled: false,
+    },
+    {
+      id: "receipts",
+      label: "Payment receipts",
+      desc: "Email confirmation on every payment",
+      enabled: true,
+    },
   ]);
 
   const togglePreference = (id: string) => {
-    setNotifications(prev =>
-      prev.map(n => n.id === id ? { ...n, enabled: !n.enabled } : n)
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, enabled: !n.enabled } : n)),
     );
   };
 
@@ -211,7 +231,6 @@ export default function TenantProfilePage() {
     <TenantLayout>
       <TooltipProvider>
         <div className="min-h-screen bg-[#FAFAF8]">
-
           {/* ── Sticky Nav ──────────────────────────────────── */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between gap-4">
@@ -273,7 +292,6 @@ export default function TenantProfilePage() {
           </header>
 
           <main className="max-w-7xl mx-auto px-6 md:px-10 py-8 space-y-8">
-
             {/* ── Profile Hero Banner ──────────────────────── */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm dark:bg-card">
@@ -287,14 +305,20 @@ export default function TenantProfilePage() {
                       className="h-24 w-24 rounded-2xl border-4 border-white overflow-hidden cursor-pointer shadow-xl transition-transform duration-300 group-hover:scale-105"
                       onClick={() => setShowAvatarModal(true)}
                     >
-                      <img src={displayImage} className="w-full h-full object-cover" />
+                      <img
+                        src={displayImage}
+                        className="w-full h-full object-cover"
+                      />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <Camera className="h-6 w-6 text-white" />
                       </div>
                     </div>
                     {/* Verified badge */}
                     <div className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center shadow-lg">
-                      <ShieldCheck className="h-4 w-4 text-white" strokeWidth={2.5} />
+                      <ShieldCheck
+                        className="h-4 w-4 text-white"
+                        strokeWidth={2.5}
+                      />
                     </div>
                   </div>
 
@@ -306,7 +330,10 @@ export default function TenantProfilePage() {
                       </Badge>
                       <div className="flex items-center gap-0.5">
                         {[1, 2, 3, 4, 5].map((s) => (
-                          <Star key={s} className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
+                          <Star
+                            key={s}
+                            className="h-3.5 w-3.5 text-amber-500 fill-amber-500"
+                          />
                         ))}
                       </div>
                     </div>
@@ -343,10 +370,8 @@ export default function TenantProfilePage() {
 
             {/* ── Main Grid ────────────────────────────────── */}
             <div className="grid lg:grid-cols-12 gap-6">
-
               {/* Left — Forms */}
               <div className="lg:col-span-8 space-y-6">
-
                 {/* Personal Info */}
                 <Reveal delay={0.1}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
@@ -495,11 +520,26 @@ export default function TenantProfilePage() {
                     <CardContent className="px-6 pb-6">
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         {[
-                          { label: "Lease Start", value: "1 Oct 2023", icon: Calendar },
-                          { label: "Lease End", value: "14 Mar 2027", icon: Calendar },
-                          { label: "Unit Type", value: "2-Bedroom", icon: Building2 },
+                          {
+                            label: "Lease Start",
+                            value: "1 Oct 2023",
+                            icon: Calendar,
+                          },
+                          {
+                            label: "Lease End",
+                            value: "14 Mar 2027",
+                            icon: Calendar,
+                          },
+                          {
+                            label: "Unit Type",
+                            value: "2-Bedroom",
+                            icon: Building2,
+                          },
                         ].map((item, i) => (
-                          <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-[#FAFAF8] border border-border">
+                          <div
+                            key={i}
+                            className="flex items-center gap-3 p-4 rounded-xl bg-[#FAFAF8] border border-border"
+                          >
                             <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                               <item.icon className="h-4 w-4 text-[#1B5E45]" />
                             </div>
@@ -507,22 +547,32 @@ export default function TenantProfilePage() {
                               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
                                 {item.label}
                               </p>
-                              <p className="text-sm font-semibold text-foreground mt-0.5">{item.value}</p>
+                              <p className="text-sm font-semibold text-foreground mt-0.5">
+                                {item.value}
+                              </p>
                             </div>
                           </div>
                         ))}
                       </div>
                       <div className="mt-4">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs text-muted-foreground font-medium">Lease progress</span>
-                          <span className="text-xs font-semibold text-[#1B5E45]">72% completed</span>
+                          <span className="text-xs text-muted-foreground font-medium">
+                            Lease progress
+                          </span>
+                          <span className="text-xs font-semibold text-[#1B5E45]">
+                            72% completed
+                          </span>
                         </div>
                         <div className="h-1.5 w-full bg-[#E8F5EE] rounded-full overflow-hidden">
                           <motion.div
                             className="h-full bg-[#3DBE7A] rounded-full"
                             initial={{ width: 0 }}
                             animate={{ width: "72%" }}
-                            transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
+                            transition={{
+                              duration: 1.2,
+                              ease: "easeOut",
+                              delay: 0.5,
+                            }}
                           />
                         </div>
                       </div>
@@ -548,19 +598,25 @@ export default function TenantProfilePage() {
                             onClick={() => togglePreference(pref.id)}
                           >
                             <div>
-                              <p className="text-sm font-medium text-foreground">{pref.label}</p>
-                              <p className="text-xs text-muted-foreground mt-0.5">{pref.desc}</p>
+                              <p className="text-sm font-medium text-foreground">
+                                {pref.label}
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-0.5">
+                                {pref.desc}
+                              </p>
                             </div>
                             <div
                               className={cn(
                                 "w-10 h-5 rounded-full relative transition-colors shrink-0",
-                                pref.enabled ? "bg-[#1B5E45]" : "bg-border"
+                                pref.enabled ? "bg-[#1B5E45]" : "bg-border",
                               )}
                             >
                               <div
                                 className={cn(
                                   "absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform",
-                                  pref.enabled ? "translate-x-5" : "translate-x-0.5"
+                                  pref.enabled
+                                    ? "translate-x-5"
+                                    : "translate-x-0.5",
                                 )}
                               />
                             </div>
@@ -574,7 +630,6 @@ export default function TenantProfilePage() {
 
               {/* Right Sidebar */}
               <div className="lg:col-span-4 space-y-6">
-
                 {/* Avatar Card */}
                 <Reveal delay={0.1}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
@@ -585,17 +640,27 @@ export default function TenantProfilePage() {
                           onClick={() => setShowAvatarModal(true)}
                         >
                           <div className="h-20 w-20 rounded-2xl border-4 border-[#E8F5EE] overflow-hidden shadow-md group-hover:shadow-lg transition-shadow">
-                            <img src={displayImage} className="w-full h-full object-cover" />
+                            <img
+                              src={displayImage}
+                              className="w-full h-full object-cover"
+                            />
                           </div>
                           <div className="absolute inset-0 rounded-2xl bg-[#1B5E45]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <Camera className="h-5 w-5 text-white" />
                           </div>
                           <div className="absolute -bottom-1.5 -right-1.5 h-6 w-6 rounded-full bg-[#3DBE7A] border-2 border-white flex items-center justify-center">
-                            <ShieldCheck className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
+                            <ShieldCheck
+                              className="h-3.5 w-3.5 text-white"
+                              strokeWidth={2.5}
+                            />
                           </div>
                         </div>
-                        <p className="text-base font-bold text-foreground">{formData.name}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">{formData.email}</p>
+                        <p className="text-base font-bold text-foreground">
+                          {formData.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          {formData.email}
+                        </p>
                         <Badge className="mt-2 bg-[#E8F5EE] text-[#1B5E45] border-0 hover:bg-[#E8F5EE] text-[10px] font-semibold uppercase tracking-wide px-2.5 rounded-full">
                           Verified Resident
                         </Badge>
@@ -630,7 +695,11 @@ export default function TenantProfilePage() {
                         />
                         <StatRow
                           label="Outstanding Balance"
-                          value={allClear ? "KSh 0" : `KSh ${currentTenant.arrears.toLocaleString()}`}
+                          value={
+                            allClear
+                              ? "KSh 0"
+                              : `KSh ${currentTenant.arrears.toLocaleString()}`
+                          }
                           danger={!allClear}
                           success={allClear}
                         />
@@ -653,25 +722,49 @@ export default function TenantProfilePage() {
                     </CardHeader>
                     <CardContent className="px-6 pb-5 space-y-3">
                       {[
-                        { icon: ShieldCheck, label: "Identity Verified", desc: "Biometric scan complete", ok: true },
-                        { icon: Clock, label: "Lease Synced", desc: "Live & up to date", ok: true },
-                        { icon: Fingerprint, label: "Trust Rating", desc: "Elite grade", ok: true },
+                        {
+                          icon: ShieldCheck,
+                          label: "Identity Verified",
+                          desc: "Biometric scan complete",
+                          ok: true,
+                        },
+                        {
+                          icon: Clock,
+                          label: "Lease Synced",
+                          desc: "Live & up to date",
+                          ok: true,
+                        },
+                        {
+                          icon: Fingerprint,
+                          label: "Trust Rating",
+                          desc: "Elite grade",
+                          ok: true,
+                        },
                       ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-[#FAFAF8] border border-border">
+                        <div
+                          key={i}
+                          className="flex items-center gap-3 p-3 rounded-xl bg-[#FAFAF8] border border-border"
+                        >
                           <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                             <item.icon className="h-4 w-4 text-[#1B5E45]" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-foreground leading-tight">{item.label}</p>
-                            <p className="text-xs text-muted-foreground">{item.desc}</p>
+                            <p className="text-sm font-medium text-foreground leading-tight">
+                              {item.label}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {item.desc}
+                            </p>
                           </div>
-                          <CheckCircle className="h-4 w-4 text-[#3DBE7A] flex-shrink-0" />
+                          <CheckCircle className="h-4 w-4 text-[#3DBE7A] shrink-0" />
                         </div>
                       ))}
 
                       <div className="flex items-center gap-2 mt-1 p-3 rounded-xl bg-[#E8F5EE] border border-[#1B5E45]/10">
                         <div className="h-2 w-2 rounded-full bg-[#3DBE7A] animate-pulse" />
-                        <span className="text-xs font-medium text-[#1B5E45]">All systems secure · AES-256 encrypted</span>
+                        <span className="text-xs font-medium text-[#1B5E45]">
+                          All systems secure · AES-256 encrypted
+                        </span>
                       </div>
                     </CardContent>
                   </Card>
@@ -719,7 +812,9 @@ export default function TenantProfilePage() {
           <div className="p-6 space-y-6">
             {/* Header */}
             <div>
-              <h3 className="text-lg font-bold text-foreground tracking-tight">Update Profile Photo</h3>
+              <h3 className="text-lg font-bold text-foreground tracking-tight">
+                Update Profile Photo
+              </h3>
               <p className="text-sm text-muted-foreground mt-1">
                 Upload a clear photo. Recommended size: 400×400px or larger.
               </p>
@@ -728,7 +823,10 @@ export default function TenantProfilePage() {
             {/* Current photo */}
             <div className="flex justify-center">
               <div className="h-24 w-24 rounded-2xl border-4 border-[#E8F5EE] overflow-hidden shadow-md">
-                <img src={displayImage} className="w-full h-full object-cover" />
+                <img
+                  src={displayImage}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
@@ -741,8 +839,12 @@ export default function TenantProfilePage() {
                   <Upload className="h-5 w-5 text-[#1B5E45] group-hover:text-white transition-colors" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-semibold text-foreground">Click to upload photo</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">PNG, JPG or WEBP · Max 5MB</p>
+                  <p className="text-sm font-semibold text-foreground">
+                    Click to upload photo
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    PNG, JPG or WEBP · Max 5MB
+                  </p>
                 </div>
               </div>
               <input

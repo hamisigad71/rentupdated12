@@ -115,9 +115,7 @@ function StatCard({
     <Card
       className={cn(
         "rounded-2xl border border-border shadow-sm hover:shadow-md transition-all duration-300 group overflow-hidden relative",
-        accent
-          ? "bg-[#1B5E45] text-white border-[#1B5E45]"
-          : "bg-white"
+        accent ? "bg-[#1B5E45] text-white border-[#1B5E45]" : "bg-white",
       )}
     >
       {/* Subtle corner accent */}
@@ -129,13 +127,14 @@ function StatCard({
           <div
             className={cn(
               "h-11 w-11 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
-              accent
-                ? "bg-white/15"
-                : "bg-[#E8F5EE]"
+              accent ? "bg-white/15" : "bg-[#E8F5EE]",
             )}
           >
             <Icon
-              className={cn("h-5 w-5", accent ? "text-white" : "text-[#1B5E45]")}
+              className={cn(
+                "h-5 w-5",
+                accent ? "text-white" : "text-[#1B5E45]",
+              )}
               strokeWidth={1.8}
             />
           </div>
@@ -143,7 +142,7 @@ function StatCard({
             <span
               className={cn(
                 "text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full",
-                badgeStyles[badge.color]
+                badgeStyles[badge.color],
               )}
             >
               {badge.label}
@@ -153,7 +152,7 @@ function StatCard({
         <p
           className={cn(
             "text-3xl font-bold tracking-tight mb-1",
-            accent ? "text-white" : "text-foreground"
+            accent ? "text-white" : "text-foreground",
           )}
         >
           {value}
@@ -161,7 +160,7 @@ function StatCard({
         <p
           className={cn(
             "text-sm font-medium",
-            accent ? "text-white/70" : "text-muted-foreground"
+            accent ? "text-white/70" : "text-muted-foreground",
           )}
         >
           {label}
@@ -170,7 +169,7 @@ function StatCard({
           <p
             className={cn(
               "text-xs mt-2",
-              accent ? "text-white/50" : "text-muted-foreground/60"
+              accent ? "text-white/50" : "text-muted-foreground/60",
             )}
           >
             {sub}
@@ -200,12 +199,16 @@ function PaymentRow({
           <Receipt className="h-4 w-4 text-[#1B5E45]" />
         </div>
         <div>
-          <p className="text-sm font-medium text-foreground leading-tight">{description}</p>
+          <p className="text-sm font-medium text-foreground leading-tight">
+            {description}
+          </p>
           <p className="text-xs text-muted-foreground mt-0.5">{date}</p>
         </div>
       </div>
       <div className="text-right">
-        <p className="text-sm font-semibold text-[#1B5E45]">${amount.toLocaleString()}</p>
+        <p className="text-sm font-semibold text-[#1B5E45]">
+          ${amount.toLocaleString()}
+        </p>
         <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full mt-1">
           <CheckCircle className="h-2.5 w-2.5" />
           {status}
@@ -240,13 +243,25 @@ function MaintenanceRow({
         <Wrench className="h-3.5 w-3.5 text-amber-600" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-foreground leading-tight truncate">{title}</p>
+        <p className="text-sm font-medium text-foreground leading-tight truncate">
+          {title}
+        </p>
         <div className="flex items-center gap-2 mt-1">
           <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <Clock className="h-3 w-3" /> {date}
           </span>
-          <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-full", cfg.color)}>
-            <span className={cn("inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle", cfg.dot)} />
+          <span
+            className={cn(
+              "text-[10px] font-semibold px-2 py-0.5 rounded-full",
+              cfg.color,
+            )}
+          >
+            <span
+              className={cn(
+                "inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle",
+                cfg.dot,
+              )}
+            />
             {status}
           </span>
         </div>
@@ -275,7 +290,9 @@ function QuickAction({
         </div>
         <div>
           <p className="text-sm font-semibold text-foreground">{label}</p>
-          <p className="text-xs text-muted-foreground mt-0.5 leading-snug">{description}</p>
+          <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
+            {description}
+          </p>
         </div>
       </div>
     </Link>
@@ -298,7 +315,6 @@ export default function TenantDashboard() {
     <TenantLayout>
       <TooltipProvider>
         <div className="min-h-screen bg-[#FAFAF8]">
-
           {/* ── Top Nav Bar ───────────────────────────────────── */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between gap-4">
@@ -340,7 +356,10 @@ export default function TenantDashboard() {
 
                 <Link
                   href="/tenant/payments"
-                  className={cn(buttonVariants({ variant: "default", size: "default" }), "h-9 px-5 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm font-semibold shadow-sm")}
+                  className={cn(
+                    buttonVariants({ variant: "default", size: "default" }),
+                    "h-9 px-5 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm font-semibold shadow-sm",
+                  )}
                 >
                   Pay Rent
                   <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -350,7 +369,6 @@ export default function TenantDashboard() {
           </header>
 
           <main className="max-w-7xl mx-auto px-6 md:px-10 py-8 space-y-8">
-
             {/* ── Hero Welcome ──────────────────────────────────── */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-white border border-border px-8 py-8 md:py-10 shadow-sm">
@@ -385,14 +403,19 @@ export default function TenantDashboard() {
                       Rent Due
                     </p>
                     <div className="flex items-baseline gap-1">
-                      <p className="text-[#1A1A1A] text-2xl font-black tracking-tight">$2,450</p>
+                      <p className="text-[#1A1A1A] text-2xl font-black tracking-tight">
+                        $2,450
+                      </p>
                     </div>
                     <p className="text-[#1B5E45] text-xs font-semibold mt-1">
                       Due in {daysUntilRent} days · Apr 1
                     </p>
                     <Link
                       href="/tenant/payments"
-                      className={cn(buttonVariants({ variant: "default", size: "sm" }), "mt-4 w-full rounded-lg bg-[#1B5E45] hover:bg-[#246B4F] text-white font-bold text-xs h-[36px] flex items-center justify-center shadow-sm")}
+                      className={cn(
+                        buttonVariants({ variant: "default", size: "sm" }),
+                        "mt-4 w-full rounded-lg bg-[#1B5E45] hover:bg-[#246B4F] text-white font-bold text-xs h-9 flex items-center justify-center shadow-sm",
+                      )}
                     >
                       Pay Now
                     </Link>
@@ -402,15 +425,23 @@ export default function TenantDashboard() {
                 {/* Lease Progress */}
                 <div className="relative mt-8 pt-6 border-t border-border">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider">Lease Progress</p>
-                    <p className="text-[#1B5E45] text-xs font-black">{leaseProgress}% completed</p>
+                    <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider">
+                      Lease Progress
+                    </p>
+                    <p className="text-[#1B5E45] text-xs font-black">
+                      {leaseProgress}% completed
+                    </p>
                   </div>
                   <div className="h-2 w-full bg-[#E8F5EE] rounded-full overflow-hidden">
                     <motion.div
                       className="h-full bg-[#1B5E45] rounded-full"
                       initial={{ width: 0 }}
                       animate={{ width: `${leaseProgress}%` }}
-                      transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+                      transition={{
+                        duration: 1.2,
+                        ease: "easeOut",
+                        delay: 0.3,
+                      }}
                     />
                   </div>
                 </div>
@@ -459,10 +490,8 @@ export default function TenantDashboard() {
 
             {/* ── Main Grid ────────────────────────────────────── */}
             <div className="grid lg:grid-cols-12 gap-6">
-
               {/* Left Column */}
               <div className="lg:col-span-8 space-y-6">
-
                 {/* Quick Actions */}
                 <Reveal delay={0.25}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
@@ -522,7 +551,10 @@ export default function TenantDashboard() {
                         </CardTitle>
                         <Link
                           href="/tenant/payments"
-                          className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-xs text-[#1B5E45] hover:bg-[#E8F5EE] h-8 px-3 rounded-lg font-medium flex items-center justify-center")}
+                          className={cn(
+                            buttonVariants({ variant: "ghost", size: "sm" }),
+                            "text-xs text-[#1B5E45] hover:bg-[#E8F5EE] h-8 px-3 rounded-lg font-medium flex items-center justify-center",
+                          )}
                         >
                           View all <ArrowRight className="ml-1 h-3 w-3" />
                         </Link>
@@ -578,12 +610,21 @@ export default function TenantDashboard() {
                           key={i}
                           className="flex items-start gap-3 p-4 rounded-xl bg-[#FAFAF8] border border-border hover:border-[#1B5E45]/20 transition-colors"
                         >
-                          <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center shrink-0", notice.color)}>
+                          <div
+                            className={cn(
+                              "h-8 w-8 rounded-lg flex items-center justify-center shrink-0",
+                              notice.color,
+                            )}
+                          >
                             <notice.icon className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-foreground">{notice.title}</p>
-                            <p className="text-xs text-muted-foreground mt-0.5">{notice.desc}</p>
+                            <p className="text-sm font-semibold text-foreground">
+                              {notice.title}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-0.5">
+                              {notice.desc}
+                            </p>
                           </div>
                         </div>
                       ))}
@@ -594,7 +635,6 @@ export default function TenantDashboard() {
 
               {/* Right Sidebar */}
               <div className="lg:col-span-4 space-y-6">
-
                 {/* Property Card */}
                 <Reveal delay={0.25}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white overflow-hidden">
@@ -604,7 +644,9 @@ export default function TenantDashboard() {
                         <Home className="h-5 w-5 text-white" />
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground font-medium">Your Residence</p>
+                        <p className="text-xs text-muted-foreground font-medium">
+                          Your Residence
+                        </p>
                         <p className="text-sm font-bold text-foreground leading-tight">
                           {currentTenant?.roomNumber || currentTenant?.unitId}
                         </p>
@@ -614,37 +656,58 @@ export default function TenantDashboard() {
                     <CardContent className="px-6 py-5 space-y-4">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Unit</span>
-                        <span className="font-semibold text-foreground">{currentTenant?.unitId || "N/A"}</span>
+                        <span className="font-semibold text-foreground">
+                          {currentTenant?.unitId || "N/A"}
+                        </span>
                       </div>
                       <Separator />
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Type</span>
-                        <span className="font-semibold text-foreground">{"2-Bedroom"}</span>
+                        <span className="font-semibold text-foreground">
+                          {"2-Bedroom"}
+                        </span>
                       </div>
                       <Separator />
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Floor</span>
-                        <span className="font-semibold text-foreground">4th Floor</span>
+                        <span className="font-semibold text-foreground">
+                          4th Floor
+                        </span>
                       </div>
                       <Separator />
 
                       {/* Rating */}
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Rating</span>
+                        <span className="text-sm text-muted-foreground">
+                          Rating
+                        </span>
                         <div className="flex items-center gap-1">
-                          {[1,2,3,4,5].map(s => (
+                          {[1, 2, 3, 4, 5].map((s) => (
                             <Star
                               key={s}
-                              className={cn("h-3.5 w-3.5", s <= 4 ? "text-amber-400 fill-amber-400" : "text-border")}
+                              className={cn(
+                                "h-3.5 w-3.5",
+                                s <= 4
+                                  ? "text-amber-400 fill-amber-400"
+                                  : "text-border",
+                              )}
                             />
                           ))}
-                          <span className="text-xs font-medium text-muted-foreground ml-1">4.8</span>
+                          <span className="text-xs font-medium text-muted-foreground ml-1">
+                            4.8
+                          </span>
                         </div>
                       </div>
 
                       <Link
                         href="/tenant/property"
-                        className={cn(buttonVariants({ variant: "outline", size: "default" }), "w-full rounded-xl h-10 text-sm border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45] font-medium mt-2 flex items-center justify-center")}
+                        className={cn(
+                          buttonVariants({
+                            variant: "outline",
+                            size: "default",
+                          }),
+                          "w-full rounded-xl h-10 text-sm border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45] font-medium mt-2 flex items-center justify-center",
+                        )}
                       >
                         View Property Details
                         <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
@@ -682,13 +745,19 @@ export default function TenantDashboard() {
                       <div className="mt-4 grid grid-cols-2 gap-2">
                         <Link
                           href="/tenant/maintenance"
-                          className={cn(buttonVariants({ variant: "outline", size: "sm" }), "rounded-xl h-9 text-xs border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45] font-medium flex items-center justify-center")}
+                          className={cn(
+                            buttonVariants({ variant: "outline", size: "sm" }),
+                            "rounded-xl h-9 text-xs border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45] font-medium flex items-center justify-center",
+                          )}
                         >
                           View All
                         </Link>
                         <Link
                           href="/tenant/maintenance/new"
-                          className={cn(buttonVariants({ variant: "default", size: "sm" }), "rounded-xl h-9 text-xs bg-[#1B5E45] hover:bg-[#246B4F] text-white font-medium flex items-center justify-center")}
+                          className={cn(
+                            buttonVariants({ variant: "default", size: "sm" }),
+                            "rounded-xl h-9 text-xs bg-[#1B5E45] hover:bg-[#246B4F] text-white font-medium flex items-center justify-center",
+                          )}
                         >
                           <Plus className="h-3 w-3 mr-1" />
                           New Request
@@ -710,11 +779,27 @@ export default function TenantDashboard() {
                     <CardContent className="px-6 pb-6">
                       <div className="grid grid-cols-2 gap-3">
                         {[
-                          { icon: Wifi, label: "High-Speed WiFi", available: true },
+                          {
+                            icon: Wifi,
+                            label: "High-Speed WiFi",
+                            available: true,
+                          },
                           { icon: Car, label: "Parking", available: true },
-                          { icon: Dumbbell, label: "Fitness Center", available: true },
-                          { icon: Home, label: "Rooftop Lounge", available: true },
-                          { icon: Shield, label: "24/7 Security", available: true },
+                          {
+                            icon: Dumbbell,
+                            label: "Fitness Center",
+                            available: true,
+                          },
+                          {
+                            icon: Home,
+                            label: "Rooftop Lounge",
+                            available: true,
+                          },
+                          {
+                            icon: Shield,
+                            label: "24/7 Security",
+                            available: true,
+                          },
                           { icon: Phone, label: "Concierge", available: true },
                         ].map((a, i) => (
                           <div
@@ -724,7 +809,9 @@ export default function TenantDashboard() {
                             <div className="h-7 w-7 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                               <a.icon className="h-3.5 w-3.5 text-[#1B5E45]" />
                             </div>
-                            <span className="text-xs font-medium text-foreground leading-tight">{a.label}</span>
+                            <span className="text-xs font-medium text-foreground leading-tight">
+                              {a.label}
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -736,21 +823,29 @@ export default function TenantDashboard() {
                 <Reveal delay={0.4}>
                   <Card className="rounded-2xl border-border shadow-sm bg-[#F0F5F1]">
                     <CardContent className="px-6 py-6">
-                      <p className="text-sm font-semibold text-foreground mb-1">Need Help?</p>
+                      <p className="text-sm font-semibold text-foreground mb-1">
+                        Need Help?
+                      </p>
                       <p className="text-xs text-muted-foreground mb-4 leading-snug">
                         Reach your property manager or building support team.
                       </p>
                       <div className="space-y-2">
                         <Link
                           href="/tenant/contact"
-                          className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE] font-medium flex items-center justify-center")}
+                          className={cn(
+                            buttonVariants({ variant: "outline", size: "sm" }),
+                            "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE] font-medium flex items-center justify-center",
+                          )}
                         >
                           <MessageSquare className="h-3.5 w-3.5 mr-2 text-[#1B5E45]" />
                           Message Manager
                         </Link>
                         <Link
                           href="tel:+1234567890"
-                          className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE] font-medium flex items-center justify-center")}
+                          className={cn(
+                            buttonVariants({ variant: "outline", size: "sm" }),
+                            "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE] font-medium flex items-center justify-center",
+                          )}
                         >
                           <Phone className="h-3.5 w-3.5 mr-2 text-[#1B5E45]" />
                           Call Front Desk
