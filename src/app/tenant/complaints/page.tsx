@@ -445,7 +445,7 @@ export default function TenantComplaintsPage() {
   return (
     <TenantLayout>
       <div className="min-h-screen bg-[#FAFAF8]">
-        <div className="p-6 md:p-8 space-y-10 max-w-350 mx-auto">
+        <div className="p-6 md:p-8 space-y-10 max-w-7xl mx-auto">
           {/* ── HEADER ─────────────────────────────────────────────────── */}
           <Reveal className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="space-y-2">
