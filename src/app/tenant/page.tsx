@@ -369,7 +369,7 @@ export default function TenantDashboard() {
                     <div className="flex items-center gap-3 mt-3 flex-wrap">
                       <span className="flex items-center gap-1.5 text-muted-foreground text-sm font-medium">
                         <MapPin className="h-4 w-4 text-[#1B5E45]" />
-                        {currentTenant?.property} · Unit {currentTenant?.unit}
+                        {currentTenant?.roomNumber || currentTenant?.unitId}
                       </span>
                       <span className="w-1 h-1 bg-border rounded-full" />
                       <span className="flex items-center gap-1.5 text-muted-foreground text-sm font-medium">
