@@ -179,7 +179,7 @@ export default function TenantComplaintsPage() {
       }
       if (sortBy === "status") {
         const order = { pending: 0, "in-progress": 1, resolved: 2 };
-        return (order[a.status as any] ?? 0) - (order[b.status as any] ?? 0);
+        return (order[a.status as keyof typeof order] ?? 0) - (order[b.status as keyof typeof order] ?? 0);
       }
       return 0;
     });
