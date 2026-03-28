@@ -196,7 +196,7 @@ function PaymentRow({
   return (
     <div className="flex items-center justify-between py-3.5 group">
       <div className="flex items-center gap-3">
-        <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
+        <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center shrink-0">
           <Receipt className="h-4 w-4 text-[#1B5E45]" />
         </div>
         <div>
@@ -236,7 +236,7 @@ function MaintenanceRow({
 
   return (
     <div className="flex items-start gap-3 py-3.5">
-      <div className="mt-0.5 h-8 w-8 rounded-lg bg-amber-50 flex items-center justify-center flex-shrink-0">
+      <div className="mt-0.5 h-8 w-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
         <Wrench className="h-3.5 w-3.5 text-amber-600" />
       </div>
       <div className="flex-1 min-w-0">
@@ -380,7 +380,7 @@ export default function TenantDashboard() {
                   </div>
 
                   {/* Rent Due Alert */}
-                  <div className="flex-shrink-0 bg-[#F0F5F1] border border-[#1B5E45]/10 rounded-xl p-5 min-w-[240px] shadow-sm">
+                  <div className="shrink-0 bg-[#F0F5F1] border border-[#1B5E45]/10 rounded-xl p-5 min-w-60 shadow-sm">
                     <p className="text-[#1B5E45]/60 text-[10px] font-bold uppercase tracking-wider mb-1.5">
                       Rent Due
                     </p>
@@ -578,7 +578,7 @@ export default function TenantDashboard() {
                           key={i}
                           className="flex items-start gap-3 p-4 rounded-xl bg-[#FAFAF8] border border-border hover:border-[#1B5E45]/20 transition-colors"
                         >
-                          <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0", notice.color)}>
+                          <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center shrink-0", notice.color)}>
                             <notice.icon className="h-4 w-4" />
                           </div>
                           <div>
@@ -721,7 +721,7 @@ export default function TenantDashboard() {
                             key={i}
                             className="flex items-center gap-2.5 p-3 rounded-xl bg-[#FAFAF8] border border-border"
                           >
-                            <div className="h-7 w-7 rounded-lg bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
+                            <div className="h-7 w-7 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                               <a.icon className="h-3.5 w-3.5 text-[#1B5E45]" />
                             </div>
                             <span className="text-xs font-medium text-foreground leading-tight">{a.label}</span>

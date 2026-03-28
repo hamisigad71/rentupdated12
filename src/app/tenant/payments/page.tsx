@@ -205,7 +205,7 @@ function MethodButton({
     >
       <div
         className={cn(
-          "h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors",
+          "h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-colors",
           active ? "bg-[#1B5E45] text-white" : "bg-[#E8F5EE] text-[#1B5E45] group-hover:bg-[#1B5E45] group-hover:text-white"
         )}
       >
@@ -218,7 +218,7 @@ function MethodButton({
         <p className="text-xs text-muted-foreground">{sub}</p>
       </div>
       {active && (
-        <div className="h-5 w-5 bg-[#1B5E45] rounded-full flex items-center justify-center flex-shrink-0">
+        <div className="h-5 w-5 bg-[#1B5E45] rounded-full flex items-center justify-center shrink-0">
           <Check className="h-3 w-3 text-white" />
         </div>
       )}
@@ -335,7 +335,7 @@ export default function TenantPaymentsPage() {
                   {/* Balance pill */}
                   <div
                     className={cn(
-                      "flex-shrink-0 rounded-xl px-6 py-4 border min-w-[200px]",
+                      "shrink-0 rounded-xl px-6 py-4 border min-w-50",
                       allClear
                         ? "bg-[#3DBE7A]/15 border-[#3DBE7A]/30"
                         : "bg-red-500/10 border-red-400/30"
@@ -558,7 +558,7 @@ export default function TenantPaymentsPage() {
                               </div>
                             </div>
                             <div className="flex items-start gap-3 p-4 rounded-xl bg-[#E8F5EE] border border-[#1B5E45]/10">
-                              <Info className="h-4 w-4 text-[#1B5E45] flex-shrink-0 mt-0.5" />
+                              <Info className="h-4 w-4 text-[#1B5E45] shrink-0 mt-0.5" />
                               <p className="text-xs text-[#1B5E45] leading-relaxed">
                                 An STK push will be sent to your phone. Confirm the prompt on your device to complete payment.
                               </p>
@@ -667,7 +667,7 @@ export default function TenantPaymentsPage() {
                               ))}
                             </div>
                             <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-50 border border-amber-200/60">
-                              <Info className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                              <Info className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
                               <p className="text-xs text-amber-700 leading-relaxed">
                                 Use the reference code above when making the transfer. Allow 1–2 business days for processing.
                               </p>
@@ -720,7 +720,7 @@ export default function TenantPaymentsPage() {
                             className="grid grid-cols-4 items-center py-3.5 group"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
+                              <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                                 <Receipt className="h-3.5 w-3.5 text-[#1B5E45]" />
                               </div>
                               <span className="text-sm font-medium text-foreground truncate">
@@ -779,7 +779,7 @@ export default function TenantPaymentsPage() {
                         },
                       ].map((item, i) => (
                         <div key={i} className="flex items-start gap-3">
-                          <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
+                          <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center shrink-0">
                             <item.icon className="h-4 w-4 text-[#1B5E45]" />
                           </div>
                           <div>

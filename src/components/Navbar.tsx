@@ -110,7 +110,7 @@ export function Navbar() {
           <div className="flex h-16 items-center justify-between gap-8">
 
             {/* ── Wordmark ──────────────────────────────────────────── */}
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/" className="shrink-0">
               <Logo size="sm" />
             </Link>
 
@@ -132,7 +132,7 @@ export function Navbar() {
                     </NavigationMenuTrigger>
 
                     <NavigationMenuContent>
-                      <div className="w-[680px] p-5 bg-white border border-[#E0E8E3] rounded-2xl shadow-xl shadow-[#1B5E45]/8">
+                      <div className="w-170 p-5 bg-white border border-[#E0E8E3] rounded-2xl shadow-xl shadow-[#1B5E45]/8">
 
                         {/* Top label */}
                         <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#E0E8E3]">
@@ -214,7 +214,7 @@ export function Navbar() {
         </div>
 
         {/* ── Subtle progress-line accent ────────────────────────────── */}
-        <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#3DBE7A]/30 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-linear-to-r from-transparent via-[#3DBE7A]/30 to-transparent pointer-events-none" />
       </header>
 
       {/* ── Mobile drawer ─────────────────────────────────────────────── */}
@@ -251,7 +251,7 @@ export function Navbar() {
                       {solutions.map((item) => (
                         <Link key={item.title} href={item.href}
                           className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-[#F4F9F6] transition-all group">
-                          <div className="h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                          <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
                             style={{ background: item.bg }}>
                             <item.icon className="h-4 w-4" style={{ color: item.color }} />
                           </div>
@@ -312,7 +312,7 @@ function SolutionItem({
       <NavigationMenuLink>
         <Link href={href}
           className="group flex items-start gap-3 p-3 rounded-xl hover:bg-[#F4F9F6] transition-all duration-150">
-          <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
+          <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
             style={{ background: bg }}>
             <Icon className="h-4.5 w-4.5" style={{ color }} />
           </div>

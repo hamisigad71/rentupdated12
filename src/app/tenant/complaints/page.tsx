@@ -203,7 +203,7 @@ export default function TenantComplaintsPage() {
   return (
     <TenantLayout>
       <div className="min-h-screen bg-[#FAFAF8]">
-        <div className="p-6 md:p-8 space-y-10 max-w-[1400px] mx-auto">
+        <div className="p-6 md:p-8 space-y-10 max-w-350 mx-auto">
 
           {/* ── HEADER ─────────────────────────────────────────────────── */}
           <Reveal className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
@@ -278,13 +278,13 @@ export default function TenantComplaintsPage() {
                   </div>
                   <div className="h-2.5 rounded-full bg-[#E8F5EE] overflow-hidden relative">
                     <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-[#246B4F] to-[#3DBE7A]"
+                      className="h-full rounded-full bg-linear-to-r from-[#246B4F] to-[#3DBE7A]"
                       initial={{ width: 0 }}
                       animate={{ width: `${resolvePct}%` }}
                       transition={{ duration: 1.3, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     />
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent"
                       animate={{ x: ["-100%", "200%"] }}
                       transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
                     />
@@ -304,7 +304,7 @@ export default function TenantComplaintsPage() {
                 </div>
 
                 {/* SLA tiles */}
-                <div className="grid grid-cols-2 gap-3 flex-shrink-0">
+                <div className="grid grid-cols-2 gap-3 shrink-0">
                   {[
                     { label: "Avg Response", value: avgResponse, icon: Clock },
                     { label: "Satisfaction", value: "4.8 / 5", icon: Star },
@@ -385,7 +385,7 @@ export default function TenantComplaintsPage() {
                       key={f}
                       onClick={() => setFilter(f)}
                       className={cn(
-                        "flex-shrink-0 h-9 px-4 rounded-full text-xs font-semibold border transition-all",
+                        "shrink-0 h-9 px-4 rounded-full text-xs font-semibold border transition-all",
                         active
                           ? "text-white border-transparent shadow-md"
                           : "bg-white border-[#E0E8E3] text-[#6B7280] hover:border-current"
@@ -551,7 +551,7 @@ export default function TenantComplaintsPage() {
                 <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: `linear-gradient(90deg, ${p.dot}, transparent)` }} />
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                    <div className="h-12 w-12 rounded-xl flex items-center justify-center shrink-0"
                       style={{ background: `${CATEGORIES.find(c => c.label === selected.category)?.color}15` }}>
                       <span style={{ color: CATEGORIES.find(c => c.label === selected.category)?.color }}>
                         {CATEGORIES.find(c => c.label === selected.category)?.icon}
@@ -642,7 +642,7 @@ export default function TenantComplaintsPage() {
                           <div className="relative z-10 space-y-5">
                             <p className="text-[10px] font-bold uppercase tracking-wider text-[#7FD9A8]">Resolution Progress</p>
                             <div className="flex items-center gap-5">
-                              <div className="relative flex-shrink-0">
+                              <div className="relative shrink-0">
                                 <Ring pct={progressPct} size={72} stroke={7} color="#3DBE7A" bg="rgba(255,255,255,0.1)" />
                                 <div className="absolute inset-0 flex items-center justify-center">
                                   <span className="text-sm font-bold">{progressPct}%</span>
@@ -659,7 +659,7 @@ export default function TenantComplaintsPage() {
                               {["Submitted", "In Review", "In Progress", "Resolved"].map((step, i) => (
                                 <div key={step} className="flex items-center gap-3">
                                   <div className={cn(
-                                    "h-5 w-5 rounded-full flex items-center justify-center flex-shrink-0 text-[9px] font-bold",
+                                    "h-5 w-5 rounded-full flex items-center justify-center shrink-0 text-[9px] font-bold",
                                     i < s.step ? "bg-[#3DBE7A] text-white" : i === s.step - 1 ? "bg-[#3DBE7A] text-white ring-2 ring-[#3DBE7A]/30" : "bg-white/10 text-white/30"
                                   )}>
                                     {i < s.step ? "✓" : i + 1}
@@ -711,7 +711,7 @@ export default function TenantComplaintsPage() {
                         <div key={i} className="flex items-start gap-4">
                           <div className="flex flex-col items-center">
                             <div className={cn(
-                              "h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all",
+                              "h-9 w-9 rounded-xl flex items-center justify-center shrink-0 transition-all",
                               log.done ? "bg-[#E8F5EE] border border-[#C4D4C9]" : "bg-[#F4F4F0] border border-[#E0E8E3]"
                             )}>
                               <log.icon className={cn("h-4 w-4", log.done ? "text-[#1B5E45]" : "text-[#6B7280]/30")} />
@@ -749,7 +749,7 @@ export default function TenantComplaintsPage() {
                         </div>
                         {s.step >= 2 && (
                           <div className="flex gap-3">
-                            <div className="h-8 w-8 rounded-full bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center flex-shrink-0">
+                            <div className="h-8 w-8 rounded-full bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center shrink-0">
                               <ShieldCheck className="h-4 w-4 text-[#1B5E45]" />
                             </div>
                             <div className="max-w-[70%]">
@@ -936,7 +936,7 @@ export default function TenantComplaintsPage() {
 
                   {/* Info bar */}
                   <div className="flex items-start gap-3 p-4 rounded-xl bg-[#E8F5EE] border border-[#C4D4C9]">
-                    <Info className="h-4 w-4 text-[#1B5E45] flex-shrink-0 mt-0.5" />
+                    <Info className="h-4 w-4 text-[#1B5E45] shrink-0 mt-0.5" />
                     <p className="text-xs text-[#1B5E45] leading-relaxed">
                       Our team will review your request within <strong>2 hours</strong> and respond with an action plan. For emergencies, please call the front desk directly.
                     </p>

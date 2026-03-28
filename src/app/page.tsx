@@ -180,7 +180,7 @@ function HeroCarousel() {
 
   return (
     <section
-      className="relative min-h-[80dvh] md:min-h-[100dvh] flex items-center overflow-hidden pt-12 md:pt-16"
+      className="relative min-h-[80dvh] md:min-h-dvh flex items-center overflow-hidden pt-12 md:pt-16"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -199,8 +199,8 @@ function HeroCarousel() {
             alt=""
             className="w-full h-full object-cover brightness-[0.88]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/88 to-background/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-background via-background/88 to-background/30" />
+          <div className="absolute inset-0 bg-linear-to-t from-background via-background/50 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
@@ -409,7 +409,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
                   duration: 1.4,
                   ease: "easeOut",
                 }}
-                className="h-full bg-gradient-to-r from-emerald-mid to-emerald-bright rounded-full"
+                className="h-full bg-linear-to-r from-emerald-mid to-emerald-bright rounded-full"
               />
             </div>
           </div>
@@ -542,7 +542,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
             key={i}
             className="flex items-center gap-4 p-3.5 rounded-2xl border border-border bg-accent/30 hover:bg-accent/60 transition-colors"
           >
-            <div className="h-9 w-9 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
+            <div className="h-9 w-9 rounded-xl bg-primary/8 flex items-center justify-center shrink-0">
               <item.icon className="h-4 w-4 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
@@ -566,7 +566,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
 
   return (
     <div className="glass-panel rounded-3xl p-7 shadow-2xl border border-foreground/6 relative overflow-hidden">
-      <div className="absolute -inset-px bg-gradient-to-br from-primary/8 via-transparent to-transparent rounded-3xl pointer-events-none" />
+      <div className="absolute -inset-px bg-linear-to-br from-primary/8 via-transparent to-transparent rounded-3xl pointer-events-none" />
       {cards[slide]}
     </div>
   );
@@ -630,7 +630,7 @@ function TrustLogosBar() {
         {[...logos, ...logos].map((name, i) => (
           <span
             key={i}
-            className="text-sm font-bold text-muted-foreground/30 tracking-wide uppercase flex-shrink-0"
+            className="text-sm font-bold text-muted-foreground/30 tracking-wide uppercase shrink-0"
           >
             {name}
           </span>
@@ -788,7 +788,7 @@ function SolutionsSection() {
                           : "text-foreground/80",
                       )}
                     >
-                      <div className="h-6 w-6 rounded-lg bg-primary/12 flex items-center justify-center flex-shrink-0">
+                      <div className="h-6 w-6 rounded-lg bg-primary/12 flex items-center justify-center shrink-0">
                         <f.icon className="h-3.5 w-3.5 text-primary" />
                       </div>
                       {f.text}
@@ -875,7 +875,7 @@ function HowItWorksSection() {
 
   return (
     <section className="py-16 md:py-28 bg-muted/30 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(#1B5E45_0.6px,transparent_1px)] [background-size:28px_28px] opacity-[0.03]" />
+      <div className="absolute inset-0 bg-[radial-gradient(#1B5E45_0.6px,transparent_1px)] bg-size-[28px_28px] opacity-[0.03]" />
       <div className="container px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-bold uppercase tracking-widest mb-4">
@@ -1366,7 +1366,7 @@ function PricingSection() {
                 <ul className="space-y-3 mb-8 flex-1">
                   {plan.features.map((f, j) => (
                     <li key={j} className="flex items-center gap-3 text-sm">
-                      <CheckCheck className="h-4 w-4 text-primary flex-shrink-0" />
+                      <CheckCheck className="h-4 w-4 text-primary shrink-0" />
                       <span
                         className={plan.highlight ? "text-background/80" : ""}
                       >

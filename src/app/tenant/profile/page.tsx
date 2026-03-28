@@ -282,7 +282,7 @@ export default function TenantProfilePage() {
 
                 <div className="relative px-8 py-8 flex flex-col md:flex-row items-center md:items-end gap-6">
                   {/* Avatar */}
-                  <div className="relative group flex-shrink-0">
+                  <div className="relative group shrink-0">
                     <div
                       className="h-24 w-24 rounded-2xl border-4 border-white overflow-hidden cursor-pointer shadow-xl transition-transform duration-300 group-hover:scale-105"
                       onClick={() => setShowAvatarModal(true)}
@@ -327,7 +327,7 @@ export default function TenantProfilePage() {
                   </div>
 
                   {/* Action */}
-                  <div className="flex-shrink-0">
+                  <div className="shrink-0">
                     <Button
                       variant="outline"
                       size="sm"
@@ -500,7 +500,7 @@ export default function TenantProfilePage() {
                           { label: "Unit Type", value: "2-Bedroom", icon: Building2 },
                         ].map((item, i) => (
                           <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-[#FAFAF8] border border-border">
-                            <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
+                            <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                               <item.icon className="h-4 w-4 text-[#1B5E45]" />
                             </div>
                             <div>
@@ -544,7 +544,7 @@ export default function TenantProfilePage() {
                         {notifications.map((pref) => (
                           <div
                             key={pref.id}
-                            className="flex items-center justify-between p-3.5 rounded-xl bg-[#FAFAF8] border border-border cursor-pointer hover:bg-emerald-500/[0.02] transition-colors"
+                            className="flex items-center justify-between p-3.5 rounded-xl bg-[#FAFAF8] border border-border cursor-pointer hover:bg-emerald-500/2 transition-colors"
                             onClick={() => togglePreference(pref.id)}
                           >
                             <div>
@@ -553,7 +553,7 @@ export default function TenantProfilePage() {
                             </div>
                             <div
                               className={cn(
-                                "w-10 h-5 rounded-full relative transition-colors flex-shrink-0",
+                                "w-10 h-5 rounded-full relative transition-colors shrink-0",
                                 pref.enabled ? "bg-[#1B5E45]" : "bg-border"
                               )}
                             >
@@ -658,7 +658,7 @@ export default function TenantProfilePage() {
                         { icon: Fingerprint, label: "Trust Rating", desc: "Elite grade", ok: true },
                       ].map((item, i) => (
                         <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-[#FAFAF8] border border-border">
-                          <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
+                          <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                             <item.icon className="h-4 w-4 text-[#1B5E45]" />
                           </div>
                           <div className="flex-1 min-w-0">
