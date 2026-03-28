@@ -284,7 +284,7 @@ function QuickAction({
 
 // ─── Main Dashboard ────────────────────────────────────────────────────────
 export default function TenantDashboard() {
-  const { user } = useAuth();
+  const { userName } = useAuth();
   const currentTenant = mockTenants[0];
   const daysUntilRent = 5;
   const leaseProgress = 72; // % of lease completed
