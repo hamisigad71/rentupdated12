@@ -1,0 +1,364 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* ── Emerald Brand Tokens (available as Tailwind utility classes) ── */
+  --color-emerald-deep:   oklch(35.5% 0.082 165.2);
+  --color-emerald-mid:    oklch(42.3% 0.088 165.7);
+  --color-emerald-bright: oklch(68.2% 0.182 165.5);
+  --color-emerald-soft:   oklch(96.1% 0.012 165.8);
+  --color-emerald-cream:  oklch(98.4% 0.004 100);
+  --color-brand-red:      oklch(60.1% 0.225 31.1);
+}
+
+/* ============================================================
+   EMERALD LIGHT — ROOT (LIGHT MODE)
+   ============================================================ */
+
+:root {
+  /* ── Shadcn Core Tokens → Emerald ── */
+  --background:            oklch(98.4% 0.004 100);
+  --foreground:            oklch(14.5% 0.005 100);
+  --card:                  oklch(100% 0 0);
+  --card-foreground:       oklch(14.5% 0.005 100);
+  --popover:               oklch(100% 0 0);
+  --popover-foreground:    oklch(14.5% 0.005 100);
+  --primary:               oklch(35.5% 0.082 165.2);
+  --primary-foreground:    oklch(100% 0 0);
+  --secondary:             oklch(96.1% 0.012 165.8);
+  --secondary-foreground:  oklch(35.5% 0.082 165.2);
+  --muted:                 oklch(96.4% 0.004 100);
+  --muted-foreground:      oklch(55.1% 0.01 100);
+  --accent:                oklch(96.1% 0.012 165.8);
+  --accent-foreground:     oklch(35.5% 0.082 165.2);
+  --destructive:           oklch(60.1% 0.225 31.1);
+  --border:                oklch(92.4% 0.008 165.8);
+  --input:                 oklch(91.8% 0.006 100);
+  --ring:                  oklch(35.5% 0.082 165.2);
+  --radius:                0.6rem;
+
+  /* ── Chart Tokens → Emerald Scale ── */
+  --chart-1: oklch(68.2% 0.182 165.5);
+  --chart-2: oklch(42.3% 0.088 165.7);
+  --chart-3: oklch(35.5% 0.082 165.2);
+  --chart-4: oklch(85.2% 0.062 165.6);
+  --chart-5: oklch(96.1% 0.012 165.8);
+
+  /* ── Sidebar → Emerald ── */
+  --sidebar:                    oklch(97.2% 0.006 165.8);
+  --sidebar-foreground:         oklch(14.5% 0.005 100);
+  --sidebar-primary:            oklch(35.5% 0.082 165.2);
+  --sidebar-primary-foreground: oklch(100% 0 0);
+  --sidebar-accent:             oklch(96.1% 0.012 165.8);
+  --sidebar-accent-foreground:  oklch(35.5% 0.082 165.2);
+  --sidebar-border:             oklch(85.8% 0.012 165.8);
+  --sidebar-ring:               oklch(68.2% 0.182 165.5);
+
+  /* ── Emerald Raw Palette (Legacy/Reference) ── */
+  --color-green-deep:        oklch(35.5% 0.082 165.2);
+  --color-green-mid:         oklch(42.3% 0.088 165.7);
+  --color-green-bright:      oklch(68.2% 0.182 165.5);
+  --color-green-soft:        oklch(96.1% 0.012 165.8);
+  --brand-red:               oklch(60.1% 0.225 31.1);
+
+  /* ── Gradients ── */
+  --gradient-green:     linear-gradient(135deg, oklch(42.3% 0.088 165.7) 0%, oklch(35.5% 0.082 165.2) 100%);
+  --gradient-mint-glow: linear-gradient(135deg, oklch(68.2% 0.182 165.5) 0%, oklch(35.5% 0.082 165.2) 100%);
+}
+
+/* ============================================================
+   EMERALD DARK — DARK MODE
+   ============================================================ */
+
+.dark {
+  --background:            oklch(12.8% 0.012 165.8);
+  --foreground:            oklch(97.4% 0.012 165.8);
+  --card:                  oklch(16.5% 0.015 165.8);
+  --card-foreground:       oklch(97.4% 0.012 165.8);
+  --popover:               oklch(16.5% 0.015 165.8);
+  --popover-foreground:    oklch(97.4% 0.012 165.8);
+  --primary:               oklch(68.2% 0.182 165.5);
+  --primary-foreground:    oklch(10.2% 0.015 165.8);
+  --secondary:             oklch(22.4% 0.025 165.8);
+  --secondary-foreground:  oklch(97.4% 0.012 165.8);
+  --muted:                 oklch(22.4% 0.025 165.8);
+  --muted-foreground:      oklch(68.5% 0.035 165.8);
+  --accent:                oklch(22.4% 0.025 165.8);
+  --accent-foreground:     oklch(68.2% 0.182 165.5);
+  --destructive:           oklch(55.2% 0.185 25.4);
+  --border:                oklch(28.5% 0.045 165.8 / 0.15);
+  --input:                 oklch(28.5% 0.045 165.8 / 0.2);
+  --ring:                  oklch(68.2% 0.182 165.5);
+
+  /* ── Sidebar — Dark ── */
+  --sidebar:                    oklch(12.8% 0.012 165.8);
+  --sidebar-foreground:         oklch(97.4% 0.012 165.8);
+  --sidebar-primary:            oklch(68.2% 0.182 165.5);
+  --sidebar-primary-foreground: oklch(10.2% 0.015 165.8);
+  --sidebar-accent:             oklch(22.4% 0.025 165.8);
+  --sidebar-accent-foreground:  oklch(68.2% 0.182 165.5);
+  --sidebar-border:             oklch(28.5% 0.045 165.8 / 0.15);
+  --sidebar-ring:               oklch(68.2% 0.182 165.5);
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50 transition-colors duration-200;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground selection:bg-primary/20 selection:text-primary;
+    font-feature-settings: "kern" 1, "liga" 1;
+    overflow-x: hidden;
+  }
+
+  h1, h2 {
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: var(--foreground);
+  }
+
+  h3, h4 {
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  h5, h6 {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--color-text-accent);
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--color-green-mid);
+    text-decoration: underline;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--color-green-deep) !important;
+    box-shadow: 0 0 0 3px rgba(27, 94, 69, 0.15);
+  }
+}
+
+/* ============================================================
+   SCROLLBAR — Emerald
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-green-mid);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-green-bright);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-green-mid) var(--muted);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes mint-pulse {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(61, 190, 122, 0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(61, 190, 122, 0);   }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.8; transform: scale(0.98); }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+  50%       { transform: none;            animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+@layer utilities {
+  /* ── Glass Panels ── */
+  .glass {
+    @apply bg-background/60 backdrop-blur-md border border-foreground/10 shadow-xl;
+  }
+
+  .glass-panel {
+    background: var(--glass-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-card);
+  }
+
+  .glass-panel-dark {
+    background: var(--glass-dark-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-dark-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ── Gradient Text ── */
+  .gradient-text {
+    background: var(--gradient-mint-glow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Gradient Backgrounds ── */
+  .bg-emerald-gradient {
+    background: var(--gradient-green);
+  }
+
+  .bg-mint-gradient {
+    background: var(--gradient-mint-glow);
+  }
+
+  /* ── Animations ── */
+  .animate-float       { animation: float 6s ease-in-out infinite; }
+  .animate-shimmer     { background: linear-gradient(90deg, transparent, rgba(61, 190, 122, 0.12), transparent); background-size: 200% 100%; animation: shimmer 2s infinite; }
+  .animate-mint-pulse  { animation: mint-pulse 2s ease-in-out infinite; }
+  .animate-pulse-soft  { animation: pulse-soft 3s ease-in-out infinite; }
+  .animate-bounce-slow { animation: bounce-slow 3s infinite; }
+  .animate-fade-in-up  { animation: fade-in-up 0.4s ease-out both; }
+  .animate-scale-in    { animation: scale-in 0.3s ease-out both; }
+
+  /* ── Chips & Badges ── */
+  .chip-emerald {
+    background: var(--color-surface-tint);
+    color: var(--color-green-deep);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* ── Dividers ── */
+  .divider-light {
+    border: none;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .divider-mid {
+    border: none;
+    border-top: 1px solid var(--color-border-mid);
+  }
+
+  .divider-gradient {
+    border: none;
+    height: 1px;
+    background: var(--gradient-mint-glow);
+    opacity: 0.3;
+  }
+
+  /* ── Scrollbar hide ── */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* ── Shadows ── */
+  .shadow-emerald { box-shadow: var(--shadow-green); }
+  .shadow-mint    { box-shadow: var(--shadow-mint);  }
+  .shadow-card    { box-shadow: var(--shadow-card);  }
+  .shadow-modal   { box-shadow: var(--shadow-modal); }
+
+  /* ── Safe area ── */
+  .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .ios-status-bar   { height: 44px; }
+}
