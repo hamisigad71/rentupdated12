@@ -39,6 +39,9 @@ import {
   Wallet,
   FileText,
   Copy,
+  MapPin,
+  Star,
+  Activity,
 } from "lucide-react";
 import { mockPayments, mockTenants } from "@/data/mockData";
 import { useAction } from "@/context/ActionContext";
@@ -241,6 +244,57 @@ function MethodButton({
   );
 }
 
+// ─── Hero Mini Stat ────────────────────────────────────────────────────────
+function HeroMiniStat({
+  icon: Icon,
+  label,
+  value,
+  highlight = false,
+  danger = false,
+}: {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  highlight?: boolean;
+  danger?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <div
+        className={cn(
+          "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
+          highlight ? "bg-[#1B5E45]" : danger ? "bg-red-50" : "bg-[#F0F5F1]",
+        )}
+      >
+        <Icon
+          className={cn(
+            "h-4 w-4",
+            highlight
+              ? "text-white"
+              : danger
+                ? "text-red-500"
+                : "text-[#1B5E45]",
+          )}
+          strokeWidth={1.8}
+        />
+      </div>
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground leading-none mb-0.5">
+          {label}
+        </p>
+        <p
+          className={cn(
+            "text-sm font-bold leading-none",
+            danger ? "text-red-600" : "text-foreground",
+          )}
+        >
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const inputCls =
   "w-full px-4 py-3 rounded-xl border border-border bg-[#FAFAF8] text-sm font-medium outline-none focus:border-[#1B5E45] focus:ring-2 focus:ring-[#1B5E45]/10 transition-all placeholder:text-muted-foreground/50";
 
@@ -312,7 +366,6 @@ export default function TenantPaymentsPage() {
                 <ChevronRight className="h-3.5 w-3.5" />
                 <span className="font-medium text-foreground">Payments</span>
               </div>
-
               <Button
                 variant="outline"
                 size="sm"
@@ -325,70 +378,238 @@ export default function TenantPaymentsPage() {
           </header>
 
           <main className="max-w-7xl mx-auto px-6 md:px-10 py-8 space-y-8">
-            {/* ── Hero Banner ───────────────────────────────────── */}
+            {/* ══ HERO SECTION ════════════════════════════════════════════ */}
             <Reveal>
-              <div className="relative overflow-hidden rounded-2xl bg-[#1B5E45] px-8 py-8">
-                <div className="pointer-events-none absolute -top-12 -right-12 h-48 w-48 rounded-full bg-white/5" />
-                <div className="pointer-events-none absolute bottom-0 right-40 h-32 w-32 rounded-full bg-[#3DBE7A]/15" />
+              <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">
+                {/* ── Decorative background circles ── */}
+                <div className="pointer-events-none absolute top-0 right-0 w-[360px] h-[360px] rounded-full bg-[#E8F5EE]/60 translate-x-1/2 -translate-y-1/2" />
+                <div className="pointer-events-none absolute bottom-0 left-1/3 w-48 h-48 rounded-full bg-[#E8F5EE]/30 translate-y-1/2" />
+                <div className="pointer-events-none absolute top-1/2 right-1/4 w-24 h-24 rounded-full bg-[#3DBE7A]/8 -translate-y-1/2" />
 
-                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div>
-                    <div className="inline-flex items-center gap-2 bg-[#3DBE7A]/20 border border-[#3DBE7A]/30 rounded-full px-3 py-1 mb-3">
-                      <ShieldCheck className="h-3.5 w-3.5 text-[#3DBE7A]" />
-                      <span className="text-[#3DBE7A] text-xs font-semibold tracking-wide">
-                        Secure Payment Portal
-                      </span>
+                {/* ── Top accent gradient strip ── */}
+                <div className="h-1 w-full bg-gradient-to-r from-[#1B5E45] via-[#3DBE7A] to-[#E8F5EE]" />
+
+                <div className="relative p-7 md:p-8">
+                  {/* ── Top row: identity + balance card ── */}
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+                    {/* Left: page identity block */}
+                    <div className="flex items-start gap-5">
+                      {/* Page icon avatar */}
+                      <div className="shrink-0 h-16 w-16 rounded-2xl bg-[#E8F5EE] border-2 border-[#1B5E45]/15 flex items-center justify-center shadow-sm">
+                        <CreditCard
+                          className="h-7 w-7 text-[#1B5E45]"
+                          strokeWidth={1.8}
+                        />
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        {/* Status badges */}
+                        <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                          <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-[#1B5E45]">
+                            <ShieldCheck className="h-3.5 w-3.5" />
+                            Secure Payment Portal
+                          </span>
+                          <span className="w-1 h-1 bg-[#1B5E45]/30 rounded-full" />
+                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
+                            256-bit SSL Encrypted
+                          </span>
+                        </div>
+
+                        {/* Title */}
+                        <h1 className="text-2xl md:text-3xl font-extrabold text-[#1A1A1A] tracking-tight leading-tight">
+                          Payments & Billing
+                        </h1>
+
+                        {/* Meta info row */}
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-2.5">
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                            <MapPin className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            {currentTenant?.roomNumber || currentTenant?.unitId}
+                          </span>
+                          <span className="w-px h-3.5 bg-border hidden sm:block" />
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                            <Calendar className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            Next due: Apr 1, 2025
+                          </span>
+                          <span className="w-px h-3.5 bg-border hidden sm:block" />
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                            <Receipt className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            Ref:{" "}
+                            <span className="font-mono font-semibold text-foreground">
+                              {refId}
+                            </span>
+                          </span>
+                        </div>
+
+                        {/* Account status tags */}
+                        <div className="flex items-center gap-2 mt-3 flex-wrap">
+                          <span
+                            className={cn(
+                              "inline-flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-full",
+                              allClear
+                                ? "bg-[#E8F5EE] text-[#1B5E45]"
+                                : "bg-red-50 text-red-600",
+                            )}
+                          >
+                            {allClear ? (
+                              <CheckCircle2 className="h-3 w-3" />
+                            ) : (
+                              <AlertCircle className="h-3 w-3" />
+                            )}
+                            {allClear ? "Account Clear" : "Balance Overdue"}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full">
+                            <Lock className="h-3 w-3" />
+                            PCI-DSS Compliant
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full">
+                            <Zap className="h-3 w-3" />
+                            Instant Confirmation
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-                      Payments & Billing
-                    </h1>
-                    <p className="text-white/60 text-sm mt-2 max-w-sm leading-relaxed">
-                      Manage your rent, view transaction history, and track your
-                      payment status.
-                    </p>
+
+                    {/* Right: Outstanding balance card */}
+                    <div className="shrink-0 lg:max-w-[230px] w-full lg:w-auto">
+                      <div
+                        className={cn(
+                          "rounded-xl border p-4",
+                          allClear
+                            ? "border-[#1B5E45]/12 bg-[#F0F5F1]"
+                            : "border-red-200/60 bg-red-50/50",
+                        )}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <p
+                            className={cn(
+                              "text-[10px] font-bold uppercase tracking-[0.15em]",
+                              allClear
+                                ? "text-[#1B5E45]/60"
+                                : "text-red-500/70",
+                            )}
+                          >
+                            Outstanding Balance
+                          </p>
+                          <span
+                            className={cn(
+                              "text-[10px] font-semibold px-2 py-0.5 rounded-full",
+                              allClear
+                                ? "text-[#1B5E45] bg-[#E8F5EE]"
+                                : "text-red-600 bg-red-100",
+                            )}
+                          >
+                            {allClear ? "Settled" : "Overdue"}
+                          </span>
+                        </div>
+                        <p
+                          className={cn(
+                            "text-3xl font-black tracking-tight leading-none",
+                            allClear ? "text-[#1A1A1A]" : "text-red-600",
+                          )}
+                        >
+                          KSh {currentTenant.arrears.toLocaleString()}
+                        </p>
+                        <div className="flex items-center gap-1.5 mt-2">
+                          {allClear ? (
+                            <>
+                              <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A]" />
+                              <span className="text-xs font-medium text-[#1B5E45]">
+                                No pending dues
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <AlertCircle className="h-3.5 w-3.5 text-red-500" />
+                              <span className="text-xs font-medium text-red-600">
+                                Settlement required
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        <button
+                          onClick={handlePayment}
+                          className={cn(
+                            "mt-3.5 w-full rounded-lg font-bold text-xs h-9 flex items-center justify-center gap-1.5 transition-colors shadow-sm",
+                            allClear
+                              ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
+                              : "bg-red-600 hover:bg-red-700 text-white",
+                          )}
+                        >
+                          {allClear ? "Make a Payment" : "Settle Now"}
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Balance pill */}
-                  <div
-                    className={cn(
-                      "shrink-0 rounded-xl px-6 py-4 border min-w-50",
-                      allClear
-                        ? "bg-[#3DBE7A]/15 border-[#3DBE7A]/30"
-                        : "bg-red-500/10 border-red-400/30",
-                    )}
-                  >
-                    <p className="text-white/50 text-xs font-medium uppercase tracking-wide mb-1">
-                      Outstanding Balance
-                    </p>
-                    <p
-                      className={cn(
-                        "text-3xl font-bold tracking-tight",
-                        allClear ? "text-[#3DBE7A]" : "text-red-300",
-                      )}
-                    >
-                      KSh {currentTenant.arrears.toLocaleString()}
-                    </p>
-                    <div className="flex items-center gap-1.5 mt-2">
-                      {allClear ? (
-                        <>
-                          <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A]" />
-                          <span className="text-[#3DBE7A] text-xs font-medium">
-                            Account Settled
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <AlertCircle className="h-3.5 w-3.5 text-red-300" />
-                          <span className="text-red-300 text-xs font-medium">
-                            Settlement Required
-                          </span>
-                        </>
-                      )}
+                  {/* ── Divider ── */}
+                  <div className="my-6 border-t border-dashed border-border" />
+
+                  {/* ── Bottom row: 4 mini stats + completion bar ── */}
+                  <div className="flex flex-col lg:flex-row lg:items-end gap-6">
+                    {/* Mini stats */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
+                      <HeroMiniStat
+                        icon={Banknote}
+                        label="Monthly Rent"
+                        value={`KSh ${currentTenant.rent.toLocaleString()}`}
+                        highlight
+                      />
+                      <HeroMiniStat
+                        icon={Wallet}
+                        label="Arrears"
+                        value={
+                          allClear
+                            ? "KSh 0 — Clear"
+                            : `KSh ${currentTenant.arrears.toLocaleString()}`
+                        }
+                        danger={!allClear}
+                      />
+                      <HeroMiniStat
+                        icon={TrendingUp}
+                        label="Paid This Year"
+                        value={`KSh ${totalPaid.toLocaleString()}`}
+                      />
+                      <HeroMiniStat
+                        icon={Activity}
+                        label="Last Payment"
+                        value={tenantPayments[0]?.date || "—"}
+                      />
+                    </div>
+
+                    {/* Completion bar */}
+                    <div className="lg:w-56 shrink-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                          Payment Completion
+                        </span>
+                        <span className="text-[10px] font-black text-[#1B5E45]">
+                          {settlePct}%
+                        </span>
+                      </div>
+                      <div className="h-2 w-full bg-[#E8F5EE] rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-[#1B5E45] to-[#3DBE7A] rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${settlePct}%` }}
+                          transition={{
+                            duration: 1.3,
+                            ease: "easeOut",
+                            delay: 0.4,
+                          }}
+                        />
+                      </div>
+                      <p className="text-[10px] text-muted-foreground mt-1.5">
+                        {settlePct}% of this month's rent settled
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </Reveal>
+            {/* ══ END HERO ════════════════════════════════════════════════ */}
 
             {/* ── Stat Cards ───────────────────────────────────── */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -448,7 +669,6 @@ export default function TenantPaymentsPage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="px-6 pb-6 space-y-5">
-                      {/* Amount Field */}
                       <div className="relative">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-[#1B5E45] select-none">
                           KSh
@@ -460,8 +680,6 @@ export default function TenantPaymentsPage() {
                           className="w-full pl-14 pr-4 py-4 text-2xl font-bold rounded-xl border-2 border-border bg-[#FAFAF8] focus:border-[#1B5E45] focus:ring-2 focus:ring-[#1B5E45]/10 outline-none transition-all"
                         />
                       </div>
-
-                      {/* Quick Amounts */}
                       <div className="flex flex-wrap gap-2">
                         <p className="w-full text-xs font-medium text-muted-foreground mb-1">
                           Quick select:
@@ -489,8 +707,6 @@ export default function TenantPaymentsPage() {
                           </button>
                         ))}
                       </div>
-
-                      {/* Reference */}
                       <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-[#F0F5F1] border border-[#1B5E45]/10">
                         <div>
                           <p className="text-xs font-medium text-muted-foreground">
@@ -532,7 +748,6 @@ export default function TenantPaymentsPage() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="px-6 pb-6 space-y-6">
-                      {/* Method Selector */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <MethodButton
                           id="mpesa"
@@ -559,10 +774,7 @@ export default function TenantPaymentsPage() {
                           onClick={() => setMethod("bank")}
                         />
                       </div>
-
                       <Separator />
-
-                      {/* Dynamic Form */}
                       <AnimatePresence mode="wait">
                         {method === "mpesa" && (
                           <motion.div
@@ -602,7 +814,6 @@ export default function TenantPaymentsPage() {
                             </Button>
                           </motion.div>
                         )}
-
                         {method === "card" && (
                           <motion.div
                             key="card"
@@ -669,7 +880,6 @@ export default function TenantPaymentsPage() {
                             </Button>
                           </motion.div>
                         )}
-
                         {method === "bank" && (
                           <motion.div
                             key="bank"
@@ -752,7 +962,6 @@ export default function TenantPaymentsPage() {
                       </div>
                     </CardHeader>
                     <CardContent className="px-6 pb-4">
-                      {/* Table header */}
                       <div className="grid grid-cols-4 pb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/70">
                         <span>Description</span>
                         <span className="text-center">Date</span>
@@ -797,7 +1006,6 @@ export default function TenantPaymentsPage() {
 
               {/* Right Sidebar */}
               <div className="lg:col-span-4 space-y-6">
-                {/* Security */}
                 <Reveal delay={0.2}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-4">
@@ -842,7 +1050,6 @@ export default function TenantPaymentsPage() {
                   </Card>
                 </Reveal>
 
-                {/* Payment Summary */}
                 <Reveal delay={0.25}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-4">
@@ -881,7 +1088,6 @@ export default function TenantPaymentsPage() {
                           KSh {amount.toLocaleString()}
                         </span>
                       </div>
-
                       <Button
                         onClick={handlePayment}
                         className="w-full h-11 mt-2 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold text-sm shadow-sm"
@@ -889,7 +1095,6 @@ export default function TenantPaymentsPage() {
                         Confirm & Pay
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
-
                       <p className="text-center text-[10px] text-muted-foreground flex items-center justify-center gap-1 pt-1">
                         <Lock className="h-3 w-3" />
                         Secured by 256-bit SSL encryption
@@ -898,7 +1103,6 @@ export default function TenantPaymentsPage() {
                   </Card>
                 </Reveal>
 
-                {/* Billing Info */}
                 <Reveal delay={0.3}>
                   <Card className="rounded-2xl border-border shadow-sm bg-[#F0F5F1]">
                     <CardContent className="px-6 py-6">

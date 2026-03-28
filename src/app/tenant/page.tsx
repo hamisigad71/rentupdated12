@@ -118,7 +118,6 @@ function StatCard({
         accent ? "bg-[#1B5E45] text-white border-[#1B5E45]" : "bg-white",
       )}
     >
-      {/* Subtle corner accent */}
       {accent && (
         <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -translate-y-8 translate-x-8 pointer-events-none" />
       )}
@@ -299,12 +298,49 @@ function QuickAction({
   );
 }
 
+// ─── Hero Mini Stat ────────────────────────────────────────────────────────
+function HeroMiniStat({
+  icon: Icon,
+  label,
+  value,
+  highlight = false,
+}: {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  highlight?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <div
+        className={cn(
+          "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
+          highlight ? "bg-[#1B5E45]" : "bg-[#F0F5F1]",
+        )}
+      >
+        <Icon
+          className={cn("h-4 w-4", highlight ? "text-white" : "text-[#1B5E45]")}
+          strokeWidth={1.8}
+        />
+      </div>
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground leading-none mb-0.5">
+          {label}
+        </p>
+        <p className="text-sm font-bold text-foreground leading-none">
+          {value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Dashboard ────────────────────────────────────────────────────────
 export default function TenantDashboard() {
   const { userName } = useAuth();
   const currentTenant = mockTenants[0];
   const daysUntilRent = 5;
-  const leaseProgress = 72; // % of lease completed
+  const leaseProgress = 72;
 
   const now = new Date();
   const hour = now.getHours();
@@ -318,14 +354,11 @@ export default function TenantDashboard() {
           {/* ── Top Nav Bar ───────────────────────────────────── */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between gap-4">
-              {/* Breadcrumb */}
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Home className="h-4 w-4 text-[#1B5E45]" />
                 <ChevronRight className="h-3.5 w-3.5" />
                 <span className="font-medium text-foreground">Dashboard</span>
               </div>
-
-              {/* Right Actions */}
               <div className="flex items-center gap-3">
                 <Tooltip>
                   <TooltipTrigger>
@@ -340,7 +373,6 @@ export default function TenantDashboard() {
                   </TooltipTrigger>
                   <TooltipContent>Notifications</TooltipContent>
                 </Tooltip>
-
                 <Tooltip>
                   <TooltipTrigger>
                     <Button
@@ -353,7 +385,6 @@ export default function TenantDashboard() {
                   </TooltipTrigger>
                   <TooltipContent>Messages</TooltipContent>
                 </Tooltip>
-
                 <Link
                   href="/tenant/payments"
                   className={cn(
@@ -369,84 +400,183 @@ export default function TenantDashboard() {
           </header>
 
           <main className="max-w-7xl mx-auto px-6 md:px-10 py-8 space-y-8">
-            {/* ── Hero Welcome ──────────────────────────────────── */}
+            {/* ══ HERO SECTION ════════════════════════════════════════════ */}
             <Reveal>
-              <div className="relative overflow-hidden rounded-2xl bg-white border border-border px-8 py-8 md:py-10 shadow-sm">
-                {/* Decorative background accent */}
-                <div className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-[#E8F5EE]/50" />
-                <div className="pointer-events-none absolute -bottom-10 right-32 h-40 w-40 rounded-full bg-[#E8F5EE]/30" />
+              <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">
+                {/* ── Decorative background elements ── */}
+                <div className="pointer-events-none absolute top-0 right-0 w-[360px] h-[360px] rounded-full bg-[#E8F5EE]/60 translate-x-1/2 -translate-y-1/2" />
+                <div className="pointer-events-none absolute bottom-0 left-1/3 w-48 h-48 rounded-full bg-[#E8F5EE]/30 translate-y-1/2" />
+                <div className="pointer-events-none absolute top-1/2 right-1/4 w-24 h-24 rounded-full bg-[#3DBE7A]/8 -translate-y-1/2" />
 
-                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-                  <div>
-                    <p className="text-[#1B5E45] text-xs font-bold uppercase tracking-widest mb-2">
-                      {greeting}
-                    </p>
-                    <h1 className="text-3xl md:text-4xl font-extrabold text-[#1A1A1A] tracking-tight">
-                      {userName?.split(" ")[0] || "Alex"} 👋
-                    </h1>
-                    <div className="flex items-center gap-3 mt-3 flex-wrap">
-                      <span className="flex items-center gap-1.5 text-muted-foreground text-sm font-medium">
-                        <MapPin className="h-4 w-4 text-[#1B5E45]" />
-                        {currentTenant?.roomNumber || currentTenant?.unitId}
-                      </span>
-                      <span className="w-1 h-1 bg-border rounded-full" />
-                      <span className="flex items-center gap-1.5 text-muted-foreground text-sm font-medium">
-                        <Calendar className="h-4 w-4 text-[#1B5E45]" />
-                        Lease ends Mar 14, 2027
-                      </span>
+                {/* ── Top accent strip ── */}
+                <div className="h-1 w-full bg-gradient-to-r from-[#1B5E45] via-[#3DBE7A] to-[#E8F5EE]" />
+
+                <div className="relative p-7 md:p-8">
+                  {/* ── Top row: greeting + pay CTA ── */}
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+                    {/* Left: Identity block */}
+                    <div className="flex items-start gap-5">
+                      {/* Avatar / initials */}
+                      <div className="shrink-0 h-16 w-16 rounded-2xl bg-[#E8F5EE] border-2 border-[#1B5E45]/15 flex items-center justify-center shadow-sm">
+                        <span className="text-2xl font-black text-[#1B5E45] tracking-tight select-none">
+                          {(userName || "Alex").charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+
+                      {/* Name + location + status badges */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#1B5E45]">
+                            {greeting}
+                          </span>
+                          <span className="w-1 h-1 bg-[#1B5E45]/30 rounded-full" />
+                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
+                            Active Tenant
+                          </span>
+                        </div>
+
+                        <h1 className="text-2xl md:text-3xl font-extrabold text-[#1A1A1A] tracking-tight leading-tight">
+                          {userName?.split(" ")[0] || "Alex"}{" "}
+                          {userName?.split(" ")[1] || "Johnson"}
+                        </h1>
+
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-2.5">
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                            <MapPin className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            {currentTenant?.roomNumber || currentTenant?.unitId}
+                          </span>
+                          <span className="w-px h-3.5 bg-border hidden sm:block" />
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                            <Home className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            2-Bedroom · 4th Floor
+                          </span>
+                          <span className="w-px h-3.5 bg-border hidden sm:block" />
+                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                            <Calendar className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            Lease ends Mar 14, 2027
+                          </span>
+                        </div>
+
+                        {/* Star rating */}
+                        <div className="flex items-center gap-1.5 mt-3">
+                          <div className="flex items-center gap-0.5">
+                            {[1, 2, 3, 4, 5].map((s) => (
+                              <Star
+                                key={s}
+                                className={cn(
+                                  "h-3.5 w-3.5",
+                                  s <= 4
+                                    ? "text-amber-400 fill-amber-400"
+                                    : "text-border fill-border",
+                                )}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-xs font-semibold text-muted-foreground">
+                            4.8 resident score
+                          </span>
+                          <span className="w-px h-3.5 bg-border" />
+                          <span className="text-xs font-medium text-muted-foreground">
+                            Member since Oct 2023
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: Rent due card */}
+                    <div className="shrink-0 lg:max-w-[220px] w-full lg:w-auto">
+                      <div className="rounded-xl border border-[#1B5E45]/12 bg-[#F0F5F1] p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#1B5E45]/60">
+                            Rent Due
+                          </p>
+                          <span className="text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                            {daysUntilRent} days left
+                          </span>
+                        </div>
+                        <p className="text-3xl font-black text-[#1A1A1A] tracking-tight leading-none">
+                          $2,450
+                        </p>
+                        <p className="text-xs font-medium text-muted-foreground mt-1.5 flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          Due April 1, 2025
+                        </p>
+                        <Link
+                          href="/tenant/payments"
+                          className={cn(
+                            buttonVariants({ variant: "default", size: "sm" }),
+                            "mt-3.5 w-full rounded-lg bg-[#1B5E45] hover:bg-[#246B4F] text-white font-bold text-xs h-9 flex items-center justify-center shadow-sm gap-1.5",
+                          )}
+                        >
+                          Pay Now
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Rent Due Alert */}
-                  <div className="shrink-0 bg-[#F0F5F1] border border-[#1B5E45]/10 rounded-xl p-5 min-w-60 shadow-sm">
-                    <p className="text-[#1B5E45]/60 text-[10px] font-bold uppercase tracking-wider mb-1.5">
-                      Rent Due
-                    </p>
-                    <div className="flex items-baseline gap-1">
-                      <p className="text-[#1A1A1A] text-2xl font-black tracking-tight">
-                        $2,450
+                  {/* ── Divider ── */}
+                  <div className="my-6 border-t border-dashed border-border" />
+
+                  {/* ── Bottom row: 4 mini stats + lease progress ── */}
+                  <div className="flex flex-col lg:flex-row lg:items-end gap-6">
+                    {/* Mini stat pills */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
+                      <HeroMiniStat
+                        icon={ShieldCheck}
+                        label="Lease Status"
+                        value="Active"
+                        highlight
+                      />
+                      <HeroMiniStat
+                        icon={CreditCard}
+                        label="Balance"
+                        value="$0.00 Clear"
+                      />
+                      <HeroMiniStat
+                        icon={Wrench}
+                        label="Open Requests"
+                        value="2 Pending"
+                      />
+                      <HeroMiniStat
+                        icon={Activity}
+                        label="Last Payment"
+                        value="Mar 1, 2025"
+                      />
+                    </div>
+
+                    {/* Lease progress bar block */}
+                    <div className="lg:w-56 shrink-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                          Lease Progress
+                        </span>
+                        <span className="text-[10px] font-black text-[#1B5E45]">
+                          {leaseProgress}%
+                        </span>
+                      </div>
+                      <div className="h-2 w-full bg-[#E8F5EE] rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-[#1B5E45] to-[#3DBE7A] rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${leaseProgress}%` }}
+                          transition={{
+                            duration: 1.3,
+                            ease: "easeOut",
+                            delay: 0.4,
+                          }}
+                        />
+                      </div>
+                      <p className="text-[10px] text-muted-foreground mt-1.5">
+                        Oct 2023 → Mar 2027 · {leaseProgress}% completed
                       </p>
                     </div>
-                    <p className="text-[#1B5E45] text-xs font-semibold mt-1">
-                      Due in {daysUntilRent} days · Apr 1
-                    </p>
-                    <Link
-                      href="/tenant/payments"
-                      className={cn(
-                        buttonVariants({ variant: "default", size: "sm" }),
-                        "mt-4 w-full rounded-lg bg-[#1B5E45] hover:bg-[#246B4F] text-white font-bold text-xs h-9 flex items-center justify-center shadow-sm",
-                      )}
-                    >
-                      Pay Now
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Lease Progress */}
-                <div className="relative mt-8 pt-6 border-t border-border">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-muted-foreground text-xs font-bold uppercase tracking-wider">
-                      Lease Progress
-                    </p>
-                    <p className="text-[#1B5E45] text-xs font-black">
-                      {leaseProgress}% completed
-                    </p>
-                  </div>
-                  <div className="h-2 w-full bg-[#E8F5EE] rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-[#1B5E45] rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${leaseProgress}%` }}
-                      transition={{
-                        duration: 1.2,
-                        ease: "easeOut",
-                        delay: 0.3,
-                      }}
-                    />
                   </div>
                 </div>
               </div>
             </Reveal>
+            {/* ══ END HERO ════════════════════════════════════════════════ */}
 
             {/* ── Stat Cards ───────────────────────────────────── */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -638,7 +768,6 @@ export default function TenantDashboard() {
                 {/* Property Card */}
                 <Reveal delay={0.25}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white overflow-hidden">
-                    {/* Header strip */}
                     <div className="bg-[#F0F5F1] px-6 py-5 border-b border-border flex items-center gap-3">
                       <div className="h-10 w-10 rounded-xl bg-[#1B5E45] flex items-center justify-center">
                         <Home className="h-5 w-5 text-white" />
@@ -652,7 +781,6 @@ export default function TenantDashboard() {
                         </p>
                       </div>
                     </div>
-
                     <CardContent className="px-6 py-5 space-y-4">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Unit</span>
@@ -664,7 +792,7 @@ export default function TenantDashboard() {
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Type</span>
                         <span className="font-semibold text-foreground">
-                          {"2-Bedroom"}
+                          2-Bedroom
                         </span>
                       </div>
                       <Separator />
@@ -675,8 +803,6 @@ export default function TenantDashboard() {
                         </span>
                       </div>
                       <Separator />
-
-                      {/* Rating */}
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-muted-foreground">
                           Rating
@@ -698,7 +824,6 @@ export default function TenantDashboard() {
                           </span>
                         </div>
                       </div>
-
                       <Link
                         href="/tenant/property"
                         className={cn(
@@ -779,28 +904,12 @@ export default function TenantDashboard() {
                     <CardContent className="px-6 pb-6">
                       <div className="grid grid-cols-2 gap-3">
                         {[
-                          {
-                            icon: Wifi,
-                            label: "High-Speed WiFi",
-                            available: true,
-                          },
-                          { icon: Car, label: "Parking", available: true },
-                          {
-                            icon: Dumbbell,
-                            label: "Fitness Center",
-                            available: true,
-                          },
-                          {
-                            icon: Home,
-                            label: "Rooftop Lounge",
-                            available: true,
-                          },
-                          {
-                            icon: Shield,
-                            label: "24/7 Security",
-                            available: true,
-                          },
-                          { icon: Phone, label: "Concierge", available: true },
+                          { icon: Wifi, label: "High-Speed WiFi" },
+                          { icon: Car, label: "Parking" },
+                          { icon: Dumbbell, label: "Fitness Center" },
+                          { icon: Home, label: "Rooftop Lounge" },
+                          { icon: Shield, label: "24/7 Security" },
+                          { icon: Phone, label: "Concierge" },
                         ].map((a, i) => (
                           <div
                             key={i}
