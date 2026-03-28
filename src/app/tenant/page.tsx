@@ -312,7 +312,7 @@ export default function TenantDashboard() {
               {/* Right Actions */}
               <div className="flex items-center gap-3">
                 <Tooltip>
-                  <TooltipTrigger asChild>
+                  <TooltipTrigger>
                     <Button
                       variant="ghost"
                       size="icon"
@@ -326,7 +326,7 @@ export default function TenantDashboard() {
                 </Tooltip>
 
                 <Tooltip>
-                  <TooltipTrigger asChild>
+                  <TooltipTrigger>
                     <Button
                       variant="ghost"
                       size="icon"

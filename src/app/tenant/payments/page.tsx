@@ -474,7 +474,7 @@ export default function TenantPaymentsPage() {
                           <p className="text-sm font-semibold text-foreground font-mono">{refId}</p>
                         </div>
                         <Tooltip>
-                          <TooltipTrigger asChild>
+                          <TooltipTrigger>
                             <button
                               onClick={() => handleCopy(refId)}
                               className="h-8 w-8 rounded-lg bg-white border border-border flex items-center justify-center hover:bg-[#E8F5EE] transition-colors"

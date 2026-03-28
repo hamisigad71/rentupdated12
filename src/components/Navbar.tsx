@@ -309,7 +309,7 @@ function SolutionItem({
 }) {
   return (
     <li>
-      <NavigationMenuLink asChild>
+      <NavigationMenuLink>
         <Link href={href}
           className="group flex items-start gap-3 p-3 rounded-xl hover:bg-[#F4F9F6] transition-all duration-150">
           <div className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
