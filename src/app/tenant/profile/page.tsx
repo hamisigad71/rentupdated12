@@ -497,7 +497,7 @@ export default function TenantProfilePage() {
                         {[
                           { label: "Lease Start", value: "1 Oct 2023", icon: Calendar },
                           { label: "Lease End", value: "14 Mar 2027", icon: Calendar },
-                          { label: "Unit Type", value: currentTenant?.type || "2-Bedroom", icon: Building2 },
+                          { label: "Unit Type", value: "2-Bedroom", icon: Building2 },
                         ].map((item, i) => (
                           <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-[#FAFAF8] border border-border">
                             <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
