@@ -533,7 +533,7 @@ export default function TenantDashboard() {
                         {mockPayments.slice(0, 4).map((payment, i) => (
                           <PaymentRow
                             key={i}
-                            description={payment.description}
+                            description={payment.month}
                             date={payment.date}
                             amount={payment.amount}
                             status="Paid"
