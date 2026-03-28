@@ -316,7 +316,7 @@ export default function TenantProfilePage() {
                     <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
                       <span className="flex items-center gap-1.5 text-muted-foreground text-sm">
                         <MapPin className="h-3.5 w-3.5 text-emerald-600" />
-                        {currentTenant?.property} · Unit {currentTenant?.unit}
+                        {currentTenant?.roomNumber || currentTenant?.unitId}
                       </span>
                       <span className="w-1 h-1 bg-border rounded-full hidden md:block" />
                       <span className="flex items-center gap-1.5 text-muted-foreground text-sm">
@@ -406,7 +406,7 @@ export default function TenantProfilePage() {
                               <Building2 className="h-4 w-4" />
                             </div>
                             <div className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-[#F4F4F0] text-sm font-medium text-muted-foreground select-none">
-                              {currentTenant?.unit} · {currentTenant?.property}
+                              {currentTenant?.unitId || "N/A"}
                             </div>
                           </div>
                         </div>
