@@ -614,12 +614,12 @@ export default function TenantDashboard() {
                     <CardContent className="px-6 py-5 space-y-4">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Unit</span>
-                        <span className="font-semibold text-foreground">{currentTenant?.unit}</span>
+                        <span className="font-semibold text-foreground">{currentTenant?.unitId || "N/A"}</span>
                       </div>
                       <Separator />
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Type</span>
-                        <span className="font-semibold text-foreground">{currentTenant?.type || "2-Bedroom"}</span>
+                        <span className="font-semibold text-foreground">{"2-Bedroom"}</span>
                       </div>
                       <Separator />
                       <div className="flex items-center justify-between text-sm">
