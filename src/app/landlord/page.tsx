@@ -125,7 +125,7 @@ export default function LandlordDashboard() {
                     initial={{ width: 0 }}
                     animate={{ width: `${(stats.occupiedUnits / stats.totalUnits) * 100}%` }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full rounded-full bg-gradient-to-r from-primary to-brand-accent shadow-[0_0_15px_rgba(var(--color-primary),0.3)]" 
+                    className="h-full rounded-full bg-linear-to-r from-primary to-brand-accent shadow-[0_0_15px_rgba(var(--color-primary),0.3)]" 
                   />
                 </div>
                 <div className="flex items-center justify-between text-xs font-bold uppercase  text-muted-foreground/60">

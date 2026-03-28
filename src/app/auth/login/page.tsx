@@ -188,8 +188,8 @@ function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
       </AnimatePresence>
 
       {/* Layered dark overlay — keeps text readable */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/20" />
+      <div className="absolute inset-0 bg-linear-to-r from-black/30 to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-between h-full p-12">

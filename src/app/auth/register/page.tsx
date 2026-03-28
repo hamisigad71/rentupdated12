@@ -358,8 +358,8 @@ function RegisterContent() {
           />
         </AnimatePresence>
         {/* Layered dark overlay — keeps text readable */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/25" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/55 to-black/25" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/20 to-transparent" />
 
         <div className="relative z-10 flex flex-col justify-between h-full p-12">
           {/* Top */}

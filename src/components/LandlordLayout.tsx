@@ -41,7 +41,7 @@ export default function LandlordLayout({ children }: { children: React.ReactNode
                 <span className="text-xs uppercase font-bold  text-primary/80 leading-none underline decoration-primary/30 underline-offset-4">Super Admin</span>
               </div>
               <div className="h-10 w-10 rounded-full border-2 border-primary/20 bg-muted/50 p-0.5 shadow-inner">
-                <div className="h-full w-full rounded-full bg-gradient-to-br from-primary/10 to-primary/30 flex items-center justify-center font-bold text-primary">AJ</div>
+                <div className="h-full w-full rounded-full bg-linear-to-br from-primary/10 to-primary/30 flex items-center justify-center font-bold text-primary">AJ</div>
               </div>
             </div>
           </header>

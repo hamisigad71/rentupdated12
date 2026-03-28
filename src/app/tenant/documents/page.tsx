@@ -696,7 +696,7 @@ export default function TenantDocumentsPage() {
                     initial={{ width: 0 }}
                     animate={{ width: "9.1%" }}
                     transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-emerald-mid to-emerald-bright rounded-full"
+                    className="h-full bg-linear-to-r from-emerald-mid to-emerald-bright rounded-full"
                   />
                 </div>
                 <p className="text-[10px] text-muted-foreground/50 font-medium mt-1.5">90.9 MB available</p>
