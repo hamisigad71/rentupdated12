@@ -180,7 +180,7 @@ function HeroCarousel() {
 
   return (
     <section
-      className="relative min-h-[80dvh] md:min-h-dvh flex items-center overflow-hidden pt-12 md:pt-16"
+      className="relative min-h-[60dvh] md:min-h-dvh flex items-center overflow-hidden pt-12 md:pt-16"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -189,23 +189,23 @@ function HeroCarousel() {
         <motion.div
           key={active}
           className="absolute inset-0 z-0"
-          initial={{ opacity: 0, scale: 1.04 }}
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.1, ease: "easeInOut" }}
+          transition={{ duration: 1.8, ease: [0.4, 0, 0.2, 1] }}
         >
           <img
             src={slide.img}
             alt=""
-            className="w-full h-full object-cover brightness-[0.88]"
+            className="w-full h-full object-cover brightness-[0.85]"
           />
-          <div className="absolute inset-0 bg-linear-to-r from-background via-background/88 to-background/30" />
-          <div className="absolute inset-0 bg-linear-to-t from-background via-background/50 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-background/95 via-background/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent" />
         </motion.div>
       </AnimatePresence>
 
       <div className="container relative z-10 px-6 md:px-8 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center min-h-[calc(100dvh-4rem)]">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center min-h-[calc(60dvh-4rem)] md:min-h-[calc(100dvh-4rem)]">
           {/* Left */}
           <div className="lg:col-span-7 space-y-8 py-14 md:py-24 lg:py-0">
             <AnimatePresence mode="wait">
@@ -245,23 +245,23 @@ function HeroCarousel() {
                 </p>
 
                 {/* CTAs */}
-                <div className="flex flex-wrap gap-4 pt-2">
-                  <Link href={slide.ctaHref}>
+                <div className="flex flex-nowrap items-center gap-2 sm:gap-4 pt-2">
+                  <Link href={slide.ctaHref} className="flex-1 sm:flex-none">
                     <Button
                       size="lg"
-                      className="h-15 px-10 rounded-3xl font-bold text-base shadow-xl shadow-primary/25 hover:shadow-2xl hover:scale-[1.02] transition-all group"
+                      className="w-full sm:w-auto h-12 md:h-15 px-4 md:px-10 rounded-2xl md:rounded-3xl font-bold text-xs md:text-base shadow-xl shadow-primary/25 hover:shadow-2xl hover:scale-[1.01] transition-all group whitespace-nowrap"
                     >
                       {slide.cta}
-                      <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
                   <Button
                     size="lg"
                     variant="outline"
-                    className="h-15 px-10 rounded-3xl border border-foreground/12 bg-background/65 backdrop-blur-xl font-semibold text-base hover:bg-foreground/5 hover:border-foreground/20 transition-all gap-3"
+                    className="flex-1 sm:flex-none h-12 md:h-15 px-4 md:px-10 rounded-2xl md:rounded-3xl border border-foreground/12 bg-background/65 backdrop-blur-xl font-semibold text-xs md:text-base hover:bg-foreground/5 hover:border-foreground/20 transition-all gap-2 md:gap-3 whitespace-nowrap"
                   >
-                    <div className="h-7 w-7 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Play className="h-3.5 w-3.5 text-primary fill-primary ml-0.5" />
+                    <div className="h-6 w-6 md:h-7 md:w-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <Play className="h-3 w-3 md:h-3.5 md:w-3.5 text-primary fill-primary ml-0.5" />
                     </div>
                     Watch Demo
                   </Button>
@@ -328,14 +328,15 @@ function HeroCarousel() {
       </div>
 
       {/* Carousel Controls */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-6">
+      <div className="absolute bottom-6 md:bottom-10 inset-x-0 z-20 flex items-center justify-between px-6 md:justify-center md:gap-10 pointer-events-none">
         <button
           onClick={prev}
-          className="h-10 w-10 rounded-full border border-foreground/12 bg-background/70 backdrop-blur-md flex items-center justify-center hover:bg-background/90 transition-all shadow-sm"
+          className="pointer-events-auto h-11 w-11 rounded-full border border-foreground/12 bg-background/70 backdrop-blur-md flex items-center justify-center hover:bg-background/90 transition-all shadow-sm md:h-10 md:w-10"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-5 w-5 md:h-4 md:w-4" />
         </button>
-        <div className="flex gap-2.5 items-center">
+
+        <div className="pointer-events-auto flex gap-2.5 items-center">
           {SLIDES.map((_, i) => (
             <button
               key={i}
@@ -349,16 +350,17 @@ function HeroCarousel() {
             />
           ))}
         </div>
+
         <button
           onClick={next}
-          className="h-10 w-10 rounded-full border border-foreground/12 bg-background/70 backdrop-blur-md flex items-center justify-center hover:bg-background/90 transition-all shadow-sm"
+          className="pointer-events-auto h-11 w-11 rounded-full border border-foreground/12 bg-background/70 backdrop-blur-md flex items-center justify-center hover:bg-background/90 transition-all shadow-sm md:h-10 md:w-10"
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-5 w-5 md:h-4 md:w-4" />
         </button>
       </div>
 
       {/* Slide number */}
-      <div className="absolute bottom-10 right-8 z-20 text-xs font-semibold text-muted-foreground/50 tracking-widest tabular-nums">
+      <div className="absolute top-26 right-6 z-20 md:top-auto md:bottom-10 md:right-8 text-[10px] md:text-xs font-bold text-muted-foreground/60 tracking-[0.2em] tabular-nums">
         0{active + 1} / 0{SLIDES.length}
       </div>
     </section>
