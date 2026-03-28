@@ -364,7 +364,7 @@ export default function TenantDashboard() {
                       {greeting}
                     </p>
                     <h1 className="text-3xl md:text-4xl font-extrabold text-[#1A1A1A] tracking-tight">
-                      {user?.name?.split(" ")[0] || "Alex"} 👋
+                      {userName?.split(" ")[0] || "Alex"} 👋
                     </h1>
                     <div className="flex items-center gap-3 mt-3 flex-wrap">
                       <span className="flex items-center gap-1.5 text-muted-foreground text-sm font-medium">
