@@ -674,7 +674,7 @@ export default function TenantDashboard() {
                             key={i}
                             title={c.title}
                             status={c.status}
-                            date={c.date}
+                            date={c.createdDate}
                             priority={i === 0 ? "medium" : "low"}
                           />
                         ))}
