@@ -206,7 +206,7 @@ function DocumentPreviewDrawer({ doc, onClose }: { doc: typeof MOCK_DOCS[0] | nu
 
             {/* Verification badge */}
             <div className="rounded-2xl border border-primary/20 bg-emerald-soft p-4 flex items-center gap-3">
-              <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                 <ShieldCheck className="h-5 w-5 text-primary" />
               </div>
               <div>
@@ -277,7 +277,7 @@ export default function TenantDocumentsPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-3 shrink-0">
             {/* Encryption badge */}
             <div className="flex items-center gap-2.5 h-11 px-5 rounded-2xl border border-primary/15 bg-emerald-soft">
               <Lock className="h-3.5 w-3.5 text-primary" />
@@ -394,7 +394,7 @@ export default function TenantDocumentsPage() {
               </div>
 
               {/* Sort + View controls */}
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
                 <div className="relative">
                   <button
                     onClick={() => setShowFilterMenu(!showFilterMenu)}
@@ -479,7 +479,7 @@ export default function TenantDocumentsPage() {
                         >
                           {/* Icon */}
                           <div className={cn(
-                            "h-12 w-12 rounded-2xl flex items-center justify-center flex-shrink-0 border transition-all group-hover:scale-105",
+                            "h-12 w-12 rounded-2xl flex items-center justify-center shrink-0 border transition-all group-hover:scale-105",
                             doc.bg, "border-current/10"
                           )}>
                             <doc.icon className={cn("h-5.5 w-5.5", doc.color)} strokeWidth={1.5} />
@@ -500,25 +500,25 @@ export default function TenantDocumentsPage() {
                           </div>
 
                           {/* Category */}
-                          <div className="hidden md:block flex-shrink-0">
+                          <div className="hidden md:block shrink-0">
                             <span className={cn("text-[10px] font-bold px-3 py-1.5 rounded-full border", CATEGORY_COLORS[doc.category] ?? "bg-muted text-muted-foreground border-border")}>
                               {doc.category}
                             </span>
                           </div>
 
                           {/* Size */}
-                          <div className="hidden lg:block text-xs font-semibold text-muted-foreground w-16 text-center flex-shrink-0">
+                          <div className="hidden lg:block text-xs font-semibold text-muted-foreground w-16 text-center shrink-0">
                             {doc.size}
                           </div>
 
                           {/* Date */}
-                          <div className="hidden lg:flex items-center gap-1.5 text-xs font-medium text-muted-foreground flex-shrink-0 w-28">
-                            <Calendar className="h-3 w-3 flex-shrink-0" />
+                          <div className="hidden lg:flex items-center gap-1.5 text-xs font-medium text-muted-foreground shrink-0 w-28">
+                            <Calendar className="h-3 w-3 shrink-0" />
                             {doc.date}
                           </div>
 
                           {/* Status */}
-                          <div className="hidden sm:flex items-center gap-1.5 flex-shrink-0">
+                          <div className="hidden sm:flex items-center gap-1.5 shrink-0">
                             {doc.status === "Verified" ? (
                               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-soft border border-primary/20">
                                 <CheckCircle2 className="h-3 w-3 text-primary" />
@@ -533,7 +533,7 @@ export default function TenantDocumentsPage() {
                           </div>
 
                           {/* Actions */}
-                          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
                             <button
                               onClick={(e) => { e.stopPropagation(); setPreviewDoc(doc); }}
                               className="h-9 w-9 rounded-xl border border-border bg-background flex items-center justify-center hover:border-primary/40 hover:bg-primary/5 transition-all"
@@ -627,7 +627,7 @@ export default function TenantDocumentsPage() {
                   { action: "Signed", doc: "Fully Executed Lease Agreement", time: "Oct 12, 2023", icon: FileCheck, color: "text-amber-500" },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-muted/40 transition-colors group cursor-pointer">
-                    <div className={cn("h-8 w-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0")}>
+                    <div className={cn("h-8 w-8 rounded-lg bg-muted flex items-center justify-center shrink-0")}>
                       <item.icon className={cn("h-3.5 w-3.5", item.color)} />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -635,7 +635,7 @@ export default function TenantDocumentsPage() {
                         <span className="text-muted-foreground">{item.action} · </span>{item.doc}
                       </p>
                     </div>
-                    <span className="text-[10px] text-muted-foreground/50 font-medium flex-shrink-0">{item.time}</span>
+                    <span className="text-[10px] text-muted-foreground/50 font-medium shrink-0">{item.time}</span>
                   </div>
                 ))}
               </div>
@@ -672,7 +672,7 @@ export default function TenantDocumentsPage() {
                     )}
                   >
                     <div className={cn(
-                      "h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0",
+                      "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
                       action.primary ? "bg-primary/15" : "bg-background border border-border"
                     )}>
                       <action.icon className={cn("h-4 w-4", action.primary ? "text-primary" : "text-muted-foreground")} />
@@ -754,7 +754,7 @@ export default function TenantDocumentsPage() {
                     { label: "Instant Access", icon: Zap, desc: "Always available" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 p-3.5 rounded-2xl border border-border bg-background hover:border-primary/25 hover:bg-primary/3 transition-all group cursor-default">
-                      <div className="h-8 w-8 rounded-lg bg-primary/8 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
+                      <div className="h-8 w-8 rounded-lg bg-primary/8 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
                         <item.icon className="h-4 w-4 text-primary" strokeWidth={1.5} />
                       </div>
                       <div className="min-w-0">

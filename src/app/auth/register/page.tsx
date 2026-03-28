@@ -91,7 +91,7 @@ function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => vo
               <ul className="space-y-2">
                 {box.features.map(f => (
                   <li key={f} className="flex items-center gap-2 text-[12px] text-[#6B7280]">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A] flex-shrink-0" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A] shrink-0" />
                     {f}
                   </li>
                 ))}
@@ -198,7 +198,7 @@ function RegisterContent() {
 
                 {/* Avatar upload */}
                 <div className="flex items-center gap-5 p-5 rounded-2xl border border-dashed border-[#C4D4C9] bg-[#F4F9F6] hover:border-[#1B5E45] transition-colors group">
-                  <div className="relative flex-shrink-0">
+                  <div className="relative shrink-0">
                     <div className="h-16 w-16 rounded-2xl bg-[#E8F5EE] border-2 border-[#C4D4C9] overflow-hidden flex items-center justify-center">
                       {form.profileImage
                         ? <img src={form.profileImage} alt="" className="h-full w-full object-cover" />
@@ -311,7 +311,7 @@ function RegisterContent() {
                 {/* Terms */}
                 <div className="flex items-start gap-2.5 pt-1">
                   <input type="checkbox" id="terms" required
-                    className="h-4 w-4 mt-0.5 rounded border-[#E0E8E3] accent-[#1B5E45] cursor-pointer flex-shrink-0" />
+                    className="h-4 w-4 mt-0.5 rounded border-[#E0E8E3] accent-[#1B5E45] cursor-pointer shrink-0" />
                   <label htmlFor="terms" className="text-[12px] text-[#6B7280] leading-relaxed cursor-pointer">
                     I agree to the{" "}
                     <Link href="/terms" className="text-[#1B5E45] font-semibold hover:underline">Terms of Service</Link>
@@ -389,7 +389,7 @@ function RegisterContent() {
               <ul className="space-y-3">
                 {hero.features.map((f, i) => (
                   <li key={i} className="flex items-center gap-3">
-                    <div className="h-6 w-6 rounded-lg bg-[#3DBE7A]/20 flex items-center justify-center flex-shrink-0">
+                    <div className="h-6 w-6 rounded-lg bg-[#3DBE7A]/20 flex items-center justify-center shrink-0">
                       <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A]" />
                     </div>
                     <span className="text-[13px] text-white/70">{f}</span>

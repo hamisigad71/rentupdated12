@@ -235,7 +235,7 @@ function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
           <div className="flex flex-col gap-2">
             {TRUST.map((t, i) => (
               <div key={i} className="flex items-center gap-2.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A] flex-shrink-0" />
+                <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A] shrink-0" />
                 <span className="text-[12px] text-white/60">{t}</span>
               </div>
             ))}
