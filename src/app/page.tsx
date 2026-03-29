@@ -646,27 +646,27 @@ function TrustLogosBar() {
     },
     {
       name: "KCB Bank",
-      src: "",
+      src: "https://i.pinimg.com/736x/b3/38/bd/b338bd6293ef751c7b2851e19c33c7d6.jpg",
     },
     {
       name: "Equity Bank",
-      src: "",
+      src: "https://i.pinimg.com/1200x/9e/3f/95/9e3f954e637b8579c4e546fdded3ebe7.jpg",
     },
     {
       name: "Britam",
-      src: "",
+      src: "https://i.pinimg.com/1200x/ef/d6/2e/efd62e6195bb18b072b9d7f8e7c5c7d4.jpg",
     },
     {
-      name: "ICEA Lion",
-      src: "",
+      name: "Absa Group",
+      src: "https://i.pinimg.com/1200x/cf/66/cf/cf66cfa76ed6f633c2a0c2392af04a8b.jpg",
     },
     {
-      name: "CIC Group",
-      src: "",
+      name: "stanbic bank",
+      src: "https://i.pinimg.com/1200x/05/fb/f4/05fbf46988bcb2271efcb0ec147f5356.jpg",
     },
     {
-      name: "Nairobi County",
-      src: "",
+      name: "Family Bank",
+      src: "https://i.pinimg.com/1200x/3f/6d/d9/3f6dd99e7095a4a06338d967caa63501.jpg",
     },
   ];
 
@@ -711,7 +711,7 @@ function TrustLogosBar() {
                 <img 
                   src={p.src} 
                   alt={`${p.name} logo`} 
-                  className="h-8 w-auto object-contain mix-blend-multiply opacity-60 group-hover:opacity-100 transition-opacity" 
+                  className="h-8 w-auto object-contain mix-blend-multiply" 
                 />
               ) : (
                 <span className="text-sm font-bold tracking-wide uppercase">{p.name}</span>
