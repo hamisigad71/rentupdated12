@@ -639,18 +639,112 @@ export default function Home() {
 
 // ─── TRUST LOGOS BAR ────────────────────────────────────────────────────────
 function TrustLogosBar() {
-  const logos = ["Safaricom","KCB Bank","Equity Bank","Nairobi County","Britam","ICEA Lion","CIC Group"];
+  const partners = [
+    {
+      name: "Safaricom",
+      src: "https://i.pinimg.com/736x/ae/b7/b6/aeb7b68c1f3325404efaa619a7334cf4.jpg",
+    },
+    {
+      name: "KCB Bank",
+      src: "",
+    },
+    {
+      name: "Equity Bank",
+      src: "",
+    },
+    {
+      name: "Britam",
+      src: "",
+    },
+    {
+      name: "ICEA Lion",
+      src: "",
+    },
+    {
+      name: "CIC Group",
+      src: "",
+    },
+    {
+      name: "Nairobi County",
+      src: "",
+    },
+  ];
+
+  // Tripled for seamless infinite loop
+  const items = [...partners, ...partners, ...partners];
+
   return (
-    <div className="border-y border-border bg-muted/40 py-6 overflow-hidden">
-      <p className="text-center text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground/50 mb-5">
-        Trusted by Kenya's leading institutions
+    <div className="border-y border-[#E0E8E3] bg-[#FAFAF8] py-10 overflow-hidden select-none">
+      {/* Header label */}
+      <p className="text-center text-[10px] font-bold uppercase tracking-[0.25em] text-[#6B7280]/60 mb-8">
+        Trusted by Kenya&apos;s leading institutions
       </p>
-      <div className="flex gap-16 animate-marquee whitespace-nowrap">
-        {[...logos,...logos].map((name,i) => (
-          <span key={i} className="text-sm font-bold text-muted-foreground/30 tracking-wide uppercase shrink-0">{name}</span>
+
+      {/* Scrolling track */}
+      <div className="relative">
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-[#FAFAF8] to-transparent pointer-events-none" />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-[#FAFAF8] to-transparent pointer-events-none" />
+
+        <div
+          className="flex items-center gap-6 whitespace-nowrap"
+          style={{
+            animation: "trust-marquee 35s linear infinite",
+            width: "max-content",
+          }}
+        >
+          {items.map((p, i) => (
+            <div
+              key={i}
+              className="
+                group flex-shrink-0 flex items-center justify-center
+                px-6 py-3 rounded-xl min-w-[120px] min-h-[50px]
+                border border-[#E0E8E3] bg-white
+                text-[#9CA3AF] hover:text-[#1B5E45]
+                hover:border-[#C4D4C9] hover:bg-[#F4F9F6]
+                hover:shadow-md hover:shadow-[#1B5E45]/8
+                transition-all duration-300 cursor-default
+              "
+            >
+              {p.src ? (
+                <img 
+                  src={p.src} 
+                  alt={`${p.name} logo`} 
+                  className="h-8 w-auto object-contain mix-blend-multiply opacity-60 group-hover:opacity-100 transition-opacity" 
+                />
+              ) : (
+                <span className="text-sm font-bold tracking-wide uppercase">{p.name}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Stats row */}
+      <div className="mt-10 flex items-center justify-center gap-10 flex-wrap px-6">
+        {[
+          { val: "7+",  label: "Institutional Partners" },
+          { val: "ISO 27001", label: "Certified" },
+          { val: "PCI DSS",   label: "Compliant" },
+          { val: "GDPR",      label: "Ready" },
+        ].map((s, i) => (
+          <div key={i} className="flex items-center gap-3">
+            {i > 0 && <div className="h-4 w-px bg-[#E0E8E3]" />}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-black text-[#1B5E45]">{s.val}</span>
+              <span className="text-[11px] text-[#6B7280]">{s.label}</span>
+            </div>
+          </div>
         ))}
       </div>
-      <style>{`@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}.animate-marquee{animation:marquee 22s linear infinite}`}</style>
+
+      <style>{`
+        @keyframes trust-marquee {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-33.333%); }
+        }
+      `}</style>
     </div>
   );
 }
@@ -666,7 +760,7 @@ function MetricBar() {
     { val: 98,   suffix: "%",    label: "Collection Rate",    icon: CreditCard,decimals: 0 },
   ];
   return (
-    <section className="bg-foreground py-14 text-background relative overflow-hidden">
+    <section className="bg-primary/5 py-14 text-foreground relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle_at_20%_50%,#3DBE7A,transparent_50%),radial-gradient(circle_at_80%_50%,#246B4F,transparent_50%)]" />
       <div className="container px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-10">
@@ -681,7 +775,7 @@ function MetricBar() {
                 <Counter to={s.val} suffix={s.suffix} decimals={s.decimals} />
               </p>
               <div className="h-px w-8 bg-primary/30 mx-auto my-3" />
-              <p className="text-[10px] uppercase tracking-widest text-background/35 font-bold">{s.label}</p>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{s.label}</p>
             </Reveal>
           ))}
         </div>
@@ -733,7 +827,7 @@ function SolutionsSection() {
               <div className={cn(
                 "group h-full rounded-3xl p-6 md:p-10 border transition-all duration-500 hover:-translate-y-1",
                 card.accent
-                  ? "bg-foreground text-background border-foreground shadow-2xl shadow-foreground/10"
+                  ? "bg-primary/5 text-foreground border-primary/20 shadow-2xl shadow-primary/5 hover:border-primary/30 hover:shadow-primary/10"
                   : "bg-card border-border hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5",
               )}>
                 <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center mb-10 transition-transform group-hover:scale-105",card.accent?"bg-primary text-primary-foreground":"bg-primary/10 text-primary")}>
@@ -741,10 +835,10 @@ function SolutionsSection() {
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-[0.15em] text-primary">{card.role}</span>
                 <h3 className="text-3xl font-black tracking-tight mt-1 mb-5">{card.title}</h3>
-                <p className={cn("text-base leading-relaxed mb-8",card.accent?"text-background/65":"text-muted-foreground")}>{card.desc}</p>
+                <p className={cn("text-base leading-relaxed mb-8",card.accent?"text-muted-foreground":"text-muted-foreground")}>{card.desc}</p>
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {card.features.map((f,j) => (
-                    <div key={j} className={cn("flex items-center gap-2.5 text-sm font-medium",card.accent?"text-background/75":"text-foreground/80")}>
+                    <div key={j} className={cn("flex items-center gap-2.5 text-sm font-medium",card.accent?"text-foreground/80":"text-foreground/80")}>
                       <div className="h-6 w-6 rounded-lg bg-primary/12 flex items-center justify-center shrink-0">
                         <f.icon className="h-3.5 w-3.5 text-primary" />
                       </div>
@@ -753,7 +847,7 @@ function SolutionsSection() {
                   ))}
                 </div>
                 <Link href={card.href}>
-                  <Button variant={card.accent?"secondary":"default"} className="h-13 px-8 rounded-2xl font-bold w-full group/btn">
+                  <Button variant={card.accent?"default":"default"} className="h-13 px-8 rounded-2xl font-bold w-full group/btn">
                     Access Portal
                     <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                   </Button>
