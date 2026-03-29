@@ -234,11 +234,11 @@ function HeroCarousel() {
 
       {/* ── Slide number — top right ───────────────────────────────────── */}
       <div className="absolute top-24 right-6 z-20 md:top-28 md:right-10 hidden sm:flex items-center gap-2">
-        <span className="text-[11px] font-bold text-white/30 tabular-nums tracking-[0.2em]">
+        <span className="text-[8px] sm:text-[9px] md:text-[11px] font-normal text-white/30 tabular-nums tracking-[0.2em]">
           0{active + 1}
         </span>
         <div className="h-px w-6 bg-white/15" />
-        <span className="text-[11px] font-bold text-white/15 tabular-nums tracking-[0.2em]">
+        <span className="text-[8px] sm:text-[9px] md:text-[11px] font-normal text-white/15 tabular-nums tracking-[0.2em]">
           0{SLIDES.length}
         </span>
       </div>
@@ -267,7 +267,7 @@ function HeroCarousel() {
                   className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/15 bg-white/8 backdrop-blur-md"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
-                  <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/80">
+                  <span className="text-[9px] sm:text-[10px] md:text-[11px] font-normal uppercase tracking-[0.18em] text-white/80">
                     {slide.tag}
                   </span>
                   <div className="h-3 w-px bg-white/20" />
@@ -280,7 +280,7 @@ function HeroCarousel() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.65, ease: [0.23, 1, 0.32, 1] }}
-                    className="text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-[-0.04em] leading-[0.88] text-white"
+                    className="text-[2.5rem] sm:text-[3.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-[-0.04em] leading-[0.88] text-white"
                   >
                     {slide.headline}
                   </motion.h1>
@@ -288,7 +288,7 @@ function HeroCarousel() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.22, duration: 0.65, ease: [0.23, 1, 0.32, 1] }}
-                    className="text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-[-0.04em] leading-[0.88] text-[#3DBE7A]"
+                    className="text-[2.5rem] sm:text-[3.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-[-0.04em] leading-[0.88] text-[#3DBE7A]"
                   >
                     {slide.headlineAccent}
                   </motion.h1>
@@ -312,7 +312,7 @@ function HeroCarousel() {
                   className="grid grid-cols-2 gap-3 md:flex md:flex-wrap"
                 >
                   <Link href={slide.ctaHref} className="w-full md:w-auto">
-                    <button className="w-full group h-12 md:h-14 px-4 md:px-10 rounded-2xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-bold text-[13px] md:text-sm flex items-center justify-center gap-2 md:gap-3 shadow-xl shadow-[#1B5E45]/30 hover:shadow-2xl hover:shadow-[#1B5E45]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                    <button className="w-full group h-12 md:h-14 px-4 md:px-10 rounded-2xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-normal text-[11px] sm:text-[12px] md:text-sm flex items-center justify-center gap-2 md:gap-3 shadow-xl shadow-[#1B5E45]/30 hover:shadow-2xl hover:shadow-[#1B5E45]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
                       <span className="truncate">{slide.cta}</span>
                       <ArrowRight className="h-4 w-4 shrink-0 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -339,7 +339,7 @@ function HeroCarousel() {
                         <div className="h-1.5 w-1.5 rounded-full bg-[#3DBE7A] shrink-0" />
                         <span className="text-[10px] sm:text-[11px] text-white/50 font-medium uppercase tracking-wider truncate">{kpi.label}</span>
                       </div>
-                      <span className="text-[13px] sm:text-sm font-bold text-white whitespace-nowrap">{kpi.value}</span>
+                      <span className="text-xs sm:text-[13px] md:text-sm font-normal text-white whitespace-nowrap">{kpi.value}</span>
                     </div>
                   ))}
                 </motion.div>
@@ -416,7 +416,7 @@ function HeroCarousel() {
                     "h-1 rounded-full transition-all duration-500",
                     i === active ? "w-10 bg-[#3DBE7A]" : "w-4 bg-white group-hover:w-6"
                   )} />
-                  <span className="hidden sm:block text-[10px] font-bold uppercase tracking-wider text-white">
+                  <span className="hidden sm:block text-[8px] sm:text-[9px] md:text-[10px] font-normal uppercase tracking-wider text-white">
                     {s.tag}
                   </span>
                 </button>
@@ -465,11 +465,11 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
             <ShieldCheck className="h-6 w-6 text-[#1B5E45]" />
           </div>
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280]">Platform Status</p>
-            <p className="font-bold text-[15px] text-[#1A1A1A]">Enterprise Secure</p>
+            <p className="text-[8px] sm:text-[9px] md:text-[10px] font-normal uppercase tracking-widest text-[#6B7280]">Platform Status</p>
+            <p className="font-normal text-[11px] sm:text-[12px] md:text-[15px] text-[#1A1A1A]">Enterprise Secure</p>
           </div>
         </div>
-        <div className="px-3 py-1.5 rounded-full border border-[#C4D4C9] bg-[#E8F5EE] flex items-center gap-1.5 text-[10px] font-bold text-[#1B5E45]">
+        <div className="px-3 py-1.5 rounded-full border border-[#C4D4C9] bg-[#E8F5EE] flex items-center gap-1.5 text-[10px] font-normal text-[#1B5E45]">
           <span className="w-1.5 h-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
           LIVE
         </div>
@@ -483,7 +483,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
           <div key={i} className="space-y-2.5">
             <div className="flex justify-between text-xs">
               <span className="text-[#6B7280] font-semibold">{s.label}</span>
-              <span className="font-bold text-[#1B5E45]">{s.value}</span>
+              <span className="font-normal text-[#1B5E45]">{s.value}</span>
             </div>
             <div className="h-1.5 bg-[#E8F5EE] rounded-full overflow-hidden">
               <motion.div
@@ -504,7 +504,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
         ].map((s, i) => (
           <div key={i} className="text-center p-3 rounded-xl bg-[#FAFAF8] border border-[#E0E8E3]">
             <p className="text-[9px] uppercase tracking-widest text-[#6B7280] font-semibold mb-1">{s.label}</p>
-            <p className="text-xl font-bold text-[#1A1A1A] tracking-tight">{s.val}</p>
+            <p className="text-lg md:text-xl font-normal text-[#1A1A1A] tracking-tight">{s.val}</p>
           </div>
         ))}
       </div>
@@ -514,10 +514,10 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
     <div key={1}>
       <div className="flex justify-between items-start mb-5">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280] mb-0.5">Analytics Dashboard</p>
-          <p className="font-bold text-[15px] text-[#1A1A1A]">Q4 2025 Overview</p>
+          <p className="text-[10px] font-normal uppercase tracking-widest text-[#6B7280] mb-0.5">Analytics Dashboard</p>
+          <p className="font-normal text-[11px] sm:text-[12px] md:text-[15px] text-[#1A1A1A]">Q4 2025 Overview</p>
         </div>
-        <span className="px-3 py-1 rounded-full bg-[#E8F5EE] text-[#1B5E45] text-[10px] font-bold border border-[#C4D4C9]">↑ 24% YoY</span>
+        <span className="px-3 py-1 rounded-full bg-[#E8F5EE] text-[#1B5E45] text-[10px] font-normal border border-[#C4D4C9]">↑ 24% YoY</span>
       </div>
       <div className="grid grid-cols-2 gap-3 mb-5">
         {[
@@ -529,15 +529,15 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
           <div key={i} className="rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] p-4">
             <div className="flex items-center justify-between mb-2.5">
               <s.icon className="h-4 w-4 text-[#1B5E45]" />
-              <span className="text-[9px] font-bold text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">{s.delta}</span>
+              <span className="text-[9px] font-normal text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">{s.delta}</span>
             </div>
-            <p className="text-xl font-bold tracking-tight text-[#1A1A1A]">{s.val}</p>
-            <p className="text-[10px] text-[#6B7280] font-medium mt-0.5">{s.label}</p>
+            <p className="text-base md:text-xl font-normal tracking-tight text-[#1A1A1A]">{s.val}</p>
+            <p className="text-[8px] sm:text-[9px] md:text-[10px] text-[#6B7280] font-medium mt-0.5">{s.label}</p>
           </div>
         ))}
       </div>
       <div className="rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] p-4">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280] mb-3">Revenue Trend</p>
+        <p className="text-[10px] font-normal uppercase tracking-widest text-[#6B7280] mb-3">Revenue Trend</p>
         <div className="flex items-end gap-1.5 h-14">
           {[40,55,45,68,72,65,88,76,92,85,95,100].map((h, i) => (
             <motion.div
@@ -559,10 +559,10 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
           <img src="https://i.pravatar.cc/128?img=45" alt="" className="object-cover w-full h-full" />
         </div>
         <div>
-          <p className="font-bold text-sm text-[#1A1A1A]">Sarah Wanjiku</p>
+          <p className="font-normal text-xs md:text-sm text-[#1A1A1A]">Sarah Wanjiku</p>
           <p className="text-[10px] text-[#6B7280]">Unit 4B · Westlands Heights</p>
         </div>
-        <div className="ml-auto px-3 py-1 rounded-full bg-[#E8F5EE] text-[#1B5E45] text-[10px] font-bold border border-[#C4D4C9]">Active</div>
+        <div className="ml-auto px-3 py-1 rounded-full bg-[#E8F5EE] text-[#1B5E45] text-[10px] font-normal border border-[#C4D4C9]">Active</div>
       </div>
       <div className="space-y-2.5 mb-5">
         {[
@@ -576,13 +576,13 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[10px] text-[#6B7280] font-semibold">{item.label}</p>
-              <p className={cn("text-sm font-bold truncate", item.color)}>{item.val}</p>
+              <p className={cn("text-sm font-normal truncate", item.color)}>{item.val}</p>
             </div>
             <p className="text-[9px] text-[#6B7280]">{item.sub}</p>
           </div>
         ))}
       </div>
-      <button className="w-full h-11 rounded-xl bg-[#1B5E45] text-white text-sm font-bold flex items-center justify-center gap-2 hover:bg-[#246B4F] transition-colors shadow-md shadow-[#1B5E45]/20">
+      <button className="w-full h-11 rounded-xl bg-[#1B5E45] text-white text-sm font-normal flex items-center justify-center gap-2 hover:bg-[#246B4F] transition-colors shadow-md shadow-[#1B5E45]/20">
         <CreditCard className="h-4 w-4" />
         Pay Rent via M-Pesa
       </button>
@@ -676,7 +676,7 @@ function TrustLogosBar() {
   return (
     <div className="border-y border-[#E0E8E3] bg-[#FAFAF8] py-10 overflow-hidden select-none">
       {/* Header label */}
-      <p className="text-center text-[10px] font-bold uppercase tracking-[0.25em] text-[#6B7280]/60 mb-8">
+      <p className="text-center text-[8px] sm:text-[9px] md:text-[10px] font-normal uppercase tracking-[0.25em] text-[#6B7280]/60 mb-8">
         Trusted by Kenya&apos;s leading institutions
       </p>
 
@@ -714,7 +714,7 @@ function TrustLogosBar() {
                   className="h-8 w-auto object-contain mix-blend-multiply" 
                 />
               ) : (
-                <span className="text-sm font-bold tracking-wide uppercase">{p.name}</span>
+                <span className="text-[10px] md:text-sm font-normal tracking-wide uppercase">{p.name}</span>
               )}
             </div>
           ))}
@@ -732,8 +732,8 @@ function TrustLogosBar() {
           <div key={i} className="flex items-center gap-3">
             {i > 0 && <div className="h-4 w-px bg-[#E0E8E3]" />}
             <div className="flex items-center gap-2">
-              <span className="text-sm font-black text-[#1B5E45]">{s.val}</span>
-              <span className="text-[11px] text-[#6B7280]">{s.label}</span>
+              <span className="text-[10px] md:text-sm font-normal text-[#1B5E45]">{s.val}</span>
+              <span className="text-[9px] md:text-[11px] text-[#6B7280]">{s.label}</span>
             </div>
           </div>
         ))}
@@ -771,11 +771,11 @@ function MetricBar() {
                   <s.icon className="h-4 w-4 text-primary" />
                 </div>
               </div>
-              <p className="text-3xl md:text-4xl font-black tracking-tighter tabular-nums">
+              <p className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter tabular-nums">
                 <Counter to={s.val} suffix={s.suffix} decimals={s.decimals} />
               </p>
               <div className="h-px w-8 bg-primary/30 mx-auto my-3" />
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{s.label}</p>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-normal">{s.label}</p>
             </Reveal>
           ))}
         </div>
@@ -790,8 +790,8 @@ function SolutionsSection() {
     <section className="py-16 md:py-28 bg-background">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-bold uppercase tracking-widest mb-4">Built for Both Sides</span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] mt-2">Dual Portals.<br />One Powerful Engine.</h2>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Built for Both Sides</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em] mt-2">Dual Portals. One Powerful Engine.</h2>
           <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto font-light">Purpose-built experiences that serve every stakeholder — flawlessly.</p>
         </Reveal>
         <div className="grid md:grid-cols-2 gap-6">
@@ -834,7 +834,7 @@ function SolutionsSection() {
                   <card.icon className="h-8 w-8" strokeWidth={1.6} />
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-[0.15em] text-primary">{card.role}</span>
-                <h3 className="text-3xl font-black tracking-tight mt-1 mb-5">{card.title}</h3>
+                <h3 className="text-2xl md:text-3xl font-black tracking-tight mt-1 mb-5">{card.title}</h3>
                 <p className={cn("text-base leading-relaxed mb-8",card.accent?"text-muted-foreground":"text-muted-foreground")}>{card.desc}</p>
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {card.features.map((f,j) => (
@@ -847,7 +847,7 @@ function SolutionsSection() {
                   ))}
                 </div>
                 <Link href={card.href}>
-                  <Button variant={card.accent?"default":"default"} className="h-13 px-8 rounded-2xl font-bold w-full group/btn">
+                  <Button variant={card.accent?"default":"default"} className="h-13 px-8 rounded-2xl font-normal w-full group/btn">
                     Access Portal
                     <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                   </Button>
@@ -883,13 +883,13 @@ function HowItWorksSection() {
       <div className="absolute inset-0 bg-[radial-gradient(#1B5E45_0.6px,transparent_1px)] bg-size-[28px_28px] opacity-[0.03]" />
       <div className="container px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-bold uppercase tracking-widest mb-4">Simple Process</span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em]">Up & running<br />in under 10 minutes.</h2>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Simple Process</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Up & running<br />in under 10 minutes.</h2>
         </Reveal>
         <Reveal className="flex justify-center mb-16">
           <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl bg-foreground/6 border border-border">
             {(["landlord","tenant"] as const).map(tab => (
-              <button key={tab} onClick={() => setActiveTab(tab)} className={cn("px-8 py-3 rounded-xl text-sm font-bold transition-all capitalize",activeTab===tab?"bg-primary text-primary-foreground shadow-md":"text-muted-foreground hover:text-foreground")}>
+              <button key={tab} onClick={() => setActiveTab(tab)} className={cn("px-8 py-3 rounded-xl text-xs md:text-sm font-normal transition-all capitalize",activeTab===tab?"bg-primary text-primary-foreground shadow-md":"text-muted-foreground hover:text-foreground")}>
                 {tab==="landlord"?"Property Manager":"Resident"}
               </button>
             ))}
@@ -907,9 +907,9 @@ function HowItWorksSection() {
                     <div className="h-13 w-13 rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
                       <s.icon className="h-6 w-6 text-primary" />
                     </div>
-                    <span className="text-4xl font-black text-foreground/6 tabular-nums">{s.step}</span>
+                    <span className="text-3xl md:text-4xl font-black text-foreground/6 tabular-nums">{s.step}</span>
                   </div>
-                  <h4 className="font-bold text-base mb-2">{s.title}</h4>
+                  <h4 className="font-normal text-sm md:text-base mb-2">{s.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
               </div>
@@ -937,8 +937,8 @@ function FeatureGridSection() {
     <section className="py-16 md:py-28 bg-background">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-bold uppercase tracking-widest mb-4">Full Feature Set</span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em]">Everything you need.<br />Nothing you don't.</h2>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Full Feature Set</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Everything you need.<br />Nothing you don't.</h2>
         </Reveal>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
           {features.map((f,i) => (
@@ -947,7 +947,7 @@ function FeatureGridSection() {
                 <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-105",f.bg==="bg-foreground text-background"?"bg-primary/15":f.bg==="bg-primary text-primary-foreground"?"bg-primary-foreground/15":f.bg==="bg-emerald-soft"?"bg-primary/15":"bg-primary/8")}>
                   <f.icon className={cn("h-5 w-5",f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground":"text-primary")} />
                 </div>
-                <h4 className="font-black text-base mb-2">{f.title}</h4>
+                <h4 className="font-black text-sm md:text-base mb-2">{f.title}</h4>
                 <p className={cn("text-sm leading-relaxed",f.bg==="bg-foreground text-background"?"text-background/60":f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground/70":"text-muted-foreground")}>{f.desc}</p>
               </div>
             </Reveal>
@@ -973,8 +973,8 @@ function TestimonialsSection() {
     <section className="py-16 md:py-28 bg-muted/25 overflow-hidden">
       <div className="container px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-bold uppercase tracking-widest mb-4">Social Proof</span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em]">Loved by managers<br />and residents alike.</h2>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Social Proof</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Loved by managers<br />and residents alike.</h2>
         </Reveal>
         <div className="relative">
           <AnimatePresence mode="wait">
@@ -986,7 +986,7 @@ function TestimonialsSection() {
               <div className="flex items-center justify-center gap-4">
                 <img src={`https://i.pravatar.cc/128?img=${TESTIMONIALS[activeIdx].img}`} alt="" className="h-13 w-13 rounded-2xl object-cover border-2 border-primary/20" />
                 <div className="text-left">
-                  <p className="font-bold">{TESTIMONIALS[activeIdx].name}</p>
+                  <p className="font-normal text-sm md:text-base">{TESTIMONIALS[activeIdx].name}</p>
                   <p className="text-sm text-muted-foreground">{TESTIMONIALS[activeIdx].role}</p>
                 </div>
               </div>
@@ -1018,13 +1018,13 @@ function PricingSection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(27,94,69,0.04),transparent)]" />
       <div className="container px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-8">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-bold uppercase tracking-widest mb-4">Transparent Pricing</span>
-          <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em]">Simple, honest pricing.<br />No surprises.</h2>
+          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Transparent Pricing</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Simple, honest pricing.<br />No surprises.</h2>
         </Reveal>
         <Reveal className="flex justify-center mb-14">
           <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl bg-foreground/5 border border-border">
             {["Monthly","Annual"].map((label,i) => (
-              <button key={i} onClick={() => setAnnual(i===1)} className={cn("px-6 py-2.5 rounded-xl text-sm font-bold transition-all",(i===1)===annual?"bg-primary text-primary-foreground shadow":"text-muted-foreground hover:text-foreground")}>
+              <button key={i} onClick={() => setAnnual(i===1)} className={cn("px-6 py-2.5 rounded-xl text-xs md:text-sm font-normal transition-all",(i===1)===annual?"bg-primary text-primary-foreground shadow":"text-muted-foreground hover:text-foreground")}>
                 {label}
                 {i===1 && <span className="ml-2 text-[10px] bg-primary-foreground/20 px-2 py-0.5 rounded-full">Save 20%</span>}
               </button>
@@ -1037,16 +1037,16 @@ function PricingSection() {
               <div className={cn("relative h-full rounded-3xl p-8 border transition-all duration-300 flex flex-col",plan.highlight?"bg-foreground text-background border-foreground shadow-2xl scale-[1.02]":"bg-card border-border hover:border-primary/20 hover:shadow-lg")}>
                 {plan.highlight && <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg">Most Popular</div>}
                 <div className="mb-6">
-                  <h3 className="font-black text-xl mb-1">{plan.name}</h3>
+                  <h3 className="font-black text-lg md:text-xl mb-1">{plan.name}</h3>
                   <p className={cn("text-sm",plan.highlight?"text-background/60":"text-muted-foreground")}>{plan.desc}</p>
                 </div>
                 <div className="mb-6">
                   {plan.price ? (
                     <div className="flex items-end gap-1">
-                      <span className="text-4xl font-black tracking-tight">KES {plan.price.toLocaleString()}</span>
+                      <span className="text-3xl md:text-4xl font-black tracking-tight">KES {plan.price.toLocaleString()}</span>
                       <span className={cn("text-sm mb-1.5",plan.highlight?"text-background/50":"text-muted-foreground")}>/mo</span>
                     </div>
-                  ) : <p className="text-3xl font-black">Custom</p>}
+                  ) : <p className="text-2xl md:text-3xl font-black">Custom</p>}
                   <p className="text-xs font-semibold mt-1.5 text-primary">{plan.units}</p>
                 </div>
                 <ul className="space-y-3 mb-8 flex-1">
@@ -1058,7 +1058,7 @@ function PricingSection() {
                   ))}
                 </ul>
                 <Link href={plan.price?"/auth/register":"/contact"}>
-                  <Button variant={plan.highlight?"secondary":"default"} className="w-full h-13 rounded-2xl font-bold">
+                  <Button variant={plan.highlight?"secondary":"default"} className="w-full h-13 rounded-2xl font-normal text-sm md:text-base">
                     {plan.cta}<ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
@@ -1084,17 +1084,17 @@ function FinalCTASection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(61,190,122,0.08),transparent)]" />
       <div className="container px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
         <Reveal>
-          <span className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/8 text-primary text-xs font-bold uppercase tracking-widest mb-4">Ready when you are</span>
-          <h2 className="text-5xl md:text-6xl font-black tracking-[-0.04em] text-background leading-tight">Start building<br />your legacy today.</h2>
+          <span className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Ready when you are</span>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-[-0.04em] text-background leading-tight">Start building<br />your legacy today.</h2>
           <p className="text-lg text-background/50 max-w-lg mx-auto font-light mt-5">Join 2,000+ property professionals who manage their portfolios with confidence on Nova.</p>
         </Reveal>
         <Reveal delay={0.2} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/auth/register">
-            <Button size="lg" className="h-16 px-14 rounded-3xl text-base font-black shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
+            <Button size="lg" className="h-16 px-14 rounded-3xl text-sm md:text-base font-black shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
               Get Started — Free<ArrowRight className="ml-3 h-5 w-5" />
             </Button>
           </Link>
-          <Button size="lg" variant="outline" className="h-16 px-10 rounded-3xl border border-background/10 text-background bg-transparent hover:bg-background/5 text-base font-bold">
+          <Button size="lg" variant="outline" className="h-16 px-10 rounded-3xl border border-background/10 text-background bg-transparent hover:bg-background/5 text-sm md:text-base font-normal">
             Schedule a Demo<Calendar className="ml-3 h-5 w-5" />
           </Button>
         </Reveal>
@@ -1134,7 +1134,7 @@ function Footer() {
               {title:"Legal",links:["Privacy Policy","Terms of Service","Cookie Policy","GDPR","Data DPA"]},
             ].map((col,i) => (
               <div key={i} className="space-y-4">
-                <h5 className="font-black text-sm tracking-tight">{col.title}</h5>
+                <h5 className="font-normal text-xs md:text-sm tracking-tight">{col.title}</h5>
                 <ul className="space-y-2.5 text-sm text-muted-foreground">
                   {col.links.map(link => (
                     <li key={link}><Link href="#" className="hover:text-primary transition-colors">{link}</Link></li>
