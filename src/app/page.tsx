@@ -60,6 +60,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/Navbar";
 import Logo from "@/components/Logo";
+import Loader from "@/components/Loader";
 import { cn } from "@/lib/utils";
 
 // ─── REVEAL ────────────────────────────────────────────────────────────────
@@ -618,10 +619,21 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <Navbar />
-      <main className="flex-1 overflow-y-auto overflow-x-hidden">
+    <>
+      <Loader show={isLoading} />
+      <div className={cn("flex min-h-screen flex-col bg-background", isLoading ? "h-screen overflow-hidden" : "")}>
+        <Navbar />
+        <main className="flex-1 overflow-y-auto overflow-x-hidden">
         <HeroCarousel />
         <TrustLogosBar />
         <MetricBar />
