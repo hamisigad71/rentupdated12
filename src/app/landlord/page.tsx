@@ -44,7 +44,7 @@ export default function LandlordDashboard() {
   return (
     <LandlordLayout>
       <div 
-        className="min-h-screen px-0.5 sm:px-4 lg:px-4 py-4 sm:py-6 lg:py-8"
+        className="min-h-screen px-4 lg:px-4 py-4 sm:py-6 lg:py-8"
         style={{ backgroundColor: "#FAFAF8" }}
       >
         <div className="max-w-7xl mx-auto space-y-8">

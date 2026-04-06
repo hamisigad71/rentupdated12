@@ -34,7 +34,7 @@ export default function TenantLayout({
         <TenantSidebar />
         <SidebarInset className="flex flex-col flex-1 w-full overflow-hidden">
           <Navbar />
-          <main className="flex-1 overflow-auto bg-background p-0 no-scrollbar relative mb-20 md:mb-0">
+          <main className="flex-1 overflow-auto bg-background px-4 no-scrollbar relative mb-20 md:mb-0">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/2 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none hidden md:block" />
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/2 blur-[100px] rounded-full -ml-48 -mb-48 pointer-events-none hidden md:block" />
             {children}

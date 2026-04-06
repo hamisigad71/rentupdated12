@@ -94,7 +94,7 @@ export default function RoleSelection() {
       <div className="absolute top-0 right-0 w-[50vw] h-[50vh] bg-primary/5 rounded-full blur-[160px] -mr-[25vw] -mt-[25vh] pointer-events-none hidden md:block" />
       <div className="absolute bottom-0 left-0 w-[50vw] h-[50vh] bg-primary/5 rounded-full blur-[160px] -ml-[25vw] -mb-[25vh] pointer-events-none hidden md:block" />
 
-      <header className="container relative z-10 px-0 sm:px-6 py-6 flex justify-between items-center">
+      <header className="container relative z-10 px-4 sm:px-6 py-6 flex justify-between items-center">
         <Logo size="lg" />
         <Link href="/auth/login">
           <Button
@@ -106,7 +106,7 @@ export default function RoleSelection() {
         </Link>
       </header>
 
-      <main className="flex-1 container relative z-10 px-0 sm:px-6 flex flex-col items-center justify-center py-10">
+      <main className="flex-1 container relative z-10 px-4 sm:px-6 flex flex-col items-center justify-center py-10">
         <div className="text-center space-y-6 mb-24 max-w-2xl mx-auto">
           <motion.p
             initial={{ opacity: 0, y: 20 }}

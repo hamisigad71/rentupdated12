@@ -353,7 +353,7 @@ export default function TenantDashboard() {
         <div className="min-h-screen bg-[#FAFAF8]">
           {/* ── Top Nav Bar ───────────────────────────────────── */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-0 md:px-10 h-16 flex items-center justify-between gap-4">
+            <div className="max-w-7xl mx-auto md:px-10 h-16 flex items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Home className="h-4 w-4 text-[#1B5E45]" />
                 <ChevronRight className="h-3.5 w-3.5" />
@@ -399,7 +399,7 @@ export default function TenantDashboard() {
             </div>
           </header>
 
-          <main className="max-w-7xl mx-auto px-0 md:px-10 py-8 space-y-8">
+          <main className="max-w-7xl mx-auto md:px-10 py-8 space-y-8">
             {/* ══ HERO SECTION ════════════════════════════════════════════ */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">

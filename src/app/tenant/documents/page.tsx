@@ -331,7 +331,7 @@ export default function TenantDocumentsPage() {
 
   return (
     <TenantLayout>
-      <div className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto">
+      <div className="py-6 md:p-8 space-y-8 max-w-7xl mx-auto">
         {/* ── HEADER ─────────────────────────────────────────────────────── */}
         <Reveal className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
           <div className="space-y-2">

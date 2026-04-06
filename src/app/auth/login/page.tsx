@@ -256,7 +256,7 @@ function LoginContent() {
   return (
     <div className="min-h-screen grid lg:grid-cols-[1fr_1.1fr] bg-[#FAFAF8]">
       {/* Left: Form */}
-      <div className="flex flex-col items-center justify-center px-0 sm:px-6 py-12 lg:px-16">
+      <div className="flex flex-col items-center justify-center px-4 sm:px-6 py-12 lg:px-16">
         <LoginForm onRoleChange={setRole} />
       </div>
       {/* Right: Hero */}
