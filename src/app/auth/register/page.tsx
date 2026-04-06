@@ -60,7 +60,7 @@ function InputBase({ icon: Icon, className = "", ...props }: { icon: React.Eleme
 /* ── Role selector screen ────────────────────────────────────────────── */
 function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => void }) {
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center px-0 py-6 sm:p-6">
       <div className="max-w-lg w-full">
 
         {/* Wordmark */}
@@ -162,7 +162,7 @@ function RegisterContent() {
     <div className="min-h-screen grid lg:grid-cols-[1fr_1.1fr] bg-[#FAFAF8]">
 
       {/* ── Left: Form ───────────────────────────────────────────────── */}
-      <div className="overflow-y-auto flex flex-col px-6 py-12 lg:px-14">
+      <div className="overflow-y-auto flex flex-col px-0 py-12 sm:px-6 lg:px-14">
         <div className="max-w-md w-full mx-auto">
 
           {/* Wordmark */}

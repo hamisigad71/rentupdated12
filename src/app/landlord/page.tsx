@@ -16,12 +16,17 @@ import {
   BarChart3, 
   ChevronRight,
   TrendingDown,
-  Calendar
+  Calendar,
+  Download,
+  Zap
 } from "lucide-react";
 import { getLandlordStats, mockPayments, mockComplaints } from "@/data/mockData";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -33,264 +38,478 @@ export default function LandlordDashboard() {
   
   const greeting = new Date().getHours() < 12 ? "Morning" : new Date().getHours() < 17 ? "Afternoon" : "Evening";
   const today = new Date().toLocaleDateString("en-KE", { weekday: "long", month: "long", day: "numeric" });
+  
+  const occupancyRate = Math.round((stats.occupiedUnits / stats.totalUnits) * 100);
 
   return (
     <LandlordLayout>
-      <div className="space-y-10">
-        
-        {/* Hero Section */}
-        <section className="relative overflow-hidden rounded-2xl bg-foreground/5 p-5 md:p-8 border border-foreground/5 dark:bg-foreground/[0.02]">
-          <div className="absolute top-0 right-0 -m-16 h-32 w-32 rounded-full bg-primary/10 blur-[80px]" />
-          <div className="absolute bottom-0 left-0 -m-16 h-32 w-32 rounded-full bg-primary/5 blur-[80px]" />
+      <div 
+        className="min-h-screen px-0.5 sm:px-4 lg:px-4 py-4 sm:py-6 lg:py-8"
+        style={{ backgroundColor: "#FAFAF8" }}
+      >
+        <div className="max-w-7xl mx-auto space-y-8">
           
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-xs font-bold uppercase  text-muted-foreground/60 leading-none">Command Center</span>
-              </div>
-              <div className="space-y-1">
-                <h2 className="text-xl md:text-2xl font-bold tracking-tight leading-none">
-                  Good {greeting},
-                </h2>
-                <h2 className="text-xl md:text-2xl font-bold tracking-tight leading-none gradient-text">
-                  {userName?.split(" ")[0]}
-                </h2>
-              </div>
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground/80">
-                <Calendar className="h-4 w-4" />
-                <span>{today}</span>
-              </div>
-              
-              <div className="flex items-center gap-6 pt-4">
-                {[
-                  { label: "Buildings", val: stats.totalBuildings },
-                  { label: "Occupancy", val: `${Math.round((stats.occupiedUnits / stats.totalUnits) * 100)}%` },
-                  { label: "Yield", val: "14.2%" },
-                ].map((item, i) => (
-                  <div key={i} className="flex flex-col">
-                    <span className="text-xl font-bold tracking-tight">{item.val}</span>
-                    <span className="text-[9px] font-bold uppercase  text-muted-foreground/50">{item.label}</span>
+          {/* Professional Welcome Header */}
+          <Card className="border-[#E8F5EE] bg-white overflow-hidden">
+            <CardContent className="p-6 lg:p-8">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#E8F5EE] rounded-full">
+                    <Calendar className="w-3.5 h-3.5 text-[#1B5E45]" />
+                    <span className="text-xs font-semibold text-[#1B5E45]">{today}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="flex flex-col items-end gap-3">
-              <Button size="lg" className="rounded-2xl px-6 h-12 bg-primary font-bold shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 active:scale-95 transition-all">
-                <Plus className="h-5 w-5 mr-2" />
-                Add New Asset
-              </Button>
-              <div className="flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2 border border-destructive/20 select-none">
-                <div className="h-1.5 w-1.5 rounded-full bg-destructive animate-pulse" />
-                <span className="text-[9px] font-bold uppercase text-destructive ">{stats.tenantsInArrears} Arrears Detected</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* KPI Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <DashboardCard title="Total Inventory" value={stats.totalUnits} icon={Home} color="primary" trend={{ value: 4, direction: "up" }} />
-          <DashboardCard title="Live Occupancy" value={stats.occupiedUnits} icon={Users} color="accent" trend={{ value: 2, direction: "up" }} />
-          <DashboardCard title="Monthly Revenue" value={`KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K`} icon={DollarSign} color="primary" trend={{ value: 12, direction: "up" }} />
-          <DashboardCard title="Arrears Pending" value={stats.tenantsInArrears} icon={AlertCircle} color="destructive" trend={{ value: 8, direction: "down" }} />
-        </section>
-
-        {/* Secondary Section */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Portfolio Health */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <h3 className="text-xl font-bold tracking-tight">Portfolio Health</h3>
-                <p className="text-sm text-muted-foreground">Live occupancy and collection frequency</p>
-              </div>
-              <Link href="/landlord/reports">
-                <Button variant="ghost" size="sm" className="text-primary font-bold hover:bg-primary/5 h-9 rounded-lg">
-                  Full Analytics <ChevronRight className="ml-1 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="glass rounded-xl border border-foreground/5 p-8 space-y-8">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold">Occupancy Rate</span>
-                  <Badge variant="secondary" className="bg-primary/10 text-primary font-bold border-primary/20">{Math.round((stats.occupiedUnits / stats.totalUnits) * 100)}% Capacity</Badge>
-                </div>
-                <div className="h-3 w-full rounded-full bg-foreground/5 overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${(stats.occupiedUnits / stats.totalUnits) * 100}%` }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full rounded-full bg-linear-to-r from-primary to-brand-accent shadow-[0_0_15px_rgba(var(--color-primary),0.3)]" 
-                  />
-                </div>
-                <div className="flex items-center justify-between text-xs font-bold uppercase  text-muted-foreground/60">
-                  <span>{stats.occupiedUnits} Units Leased</span>
-                  <span>{stats.vacantUnits} Vacancies</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-6 rounded-2xl bg-foreground/[0.02] border border-foreground/5 space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <BarChart3 className="h-4 w-4 text-primary" />
-                    </div>
-                    <span className="text-sm font-bold uppercase  text-muted-foreground/60">Revenue Performance</span>
+                  
+                  <div>
+                    <p className="text-sm font-medium text-[#6B7280] mb-1">Good {greeting},</p>
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1A1A1A]">
+                      {userName || "Property Manager"}
+                    </h1>
                   </div>
-                  <div className="flex items-end gap-1.5 h-12 pt-2">
-                    {[35, 42, 65, 55, 80, 100].map((h, i) => (
-                      <div key={i} className="flex-1">
-                        <motion.div 
-                          initial={{ height: 0 }}
-                          animate={{ height: `${h}%` }}
-                          transition={{ delay: i * 0.1, duration: 0.8 }}
-                          className={`w-full rounded-t-md ${i === 5 ? "bg-primary" : "bg-primary/20"}`} 
-                        />
+                  
+                  <div className="flex items-center gap-6 pt-2">
+                    {[
+                      { label: "Properties", val: stats.totalBuildings },
+                      { label: "Occupancy", val: `${occupancyRate}%` },
+                      { label: "Revenue", val: `KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K` },
+                    ].map((item, i) => (
+                      <div key={i} className="space-y-1">
+                        <p className="text-2xl font-bold text-[#1A1A1A]">{item.val}</p>
+                        <p className="text-xs font-medium text-[#6B7280]">{item.label}</p>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="p-6 rounded-2xl bg-foreground/[0.02] border border-foreground/5 space-y-4">
-                   <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-lg bg-destructive/10 flex items-center justify-center">
-                          <Activity className="h-4 w-4 text-destructive" />
-                        </div>
-                        <span className="text-sm font-bold uppercase  text-muted-foreground/60">Arrears Aging</span>
-                      </div>
-                      <Badge variant="outline" className="text-[9px] font-bold border-destructive/20 text-destructive">+12% vs LW</Badge>
-                   </div>
-                   <div className="space-y-3 pt-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium uppercase text-muted-foreground/80 ">30+ Days</span>
-                        <span className="text-sm font-bold">KSh 12,400</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
-                        <div className="h-full w-1/3 bg-destructive rounded-full" />
-                      </div>
-                   </div>
+                
+                <div className="flex flex-row items-center gap-3 w-full lg:w-auto">
+                  <Button 
+                    size="lg"
+                    className="bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold shadow-lg"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Property
+                  </Button>
+                  
+                  {stats.tenantsInArrears > 0 && (
+                    <div className="flex items-center gap-2 px-4 py-2.5 bg-red-50 border border-red-200 rounded-xl">
+                      <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                      <span className="text-xs font-semibold text-red-700">
+                        {stats.tenantsInArrears} Arrears Pending
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
+            </CardContent>
+          </Card>
+
+          {/* KPI Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { 
+                label: "Total Units", 
+                value: stats.totalUnits, 
+                icon: Home, 
+                color: "#1B5E45",
+                bgColor: "#E8F5EE",
+                trend: { value: 4, isPositive: true }
+              },
+              { 
+                label: "Occupied Units", 
+                value: stats.occupiedUnits, 
+                icon: Users, 
+                color: "#3DBE7A",
+                bgColor: "#E8F5EE",
+                trend: { value: 2, isPositive: true }
+              },
+              { 
+                label: "Monthly Revenue", 
+                value: `KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K`, 
+                icon: DollarSign, 
+                color: "#1B5E45",
+                bgColor: "#E8F5EE",
+                trend: { value: 12, isPositive: true }
+              },
+              { 
+                label: "Arrears", 
+                value: stats.tenantsInArrears, 
+                icon: AlertCircle, 
+                color: "#EF4444",
+                bgColor: "#FEE2E2",
+                trend: { value: 8, isPositive: false }
+              }
+            ].map((stat, i) => (
+              <Card key={i} className="border-[#E8F5EE] bg-white hover:shadow-md transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div 
+                      className="w-11 h-11 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: stat.bgColor, color: stat.color }}
+                    >
+                      <stat.icon className="w-5 h-5" strokeWidth={2.5} />
+                    </div>
+                    {stat.trend && (
+                      <Badge 
+                        variant="outline" 
+                        className={stat.trend.isPositive 
+                          ? "border-[#3DBE7A] text-[#3DBE7A] bg-[#E8F5EE]" 
+                          : "border-red-300 text-red-600 bg-red-50"
+                        }
+                      >
+                        {stat.trend.isPositive ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
+                        {stat.trend.value}%
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium text-[#6B7280]">{stat.label}</p>
+                    <h3 className="text-2xl font-bold text-[#1A1A1A]">{stat.value}</h3>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
-          {/* Quick Support / Tickets */}
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-               <h3 className="text-xl font-bold tracking-tight">Support Tickets</h3>
-               <Link href="/landlord/complaints" className="text-xs font-bold text-primary hover:underline underline-offset-4">See All</Link>
-            </div>
-            <div className="space-y-4">
-              {recentComplaints.map((ticket, i) => (
-                <div key={ticket.id} className="p-4 rounded-2xl bg-background border border-foreground/5 shadow-sm hover:shadow-md transition-all group cursor-pointer">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline" className={`text-[8px] font-bold uppercase h-4 px-1 ${ticket.priority === 'high' ? 'border-destructive/30 text-destructive bg-destructive/5' : ''}`}>
-                          {ticket.category}
-                        </Badge>
-                        <span className="text-xs font-bold text-muted-foreground/50 uppercase ">{ticket.createdDate}</span>
-                      </div>
-                      <h4 className="text-sm font-bold truncate group-hover:text-primary transition-colors">{ticket.title}</h4>
-                      <p className="text-xs font-semibold text-muted-foreground/60 uppercase">{ticket.tenantName}</p>
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Portfolio Analytics */}
+            <Card className="lg:col-span-2 border-[#E8F5EE] bg-white">
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle className="text-[#1A1A1A] text-xl font-bold">Portfolio Overview</CardTitle>
+                    <CardDescription className="text-[#6B7280] mt-1">
+                      Performance metrics and occupancy analytics
+                    </CardDescription>
+                  </div>
+                  <Link href="/landlord/reports">
+                    <Button variant="ghost" size="sm" className="text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold">
+                      View Reports
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                
+                {/* Occupancy Progress */}
+                <div className="space-y-4">
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-[#6B7280] mb-1">Occupancy Rate</p>
+                      <p className="text-3xl font-bold text-[#1A1A1A]">
+                        {stats.occupiedUnits}
+                        <span className="text-lg text-[#6B7280] font-normal ml-2">
+                          of {stats.totalUnits} units
+                        </span>
+                      </p>
                     </div>
-                    <div className={`h-8 w-8 shrink-0 rounded-lg flex items-center justify-center ${ticket.status === 'in-progress' ? 'bg-brand-accent/10 border border-brand-accent/20 text-brand-accent' : 'bg-destructive/10 border border-destructive/20 text-destructive'}`}>
-                       {ticket.status === 'in-progress' ? <Activity className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+                    <Badge variant="outline" className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20">
+                      {occupancyRate}% Occupied
+                    </Badge>
+                  </div>
+                  <div className="h-3 w-full rounded-full bg-[#E8F5EE] overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${occupancyRate}%` }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
+                      className="h-full rounded-full bg-[#1B5E45]" 
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-xs font-medium text-[#6B7280]">
+                    <span>{stats.occupiedUnits} Leased Units</span>
+                    <span>{stats.vacantUnits} Vacant</span>
+                  </div>
+                </div>
+
+                <Separator className="bg-[#F4F4F0]" />
+
+                {/* Performance Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  
+                  {/* Revenue Chart */}
+                  <div className="p-6 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8] space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
+                        <BarChart3 className="w-4 h-4 text-[#1B5E45]" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-[#6B7280]">Revenue Trend</p>
+                        <p className="text-sm font-bold text-[#1A1A1A]">6-Month View</p>
+                      </div>
+                    </div>
+                    <div className="flex items-end gap-1.5 h-20">
+                      {[35, 42, 65, 55, 80, 100].map((height, i) => (
+                        <div key={i} className="flex-1 flex items-end">
+                          <motion.div 
+                            initial={{ height: 0 }}
+                            animate={{ height: `${height}%` }}
+                            transition={{ delay: i * 0.1, duration: 0.8 }}
+                            className={`w-full rounded-t-lg transition-all duration-300 hover:opacity-80 ${
+                              i === 5 
+                                ? "bg-[#1B5E45]" 
+                                : "bg-[#D1E7DD]"
+                            }`} 
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Arrears Summary */}
+                  <div className="p-6 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8] space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center">
+                          <Activity className="w-4 h-4 text-red-600" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-medium text-[#6B7280]">Arrears Aging</p>
+                          <p className="text-sm font-bold text-[#1A1A1A]">Outstanding</p>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="text-xs border-red-200 text-red-600 bg-red-50">
+                        {stats.tenantsInArrears} Accounts
+                      </Badge>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-[#6B7280]">30+ Days</span>
+                        <span className="text-sm font-bold text-[#1A1A1A]">KSh 124,000</span>
+                      </div>
+                      <div className="h-2 w-full rounded-full bg-red-50 overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: "65%" }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
+                          className="h-full rounded-full bg-red-500" 
+                        />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-[#6B7280]">60+ Days</span>
+                        <span className="text-sm font-bold text-red-600">KSh 45,000</span>
+                      </div>
+                      <div className="h-2 w-full rounded-full bg-red-50 overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: "35%" }}
+                          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+                          className="h-full rounded-full bg-red-500" 
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-            
-            <div className="glass p-6 rounded-xl border border-foreground/5 space-y-4">
-               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">Quick Terminal</h4>
-               <div className="grid grid-cols-2 gap-3">
-                 <Link href="/landlord/tenants" className="contents">
-                    <Button variant="outline" className="rounded-xl border-foreground/5 h-14 w-full flex flex-col items-center justify-center gap-1 hover:bg-primary/5 hover:border-primary/20 group">
-                        <Plus className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
-                        <span className="text-[8px] font-bold uppercase ">New Tenant</span>
+              </CardContent>
+            </Card>
+
+            {/* Sidebar */}
+            <div className="space-y-6">
+              
+              {/* Support Tickets */}
+              <Card className="border-[#E8F5EE] bg-white">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-[#1A1A1A] text-lg font-bold">Support Tickets</CardTitle>
+                    <Link href="/landlord/complaints" className="text-xs font-semibold text-[#1B5E45] hover:underline">
+                      View All
+                    </Link>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {recentComplaints.map((ticket) => (
+                    <Link 
+                      key={ticket.id}
+                      href={`/landlord/complaints/${ticket.id}`}
+                      className="block p-4 rounded-xl bg-[#FAFAF8] border border-[#E8F5EE] hover:border-[#1B5E45]/20 hover:bg-[#E8F5EE] transition-all group"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-2 flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs ${
+                                ticket.priority === 'high' 
+                                  ? 'border-red-200 text-red-600 bg-red-50' 
+                                  : 'border-[#E8F5EE] text-[#6B7280] bg-white'
+                              }`}
+                            >
+                              {ticket.category}
+                            </Badge>
+                            <span className="text-xs text-[#6B7280]">{ticket.createdDate}</span>
+                          </div>
+                          <h4 className="text-sm font-semibold text-[#1A1A1A] truncate group-hover:text-[#1B5E45] transition-colors">
+                            {ticket.title}
+                          </h4>
+                          <p className="text-xs font-medium text-[#6B7280]">{ticket.tenantName}</p>
+                        </div>
+                        <div className={`w-8 h-8 shrink-0 rounded-lg flex items-center justify-center ${
+                          ticket.status === 'in-progress' 
+                            ? 'bg-[#E8F5EE] text-[#1B5E45]' 
+                            : 'bg-red-50 text-red-600'
+                        }`}>
+                          {ticket.status === 'in-progress' 
+                            ? <Activity className="w-4 h-4" /> 
+                            : <AlertCircle className="w-4 h-4" />
+                          }
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </CardContent>
+              </Card>
+
+              {/* Quick Actions */}
+              <Card className="border-[#E8F5EE] bg-white">
+                <CardHeader>
+                  <CardTitle className="text-[#1A1A1A] text-lg font-bold flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-[#1B5E45]" />
+                    Quick Actions
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Link href="/landlord/tenants">
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 font-semibold"
+                    >
+                      <Plus className="w-4 h-4 mr-3 text-[#1B5E45]" />
+                      Add New Tenant
                     </Button>
-                 </Link>
-                 <Link href="/landlord/payments" className="contents">
-                    <Button variant="outline" className="rounded-xl border-foreground/5 h-14 w-full flex flex-col items-center justify-center gap-1 hover:bg-primary/5 hover:border-primary/20 group">
-                        <DollarSign className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
-                        <span className="text-[8px] font-bold uppercase ">Post Rent</span>
+                  </Link>
+                  <Link href="/landlord/payments">
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 font-semibold"
+                    >
+                      <DollarSign className="w-4 h-4 mr-3 text-[#1B5E45]" />
+                      Record Payment
                     </Button>
-                 </Link>
-               </div>
+                  </Link>
+                  <Link href="/landlord/reports">
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 font-semibold"
+                    >
+                      <BarChart3 className="w-4 h-4 mr-3 text-[#1B5E45]" />
+                      Generate Report
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
           </div>
-        </section>
 
-        {/* Ledger Section */}
-        <section className="space-y-6">
-           <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <h3 className="text-xl font-bold tracking-tight">Recent Ledger</h3>
-                <p className="text-sm text-muted-foreground">Latest financial transactions across all assets</p>
+          {/* Recent Transactions Table */}
+          <Card className="border-[#E8F5EE] bg-white">
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div>
+                  <CardTitle className="text-[#1A1A1A] text-xl font-bold">Recent Transactions</CardTitle>
+                  <CardDescription className="text-[#6B7280] mt-1">
+                    Latest payment activity across all properties
+                  </CardDescription>
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
               </div>
-              <Button variant="outline" size="sm" className="rounded-xl h-10 border-foreground/10 font-bold px-5">Download CSV</Button>
-           </div>
-           
-           <div className="glass rounded-2xl border border-foreground/5 overflow-hidden">
-             <div className="overflow-x-auto">
-               <table className="w-full text-left border-collapse">
-                 <thead>
-                   <tr className="bg-foreground/[0.02] border-b border-foreground/5">
-                     <th className="px-8 py-5 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">Reference</th>
-                     <th className="px-6 py-5 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">Entity</th>
-                     <th className="px-6 py-5 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">Asset ID</th>
-                     <th className="px-6 py-5 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40 text-right">Magnitude</th>
-                     <th className="px-8 py-5 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40 text-center">Status</th>
-                   </tr>
-                 </thead>
-                 <tbody className="divide-y divide-foreground/5">
-                   {recentPayments.map((p, i) => (
-                     <tr key={p.id} className="hover:bg-foreground/[0.01] transition-colors group">
-                       <td className="px-8 py-4">
-                         <div className="flex flex-col">
-                           <span className="text-xs font-bold font-mono text-muted-foreground/60">{p.id}</span>
-                           <span className="text-xs font-bold text-muted-foreground/40">{p.date}</span>
-                         </div>
-                       </td>
-                       <td className="px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-xl bg-foreground/5 flex items-center justify-center font-bold text-muted-foreground">
-                              {p.tenantName[0]}
+            </CardHeader>
+            <CardContent>
+              <div className="rounded-xl border border-[#E8F5EE] overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="bg-[#FAFAF8] border-b border-[#E8F5EE]">
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-[#6B7280] uppercase">
+                          Transaction ID
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-[#6B7280] uppercase">
+                          Tenant
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-[#6B7280] uppercase">
+                          Unit
+                        </th>
+                        <th className="px-6 py-4 text-right text-xs font-semibold text-[#6B7280] uppercase">
+                          Amount
+                        </th>
+                        <th className="px-6 py-4 text-center text-xs font-semibold text-[#6B7280] uppercase">
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#E8F5EE]">
+                      {recentPayments.map((payment) => (
+                        <tr key={payment.id} className="hover:bg-[#FAFAF8] transition-colors">
+                          <td className="px-6 py-4">
+                            <div className="space-y-1">
+                              <p className="text-sm font-mono font-semibold text-[#1A1A1A]">
+                                {payment.id}
+                              </p>
+                              <p className="text-xs text-[#6B7280]">{payment.date}</p>
                             </div>
-                            <div className="flex flex-col">
-                              <span className="text-sm font-bold">{p.tenantName}</span>
-                              <span className="text-xs font-bold text-muted-foreground/60 uppercase">{p.month}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center font-semibold text-[#1B5E45]">
+                                {payment.tenantName[0]}
+                              </div>
+                              <div>
+                                <p className="text-sm font-semibold text-[#1A1A1A]">
+                                  {payment.tenantName}
+                                </p>
+                                <p className="text-xs text-[#6B7280]">{payment.month}</p>
+                              </div>
                             </div>
-                          </div>
-                       </td>
-                       <td className="px-6 py-4 text-xs font-bold text-muted-foreground/80 uppercase ">{p.unitId}</td>
-                       <td className="px-6 py-4 text-right">
-                         <span className="text-sm font-bold text-primary tracking-tight">KSh {p.amount.toLocaleString()}</span>
-                       </td>
-                       <td className="px-8 py-4">
-                         <div className="flex justify-center">
-                           <Badge className={`rounded-xl h-6 px-3 border uppercase text-[8px] font-bold  ${p.status === 'completed' ? 'bg-primary/10 border-primary/20 text-primary shadow-[0_0_10px_rgba(var(--color-primary),0.05)]' : 'bg-destructive/10 border-destructive/20 text-destructive'}`}>
-                             {p.status}
-                           </Badge>
-                         </div>
-                       </td>
-                     </tr>
-                   ))}
-                 </tbody>
-               </table>
-             </div>
-              <Link href="/landlord/payments" className="p-4 bg-foreground/[0.02] border-t border-foreground/5 flex justify-center hover:bg-primary/5 transition-colors group">
-                 <Button variant="ghost" size="sm" className="text-xs font-bold uppercase  text-muted-foreground group-hover:text-primary">View Full Ledger <ArrowUpRight className="ml-1 h-3 w-3" /></Button>
-              </Link>
-           </div>
-        </section>
+                          </td>
+                          <td className="px-6 py-4 text-sm font-medium text-[#4B5563]">
+                            {payment.unitId}
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <p className="text-sm font-bold text-[#1B5E45]">
+                              KSh {payment.amount.toLocaleString()}
+                            </p>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex justify-center">
+                              <Badge 
+                                className={`${
+                                  payment.status === 'completed' 
+                                    ? 'bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20' 
+                                    : 'bg-red-50 text-red-600 border-red-200'
+                                } capitalize`}
+                              >
+                                {payment.status}
+                              </Badge>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="border-t border-[#E8F5EE] p-4 bg-[#FAFAF8] flex justify-center">
+                  <Link href="/landlord/payments">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold"
+                    >
+                      View All Transactions
+                      <ArrowUpRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
+        </div>
       </div>
     </LandlordLayout>
   );

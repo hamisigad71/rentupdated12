@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import LandlordLayout from "@/components/LandlordLayout";
 import { 
   revenueHistory, 
@@ -18,11 +18,15 @@ import {
   BarChart,
   Bar,
   Cell,
-  PieChart,
-  Pie
+  LineChart,
+  Line,
+  Legend
 } from "recharts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BarChart3, 
   TrendingUp, 
@@ -33,8 +37,13 @@ import {
   Activity, 
   Zap, 
   ShieldCheck,
-  Globe,
-  PieChart as PieIcon
+  DollarSign,
+  Home,
+  AlertCircle,
+  CheckCircle2,
+  TrendingDown,
+  FileText,
+  Filter
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -42,14 +51,17 @@ import { cn } from "@/lib/utils";
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="glass p-4 rounded-2xl border border-white/10 shadow-2xl">
-        <p className="text-xs font-bold uppercase  text-primary mb-2">{label}</p>
+      <div className="bg-white p-4 rounded-xl border border-[#E8F5EE] shadow-xl">
+        <p className="text-xs font-semibold text-[#1A1A1A] mb-2">{label}</p>
         {payload.map((entry: any, i: number) => (
-          <div key={i} className="flex items-center gap-4">
-             <div className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
-             <p className="text-sm font-bold tracking-tight uppercase text-white/90">
-                {entry.name}: <span className="text-white">KSh {entry.value.toLocaleString()}</span>
-             </p>
+          <div key={i} className="flex items-center justify-between gap-6">
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
+              <span className="text-xs font-medium text-[#6B7280]">{entry.name}</span>
+            </div>
+            <span className="text-sm font-bold text-[#1A1A1A]">
+              KSh {entry.value.toLocaleString()}
+            </span>
           </div>
         ))}
       </div>
@@ -60,205 +72,475 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export default function ReportsPage() {
   const stats = getLandlordStats();
+  const [chartView, setChartView] = useState<"area" | "line">("area");
+  const [timeRange, setTimeRange] = useState("6m");
+
+  const portfolioPerformance = Math.round((stats.occupiedUnits / stats.totalUnits) * 100);
+  const revenueGrowth = 12.4;
+  const arrearsRate = Math.round((stats.totalArrears / stats.monthlyIncome) * 100);
 
   return (
     <LandlordLayout>
-      <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-        
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <div className="space-y-1">
-            <Badge variant="outline" className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs font-bold  px-3 py-1 mb-2">
-              Strategic Analytics
-            </Badge>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight leading-none uppercase">
-              Performance <span className="text-primary ">& Metrics</span>
-            </h1>
-            <p className="text-sm font-bold text-muted-foreground/30 uppercase tracking-tight">
-              Enterprise-grade portfolio intelligence node
-            </p>
-          </div>
+      <div 
+        className="min-h-screen p-4 sm:p-6 lg:p-8"
+        style={{ backgroundColor: "#FAFAF8" }}
+      >
+        <div className="max-w-7xl mx-auto space-y-6">
           
-          <div className="flex items-center gap-3">
-             <div className="flex h-12 items-center gap-2 px-6 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-                <Calendar className="h-4 w-4 text-muted-foreground/40" />
-                <span className="text-xs font-bold uppercase  text-muted-foreground/60">Audit Cycle:</span>
-                <span className="text-xs font-bold text-primary">Q1 2024</span>
-             </div>
-             <Button variant="outline" className="h-12 rounded-xl border-foreground/10 font-bold uppercase text-[9px] tracking-[0.2em] group">
-                <Download className="mr-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" /> Synchronize Reports
-             </Button>
-          </div>
-        </div>
+          {/* Page Header */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="space-y-2">
+              <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
+                <BarChart3 className="w-3 h-3 mr-1" />
+                Analytics & Reports
+              </Badge>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A]">
+                Performance Dashboard
+              </h1>
+              <p className="text-sm text-[#6B7280]">
+                Comprehensive portfolio analytics and insights
+              </p>
+            </div>
 
-        {/* Global KPIs Card Strip */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-           {[
-             { label: "Gross Revenue", val: `KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K`, icon: TrendingUp, trend: "+12.4%" },
-             { label: "Portfolio Yield", val: "14.2%", icon: Target, trend: "+0.8%" },
-             { label: "Arrears Exposure", val: `${Math.round((stats.totalArrears / stats.monthlyIncome) * 100)}%`, icon: Activity, trend: "-2.1%", danger: true },
-             { label: "Global Occupancy", val: `${Math.round((stats.occupiedUnits / stats.totalUnits) * 100)}%`, icon: Globe, trend: "+1.5%" },
-           ].map((stat, i) => (
-             <motion.div
-               key={i}
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: i * 0.1 }}
-               className="p-8 rounded-2xl bg-background border border-foreground/5 shadow-2xl hover:border-primary/20 transition-all group"
-             >
-               <div className="flex items-center justify-between mb-6">
-                  <div className="h-12 w-12 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform shadow-inner">
-                     <stat.icon className="h-6 w-6" />
-                  </div>
-                  <Badge className={cn(
-                    "rounded-lg h-6 px-2 text-[9px] font-bold uppercase ",
-                    stat.danger ? "bg-destructive/10 text-destructive border-destructive/20" : "bg-primary/10 text-primary border-primary/20"
-                  )}>
-                    {stat.trend}
-                  </Badge>
-               </div>
-               <p className="text-3xl font-bold tracking-tight mb-1 uppercase leading-none">{stat.val}</p>
-               <span className="text-xs font-bold uppercase  text-muted-foreground/40">{stat.label}</span>
-             </motion.div>
-           ))}
-        </div>
-
-        {/* Main Analytics Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-           
-           {/* Revenue Projection (Left) */}
-           <div className="lg:col-span-8 glass p-5 rounded-3xl border border-foreground/5 shadow-2xl space-y-10">
-              <div className="flex items-center justify-between">
-                 <div className="space-y-1">
-                    <h3 className="text-2xl font-bold uppercase tracking-tight">Revenue Projection</h3>
-                    <p className="text-xs font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">6-Month Financial Trajectory</p>
-                 </div>
-                 <div className="flex gap-2">
-                    {["Area", "Bar"].map(v => (
-                      <Button key={v} variant="outline" className={cn("h-10 px-6 rounded-xl text-[9px] font-bold uppercase  border-foreground/5", v === "Area" ? "bg-primary text-white border-primary" : "text-muted-foreground")}>{v}</Button>
-                    ))}
-                 </div>
+            <div className="flex flex-row items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-2 px-4 h-11 rounded-xl bg-white border border-[#E8F5EE]">
+                <Calendar className="w-4 h-4 text-[#6B7280]" />
+                <span className="text-xs font-medium text-[#6B7280]">Period:</span>
+                <span className="text-xs font-semibold text-[#1B5E45]">Q1 2024</span>
               </div>
+              <Button
+                variant="outline"
+                className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export Report
+              </Button>
+            </div>
+          </div>
 
-              <div className="h-[400px] w-full pt-6">
-                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={revenueHistory}>
-                       <defs>
+          {/* Key Metrics Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                label: "Total Revenue",
+                value: `KSh ${(stats.monthlyIncome / 1000).toFixed(1)}K`,
+                change: "+12.4%",
+                isPositive: true,
+                icon: DollarSign,
+                color: "#1B5E45",
+                bgColor: "#E8F5EE",
+              },
+              {
+                label: "Portfolio Yield",
+                value: "14.2%",
+                change: "+0.8%",
+                isPositive: true,
+                icon: Target,
+                color: "#3DBE7A",
+                bgColor: "#E8F5EE",
+              },
+              {
+                label: "Occupancy Rate",
+                value: `${portfolioPerformance}%`,
+                change: "+1.5%",
+                isPositive: true,
+                icon: Home,
+                color: "#1B5E45",
+                bgColor: "#E8F5EE",
+              },
+              {
+                label: "Arrears Rate",
+                value: `${arrearsRate}%`,
+                change: "-2.1%",
+                isPositive: true,
+                icon: AlertCircle,
+                color: "#EF4444",
+                bgColor: "#FEE2E2",
+              },
+            ].map((metric, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="border-[#E8F5EE] bg-white hover:shadow-md transition-shadow">
+                  <CardContent className="p-4 sm:pt-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div
+                        className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: metric.bgColor, color: metric.color }}
+                      >
+                        <metric.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+                      </div>
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "px-1.5 py-0 text-[10px] sm:text-xs",
+                          metric.isPositive
+                            ? "border-[#3DBE7A] text-[#3DBE7A] bg-[#E8F5EE]"
+                            : "border-red-300 text-red-600 bg-red-50"
+                        )}
+                      >
+                        {metric.isPositive ? (
+                          <TrendingUp className="w-3 h-3 mr-0.5" />
+                        ) : (
+                          <TrendingDown className="w-3 h-3 mr-0.5" />
+                        )}
+                        {metric.change}
+                      </Badge>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[10px] sm:text-xs font-medium text-[#6B7280]">{metric.label}</p>
+                      <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A]">{metric.value}</h3>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Main Analytics Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Revenue Chart - Takes 2/3 width */}
+            <Card className="lg:col-span-2 border-[#E8F5EE] bg-white">
+              <CardHeader>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <CardTitle className="text-[#1A1A1A] text-xl font-bold">
+                      Revenue Analytics
+                    </CardTitle>
+                    <CardDescription className="text-[#6B7280] mt-1">
+                      6-month performance overview
+                    </CardDescription>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant={chartView === "area" ? "default" : "outline"}
+                      onClick={() => setChartView("area")}
+                      className={cn(
+                        "h-9 px-4",
+                        chartView === "area"
+                          ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
+                          : "border-[#E8F5EE] hover:bg-[#E8F5EE]"
+                      )}
+                    >
+                      Area
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant={chartView === "line" ? "default" : "outline"}
+                      onClick={() => setChartView("line")}
+                      className={cn(
+                        "h-9 px-4",
+                        chartView === "line"
+                          ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
+                          : "border-[#E8F5EE] hover:bg-[#E8F5EE]"
+                      )}
+                    >
+                      Line
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[350px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    {chartView === "area" ? (
+                      <AreaChart data={revenueHistory}>
+                        <defs>
                           <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                             <stop offset="5%" stopColor="#1B5E45" stopOpacity={0.4}/>
-                             <stop offset="95%" stopColor="#1B5E45" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#1B5E45" stopOpacity={0.3} />
+                            <stop offset="95%" stopColor="#1B5E45" stopOpacity={0} />
                           </linearGradient>
                           <linearGradient id="colorTarget" x1="0" y1="0" x2="0" y2="1">
-                             <stop offset="5%" stopColor="#3DBE7A" stopOpacity={0.1}/>
-                             <stop offset="95%" stopColor="#3DBE7A" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#3DBE7A" stopOpacity={0.2} />
+                            <stop offset="95%" stopColor="#3DBE7A" stopOpacity={0} />
                           </linearGradient>
-                       </defs>
-                       <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: "hsl(var(--muted-foreground))" }} dy={10} />
-                       <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: "hsl(var(--muted-foreground))" }} tickFormatter={(val) => `KSh ${val / 1000}k`} />
-                       <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--foreground))" strokeOpacity={0.05} />
-                       <Tooltip content={<CustomTooltip />} />
-                       <Area type="monotone" dataKey="revenue" name="Actual Revenue" stroke="#1B5E45" strokeWidth={4} fillOpacity={1} fill="url(#colorRevenue)" />
-                       <Area type="monotone" dataKey="target" name="Target Matrix" stroke="#3DBE7A" strokeWidth={2} strokeDasharray="8 4" fillOpacity={1} fill="url(#colorTarget)" />
-                    </AreaChart>
-                 </ResponsiveContainer>
-              </div>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E8F5EE" vertical={false} />
+                        <XAxis
+                          dataKey="month"
+                          axisLine={false}
+                          tickLine={false}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          dy={10}
+                        />
+                        <YAxis
+                          axisLine={false}
+                          tickLine={false}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          tickFormatter={(val) => `${val / 1000}K`}
+                        />
+                        <Tooltip content={<CustomTooltip />} />
+                        <Legend
+                          wrapperStyle={{ paddingTop: "20px" }}
+                          iconType="circle"
+                          formatter={(value) => (
+                            <span className="text-sm font-medium text-[#4B5563]">{value}</span>
+                          )}
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="revenue"
+                          name="Actual Revenue"
+                          stroke="#1B5E45"
+                          strokeWidth={3}
+                          fillOpacity={1}
+                          fill="url(#colorRevenue)"
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="target"
+                          name="Target"
+                          stroke="#3DBE7A"
+                          strokeWidth={2}
+                          strokeDasharray="5 5"
+                          fillOpacity={1}
+                          fill="url(#colorTarget)"
+                        />
+                      </AreaChart>
+                    ) : (
+                      <LineChart data={revenueHistory}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E8F5EE" vertical={false} />
+                        <XAxis
+                          dataKey="month"
+                          axisLine={false}
+                          tickLine={false}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          dy={10}
+                        />
+                        <YAxis
+                          axisLine={false}
+                          tickLine={false}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          tickFormatter={(val) => `${val / 1000}K`}
+                        />
+                        <Tooltip content={<CustomTooltip />} />
+                        <Legend
+                          wrapperStyle={{ paddingTop: "20px" }}
+                          iconType="circle"
+                          formatter={(value) => (
+                            <span className="text-sm font-medium text-[#4B5563]">{value}</span>
+                          )}
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="revenue"
+                          name="Actual Revenue"
+                          stroke="#1B5E45"
+                          strokeWidth={3}
+                          dot={{ fill: "#1B5E45", r: 4 }}
+                          activeDot={{ r: 6 }}
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="target"
+                          name="Target"
+                          stroke="#3DBE7A"
+                          strokeWidth={2}
+                          strokeDasharray="5 5"
+                          dot={{ fill: "#3DBE7A", r: 3 }}
+                        />
+                      </LineChart>
+                    )}
+                  </ResponsiveContainer>
+                </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-10 border-t border-foreground/5">
-                 {[
-                   { l: "Peak Performance", v: "MAR 24", s: "Revenue Cap" },
-                   { l: "Growth Index", v: "18.4%", s: "Year-on-Year" },
-                   { l: "Target Variance", v: "+12.2%", s: "Above Matrix" },
-                   { l: "Net Liquid", v: "KSh 1.2M", s: "Dischargeable" },
-                 ].map((stat, i) => (
-                   <div key={i} className="flex flex-col">
-                      <span className="text-[8px] font-bold uppercase  text-muted-foreground/30 mb-1">{stat.l}</span>
-                      <span className="text-sm font-bold uppercase tracking-tight text-primary">{stat.v}</span>
-                      <span className="text-[9px] font-bold text-muted-foreground/20 uppercase tracking-tight">{stat.s}</span>
-                   </div>
-                 ))}
-              </div>
-           </div>
+                <Separator className="my-6 bg-[#F4F4F0]" />
 
-           {/* Asset Health (Right) */}
-           <div className="lg:col-span-4 space-y-8">
+                {/* Revenue Insights */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { label: "Peak Month", value: "MAR '24", sublabel: "Highest Revenue" },
+                    { label: "Growth Rate", value: "18.4%", sublabel: "Year-on-Year" },
+                    { label: "vs Target", value: "+12.2%", sublabel: "Above Target" },
+                    { label: "Net Income", value: "KSh 1.2M", sublabel: "This Quarter" },
+                  ].map((insight, i) => (
+                    <div key={i} className="space-y-1">
+                      <p className="text-xs font-medium text-[#6B7280]">{insight.label}</p>
+                      <p className="text-lg font-bold text-[#1B5E45]">{insight.value}</p>
+                      <p className="text-xs text-[#6B7280]">{insight.sublabel}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Right Column - Occupancy & Performance */}
+            <div className="space-y-6">
               
               {/* Occupancy Chart */}
-              <div className="glass p-5 rounded-2xl border border-foreground/5 shadow-2xl space-y-8">
-                 <div className="flex items-center gap-5">
-                    <div className="h-14 w-14 rounded-2xl bg-[#0F0F0F] flex items-center justify-center text-white shadow-2xl">
-                       <BarChart3 className="h-7 w-7 text-primary" strokeWidth={1.5} />
+              <Card className="border-[#E8F5EE] bg-white">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
+                      <BarChart3 className="w-5 h-5 text-[#1B5E45]" />
                     </div>
-                    <div className="space-y-0.5">
-                       <h4 className="text-xl font-bold uppercase tracking-tight">Asset Load</h4>
-                       <p className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">Live Occupancy Trends</p>
+                    <div>
+                      <CardTitle className="text-[#1A1A1A] text-lg font-bold">
+                        Occupancy
+                      </CardTitle>
+                      <CardDescription className="text-[#6B7280] text-xs">
+                        By building
+                      </CardDescription>
                     </div>
-                 </div>
-
-                 <div className="h-[250px] w-full">
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[280px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
-                       <BarChart data={occupancyTrends} layout="vertical" barSize={12} margin={{ left: -20 }}>
-                          <XAxis type="number" hide />
-                          <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 9, fontWeight: 900, fill: "hsl(var(--muted-foreground))" }} width={100} />
-                          <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} />
-                          <Bar dataKey="occupied" radius={[0, 4, 4, 0]}>
-                             {occupancyTrends.map((entry, index) => (
-                               <Cell key={`cell-${index}`} fill={index === 2 ? "#1B5E45" : "#1B5E4540"} />
-                             ))}
-                          </Bar>
-                       </BarChart>
+                      <BarChart data={occupancyTrends} layout="vertical" barSize={20}>
+                        <XAxis type="number" hide />
+                        <YAxis
+                          dataKey="name"
+                          type="category"
+                          axisLine={false}
+                          tickLine={false}
+                          tick={{ fontSize: 11, fill: "#6B7280", fontWeight: 500 }}
+                          width={90}
+                        />
+                        <Tooltip content={<CustomTooltip />} />
+                        <Bar dataKey="occupied" radius={[0, 8, 8, 0]}>
+                          {occupancyTrends.map((entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={index === 0 ? "#1B5E45" : "#E8F5EE"}
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
                     </ResponsiveContainer>
-                 </div>
-                 
-                 <div className="flex items-center justify-between pt-6 border-t border-foreground/5">
-                    <div className="flex items-center gap-3">
-                       <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                       <span className="text-xs font-bold uppercase text-muted-foreground/40 ">Global Stability</span>
+                  </div>
+
+                  <Separator className="my-4 bg-[#F4F4F0]" />
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#3DBE7A] animate-pulse" />
+                      <span className="text-xs font-medium text-[#6B7280]">
+                        Overall Performance
+                      </span>
                     </div>
-                    <ArrowUpRight className="h-4 w-4 text-primary" />
-                 </div>
+                    <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20">
+                      {portfolioPerformance}%
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Performance Metrics */}
+              <Card className="border-[#E8F5EE] bg-white">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
+                      <Activity className="w-5 h-5 text-[#1B5E45]" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-[#1A1A1A] text-lg font-bold">
+                        Operations
+                      </CardTitle>
+                      <CardDescription className="text-[#6B7280] text-xs">
+                        Key performance indicators
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {[
+                    { label: "Collection Rate", value: 92, max: 100, color: "#3DBE7A" },
+                    { label: "Avg Response Time", value: 75, max: 100, color: "#1B5E45" },
+                    { label: "Cost Efficiency", value: 88, max: 100, color: "#3DBE7A" },
+                  ].map((metric, i) => (
+                    <div key={i} className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="font-medium text-[#4B5563]">{metric.label}</span>
+                        <span className="font-bold text-[#1A1A1A]">{metric.value}%</span>
+                      </div>
+                      <div className="h-2 w-full bg-[#F4F4F0] rounded-full overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${metric.value}%` }}
+                          transition={{ duration: 1, delay: 0.2 + i * 0.1 }}
+                          className="h-full rounded-full"
+                          style={{ backgroundColor: metric.color }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  <Separator className="my-4 bg-[#F4F4F0]" />
+
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-[#E8F5EE]">
+                    <CheckCircle2 className="w-4 h-4 text-[#1B5E45]" />
+                    <span className="text-xs font-semibold text-[#1B5E45]">
+                      All systems operational
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Additional Insights Section */}
+          <Card className="border-[#E8F5EE] bg-white">
+            <CardHeader>
+              <CardTitle className="text-[#1A1A1A] text-xl font-bold">
+                Portfolio Insights
+              </CardTitle>
+              <CardDescription className="text-[#6B7280]">
+                Key takeaways and recommendations
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  {
+                    icon: TrendingUp,
+                    title: "Strong Growth",
+                    description: "Revenue increased 12.4% compared to last quarter",
+                    color: "#3DBE7A",
+                    bgColor: "#E8F5EE",
+                  },
+                  {
+                    icon: Target,
+                    title: "Target Achievement",
+                    description: "Exceeded quarterly targets by 12.2%",
+                    color: "#1B5E45",
+                    bgColor: "#E8F5EE",
+                  },
+                  {
+                    icon: AlertCircle,
+                    title: "Action Required",
+                    description: `${arrearsRate}% arrears rate - consider collection strategy`,
+                    color: "#EF4444",
+                    bgColor: "#FEE2E2",
+                  },
+                ].map((insight, i) => (
+                  <div
+                    key={i}
+                    className="p-5 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8] space-y-3"
+                  >
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center"
+                      style={{ backgroundColor: insight.bgColor, color: insight.color }}
+                    >
+                      <insight.icon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-[#1A1A1A] mb-1">
+                        {insight.title}
+                      </h4>
+                      <p className="text-xs text-[#6B7280]">{insight.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-
-              {/* Maintenance Metrics */}
-              <div className="glass p-5 rounded-2xl border border-foreground/5 bg-[#0F0F0F] text-white shadow-2xl space-y-8 relative overflow-hidden">
-                 <div className="absolute top-0 right-0 h-48 w-48 bg-primary/20 blur-[100px] -mr-24 -mt-24" />
-                 <div className="relative z-10 space-y-8">
-                    <div className="flex items-center gap-5">
-                       <div className="h-14 w-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white shadow-inner">
-                          <Zap className="h-7 w-7 text-primary" strokeWidth={1} />
-                       </div>
-                       <div className="space-y-0.5">
-                          <h4 className="text-xl font-bold uppercase tracking-tight">Ops Index</h4>
-                          <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em]">Maintenance Discharge Rate</p>
-                       </div>
-                    </div>
-
-                    <div className="space-y-4">
-                       {[
-                         { l: "SLA Compliant", v: "92%", c: "bg-primary" },
-                         { l: "Response Time", v: "4.2h", c: "bg-primary/40" },
-                         { l: "Cost Control", v: "-8.5%", c: "bg-brand-accent/40" },
-                       ].map((m, i) => (
-                         <div key={i} className="space-y-2">
-                            <div className="flex items-center justify-between text-xs font-bold uppercase  opacity-60">
-                               <span>{m.l}</span>
-                               <span>{m.v}</span>
-                            </div>
-                            <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                               <motion.div initial={{ width: 0 }} animate={{ width: m.v }} transition={{ duration: 1, delay: 0.5 + i * 0.1 }} className={cn("h-full rounded-full shadow-[0_0_10px_rgba(var(--primary),0.3)]", m.c)} />
-                            </div>
-                         </div>
-                       ))}
-                    </div>
-
-                    <div className="pt-4 flex items-center gap-3 text-primary">
-                       <ShieldCheck className="h-5 w-5" />
-                       <span className="text-xs font-bold uppercase  leading-none">Enterprise Protocol Verified</span>
-                    </div>
-                 </div>
-              </div>
-           </div>
+            </CardContent>
+          </Card>
         </div>
-
       </div>
     </LandlordLayout>
   );

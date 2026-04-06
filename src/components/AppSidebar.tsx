@@ -12,6 +12,7 @@ import {
   Settings,
   HelpCircle,
   Plus,
+  LogOut,
 } from "lucide-react";
 import Logo from "./Logo";
 import {
@@ -29,7 +30,7 @@ import {
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const mainItems = [
@@ -50,6 +51,12 @@ const footerItems = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Add logout logic here (clear tokens, etc.)
+    router.push("/auth/login");
+  };
 
   return (
     <Sidebar collapsible="icon" className="glass border-r border-foreground/5 shadow-2xl">
@@ -100,10 +107,31 @@ export function AppSidebar() {
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
-        <div className="group-data-[collapsible=icon]:hidden">
-          <Button className="w-full gap-2 rounded-xl h-11 bg-primary shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all">
+        <div className="group-data-[collapsible=icon]:hidden space-y-2">
+          <Button className="w-full gap-2 rounded-xl h-11 bg-[#1B5E45] text-white shadow-lg shadow-[#1B5E45]/20 hover:bg-[#246B4F] hover:shadow-xl active:scale-95 transition-all">
             <Plus className="h-4 w-4" />
             <span>New Quick Action</span>
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            onClick={handleLogout}
+            className="w-full gap-2 rounded-xl h-11 text-rose-600 hover:text-rose-700 hover:bg-rose-50 active:scale-95 transition-all justify-start px-4"
+          >
+            <LogOut className="h-5 w-5" />
+            <span>Logout</span>
+          </Button>
+        </div>
+        
+        {/* Icon-only Logout for collapsed state */}
+        <div className="hidden group-data-[collapsible=icon]:flex justify-center">
+          <Button 
+            variant="ghost" 
+            size="icon"
+            onClick={handleLogout}
+            className="h-10 w-10 rounded-xl text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-all"
+          >
+            <LogOut className="h-5 w-5" />
           </Button>
         </div>
       </SidebarFooter>

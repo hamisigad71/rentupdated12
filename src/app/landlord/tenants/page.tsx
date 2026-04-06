@@ -14,6 +14,16 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Search,
   User,
@@ -29,406 +39,575 @@ import {
   Building2,
   Trash2,
   Edit,
+  AlertCircle,
+  CheckCircle2,
+  Send,
+  FileText,
+  Clock,
+  TrendingUp,
+  Users,
+  DollarSign,
 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export default function TenantsPage() {
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [arrearsFilter, setArrearsFilter] = useState("all");
   const [selectedTenant, setSelectedTenant] = useState<Tenant | null>(null);
   const [showProfile, setShowProfile] = useState(false);
+  const [showAddTenant, setShowAddTenant] = useState(false);
 
-  const filteredTenants = mockTenants.filter(
-    (t) =>
+  // Filter tenants
+  const filteredTenants = mockTenants.filter((t) => {
+    const matchesSearch =
       t.name.toLowerCase().includes(search.toLowerCase()) ||
-      t.unitId.toLowerCase().includes(search.toLowerCase()),
-  );
+      t.unitId.toLowerCase().includes(search.toLowerCase()) ||
+      t.email.toLowerCase().includes(search.toLowerCase());
+    
+    const matchesStatus = 
+      statusFilter === "all" || t.status === statusFilter;
+    
+    const matchesArrears =
+      arrearsFilter === "all" ||
+      (arrearsFilter === "current" && t.arrears === 0) ||
+      (arrearsFilter === "arrears" && t.arrears > 0);
+
+    return matchesSearch && matchesStatus && matchesArrears;
+  });
+
+  // Calculate statistics
+  const totalTenants = mockTenants.length;
+  const activeTenants = mockTenants.filter((t) => t.status === "active").length;
+  const tenantsInArrears = mockTenants.filter((t) => t.arrears > 0).length;
+  const totalArrears = mockTenants.reduce((sum, t) => sum + t.arrears, 0);
+  const totalMonthlyRent = mockTenants.reduce((sum, t) => sum + t.rent, 0);
+  const collectionRate = totalMonthlyRent > 0 
+    ? Math.round(((totalMonthlyRent - totalArrears) / totalMonthlyRent) * 100)
+    : 0;
 
   return (
     <LandlordLayout>
-      <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-1">
-            <Badge
-              variant="outline"
-              className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs font-bold  px-3 py-1 mb-2"
-            >
-              Tenant Management
-            </Badge>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight leading-none uppercase">
-              Tenant <span className="text-primary ">Registry</span>
-            </h1>
-            <p className="text-sm font-bold text-muted-foreground/30 uppercase tracking-tight">
-              Enterprise-grade resident management center
-            </p>
-          </div>
+      <div 
+        className="min-h-screen p-4 sm:p-6 lg:p-8"
+        style={{ backgroundColor: "#FAFAF8" }}
+      >
+        <div className="max-w-7xl mx-auto space-y-6">
+          
+          {/* Page Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-2">
+              <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
+                <Users className="w-3 h-3 mr-1" />
+                Tenant Management
+              </Badge>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A]">
+                Tenants
+              </h1>
+              <p className="text-sm text-[#6B7280]">
+                Manage your tenant relationships and leases
+              </p>
+            </div>
 
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              className="h-12 rounded-xl border-foreground/10 font-bold uppercase text-[9px]  group"
-            >
-              <Download className="mr-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />{" "}
-              Export DB
-            </Button>
-            <Button className="h-12 rounded-xl px-6 bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all font-bold uppercase text-xs ">
-              <Plus className="h-4 w-4 mr-2" /> Register Tenant
-            </Button>
-          </div>
-        </div>
-
-        {/* Filters & Search */}
-        <div className="glass p-6 rounded-xl border border-foreground/5 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="relative w-full md:w-32 group/search">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 group-focus-within/search:text-primary transition-colors" />
-            <Input
-              placeholder="Locate Resident..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-11 pr-4 py-2.5 h-12 rounded-xl text-xs font-bold border-foreground/5 bg-foreground/[0.02] w-full group-focus-within/search:border-primary/20"
-            />
-          </div>
-
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <Button
-              variant="outline"
-              className="flex-1 md:flex-none h-12 rounded-xl border-foreground/10 gap-2 font-bold uppercase text-[9px]  hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all"
-            >
-              <Filter className="h-4 w-4" /> Filter Protocol
-            </Button>
-            <div className="h-12 w-[1px] bg-foreground/5 hidden md:block" />
-            <div className="flex items-center gap-2 px-4 h-12 rounded-xl bg-foreground/[0.02] border border-foreground/5">
-              <span className="text-xs font-bold uppercase  text-muted-foreground/40">
-                Total Nodes:
-              </span>
-              <span className="text-sm font-bold text-primary">
-                {mockTenants.length}
-              </span>
+            <div className="flex flex-row items-center gap-2 sm:gap-3">
+              <Button
+                variant="outline"
+                className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </Button>
+              <Button
+                onClick={() => setShowAddTenant(true)}
+                className="bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold shadow-lg"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Tenant
+              </Button>
             </div>
           </div>
-        </div>
 
-        {/* Tenants Table */}
-        <div className="glass rounded-2xl border border-foreground/5 overflow-hidden shadow-2xl">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader className="bg-foreground/[0.02]">
-                <TableRow className="border-b border-foreground/5">
-                  <TableHead className="px-8 py-6 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
-                    Resident Identity
-                  </TableHead>
-                  <TableHead className="px-6 py-6 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
-                    Asset Node
-                  </TableHead>
-                  <TableHead className="px-6 py-6 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
-                    Communication
-                  </TableHead>
-                  <TableHead className="px-6 py-6 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40 text-right">
-                    Net Liability
-                  </TableHead>
-                  <TableHead className="px-6 py-6 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40 text-center">
-                    Protocol Status
-                  </TableHead>
-                  <TableHead className="px-8 py-6 text-right"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <AnimatePresence>
-                  {filteredTenants.map((tenant, i) => (
-                    <motion.tr
-                      key={tenant.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                      className="group border-b border-foreground/5 last:border-0 hover:bg-foreground/[0.01] transition-colors"
-                    >
-                      <TableCell className="px-8 py-6">
-                        <div className="flex items-center gap-4">
-                          <div className="h-12 w-12 rounded-2xl bg-foreground/5 border border-foreground/5 flex items-center justify-center font-bold text-muted-foreground/60 shadow-inner group-hover:border-primary/20 group-hover:bg-primary/5 group-hover:text-primary transition-all">
-                            {tenant.name[0]}
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-sm font-bold uppercase tracking-tight leading-none mb-1">
-                              {tenant.name}
-                            </span>
-                            <span className="text-xs font-bold text-muted-foreground/40 uppercase  leading-none">
-                              ID: {tenant.idNumber}
-                            </span>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="px-6 py-6">
-                        <div className="flex flex-col">
-                          <span className="text-xs font-bold text-primary uppercase ">
-                            {tenant.unitId}
-                          </span>
-                          <span className="text-xs font-bold text-muted-foreground/40 uppercase tracking-[0.2em]">
-                            SINCE {tenant.moveInDate}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="px-6 py-6">
-                        <div className="flex flex-col gap-1">
-                          <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground/60 uppercase">
-                            <Phone className="h-3 w-3 text-primary/40" />{" "}
-                            {tenant.phone}
-                          </div>
-                          <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground/60 uppercase lowercase-none truncate max-w-[150px]">
-                            <Mail className="h-3 w-3 text-primary/40" />{" "}
-                            {tenant.email}
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="px-6 py-6 text-right">
-                        <div className="flex flex-col">
-                          <span
-                            className={cn(
-                              "text-base font-bold tracking-tight",
-                              tenant.arrears > 0
-                                ? "text-destructive"
-                                : "text-primary",
-                            )}
-                          >
-                            KSh {tenant.arrears.toLocaleString()}
-                          </span>
-                          <span className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">
-                            ARREARS INDEX
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="px-6 py-6">
-                        <div className="flex justify-center">
-                          <Badge
-                            className={cn(
-                              "rounded-xl h-6 px-3 border uppercase text-[8px] font-bold tracking-[0.2em] transition-all",
-                              tenant.status === "active"
-                                ? "bg-primary/10 border-primary/20 text-primary shadow-[0_0_12px_rgba(var(--primary),0.1)]"
-                                : "bg-destructive/10 border-destructive/20 text-destructive",
-                            )}
-                          >
-                            {tenant.status}
-                          </Badge>
-                        </div>
-                      </TableCell>
-                      <TableCell className="px-8 py-6 text-right">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-10 px-4 rounded-xl border border-foreground/5 text-[9px] font-bold uppercase  hover:bg-primary/5 hover:text-primary transition-all"
-                          onClick={() => {
-                            setSelectedTenant(tenant);
-                            setShowProfile(true);
-                          }}
-                        >
-                          Access Profile{" "}
-                          <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
-                        </Button>
-                      </TableCell>
-                    </motion.tr>
-                  ))}
-                </AnimatePresence>
-              </TableBody>
-            </Table>
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                label: "Total Tenants",
+                value: totalTenants,
+                icon: Users,
+                color: "#1B5E45",
+                bgColor: "#E8F5EE",
+              },
+              {
+                label: "Active Leases",
+                value: activeTenants,
+                icon: CheckCircle2,
+                color: "#3DBE7A",
+                bgColor: "#E8F5EE",
+              },
+              {
+                label: "Collection Rate",
+                value: `${collectionRate}%`,
+                icon: TrendingUp,
+                color: "#1B5E45",
+                bgColor: "#E8F5EE",
+              },
+              {
+                label: "Total Arrears",
+                value: `KSh ${(totalArrears / 1000).toFixed(0)}K`,
+                icon: AlertCircle,
+                color: "#EF4444",
+                bgColor: "#FEE2E2",
+              },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="border-[#E8F5EE] bg-white hover:shadow-md transition-shadow">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div
+                        className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: stat.bgColor, color: stat.color }}
+                      >
+                        <stat.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[10px] sm:text-xs font-medium text-[#6B7280]">{stat.label}</p>
+                      <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A]">{stat.value}</h3>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
 
-          <div className="p-4 bg-foreground/[0.02] border-t border-foreground/5 flex justify-center">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs font-bold uppercase  text-muted-foreground hover:text-primary"
-            >
-              Synchronize Ledger <ArrowUpRight className="ml-1 h-3 w-3" />
-            </Button>
-          </div>
+          {/* Filters Section */}
+          <Card className="border-[#E8F5EE] bg-white">
+            <CardContent className="p-6">
+              <div className="flex flex-col lg:flex-row gap-4">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6B7280]" />
+                  <Input
+                    placeholder="Search tenants by name, unit, or email..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="pl-9 h-11 border-[#E8F5EE] bg-white focus:border-[#1B5E45]"
+                  />
+                </div>
+
+                <div className="flex gap-3">
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="w-[140px] h-11 border-[#E8F5EE] bg-white">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Status</SelectItem>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={arrearsFilter} onValueChange={setArrearsFilter}>
+                    <SelectTrigger className="w-[140px] h-11 border-[#E8F5EE] bg-white">
+                      <SelectValue placeholder="Payment" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Payments</SelectItem>
+                      <SelectItem value="current">Current</SelectItem>
+                      <SelectItem value="arrears">In Arrears</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Badge variant="outline" className="h-11 px-4 bg-[#FAFAF8] border-[#E8F5EE] text-[#4B5563] flex items-center gap-2">
+                    <span className="text-xs font-medium">Results:</span>
+                    <span className="text-sm font-bold text-[#1B5E45]">
+                      {filteredTenants.length}
+                    </span>
+                  </Badge>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Tenants Table */}
+          <Card className="border-[#E8F5EE] bg-white">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-[#FAFAF8] border-b border-[#E8F5EE] hover:bg-[#FAFAF8]">
+                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase">
+                      Tenant
+                    </TableHead>
+                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase">
+                      Unit
+                    </TableHead>
+                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase">
+                      Contact
+                    </TableHead>
+                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase text-right">
+                      Rent
+                    </TableHead>
+                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase text-right">
+                      Arrears
+                    </TableHead>
+                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase text-center">
+                      Status
+                    </TableHead>
+                    <TableHead className="px-6 py-4"></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <AnimatePresence>
+                    {filteredTenants.map((tenant, i) => (
+                      <motion.tr
+                        key={tenant.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ delay: i * 0.03 }}
+                        className="border-b border-[#E8F5EE] hover:bg-[#FAFAF8] transition-colors"
+                      >
+                        <TableCell className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-[#E8F5EE] flex items-center justify-center font-semibold text-[#1B5E45]">
+                              {tenant.name[0]}
+                            </div>
+                            <div>
+                              <p className="text-sm font-semibold text-[#1A1A1A]">
+                                {tenant.name}
+                              </p>
+                              <p className="text-xs text-[#6B7280]">
+                                ID: {tenant.idNumber}
+                              </p>
+                            </div>
+                          </div>
+                        </TableCell>
+                        
+                        <TableCell className="px-6 py-4">
+                          <div>
+                            <p className="text-sm font-semibold text-[#1B5E45]">
+                              {tenant.unitId}
+                            </p>
+                            <p className="text-xs text-[#6B7280]">
+                              Since {tenant.moveInDate}
+                            </p>
+                          </div>
+                        </TableCell>
+
+                        <TableCell className="px-6 py-4">
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2 text-xs text-[#6B7280]">
+                              <Phone className="w-3 h-3" />
+                              {tenant.phone}
+                            </div>
+                            <div className="flex items-center gap-2 text-xs text-[#6B7280] max-w-[200px] truncate">
+                              <Mail className="w-3 h-3" />
+                              {tenant.email}
+                            </div>
+                          </div>
+                        </TableCell>
+
+                        <TableCell className="px-6 py-4 text-right">
+                          <p className="text-sm font-bold text-[#1A1A1A]">
+                            KSh {tenant.rent.toLocaleString()}
+                          </p>
+                        </TableCell>
+
+                        <TableCell className="px-6 py-4 text-right">
+                          <p
+                            className={cn(
+                              "text-sm font-bold",
+                              tenant.arrears > 0 ? "text-red-600" : "text-[#3DBE7A]"
+                            )}
+                          >
+                            {tenant.arrears > 0 
+                              ? `KSh ${tenant.arrears.toLocaleString()}`
+                              : "—"
+                            }
+                          </p>
+                        </TableCell>
+
+                        <TableCell className="px-6 py-4">
+                          <div className="flex justify-center">
+                            <Badge
+                              className={cn(
+                                tenant.status === "active"
+                                  ? "bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20"
+                                  : "bg-red-50 text-red-600 border-red-200",
+                                "capitalize"
+                              )}
+                            >
+                              {tenant.status}
+                            </Badge>
+                          </div>
+                        </TableCell>
+
+                        <TableCell className="px-6 py-4">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 p-0 hover:bg-[#E8F5EE]"
+                              >
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-48">
+                              <DropdownMenuItem
+                                onClick={() => {
+                                  setSelectedTenant(tenant);
+                                  setShowProfile(true);
+                                }}
+                              >
+                                <User className="w-4 h-4 mr-2" />
+                                View Profile
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                <Send className="w-4 h-4 mr-2" />
+                                Send Notice
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                <FileText className="w-4 h-4 mr-2" />
+                                View Lease
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem>
+                                <Edit className="w-4 h-4 mr-2" />
+                                Edit Details
+                              </DropdownMenuItem>
+                              <DropdownMenuItem className="text-red-600">
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Remove Tenant
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </motion.tr>
+                    ))}
+                  </AnimatePresence>
+                </TableBody>
+              </Table>
+            </div>
+
+            {filteredTenants.length === 0 && (
+              <div className="p-12 text-center">
+                <Users className="w-12 h-12 mx-auto text-[#6B7280] mb-4" />
+                <h3 className="text-lg font-semibold text-[#1A1A1A] mb-2">
+                  No tenants found
+                </h3>
+                <p className="text-sm text-[#6B7280]">
+                  Try adjusting your search or filters
+                </p>
+              </div>
+            )}
+          </Card>
         </div>
       </div>
 
       {/* Tenant Profile Modal */}
       <Dialog open={showProfile} onOpenChange={setShowProfile}>
-        <DialogContent className="max-w-[95vw] sm:max-w-[calc(100vw-2rem)] md:max-w-[800px] p-0 overflow-hidden rounded-2xl border-none shadow-2xl bg-background h-[80vh]">
-          <div className="flex flex-col h-full overflow-hidden">
+        <DialogContent className="max-w-3xl max-h-[90vh] p-0 overflow-hidden bg-white">
+          <div className="flex flex-col h-full">
+            
             {/* Modal Header */}
-            <div className="relative h-48 shrink-0 bg-[#0F0F0F] p-6 flex flex-col justify-center overflow-hidden">
-              <div className="absolute top-0 right-0 h-32 w-32 bg-primary/20 blur-[100px] -mr-32 -mt-32" />
-              <div className="relative z-10 flex items-center gap-8">
-                <div className="h-24 w-24 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl font-bold text-primary shadow-2xl">
+            <div className="px-6 py-5 border-b border-[#E8F5EE] bg-[#FAFAF8]">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 rounded-xl bg-[#E8F5EE] flex items-center justify-center text-2xl font-bold text-[#1B5E45]">
                   {selectedTenant?.name[0]}
                 </div>
-                <div className="space-y-2">
-                  <Badge className="bg-primary/20 border-primary/30 text-primary border rounded-lg text-[9px] font-bold uppercase ">
-                    Resident Bio-Link
-                  </Badge>
-                  <h2 className="text-xl font-bold tracking-tight text-white uppercase leading-none">
+                <div className="flex-1">
+                  <DialogTitle className="text-xl font-bold text-[#1A1A1A] mb-1">
                     {selectedTenant?.name}
-                  </h2>
-                  <div className="flex items-center gap-4 text-xs font-bold text-white/40 uppercase ">
-                    <span>SINCE {selectedTenant?.moveInDate}</span>
-                    <span className="h-1 w-1 rounded-full bg-white/20" />
-                    <span className="text-primary">
-                      {selectedTenant?.unitId}
-                    </span>
-                  </div>
+                  </DialogTitle>
+                  <DialogDescription className="text-sm text-[#6B7280]">
+                    Unit {selectedTenant?.unitId} • Tenant since {selectedTenant?.moveInDate}
+                  </DialogDescription>
                 </div>
+                <Badge
+                  className={cn(
+                    selectedTenant?.status === "active"
+                      ? "bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20"
+                      : "bg-red-50 text-red-600 border-red-200",
+                    "capitalize"
+                  )}
+                >
+                  {selectedTenant?.status}
+                </Badge>
               </div>
             </div>
 
-            {/* Modal Body */}
-            <div className="flex-1 overflow-auto p-6 no-scrollbar space-y-12">
-              {/* Core Stats */}
-              <div className="grid grid-cols-3 gap-6">
+            {/* Modal Content */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              
+              {/* Financial Overview */}
+              <div className="grid grid-cols-3 gap-4">
                 {[
                   {
-                    l: "Monthly Rental",
-                    v: `KSh ${selectedTenant?.rent.toLocaleString()}`,
-                    i: CreditCard,
-                    p: true,
+                    label: "Monthly Rent",
+                    value: `KSh ${selectedTenant?.rent.toLocaleString()}`,
+                    icon: DollarSign,
+                    color: "#1B5E45",
+                    bgColor: "#E8F5EE",
                   },
                   {
-                    l: "Total Paid",
-                    v: `KSh ${selectedTenant?.paidAmount.toLocaleString()}`,
-                    i: ArrowUpRight,
+                    label: "Amount Paid",
+                    value: `KSh ${selectedTenant?.paidAmount.toLocaleString()}`,
+                    icon: CheckCircle2,
+                    color: "#3DBE7A",
+                    bgColor: "#E8F5EE",
                   },
                   {
-                    l: "Arrears Exposure",
-                    v: `KSh ${selectedTenant?.arrears.toLocaleString()}`,
-                    i: Trash2,
-                    d: (selectedTenant?.arrears ?? 0) > 0,
+                    label: "Arrears",
+                    value: `KSh ${selectedTenant?.arrears.toLocaleString()}`,
+                    icon: AlertCircle,
+                    color: (selectedTenant?.arrears ?? 0) > 0 ? "#EF4444" : "#3DBE7A",
+                    bgColor: (selectedTenant?.arrears ?? 0) > 0 ? "#FEE2E2" : "#E8F5EE",
                   },
                 ].map((stat, i) => (
                   <div
                     key={i}
-                    className={cn(
-                      "p-6 rounded-3xl border border-foreground/5 shadow-xl transition-all hover:-translate-y-1",
-                      stat.p
-                        ? "bg-[#0F0F0F] text-white"
-                        : stat.d
-                          ? "bg-destructive/10 border-destructive/20"
-                          : "bg-background",
-                    )}
+                    className="p-4 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8]"
                   >
-                    <p
-                      className={cn(
-                        "text-[9px] font-bold uppercase  mb-4",
-                        stat.p
-                          ? "text-primary mt-1"
-                          : "text-muted-foreground/40",
-                      )}
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center mb-3"
+                      style={{ backgroundColor: stat.bgColor, color: stat.color }}
                     >
-                      {stat.l}
+                      <stat.icon className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs font-medium text-[#6B7280] mb-1">
+                      {stat.label}
                     </p>
-                    <p
-                      className={cn(
-                        "text-xl font-bold tracking-tight",
-                        stat.d && "text-destructive",
-                      )}
-                    >
-                      {stat.v}
+                    <p className="text-lg font-bold" style={{ color: stat.color }}>
+                      {stat.value}
                     </p>
                   </div>
                 ))}
               </div>
 
-              {/* Detailed Info */}
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <h4 className="text-xs font-bold uppercase tracking-[0.4em] text-primary">
-                      Contact Vectors
-                    </h4>
-                    <div className="space-y-4">
-                      {[
-                        {
-                          l: "Mobile Stream",
-                          v: selectedTenant?.phone,
-                          i: Phone,
-                        },
-                        {
-                          l: "Signal Encryption",
-                          v: selectedTenant?.email,
-                          i: Mail,
-                        },
-                        {
-                          l: "Identity Signature",
-                          v: selectedTenant?.idNumber,
-                          i: User,
-                        },
-                      ].map((f, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-4 p-4 rounded-2xl bg-foreground/[0.02] border border-foreground/5"
-                        >
-                          <f.i className="h-4 w-4 text-primary/40 shrink-0" />
-                          <div className="flex flex-col">
-                            <span className="text-[8px] font-bold text-muted-foreground/40 uppercase  leading-none mb-1">
-                              {f.l}
-                            </span>
-                            <span className="text-[11px] font-bold uppercase ">
-                              {f.v}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+              <Separator className="bg-[#F4F4F0]" />
 
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <h4 className="text-xs font-bold uppercase tracking-[0.4em] text-primary">
-                      System Compliance
-                    </h4>
-                    <div className="space-y-4">
-                      <div className="p-6 rounded-xl bg-foreground/[0.01] border border-foreground/5 space-y-4">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold uppercase  text-muted-foreground/40">
-                            Reliability Score
-                          </span>
-                          <span className="text-sm font-bold text-primary">
-                            98.4%
-                          </span>
-                        </div>
-                        <div className="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
-                          <div className="h-full w-[98%] bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary),0.3)]" />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-4 rounded-2xl bg-primary/5 border border-primary/20 text-primary">
-                        <Building2 className="h-4 w-4" />
-                        <span className="text-xs font-bold uppercase ">
-                          Registered Asset Occupant
-                        </span>
+              {/* Contact Information */}
+              <div>
+                <h3 className="text-sm font-semibold text-[#1A1A1A] mb-4">
+                  Contact Information
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[
+                    { label: "Phone Number", value: selectedTenant?.phone, icon: Phone },
+                    { label: "Email Address", value: selectedTenant?.email, icon: Mail },
+                    { label: "ID Number", value: selectedTenant?.idNumber, icon: User },
+                    { label: "Move-in Date", value: selectedTenant?.moveInDate, icon: Calendar },
+                  ].map((field, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 p-4 rounded-xl bg-[#FAFAF8] border border-[#E8F5EE]"
+                    >
+                      <field.icon className="w-4 h-4 text-[#6B7280]" />
+                      <div>
+                        <p className="text-xs text-[#6B7280]">{field.label}</p>
+                        <p className="text-sm font-semibold text-[#1A1A1A]">
+                          {field.value}
+                        </p>
                       </div>
                     </div>
+                  ))}
+                </div>
+              </div>
+
+              <Separator className="bg-[#F4F4F0]" />
+
+              {/* Payment Compliance */}
+              <div>
+                <h3 className="text-sm font-semibold text-[#1A1A1A] mb-4">
+                  Payment Performance
+                </h3>
+                <div className="p-4 rounded-xl bg-[#FAFAF8] border border-[#E8F5EE] space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-[#6B7280]">
+                      Compliance Rate
+                    </span>
+                    <span className="text-sm font-bold text-[#1B5E45]">
+                      {selectedTenant?.rent 
+                        ? Math.round(((selectedTenant.paidAmount / selectedTenant.rent) * 100))
+                        : 0}%
+                    </span>
                   </div>
+                  <Progress
+                    value={selectedTenant?.rent 
+                      ? (selectedTenant.paidAmount / selectedTenant.rent) * 100
+                      : 0}
+                    className="h-2 bg-[#F4F4F0]"
+                  />
+                  <p className="text-xs text-[#6B7280]">
+                    {(selectedTenant?.arrears ?? 0) === 0
+                      ? "This tenant is up to date with payments"
+                      : `Outstanding balance of KSh ${selectedTenant?.arrears.toLocaleString()}`}
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Actions Footer */}
-            <div className="p-8 border-t border-foreground/5 bg-foreground/[0.015] flex gap-4 shrink-0">
+            {/* Modal Actions */}
+            <div className="px-6 py-4 border-t border-[#E8F5EE] bg-[#FAFAF8] flex gap-3">
               <Button
                 variant="outline"
-                className="flex-1 h-14 rounded-2xl font-bold uppercase text-xs  border-foreground/5 hover:bg-destructive/5 hover:text-destructive hover:border-destructive/20 transition-all"
+                className="flex-1 border-[#E8F5EE] hover:bg-white"
               >
-                <Trash2 className="h-4 w-4 mr-2" /> Expel Node
+                <Edit className="w-4 h-4 mr-2" />
+                Edit Details
               </Button>
               <Button
                 variant="outline"
-                className="flex-1 h-14 rounded-2xl font-bold uppercase text-xs  border-foreground/5 hover:bg-primary/5 hover:text-primary transition-all"
+                className="flex-1 border-[#E8F5EE] hover:bg-white"
               >
-                <Edit className="h-4 w-4 mr-2" /> Modify Data
+                <Send className="w-4 h-4 mr-2" />
+                Send Notice
               </Button>
-              <Button className="flex-1 h-14 rounded-2xl bg-[#0F0F0F] text-white font-bold uppercase text-xs  shadow-2xl hover:bg-primary transition-all">
-                Issue Notice <ArrowUpRight className="h-4 w-4 ml-2" />
+              <Button
+                className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                View Lease
               </Button>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Tenant Modal */}
+      <Dialog open={showAddTenant} onOpenChange={setShowAddTenant}>
+        <DialogContent className="max-w-2xl bg-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-[#1A1A1A]">
+              Add New Tenant
+            </DialogTitle>
+            <DialogDescription className="text-sm text-[#6B7280]">
+              Register a new tenant to your property
+            </DialogDescription>
+          </DialogHeader>
+          <div className="p-6 text-center text-[#6B7280]">
+            <Plus className="w-12 h-12 mx-auto mb-4 text-[#1B5E45]" />
+            <p>Add tenant form will be implemented here</p>
           </div>
         </DialogContent>
       </Dialog>

@@ -422,7 +422,7 @@ export default function TenantPaymentsPage() {
                         </h1>
 
                         {/* Meta info row */}
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-2.5">
+                        <div className="grid grid-cols-2 lg:flex lg:flex-wrap items-center gap-x-4 gap-y-2 mt-2.5">
                           <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                             <MapPin className="h-3.5 w-3.5 text-[#1B5E45]" />
                             {currentTenant?.roomNumber || currentTenant?.unitId}
@@ -443,7 +443,7 @@ export default function TenantPaymentsPage() {
                         </div>
 
                         {/* Account status tags */}
-                        <div className="flex items-center gap-2 mt-3 flex-wrap">
+                        <div className="grid grid-cols-2 lg:flex items-center gap-2 mt-3">
                           <span
                             className={cn(
                               "inline-flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-full",
@@ -550,7 +550,7 @@ export default function TenantPaymentsPage() {
                   {/* ── Bottom row: 4 mini stats + completion bar ── */}
                   <div className="flex flex-col lg:flex-row lg:items-end gap-6">
                     {/* Mini stats */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
+                    <div className="hidden sm:grid sm:grid-cols-4 gap-4 flex-1">
                       <HeroMiniStat
                         icon={Banknote}
                         label="Monthly Rent"
