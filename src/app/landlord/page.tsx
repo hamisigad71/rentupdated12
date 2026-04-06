@@ -29,6 +29,7 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function LandlordDashboard() {
   const { userName } = useAuth();
@@ -103,7 +104,7 @@ export default function LandlordDashboard() {
           </Card>
 
           {/* KPI Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
               { 
                 label: "Total Units", 
@@ -139,30 +140,32 @@ export default function LandlordDashboard() {
               }
             ].map((stat, i) => (
               <Card key={i} className="border-[#E8F5EE] bg-white hover:shadow-md transition-shadow">
-                <CardContent className="pt-6">
-                  <div className="flex justify-between items-start mb-4">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex justify-between items-start mb-3 sm:mb-4">
                     <div 
-                      className="w-11 h-11 rounded-xl flex items-center justify-center"
+                      className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0"
                       style={{ backgroundColor: stat.bgColor, color: stat.color }}
                     >
-                      <stat.icon className="w-5 h-5" strokeWidth={2.5} />
+                      <stat.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
                     </div>
                     {stat.trend && (
                       <Badge 
                         variant="outline" 
-                        className={stat.trend.isPositive 
+                        className={cn(
+                          "text-[9px] sm:text-xs px-1.5 py-0 sm:px-2.5 sm:py-0.5",
+                          stat.trend.isPositive 
                           ? "border-[#3DBE7A] text-[#3DBE7A] bg-[#E8F5EE]" 
                           : "border-red-300 text-red-600 bg-red-50"
-                        }
+                        )}
                       >
-                        {stat.trend.isPositive ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
+                        {stat.trend.isPositive ? <TrendingUp className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" /> : <TrendingDown className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1" />}
                         {stat.trend.value}%
                       </Badge>
                     )}
                   </div>
-                  <div className="space-y-1">
-                    <p className="text-xs font-medium text-[#6B7280]">{stat.label}</p>
-                    <h3 className="text-2xl font-bold text-[#1A1A1A]">{stat.value}</h3>
+                  <div className="space-y-0.5 sm:space-y-1">
+                    <p className="text-[10px] sm:text-xs font-medium text-[#6B7280] truncate">{stat.label}</p>
+                    <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A] truncate">{stat.value}</h3>
                   </div>
                 </CardContent>
               </Card>

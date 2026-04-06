@@ -121,17 +121,17 @@ function StatCard({
       {accent && (
         <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -translate-y-8 translate-x-8 pointer-events-none" />
       )}
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-5">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex items-start justify-between mb-3 sm:mb-5">
           <div
             className={cn(
-              "h-11 w-11 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
+              "h-8 w-8 sm:h-11 sm:w-11 rounded-lg sm:rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
               accent ? "bg-white/15" : "bg-[#E8F5EE]",
             )}
           >
             <Icon
               className={cn(
-                "h-5 w-5",
+                "h-4 w-4 sm:h-5 sm:w-5",
                 accent ? "text-white" : "text-[#1B5E45]",
               )}
               strokeWidth={1.8}
@@ -140,7 +140,7 @@ function StatCard({
           {badge && (
             <span
               className={cn(
-                "text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full",
+                "text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full",
                 badgeStyles[badge.color],
               )}
             >
@@ -150,7 +150,7 @@ function StatCard({
         </div>
         <p
           className={cn(
-            "text-3xl font-bold tracking-tight mb-1",
+            "text-xl sm:text-3xl font-bold tracking-tight mb-0.5 sm:mb-1 truncate",
             accent ? "text-white" : "text-foreground",
           )}
         >
@@ -158,7 +158,7 @@ function StatCard({
         </p>
         <p
           className={cn(
-            "text-sm font-medium",
+            "text-[10px] sm:text-sm font-medium truncate",
             accent ? "text-white/70" : "text-muted-foreground",
           )}
         >
@@ -167,7 +167,7 @@ function StatCard({
         {sub && (
           <p
             className={cn(
-              "text-xs mt-2",
+              "text-[10px] sm:text-xs mt-1 sm:mt-2 truncate",
               accent ? "text-white/50" : "text-muted-foreground/60",
             )}
           >

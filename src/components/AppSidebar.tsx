@@ -67,7 +67,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="px-6 text-xs uppercase font-bold  text-muted-foreground/60 group-data-[collapsible=icon]:hidden">Management</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-6 text-xs uppercase font-medium text-muted-foreground/60 group-data-[collapsible=icon]:hidden">Management</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="px-2 space-y-1">
               {mainItems.map((item) => (
@@ -76,7 +76,7 @@ export function AppSidebar() {
                     render={
                       <Link href={item.href}>
                         <item.icon className={pathname === item.href ? "text-primary h-5 w-5" : "text-muted-foreground h-5 w-5"} />
-                        <span className="font-medium group-data-[collapsible=icon]:hidden">{item.label}</span>
+                        <span className="font-normal group-data-[collapsible=icon]:hidden">{item.label}</span>
                       </Link>
                     }
                     isActive={pathname === item.href}
@@ -97,7 +97,7 @@ export function AppSidebar() {
                 render={
                   <Link href={item.href}>
                     <item.icon className="text-muted-foreground h-5 w-5" />
-                    <span className="text-sm font-medium group-data-[collapsible=icon]:hidden">{item.label}</span>
+                    <span className="text-sm font-normal group-data-[collapsible=icon]:hidden">{item.label}</span>
                   </Link>
                 }
                 isActive={pathname === item.href}
