@@ -5,7 +5,9 @@ import TenantLayout from "@/components/TenantLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import {
   Tooltip,
   TooltipContent,
@@ -20,7 +22,6 @@ import {
   ShieldCheck,
   Clock,
   History,
-  Info,
   CheckCircle2,
   Calendar,
   Lock,
@@ -34,21 +35,21 @@ import {
   Home,
   Receipt,
   AlertCircle,
-  ArrowUpRight,
   Banknote,
   Wallet,
   FileText,
   Copy,
   MapPin,
-  Star,
   Activity,
+  Info,
+  X,
 } from "lucide-react";
 import { mockPayments, mockTenants } from "@/data/mockData";
 import { useAction } from "@/context/ActionContext";
 import { LOADER_DURATION } from "@/utils/constants";
 import { cn } from "@/lib/utils";
 
-// ─── Reveal ────────────────────────────────────────────────────────────────
+// ─── REVEAL ANIMATION ────────────────────────────────────────────────────────
 function Reveal({
   children,
   delay = 0,
@@ -65,7 +66,7 @@ function Reveal({
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.23, 1, 0.32, 1] }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
       className={className}
     >
       {children}
@@ -73,133 +74,18 @@ function Reveal({
   );
 }
 
-// ─── Animated Progress Bar ─────────────────────────────────────────────────
-function ProgressBar({ pct }: { pct: number }) {
-  return (
-    <div className="h-1.5 bg-[#E8F5EE] rounded-full overflow-hidden">
-      <motion.div
-        className="h-full bg-[#3DBE7A] rounded-full"
-        initial={{ width: 0 }}
-        animate={{ width: `${pct}%` }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-      />
-    </div>
-  );
-}
-
-// ─── Stat Card ─────────────────────────────────────────────────────────────
-function StatCard({
-  label,
-  value,
-  icon: Icon,
-  accent = false,
-  badge,
-  sub,
-  progress,
-}: {
-  label: string;
-  value: string;
-  icon: React.ElementType;
-  accent?: boolean;
-  badge?: { label: string; danger?: boolean };
-  sub?: string;
-  progress?: number;
-}) {
-  return (
-    <Card
-      className={cn(
-        "rounded-2xl border shadow-sm overflow-hidden relative",
-        accent ? "bg-[#1B5E45] border-[#1B5E45]" : "bg-white border-border",
-      )}
-    >
-      {accent && (
-        <div className="pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full bg-white/5" />
-      )}
-      <CardContent className="p-5">
-        <div className="flex items-start justify-between mb-4">
-          <div
-            className={cn(
-              "h-10 w-10 rounded-xl flex items-center justify-center",
-              accent ? "bg-white/15" : "bg-[#E8F5EE]",
-            )}
-          >
-            <Icon
-              className={cn(
-                "h-4.5 w-4.5",
-                accent ? "text-white" : "text-[#1B5E45]",
-              )}
-              strokeWidth={1.8}
-            />
-          </div>
-          {badge && (
-            <span
-              className={cn(
-                "text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full",
-                badge.danger
-                  ? "bg-red-50 text-red-600"
-                  : "bg-[#E8F5EE] text-[#1B5E45]",
-              )}
-            >
-              {badge.label}
-            </span>
-          )}
-        </div>
-        <p
-          className={cn(
-            "text-2xl font-bold tracking-tight",
-            accent ? "text-white" : "text-foreground",
-          )}
-        >
-          {value}
-        </p>
-        <p
-          className={cn(
-            "text-xs font-medium mt-1",
-            accent ? "text-white/60" : "text-muted-foreground",
-          )}
-        >
-          {label}
-        </p>
-        {sub && (
-          <p
-            className={cn(
-              "text-xs mt-1.5",
-              accent ? "text-white/40" : "text-muted-foreground/60",
-            )}
-          >
-            {sub}
-          </p>
-        )}
-        {typeof progress !== "undefined" && (
-          <div className="mt-3">
-            <ProgressBar pct={progress} />
-            <p
-              className={cn(
-                "text-[10px] mt-1.5 font-medium",
-                accent ? "text-white/50" : "text-muted-foreground/60",
-              )}
-            >
-              {progress}% completed
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
-
-// ─── Method Button ─────────────────────────────────────────────────────────
-function MethodButton({
+// ─── PAYMENT METHOD BUTTON ───────────────────────────────────────────────────
+function PaymentMethodButton({
   id,
   label,
-  sub,
+  subtitle,
   icon: Icon,
   active,
   onClick,
 }: {
   id: string;
   label: string;
-  sub: string;
+  subtitle: string;
   icon: React.ElementType;
   active: boolean;
   onClick: () => void;
@@ -208,115 +94,52 @@ function MethodButton({
     <button
       onClick={onClick}
       className={cn(
-        "relative w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 text-left group",
+        "relative w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left group",
         active
-          ? "border-[#1B5E45] bg-[#F0F5F1]"
-          : "border-border bg-white hover:border-[#1B5E45]/30 hover:bg-[#FAFAF8]",
+          ? "border-[#1B5E45] bg-[#E8F5EE]"
+          : "border-[#E8F5EE] bg-white hover:border-[#1B5E45]/30 hover:bg-[#FAFAF8]"
       )}
     >
       <div
         className={cn(
-          "h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-colors",
+          "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors",
           active
             ? "bg-[#1B5E45] text-white"
-            : "bg-[#E8F5EE] text-[#1B5E45] group-hover:bg-[#1B5E45] group-hover:text-white",
+            : "bg-[#E8F5EE] text-[#1B5E45] group-hover:bg-[#1B5E45] group-hover:text-white"
         )}
       >
-        <Icon className="h-5 w-5" strokeWidth={1.8} />
+        <Icon className="w-5 h-5" />
       </div>
       <div className="flex-1 min-w-0">
-        <p
-          className={cn(
-            "text-sm font-semibold",
-            active ? "text-[#1B5E45]" : "text-foreground",
-          )}
-        >
+        <p className={cn("text-sm font-semibold", active ? "text-[#1B5E45]" : "text-[#1A1A1A]")}>
           {label}
         </p>
-        <p className="text-xs text-muted-foreground">{sub}</p>
+        <p className="text-xs text-[#6B7280]">{subtitle}</p>
       </div>
       {active && (
-        <div className="h-5 w-5 bg-[#1B5E45] rounded-full flex items-center justify-center shrink-0">
-          <Check className="h-3 w-3 text-white" />
+        <div className="w-5 h-5 bg-[#1B5E45] rounded-full flex items-center justify-center shrink-0">
+          <Check className="w-3 h-3 text-white" />
         </div>
       )}
     </button>
   );
 }
 
-// ─── Hero Mini Stat ────────────────────────────────────────────────────────
-function HeroMiniStat({
-  icon: Icon,
-  label,
-  value,
-  highlight = false,
-  danger = false,
-}: {
-  icon: React.ElementType;
-  label: string;
-  value: string;
-  highlight?: boolean;
-  danger?: boolean;
-}) {
-  return (
-    <div className="flex items-center gap-3">
-      <div
-        className={cn(
-          "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
-          highlight ? "bg-[#1B5E45]" : danger ? "bg-red-50" : "bg-[#F0F5F1]",
-        )}
-      >
-        <Icon
-          className={cn(
-            "h-4 w-4",
-            highlight
-              ? "text-white"
-              : danger
-                ? "text-red-500"
-                : "text-[#1B5E45]",
-          )}
-          strokeWidth={1.8}
-        />
-      </div>
-      <div>
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground leading-none mb-0.5">
-          {label}
-        </p>
-        <p
-          className={cn(
-            "text-sm font-bold leading-none",
-            danger ? "text-red-600" : "text-foreground",
-          )}
-        >
-          {value}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-const inputCls =
-  "w-full px-4 py-3 rounded-xl border border-border bg-[#FAFAF8] text-sm font-medium outline-none focus:border-[#1B5E45] focus:ring-2 focus:ring-[#1B5E45]/10 transition-all placeholder:text-muted-foreground/50";
-
-// ─── Main Page ─────────────────────────────────────────────────────────────
+// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function TenantPaymentsPage() {
   const currentTenant = mockTenants[0];
-  const tenantPayments = mockPayments.filter(
-    (p) => p.tenantId === currentTenant.id,
-  );
+  const tenantPayments = mockPayments.filter((p) => p.tenantId === currentTenant.id);
 
-  const [method, setMethod] = useState<"mpesa" | "card" | "bank">("mpesa");
+  const [paymentMethod, setPaymentMethod] = useState<"mpesa" | "card" | "bank">("mpesa");
   const [amount, setAmount] = useState(
-    currentTenant.arrears > 0 ? currentTenant.arrears : currentTenant.rent,
+    currentTenant.arrears > 0 ? currentTenant.arrears : currentTenant.rent
   );
-  const [refId, setRefId] = useState("");
+  const [referenceId, setReferenceId] = useState("");
   const [copied, setCopied] = useState(false);
   const { showAction, updateAction, hideAction } = useAction();
 
   useEffect(() => {
-    setRefId(
-      `${currentTenant.id.split("-").pop()}-${new Date().getMonth() + 1}`,
-    );
+    setReferenceId(`REF-${currentTenant.id.split("-").pop()}-${new Date().getMonth() + 1}`);
   }, [currentTenant.id]);
 
   const handleCopy = (text: string) => {
@@ -327,15 +150,15 @@ export default function TenantPaymentsPage() {
 
   const handlePayment = () => {
     showAction({
-      title: "Processing Secure Transaction",
-      message: "Connecting to payment gateway...",
+      title: "Processing Payment",
+      message: "Connecting to secure payment gateway...",
       color: "green",
       icon: "published_with_changes",
     });
     setTimeout(() => {
       updateAction({
         title: "Payment Successful",
-        message: "Your account has been successfully reconciled.",
+        message: "Your payment has been processed successfully.",
         color: "green",
         icon: "check_circle",
       });
@@ -343,395 +166,265 @@ export default function TenantPaymentsPage() {
     }, LOADER_DURATION - 600);
   };
 
-  const settlePct = Math.min(
-    100,
-    Math.round((currentTenant.paidAmount / currentTenant.rent) * 100),
-  );
-  const allClear = currentTenant.arrears === 0;
-  const totalPaid = tenantPayments
+  const paymentProgress = Math.min(100, Math.round((currentTenant.paidAmount / currentTenant.rent) * 100));
+  const isFullyPaid = currentTenant.arrears === 0;
+  const totalPaidThisYear = tenantPayments
     .filter((p) => p.status === "completed")
-    .reduce((s, p) => s + p.amount, 0);
+    .reduce((sum, p) => sum + p.amount, 0);
 
   return (
     <TenantLayout>
       <TooltipProvider>
-        <div className="min-h-screen bg-[#FAFAF8]">
-          {/* ── Top Nav ───────────────────────────────────────── */}
-          <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto md:px-10 h-16 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Home className="h-4 w-4 text-[#1B5E45]" />
-                <ChevronRight className="h-3.5 w-3.5" />
-                <span className="text-muted-foreground">Dashboard</span>
-                <ChevronRight className="h-3.5 w-3.5" />
-                <span className="font-medium text-foreground">Payments</span>
+        <div className="min-h-screen" style={{ backgroundColor: "#FAFAF8" }}>
+          
+          {/* Breadcrumb Navigation */}
+          <div className="sticky top-0 z-40 border-b border-[#E8F5EE] bg-white/90 backdrop-blur-md">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm">
+                <Home className="w-4 h-4 text-[#1B5E45]" />
+                <ChevronRight className="w-3.5 h-3.5 text-[#6B7280]" />
+                <span className="text-[#6B7280]">Dashboard</span>
+                <ChevronRight className="w-3.5 h-3.5 text-[#6B7280]" />
+                <span className="font-semibold text-[#1A1A1A]">Payments</span>
               </div>
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 px-4 rounded-xl border-border text-sm font-medium hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
+                className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
               >
-                <Download className="h-4 w-4 mr-2" />
-                Export Ledger
+                <Download className="w-4 h-4 mr-2" />
+                Export
               </Button>
             </div>
-          </header>
+          </div>
 
-          <main className="max-w-7xl mx-auto md:px-10 py-8 space-y-8">
-            {/* ══ HERO SECTION ════════════════════════════════════════════ */}
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+            
+            {/* Page Header */}
             <Reveal>
-              <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">
-                {/* ── Decorative background circles ── */}
-                <div className="pointer-events-none absolute top-0 right-0 w-[360px] h-[360px] rounded-full bg-[#E8F5EE]/60 translate-x-1/2 -translate-y-1/2" />
-                <div className="pointer-events-none absolute bottom-0 left-1/3 w-48 h-48 rounded-full bg-[#E8F5EE]/30 translate-y-1/2" />
-                <div className="pointer-events-none absolute top-1/2 right-1/4 w-24 h-24 rounded-full bg-[#3DBE7A]/8 -translate-y-1/2" />
-
-                {/* ── Top accent gradient strip ── */}
-                <div className="h-1 w-full bg-gradient-to-r from-[#1B5E45] via-[#3DBE7A] to-[#E8F5EE]" />
-
-                <div className="relative p-7 md:p-8">
-                  {/* ── Top row: identity + balance card ── */}
+              <Card className="border-[#E8F5EE] bg-white overflow-hidden">
+                <div className="h-1 bg-gradient-to-r from-[#1B5E45] via-[#3DBE7A] to-[#E8F5EE]" />
+                <CardContent className="p-6 lg:p-8">
                   <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
-                    {/* Left: page identity block */}
+                    
+                    {/* Left: Page Info */}
                     <div className="flex items-start gap-5">
-                      {/* Page icon avatar */}
-                      <div className="shrink-0 h-16 w-16 rounded-2xl bg-[#E8F5EE] border-2 border-[#1B5E45]/15 flex items-center justify-center shadow-sm">
-                        <CreditCard
-                          className="h-7 w-7 text-[#1B5E45]"
-                          strokeWidth={1.8}
-                        />
+                      <div className="w-16 h-16 rounded-xl bg-[#E8F5EE] border-2 border-[#1B5E45]/10 flex items-center justify-center">
+                        <CreditCard className="w-7 h-7 text-[#1B5E45]" />
                       </div>
-
-                      <div className="flex-1 min-w-0">
-                        {/* Status badges */}
-                        <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                          <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-[#1B5E45]">
-                            <ShieldCheck className="h-3.5 w-3.5" />
+                      
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
+                            <ShieldCheck className="w-3 h-3 mr-1" />
                             Secure Payment Portal
-                          </span>
-                          <span className="w-1 h-1 bg-[#1B5E45]/30 rounded-full" />
-                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
-                            256-bit SSL Encrypted
-                          </span>
+                          </Badge>
+                          <Badge variant="outline" className="border-[#E8F5EE] text-[#6B7280]">
+                            <Lock className="w-3 h-3 mr-1" />
+                            AES-256 Encrypted
+                          </Badge>
                         </div>
-
-                        {/* Title */}
-                        <h1 className="text-2xl md:text-3xl font-extrabold text-[#1A1A1A] tracking-tight leading-tight">
+                        
+                        <h1 className="text-3xl font-bold text-[#1A1A1A] mb-3">
                           Payments & Billing
                         </h1>
-
-                        {/* Meta info row */}
-                        <div className="grid grid-cols-2 lg:flex lg:flex-wrap items-center gap-x-4 gap-y-2 mt-2.5">
-                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                            <MapPin className="h-3.5 w-3.5 text-[#1B5E45]" />
-                            {currentTenant?.roomNumber || currentTenant?.unitId}
-                          </span>
-                          <span className="w-px h-3.5 bg-border hidden sm:block" />
-                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                            <Calendar className="h-3.5 w-3.5 text-[#1B5E45]" />
-                            Next due: Apr 1, 2025
-                          </span>
-                          <span className="w-px h-3.5 bg-border hidden sm:block" />
-                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                            <Receipt className="h-3.5 w-3.5 text-[#1B5E45]" />
-                            Ref:{" "}
-                            <span className="font-mono font-semibold text-foreground">
-                              {refId}
+                        
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-[#6B7280]">
+                          <div className="flex items-center gap-2">
+                            <MapPin className="w-4 h-4 text-[#1B5E45]" />
+                            <span>Unit {currentTenant.unitId}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-[#1B5E45]" />
+                            <span>Next due: Apr 1, 2025</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Receipt className="w-4 h-4 text-[#1B5E45]" />
+                            <span className="font-mono font-semibold text-[#1A1A1A]">
+                              {referenceId}
                             </span>
-                          </span>
-                        </div>
-
-                        {/* Account status tags */}
-                        <div className="grid grid-cols-2 lg:flex items-center gap-2 mt-3">
-                          <span
-                            className={cn(
-                              "inline-flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-full",
-                              allClear
-                                ? "bg-[#E8F5EE] text-[#1B5E45]"
-                                : "bg-red-50 text-red-600",
-                            )}
-                          >
-                            {allClear ? (
-                              <CheckCircle2 className="h-3 w-3" />
-                            ) : (
-                              <AlertCircle className="h-3 w-3" />
-                            )}
-                            {allClear ? "Account Clear" : "Balance Overdue"}
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold bg-sky-50 text-sky-700 px-2.5 py-1 rounded-full">
-                            <Lock className="h-3 w-3" />
-                            PCI-DSS Compliant
-                          </span>
-                          <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full">
-                            <Zap className="h-3 w-3" />
-                            Instant Confirmation
-                          </span>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Right: Outstanding balance card */}
-                    <div className="shrink-0 lg:max-w-[230px] w-full lg:w-auto">
+                    {/* Right: Balance Card */}
+                    <div className="lg:w-64 shrink-0">
                       <div
                         className={cn(
-                          "rounded-xl border p-4",
-                          allClear
-                            ? "border-[#1B5E45]/12 bg-[#F0F5F1]"
-                            : "border-red-200/60 bg-red-50/50",
+                          "rounded-xl border p-5",
+                          isFullyPaid
+                            ? "border-[#1B5E45]/20 bg-[#E8F5EE]"
+                            : "border-red-200 bg-red-50"
                         )}
                       >
                         <div className="flex items-center justify-between mb-3">
-                          <p
-                            className={cn(
-                              "text-[10px] font-bold uppercase tracking-[0.15em]",
-                              allClear
-                                ? "text-[#1B5E45]/60"
-                                : "text-red-500/70",
-                            )}
-                          >
+                          <p className="text-xs font-semibold text-[#6B7280] uppercase">
                             Outstanding Balance
                           </p>
-                          <span
+                          <Badge
                             className={cn(
-                              "text-[10px] font-semibold px-2 py-0.5 rounded-full",
-                              allClear
-                                ? "text-[#1B5E45] bg-[#E8F5EE]"
-                                : "text-red-600 bg-red-100",
+                              isFullyPaid
+                                ? "bg-[#1B5E45] text-white"
+                                : "bg-red-600 text-white"
                             )}
                           >
-                            {allClear ? "Settled" : "Overdue"}
-                          </span>
+                            {isFullyPaid ? "Settled" : "Overdue"}
+                          </Badge>
                         </div>
                         <p
                           className={cn(
-                            "text-3xl font-black tracking-tight leading-none",
-                            allClear ? "text-[#1A1A1A]" : "text-red-600",
+                            "text-3xl font-bold mb-3",
+                            isFullyPaid ? "text-[#1A1A1A]" : "text-red-600"
                           )}
                         >
                           KSh {currentTenant.arrears.toLocaleString()}
                         </p>
-                        <div className="flex items-center gap-1.5 mt-2">
-                          {allClear ? (
-                            <>
-                              <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A]" />
-                              <span className="text-xs font-medium text-[#1B5E45]">
-                                No pending dues
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <AlertCircle className="h-3.5 w-3.5 text-red-500" />
-                              <span className="text-xs font-medium text-red-600">
-                                Settlement required
-                              </span>
-                            </>
-                          )}
-                        </div>
-                        <button
+                        <Button
                           onClick={handlePayment}
                           className={cn(
-                            "mt-3.5 w-full rounded-lg font-bold text-xs h-9 flex items-center justify-center gap-1.5 transition-colors shadow-sm",
-                            allClear
+                            "w-full font-semibold",
+                            isFullyPaid
                               ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
-                              : "bg-red-600 hover:bg-red-700 text-white",
+                              : "bg-red-600 hover:bg-red-700 text-white"
                           )}
                         >
-                          {allClear ? "Make a Payment" : "Settle Now"}
-                          <ArrowRight className="h-3.5 w-3.5" />
-                        </button>
+                          {isFullyPaid ? "Make Payment" : "Settle Now"}
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
                       </div>
                     </div>
                   </div>
 
-                  {/* ── Divider ── */}
-                  <div className="my-6 border-t border-dashed border-border" />
+                  <Separator className="my-6 bg-[#E8F5EE]" />
 
-                  {/* ── Bottom row: 4 mini stats + completion bar ── */}
+                  {/* Payment Progress */}
                   <div className="flex flex-col lg:flex-row lg:items-end gap-6">
-                    {/* Mini stats */}
-                    <div className="hidden sm:grid sm:grid-cols-4 gap-4 flex-1">
-                      <HeroMiniStat
-                        icon={Banknote}
-                        label="Monthly Rent"
-                        value={`KSh ${currentTenant.rent.toLocaleString()}`}
-                        highlight
-                      />
-                      <HeroMiniStat
-                        icon={Wallet}
-                        label="Arrears"
-                        value={
-                          allClear
-                            ? "KSh 0 — Clear"
-                            : `KSh ${currentTenant.arrears.toLocaleString()}`
-                        }
-                        danger={!allClear}
-                      />
-                      <HeroMiniStat
-                        icon={TrendingUp}
-                        label="Paid This Year"
-                        value={`KSh ${totalPaid.toLocaleString()}`}
-                      />
-                      <HeroMiniStat
-                        icon={Activity}
-                        label="Last Payment"
-                        value={tenantPayments[0]?.date || "—"}
-                      />
+                    <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                      {[
+                        {
+                          label: "Monthly Rent",
+                          value: `KSh ${currentTenant.rent.toLocaleString()}`,
+                          icon: Banknote,
+                        },
+                        {
+                          label: "Arrears",
+                          value: isFullyPaid ? "Clear" : `KSh ${currentTenant.arrears.toLocaleString()}`,
+                          icon: Wallet,
+                        },
+                        {
+                          label: "Paid This Year",
+                          value: `KSh ${totalPaidThisYear.toLocaleString()}`,
+                          icon: TrendingUp,
+                        },
+                        {
+                          label: "Last Payment",
+                          value: tenantPayments[0]?.date || "—",
+                          icon: Activity,
+                        },
+                      ].map((stat, i) => (
+                        <div key={i} className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <stat.icon className="w-4 h-4 text-[#1B5E45]" />
+                            <p className="text-xs font-medium text-[#6B7280]">{stat.label}</p>
+                          </div>
+                          <p className="text-lg font-bold text-[#1A1A1A]">{stat.value}</p>
+                        </div>
+                      ))}
                     </div>
 
-                    {/* Completion bar */}
-                    <div className="lg:w-56 shrink-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                          Payment Completion
-                        </span>
-                        <span className="text-[10px] font-black text-[#1B5E45]">
-                          {settlePct}%
-                        </span>
+                    <div className="lg:w-64 space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium text-[#6B7280]">Payment Completion</span>
+                        <span className="font-bold text-[#1B5E45]">{paymentProgress}%</span>
                       </div>
-                      <div className="h-2 w-full bg-[#E8F5EE] rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-gradient-to-r from-[#1B5E45] to-[#3DBE7A] rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${settlePct}%` }}
-                          transition={{
-                            duration: 1.3,
-                            ease: "easeOut",
-                            delay: 0.4,
-                          }}
-                        />
-                      </div>
-                      <p className="text-[10px] text-muted-foreground mt-1.5">
-                        {settlePct}% of this month's rent settled
+                      <Progress value={paymentProgress} className="h-2 bg-[#F4F4F0]" />
+                      <p className="text-xs text-[#6B7280]">
+                        {paymentProgress}% of this month's rent settled
                       </p>
                     </div>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             </Reveal>
-            {/* ══ END HERO ════════════════════════════════════════════════ */}
 
-            {/* ── Stat Cards ───────────────────────────────────── */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <Reveal delay={0.05}>
-                <StatCard
-                  icon={Banknote}
-                  label="Monthly Rent"
-                  value={`KSh ${currentTenant.rent.toLocaleString()}`}
-                  accent
-                  sub="Current billing period"
-                />
-              </Reveal>
-              <Reveal delay={0.1}>
-                <StatCard
-                  icon={Wallet}
-                  label="Outstanding"
-                  value={`KSh ${currentTenant.arrears.toLocaleString()}`}
-                  badge={
-                    allClear
-                      ? { label: "Cleared" }
-                      : { label: "Overdue", danger: true }
-                  }
-                  sub={allClear ? "No dues pending" : "Please settle soon"}
-                />
-              </Reveal>
-              <Reveal delay={0.15}>
-                <StatCard
-                  icon={TrendingUp}
-                  label="Paid This Year"
-                  value={`KSh ${totalPaid.toLocaleString()}`}
-                  badge={{ label: "YTD" }}
-                  sub="All completed payments"
-                />
-              </Reveal>
-              <Reveal delay={0.2}>
-                <StatCard
-                  icon={CheckCircle2}
-                  label="Completion Rate"
-                  value={`${settlePct}%`}
-                  progress={settlePct}
-                  sub="Payment fulfilment"
-                />
-              </Reveal>
-            </div>
-
-            {/* ── Main Grid ────────────────────────────────────── */}
-            <div className="grid lg:grid-cols-12 gap-6">
-              {/* Left — Payment Terminal */}
-              <div className="lg:col-span-8 space-y-6">
+            {/* Main Content Grid */}
+            <div className="grid lg:grid-cols-3 gap-6">
+              
+              {/* Left: Payment Form */}
+              <div className="lg:col-span-2 space-y-6">
+                
                 {/* Amount Input */}
-                <Reveal delay={0.2}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-white">
-                    <CardHeader className="px-6 pt-6 pb-4">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-[#1B5E45]" />
+                <Reveal delay={0.1}>
+                  <Card className="border-[#E8F5EE] bg-white">
+                    <CardHeader>
+                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                        <DollarSign className="w-5 h-5 text-[#1B5E45]" />
                         Payment Amount
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="px-6 pb-6 space-y-5">
+                    <CardContent className="space-y-4">
                       <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-[#1B5E45] select-none">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-[#1B5E45]">
                           KSh
                         </div>
-                        <input
+                        <Input
                           type="number"
                           value={amount}
                           onChange={(e) => setAmount(Number(e.target.value))}
-                          className="w-full pl-14 pr-4 py-4 text-2xl font-bold rounded-xl border-2 border-border bg-[#FAFAF8] focus:border-[#1B5E45] focus:ring-2 focus:ring-[#1B5E45]/10 outline-none transition-all"
+                          className="pl-16 h-14 text-2xl font-bold border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
                         />
                       </div>
-                      <div className="flex flex-wrap gap-2">
-                        <p className="w-full text-xs font-medium text-muted-foreground mb-1">
-                          Quick select:
-                        </p>
-                        {[
-                          { label: "Full Rent", val: currentTenant.rent },
-                          {
-                            label: "50%",
-                            val: Math.round(currentTenant.rent / 2),
-                          },
-                          { label: "Arrears", val: currentTenant.arrears },
-                          { label: "KSh 5,000", val: 5000 },
-                        ].map((q) => (
-                          <button
-                            key={q.label}
-                            onClick={() => setAmount(q.val)}
-                            className={cn(
-                              "px-4 py-2 rounded-lg border text-xs font-semibold transition-all",
-                              amount === q.val
-                                ? "border-[#1B5E45] bg-[#E8F5EE] text-[#1B5E45]"
-                                : "border-border bg-white text-muted-foreground hover:border-[#1B5E45]/30 hover:text-[#1B5E45]",
-                            )}
-                          >
-                            {q.label}
-                          </button>
-                        ))}
+
+                      <div className="space-y-2">
+                        <p className="text-xs font-medium text-[#6B7280]">Quick select:</p>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                          {[
+                            { label: "Full Rent", value: currentTenant.rent },
+                            { label: "Half", value: Math.round(currentTenant.rent / 2) },
+                            { label: "Arrears", value: currentTenant.arrears },
+                            { label: "KSh 5,000", value: 5000 },
+                          ].map((quick) => (
+                            <Button
+                              key={quick.label}
+                              variant={amount === quick.value ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => setAmount(quick.value)}
+                              className={cn(
+                                amount === quick.value
+                                  ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
+                                  : "border-[#E8F5EE] hover:bg-[#E8F5EE]"
+                              )}
+                            >
+                              {quick.label}
+                            </Button>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-[#F0F5F1] border border-[#1B5E45]/10">
+
+                      <div className="flex items-center justify-between p-4 rounded-lg bg-[#E8F5EE] border border-[#1B5E45]/10">
                         <div>
-                          <p className="text-xs font-medium text-muted-foreground">
-                            Payment Reference
-                          </p>
-                          <p className="text-sm font-semibold text-foreground font-mono">
-                            {refId}
+                          <p className="text-xs font-medium text-[#6B7280]">Payment Reference</p>
+                          <p className="text-sm font-semibold text-[#1A1A1A] font-mono">
+                            {referenceId}
                           </p>
                         </div>
                         <Tooltip>
-                          <TooltipTrigger>
-                            <button
-                              onClick={() => handleCopy(refId)}
-                              className="h-8 w-8 rounded-lg bg-white border border-border flex items-center justify-center hover:bg-[#E8F5EE] transition-colors"
+                          <TooltipTrigger asChild>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              onClick={() => handleCopy(referenceId)}
+                              className="hover:bg-white"
                             >
                               {copied ? (
-                                <Check className="h-3.5 w-3.5 text-[#1B5E45]" />
+                                <Check className="w-4 h-4 text-[#1B5E45]" />
                               ) : (
-                                <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                                <Copy className="w-4 h-4 text-[#6B7280]" />
                               )}
-                            </button>
+                            </Button>
                           </TooltipTrigger>
-                          <TooltipContent>
-                            {copied ? "Copied!" : "Copy reference"}
-                          </TooltipContent>
+                          <TooltipContent>{copied ? "Copied!" : "Copy"}</TooltipContent>
                         </Tooltip>
                       </div>
                     </CardContent>
@@ -739,202 +432,187 @@ export default function TenantPaymentsPage() {
                 </Reveal>
 
                 {/* Payment Method */}
-                <Reveal delay={0.25}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-white">
-                    <CardHeader className="px-6 pt-6 pb-4">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
-                        <CreditCard className="h-4 w-4 text-[#1B5E45]" />
+                <Reveal delay={0.15}>
+                  <Card className="border-[#E8F5EE] bg-white">
+                    <CardHeader>
+                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                        <CreditCard className="w-5 h-5 text-[#1B5E45]" />
                         Payment Method
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="px-6 pb-6 space-y-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <MethodButton
+                    <CardContent className="space-y-6">
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        <PaymentMethodButton
                           id="mpesa"
                           label="M-PESA"
-                          sub="Instant mobile money"
+                          subtitle="Instant mobile money"
                           icon={Smartphone}
-                          active={method === "mpesa"}
-                          onClick={() => setMethod("mpesa")}
+                          active={paymentMethod === "mpesa"}
+                          onClick={() => setPaymentMethod("mpesa")}
                         />
-                        <MethodButton
+                        <PaymentMethodButton
                           id="card"
                           label="Card"
-                          sub="Visa & Mastercard"
+                          subtitle="Visa & Mastercard"
                           icon={CreditCard}
-                          active={method === "card"}
-                          onClick={() => setMethod("card")}
+                          active={paymentMethod === "card"}
+                          onClick={() => setPaymentMethod("card")}
                         />
-                        <MethodButton
+                        <PaymentMethodButton
                           id="bank"
                           label="Bank Transfer"
-                          sub="Direct bank wire"
+                          subtitle="Direct bank wire"
                           icon={Building2}
-                          active={method === "bank"}
-                          onClick={() => setMethod("bank")}
+                          active={paymentMethod === "bank"}
+                          onClick={() => setPaymentMethod("bank")}
                         />
                       </div>
-                      <Separator />
+
+                      <Separator className="bg-[#E8F5EE]" />
+
                       <AnimatePresence mode="wait">
-                        {method === "mpesa" && (
+                        {paymentMethod === "mpesa" && (
                           <motion.div
                             key="mpesa"
-                            initial={{ opacity: 0, y: 12 }}
+                            initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.25 }}
+                            exit={{ opacity: 0, y: -10 }}
                             className="space-y-4"
                           >
                             <div>
-                              <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-muted-foreground">
+                              <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
                                 M-PESA Phone Number
                               </label>
                               <div className="relative">
-                                <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#1B5E45]" />
-                                <input
+                                <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1B5E45]" />
+                                <Input
                                   type="tel"
                                   placeholder="0712 345 678"
-                                  className={cn(inputCls, "pl-11")}
+                                  className="pl-10 border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
                                 />
                               </div>
                             </div>
-                            <div className="flex items-start gap-3 p-4 rounded-xl bg-[#E8F5EE] border border-[#1B5E45]/10">
-                              <Info className="h-4 w-4 text-[#1B5E45] shrink-0 mt-0.5" />
-                              <p className="text-xs text-[#1B5E45] leading-relaxed">
-                                An STK push will be sent to your phone. Confirm
-                                the prompt on your device to complete payment.
+                            <div className="flex items-start gap-3 p-4 rounded-lg bg-[#E8F5EE]">
+                              <Info className="w-4 h-4 text-[#1B5E45] shrink-0 mt-0.5" />
+                              <p className="text-xs text-[#1B5E45]">
+                                An STK push will be sent to your phone. Confirm the prompt to complete payment.
                               </p>
                             </div>
                             <Button
                               onClick={handlePayment}
-                              className="w-full h-12 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold text-sm shadow-sm"
+                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
                             >
                               Send STK Push · KSh {amount.toLocaleString()}
-                              <ArrowRight className="ml-2 h-4 w-4" />
+                              <ArrowRight className="w-4 h-4 ml-2" />
                             </Button>
                           </motion.div>
                         )}
-                        {method === "card" && (
+
+                        {paymentMethod === "card" && (
                           <motion.div
                             key="card"
-                            initial={{ opacity: 0, y: 12 }}
+                            initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.25 }}
+                            exit={{ opacity: 0, y: -10 }}
                             className="space-y-4"
                           >
                             <div>
-                              <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-muted-foreground">
+                              <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
                                 Card Number
                               </label>
-                              <div className="relative">
-                                <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#1B5E45]" />
-                                <input
-                                  type="text"
-                                  placeholder="4242 4242 4242 4242"
-                                  className={cn(
-                                    inputCls,
-                                    "pl-11 font-mono tracking-widest",
-                                  )}
-                                />
-                              </div>
+                              <Input
+                                type="text"
+                                placeholder="4242 4242 4242 4242"
+                                className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45] font-mono"
+                              />
                             </div>
                             <div>
-                              <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-muted-foreground">
+                              <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
                                 Cardholder Name
                               </label>
-                              <input
+                              <Input
                                 type="text"
-                                placeholder="Full name on card"
-                                className={inputCls}
+                                placeholder="John Doe"
+                                className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
                               />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                               <div>
-                                <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-muted-foreground">
+                                <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
                                   Expiry
                                 </label>
-                                <input
+                                <Input
                                   type="text"
-                                  placeholder="MM / YY"
-                                  className={inputCls}
+                                  placeholder="MM/YY"
+                                  className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
                                 />
                               </div>
                               <div>
-                                <label className="block text-xs font-semibold uppercase tracking-widest mb-2 text-muted-foreground">
+                                <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
                                   CVV
                                 </label>
-                                <input
+                                <Input
                                   type="password"
                                   placeholder="•••"
-                                  className={inputCls}
+                                  className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
                                 />
                               </div>
                             </div>
                             <Button
                               onClick={handlePayment}
-                              className="w-full h-12 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold text-sm shadow-sm"
+                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
                             >
                               Pay Securely · KSh {amount.toLocaleString()}
-                              <ArrowRight className="ml-2 h-4 w-4" />
+                              <ArrowRight className="w-4 h-4 ml-2" />
                             </Button>
                           </motion.div>
                         )}
-                        {method === "bank" && (
+
+                        {paymentMethod === "bank" && (
                           <motion.div
                             key="bank"
-                            initial={{ opacity: 0, y: 12 }}
+                            initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.25 }}
+                            exit={{ opacity: 0, y: -10 }}
                             className="space-y-4"
                           >
-                            <div className="rounded-xl border border-border bg-[#FAFAF8] divide-y divide-border overflow-hidden">
+                            <div className="rounded-lg border border-[#E8F5EE] bg-[#FAFAF8] divide-y divide-[#E8F5EE]">
                               {[
                                 { label: "Bank", value: "Equity Bank" },
-                                {
-                                  label: "Account Name",
-                                  value: "Nova Realty Ltd",
-                                },
+                                { label: "Account Name", value: "Nova Realty Ltd" },
                                 { label: "Account No.", value: "880977221100" },
-                                { label: "Reference", value: refId },
+                                { label: "Reference", value: referenceId },
                               ].map((row) => (
-                                <div
-                                  key={row.label}
-                                  className="flex items-center justify-between px-4 py-3"
-                                >
-                                  <span className="text-xs text-muted-foreground font-medium">
-                                    {row.label}
-                                  </span>
+                                <div key={row.label} className="flex items-center justify-between p-3">
+                                  <span className="text-xs text-[#6B7280] font-medium">{row.label}</span>
                                   <div className="flex items-center gap-2">
-                                    <span className="text-sm font-semibold text-foreground font-mono">
+                                    <span className="text-sm font-semibold text-[#1A1A1A] font-mono">
                                       {row.value}
                                     </span>
-                                    <button
+                                    <Button
+                                      size="icon"
+                                      variant="ghost"
                                       onClick={() => handleCopy(row.value)}
-                                      className="h-6 w-6 rounded flex items-center justify-center hover:bg-[#E8F5EE] transition-colors"
+                                      className="h-6 w-6"
                                     >
-                                      <Copy className="h-3 w-3 text-muted-foreground" />
-                                    </button>
+                                      <Copy className="w-3 h-3" />
+                                    </Button>
                                   </div>
                                 </div>
                               ))}
                             </div>
-                            <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-50 border border-amber-200/60">
-                              <Info className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-                              <p className="text-xs text-amber-700 leading-relaxed">
-                                Use the reference code above when making the
-                                transfer. Allow 1–2 business days for
-                                processing.
+                            <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-50 border border-amber-200">
+                              <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                              <p className="text-xs text-amber-700">
+                                Use the reference code when transferring. Allow 1-2 business days for processing.
                               </p>
                             </div>
                             <Button
                               onClick={handlePayment}
                               variant="outline"
-                              className="w-full h-12 rounded-xl border-[#1B5E45] text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold text-sm"
+                              className="w-full border-[#1B5E45] text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold"
                             >
-                              Confirm Bank Transfer · KSh{" "}
-                              {amount.toLocaleString()}
+                              Confirm Transfer · KSh {amount.toLocaleString()}
                             </Button>
                           </motion.div>
                         )}
@@ -943,58 +621,42 @@ export default function TenantPaymentsPage() {
                   </Card>
                 </Reveal>
 
-                {/* Transaction History Table */}
-                <Reveal delay={0.3}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-white">
-                    <CardHeader className="px-6 pt-6 pb-4">
+                {/* Transaction History */}
+                <Reveal delay={0.2}>
+                  <Card className="border-[#E8F5EE] bg-white">
+                    <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-semibold flex items-center gap-2">
-                          <History className="h-4 w-4 text-[#1B5E45]" />
+                        <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                          <History className="w-5 h-5 text-[#1B5E45]" />
                           Transaction History
                         </CardTitle>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-xs text-[#1B5E45] hover:bg-[#E8F5EE] h-8 px-3 rounded-lg font-medium"
-                        >
-                          View all <ArrowRight className="ml-1 h-3 w-3" />
+                        <Button variant="ghost" size="sm" className="text-[#1B5E45] hover:bg-[#E8F5EE]">
+                          View All
+                          <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
                       </div>
                     </CardHeader>
-                    <CardContent className="px-6 pb-4">
-                      <div className="grid grid-cols-4 pb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/70">
-                        <span>Description</span>
-                        <span className="text-center">Date</span>
-                        <span className="text-center">Method</span>
-                        <span className="text-right">Amount</span>
-                      </div>
-                      <Separator className="mb-1" />
-                      <div className="divide-y divide-border">
+                    <CardContent>
+                      <div className="space-y-1">
                         {tenantPayments.slice(0, 5).map((payment, i) => (
                           <div
                             key={i}
-                            className="grid grid-cols-4 items-center py-3.5 group"
+                            className="flex items-center justify-between p-3 rounded-lg hover:bg-[#FAFAF8] transition-colors"
                           >
                             <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
-                                <Receipt className="h-3.5 w-3.5 text-[#1B5E45]" />
+                              <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
+                                <Receipt className="w-4 h-4 text-[#1B5E45]" />
                               </div>
-                              <span className="text-sm font-medium text-foreground truncate">
-                                {payment.month}
-                              </span>
+                              <div>
+                                <p className="text-sm font-semibold text-[#1A1A1A]">{payment.month}</p>
+                                <p className="text-xs text-[#6B7280]">{payment.date}</p>
+                              </div>
                             </div>
-                            <span className="text-xs text-muted-foreground text-center">
-                              {payment.date}
-                            </span>
-                            <span className="text-center">
-                              <span className="inline-flex items-center text-[10px] font-medium text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
-                                M-PESA
-                              </span>
-                            </span>
                             <div className="text-right">
-                              <p className="text-sm font-semibold text-[#1B5E45]">
+                              <p className="text-sm font-bold text-[#1B5E45]">
                                 KSh {payment.amount.toLocaleString()}
                               </p>
+                              <Badge className="bg-[#E8F5EE] text-[#1B5E45] text-xs">M-PESA</Badge>
                             </div>
                           </div>
                         ))}
@@ -1005,131 +667,102 @@ export default function TenantPaymentsPage() {
               </div>
 
               {/* Right Sidebar */}
-              <div className="lg:col-span-4 space-y-6">
-                <Reveal delay={0.2}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-white">
-                    <CardHeader className="px-6 pt-6 pb-4">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
-                        <ShieldCheck className="h-4 w-4 text-[#1B5E45]" />
-                        Security & Trust
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-6 pb-6 space-y-4">
-                      {[
-                        {
-                          icon: Lock,
-                          title: "End-to-End Encrypted",
-                          desc: "AES-256 GCM encryption",
-                        },
-                        {
-                          icon: Zap,
-                          title: "Instant Verification",
-                          desc: "Real-time confirmation",
-                        },
-                        {
-                          icon: ShieldCheck,
-                          title: "PCI-DSS Compliant",
-                          desc: "Level 1 Certified",
-                        },
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-start gap-3">
-                          <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center shrink-0">
-                            <item.icon className="h-4 w-4 text-[#1B5E45]" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-semibold text-foreground">
-                              {item.title}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </Reveal>
-
-                <Reveal delay={0.25}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-white">
-                    <CardHeader className="px-6 pt-6 pb-4">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
-                        <FileText className="h-4 w-4 text-[#1B5E45]" />
+              <div className="space-y-6">
+                
+                {/* Payment Summary */}
+                <Reveal delay={0.1}>
+                  <Card className="border-[#E8F5EE] bg-white">
+                    <CardHeader>
+                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                        <FileText className="w-5 h-5 text-[#1B5E45]" />
                         Payment Summary
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="px-6 pb-6 space-y-3">
-                      {[
-                        {
-                          label: "Subtotal",
-                          value: `KSh ${amount.toLocaleString()}`,
-                        },
-                        { label: "Processing Fee", value: "KSh 0" },
-                        { label: "VAT (0%)", value: "KSh 0" },
-                      ].map((row) => (
-                        <div
-                          key={row.label}
-                          className="flex items-center justify-between"
-                        >
-                          <span className="text-sm text-muted-foreground">
-                            {row.label}
-                          </span>
-                          <span className="text-sm font-medium text-foreground">
-                            {row.value}
-                          </span>
-                        </div>
-                      ))}
-                      <Separator />
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        {[
+                          { label: "Subtotal", value: `KSh ${amount.toLocaleString()}` },
+                          { label: "Processing Fee", value: "KSh 0" },
+                          { label: "VAT (0%)", value: "KSh 0" },
+                        ].map((row) => (
+                          <div key={row.label} className="flex items-center justify-between text-sm">
+                            <span className="text-[#6B7280]">{row.label}</span>
+                            <span className="font-medium text-[#1A1A1A]">{row.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <Separator className="bg-[#E8F5EE]" />
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-foreground">
-                          Total
-                        </span>
-                        <span className="text-base font-bold text-[#1B5E45]">
+                        <span className="text-sm font-bold text-[#1A1A1A]">Total</span>
+                        <span className="text-lg font-bold text-[#1B5E45]">
                           KSh {amount.toLocaleString()}
                         </span>
                       </div>
                       <Button
                         onClick={handlePayment}
-                        className="w-full h-11 mt-2 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold text-sm shadow-sm"
+                        className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
                       >
                         Confirm & Pay
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
-                      <p className="text-center text-[10px] text-muted-foreground flex items-center justify-center gap-1 pt-1">
-                        <Lock className="h-3 w-3" />
+                      <p className="text-center text-xs text-[#6B7280] flex items-center justify-center gap-1">
+                        <Lock className="w-3 h-3" />
                         Secured by 256-bit SSL encryption
                       </p>
                     </CardContent>
                   </Card>
                 </Reveal>
 
-                <Reveal delay={0.3}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-[#F0F5F1]">
-                    <CardContent className="px-6 py-6">
-                      <p className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-[#1B5E45]" />
-                        Billing Schedule
-                      </p>
-                      <div className="space-y-3">
-                        {[
-                          { label: "Rent Due Date", val: "1st of every month" },
-                          { label: "Late Fee After", val: "5th of the month" },
-                          { label: "Next Due", val: "1 Apr 2025" },
-                          { label: "Lease End", val: "14 Mar 2027" },
-                        ].map((row) => (
-                          <div
-                            key={row.label}
-                            className="flex items-center justify-between"
-                          >
-                            <span className="text-xs text-muted-foreground">
-                              {row.label}
-                            </span>
-                            <span className="text-xs font-semibold text-foreground">
-                              {row.val}
-                            </span>
+                {/* Security Features */}
+                <Reveal delay={0.15}>
+                  <Card className="border-[#E8F5EE] bg-white">
+                    <CardHeader>
+                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                        <ShieldCheck className="w-5 h-5 text-[#1B5E45]" />
+                        Security & Trust
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {[
+                        { icon: Lock, title: "End-to-End Encrypted", desc: "AES-256 GCM encryption" },
+                        { icon: Zap, title: "Instant Verification", desc: "Real-time confirmation" },
+                        { icon: ShieldCheck, title: "PCI-DSS Compliant", desc: "Level 1 Certified" },
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-start gap-3">
+                          <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
+                            <item.icon className="w-4 h-4 text-[#1B5E45]" />
                           </div>
-                        ))}
-                      </div>
+                          <div>
+                            <p className="text-sm font-semibold text-[#1A1A1A]">{item.title}</p>
+                            <p className="text-xs text-[#6B7280]">{item.desc}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                </Reveal>
+
+                {/* Billing Schedule */}
+                <Reveal delay={0.2}>
+                  <Card className="border-[#E8F5EE] bg-[#E8F5EE]">
+                    <CardHeader>
+                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                        <Calendar className="w-5 h-5 text-[#1B5E45]" />
+                        Billing Schedule
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {[
+                        { label: "Rent Due Date", value: "1st of every month" },
+                        { label: "Late Fee After", value: "5th of the month" },
+                        { label: "Next Due", value: "Apr 1, 2025" },
+                        { label: "Lease End", value: "Mar 14, 2027" },
+                      ].map((row) => (
+                        <div key={row.label} className="flex items-center justify-between text-sm">
+                          <span className="text-[#6B7280]">{row.label}</span>
+                          <span className="font-semibold text-[#1A1A1A]">{row.value}</span>
+                        </div>
+                      ))}
                     </CardContent>
                   </Card>
                 </Reveal>

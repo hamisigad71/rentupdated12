@@ -1,24 +1,32 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import TenantLayout from "@/components/TenantLayout";
-import Modal from "@/components/Modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { mockComplaints, mockTenants } from "@/data/mockData";
-import { useAuth } from "@/context/AuthContext";
 import {
   AlertCircle,
   Plus,
   Search,
   CheckCircle2,
   Clock,
-  CircleDot,
   ChevronRight,
   X,
   Calendar,
-  Tag,
   Wrench,
   Wifi,
   Droplets,
@@ -26,144 +34,93 @@ import {
   Shield,
   MoreHorizontal,
   MessageSquare,
-  ArrowRight,
-  ShieldCheck,
-  Timer,
-  CheckCheck,
-  Filter,
-  Download,
-  Info,
-  Settings,
+  FileText,
   Activity,
-  ZapIcon,
-  DropletsIcon,
-  WifiIcon,
-  WrenchIcon,
-  ShieldIcon,
   TrendingUp,
   Bell,
   Star,
-  RefreshCw,
   Eye,
-  FileText,
-  ChevronDown,
-  Paperclip,
   Send,
-  ThumbsUp,
-  AlertTriangle,
   Home,
-  Hash,
-  BarChart2,
-  Layers,
-  CircleCheck,
+  Paperclip,
+  Info,
   Flame,
+  AlertTriangle,
+  CheckCheck,
+  Timer,
+  CircleDot,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* === types ================================================================ */
+// ─── TYPES ───────────────────────────────────────────────────────────────────
 type Priority = "low" | "medium" | "high";
 type Status = "all" | "pending" | "in-progress" | "resolved";
 
-/* === helpers =============================================================== */
-function priorityConf(p: string) {
-  if (p === "high")
-    return {
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function getPriorityConfig(priority: string) {
+  const configs = {
+    high: {
       label: "Critical",
-      dot: "#ef4444",
-      bg: "#fef2f2",
-      text: "#dc2626",
-      border: "#fecaca",
+      color: "#EF4444",
+      bgColor: "#FEE2E2",
+      borderColor: "#FECACA",
       icon: Flame,
-    };
-  if (p === "medium")
-    return {
+    },
+    medium: {
       label: "Standard",
-      dot: "#f59e0b",
-      bg: "#fffbeb",
-      text: "#d97706",
-      border: "#fde68a",
+      color: "#F59E0B",
+      bgColor: "#FEF3C7",
+      borderColor: "#FDE68A",
       icon: AlertTriangle,
-    };
-  return {
-    label: "Low",
-    dot: "#3DBE7A",
-    bg: "#f0fdf4",
-    text: "#16a34a",
-    border: "#bbf7d0",
-    icon: CircleCheck,
+    },
+    low: {
+      label: "Low",
+      color: "#3DBE7A",
+      bgColor: "#E8F5EE",
+      borderColor: "#C4D4C9",
+      icon: CheckCheck,
+    },
   };
+  return configs[priority as keyof typeof configs] || configs.low;
 }
 
-function statusConf(s: string) {
-  if (s === "resolved")
-    return {
+function getStatusConfig(status: string) {
+  const configs = {
+    resolved: {
       label: "Resolved",
-      Icon: CheckCheck,
-      color: "#16a34a",
-      bg: "#f0fdf4",
-      border: "#bbf7d0",
-      step: 3,
-    };
-  if (s === "in-progress")
-    return {
+      icon: CheckCheck,
+      color: "#16A34A",
+      bgColor: "#E8F5EE",
+      borderColor: "#C4D4C9",
+    },
+    "in-progress": {
       label: "In Progress",
-      Icon: Timer,
-      color: "#d97706",
-      bg: "#fffbeb",
-      border: "#fde68a",
-      step: 2,
-    };
-  return {
-    label: "Pending",
-    Icon: CircleDot,
-    color: "#dc2626",
-    bg: "#fef2f2",
-    border: "#fecaca",
-    step: 1,
+      icon: Timer,
+      color: "#F59E0B",
+      bgColor: "#FEF3C7",
+      borderColor: "#FDE68A",
+    },
+    pending: {
+      label: "Pending",
+      icon: CircleDot,
+      color: "#EF4444",
+      bgColor: "#FEE2E2",
+      borderColor: "#FECACA",
+    },
   };
+  return configs[status as keyof typeof configs] || configs.pending;
 }
 
 const CATEGORIES = [
-  {
-    label: "Plumbing",
-    icon: <DropletsIcon className="w-5 h-5" />,
-    color: "#3b82f6",
-  },
-  {
-    label: "Electrical",
-    icon: <ZapIcon className="w-5 h-5" />,
-    color: "#f59e0b",
-  },
-  {
-    label: "Internet",
-    icon: <WifiIcon className="w-5 h-5" />,
-    color: "#8b5cf6",
-  },
-  {
-    label: "Maintenance",
-    icon: <WrenchIcon className="w-5 h-5" />,
-    color: "#f97316",
-  },
-  {
-    label: "Security",
-    icon: <ShieldIcon className="w-5 h-5" />,
-    color: "#ef4444",
-  },
-  {
-    label: "Other",
-    icon: <MoreHorizontal className="w-5 h-5" />,
-    color: "#6b7280",
-  },
+  { label: "Plumbing", icon: Droplets, color: "#3B82F6" },
+  { label: "Electrical", icon: Zap, color: "#F59E0B" },
+  { label: "Internet", icon: Wifi, color: "#8B5CF6" },
+  { label: "Maintenance", icon: Wrench, color: "#F97316" },
+  { label: "Security", icon: Shield, color: "#EF4444" },
+  { label: "Other", icon: MoreHorizontal, color: "#6B7280" },
 ];
 
-const SORT_OPTIONS = [
-  { label: "Newest First", value: "newest" },
-  { label: "Oldest First", value: "oldest" },
-  { label: "High Priority", value: "priority" },
-  { label: "Status", value: "status" },
-];
-
-/* === Reveal =============================================================== */
+// ─── REVEAL ANIMATION ────────────────────────────────────────────────────────
 function Reveal({
   children,
   delay = 0,
@@ -180,7 +137,7 @@ function Reveal({
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
       className={className}
     >
       {children}
@@ -188,727 +145,406 @@ function Reveal({
   );
 }
 
-/* === Progress Ring ======================================================= */
-function Ring({
-  pct,
-  size = 56,
-  stroke = 5,
-  color = "#3DBE7A",
-  bg = "#e8f5ee",
-}: {
-  pct: number;
-  size?: number;
-  stroke?: number;
-  color?: string;
-  bg?: string;
-}) {
-  const r = (size - stroke * 2) / 2;
-  const circ = 2 * Math.PI * r;
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      className="-rotate-90"
-    >
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        stroke={bg}
-        strokeWidth={stroke}
-      />
-      <motion.circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        stroke={color}
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeDasharray={circ}
-        initial={{ strokeDashoffset: circ }}
-        animate={{ strokeDashoffset: circ - (pct / 100) * circ }}
-        transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      />
-    </svg>
-  );
-}
-
-/* === Stat Card ============================================================ */
-function StatCard({
-  label,
-  value,
-  sub,
-  icon: Icon,
-  accent,
-  warn,
-  danger,
-  delay = 0,
-}: any) {
-  return (
-    <Reveal delay={delay}>
-      <div
-        className={cn(
-          "relative rounded-2xl p-6 border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group cursor-default",
-          accent
-            ? "bg-[#1B5E45] border-[#246B4F] text-white"
-            : danger
-              ? "bg-[#fef2f2] border-[#fecaca]"
-              : warn
-                ? "bg-[#fffbeb] border-[#fde68a]"
-                : "bg-white border-[#E0E8E3] shadow-sm",
-        )}
-      >
-        {/* soft dot pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)",
-            backgroundSize: "18px 18px",
-          }}
-        />
-
-        <div className="relative z-10 flex items-start justify-between">
-          <div>
-            <p
-              className={cn(
-                "text-[10px] font-semibold uppercase tracking-widest mb-3",
-                accent ? "text-[#7FD9A8]" : "text-[#6B7280]",
-              )}
-            >
-              {label}
-            </p>
-            <p
-              className={cn(
-                "text-3xl font-bold tracking-tight",
-                accent
-                  ? "text-white"
-                  : danger
-                    ? "text-[#dc2626]"
-                    : warn
-                      ? "text-[#d97706]"
-                      : "text-[#1A1A1A]",
-              )}
-            >
-              {value}
-            </p>
-            {sub && (
-              <p
-                className={cn(
-                  "text-xs mt-1",
-                  accent ? "text-[#7FD9A8]" : "text-[#6B7280]",
-                )}
-              >
-                {sub}
-              </p>
-            )}
-          </div>
-          {Icon && (
-            <div
-              className={cn(
-                "h-10 w-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110",
-                accent
-                  ? "bg-white/10"
-                  : danger
-                    ? "bg-[#fecaca]"
-                    : warn
-                      ? "bg-[#fde68a]"
-                      : "bg-[#E8F5EE]",
-              )}
-            >
-              <Icon
-                className={cn(
-                  "h-5 w-5",
-                  accent
-                    ? "text-[#3DBE7A]"
-                    : danger
-                      ? "text-[#dc2626]"
-                      : warn
-                        ? "text-[#d97706]"
-                        : "text-[#1B5E45]",
-                )}
-              />
-            </div>
-          )}
-        </div>
-      </div>
-    </Reveal>
-  );
-}
-
-/* === Timeline Step ======================================================== */
-function TimelineStep({
-  step,
-  currentStep,
-}: {
-  step: { label: string; desc: string };
-  idx: number;
-  currentStep: number;
-  index: number;
-}) {
-  // re-declared below in usage
-  return null;
-}
-
-/* === Main Page ============================================================ */
+// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function TenantComplaintsPage() {
-  const { userName } = useAuth();
   const currentTenant = mockTenants[0];
-  const myComplaints = mockComplaints.filter(
-    (c) => c.tenantId === currentTenant.id,
-  );
+  const myComplaints = mockComplaints.filter((c) => c.tenantId === currentTenant.id);
 
-  const [filter, setFilter] = useState<Status>("all");
+  const [statusFilter, setStatusFilter] = useState<Status>("all");
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("newest");
-  const [selected, setSelected] = useState<any>(null);
-  const [showForm, setShowForm] = useState(false);
-  const [showSort, setShowSort] = useState(false);
-  const [activeTab, setActiveTab] = useState<
-    "details" | "timeline" | "messages"
-  >("details");
+  const [selectedComplaint, setSelectedComplaint] = useState<any>(null);
+  const [showNewRequestModal, setShowNewRequestModal] = useState(false);
+  const [activeTab, setActiveTab] = useState<"details" | "timeline" | "messages">("details");
 
-  /* form state */
+  // Form state
   const [form, setForm] = useState({
     title: "",
     category: "",
     priority: "medium" as Priority,
     description: "",
-    attachment: "",
   });
-  const [submitted, setSubmitted] = useState(false);
-  const [followUpMsg, setFollowUpMsg] = useState("");
-  const [rating, setRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  /* stats */
-  const total = myComplaints.length;
-  const pending = myComplaints.filter((c) => c.status === "pending").length;
-  const inProgress = myComplaints.filter(
-    (c) => c.status === "in-progress",
-  ).length;
-  const resolved = myComplaints.filter((c) => c.status === "resolved").length;
-  const resolvePct = total ? Math.round((resolved / total) * 100) : 0;
-  const avgResponse = "18h";
+  // Statistics
+  const totalRequests = myComplaints.length;
+  const pendingRequests = myComplaints.filter((c) => c.status === "pending").length;
+  const inProgressRequests = myComplaints.filter((c) => c.status === "in-progress").length;
+  const resolvedRequests = myComplaints.filter((c) => c.status === "resolved").length;
+  const resolutionRate = totalRequests ? Math.round((resolvedRequests / totalRequests) * 100) : 0;
 
-  /* filtering + sorting */
-  const filtered = myComplaints
-    .filter((c) => {
-      const matchStatus = filter === "all" || c.status === filter;
-      const matchSearch = `${c.title} ${c.category} ${c.description}`
-        .toLowerCase()
-        .includes(search.toLowerCase());
-      return matchStatus && matchSearch;
-    })
-    .sort((a, b) => {
-      if (sortBy === "priority") {
-        const order = { high: 0, medium: 1, low: 2 };
-        return (
-          (order[a.priority as Priority] ?? 2) -
-          (order[b.priority as Priority] ?? 2)
-        );
-      }
-      if (sortBy === "status") {
-        const order = { pending: 0, "in-progress": 1, resolved: 2 };
-        return (
-          (order[a.status as keyof typeof order] ?? 0) -
-          (order[b.status as keyof typeof order] ?? 0)
-        );
-      }
-      return 0;
-    });
+  // Filtering
+  const filteredComplaints = myComplaints.filter((c) => {
+    const matchesStatus = statusFilter === "all" || c.status === statusFilter;
+    const matchesSearch = `${c.title} ${c.category} ${c.description}`
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
-  const handleSubmit = () => {
+  const handleSubmitRequest = () => {
     if (!form.title || !form.category || !form.description) return;
-    setSubmitted(true);
+    setIsSubmitting(true);
     setTimeout(() => {
-      setSubmitted(false);
-      setShowForm(false);
-      setForm({
-        title: "",
-        category: "",
-        priority: "medium",
-        description: "",
-        attachment: "",
-      });
-    }, 2500);
+      setIsSubmitting(false);
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        setShowNewRequestModal(false);
+        setForm({
+          title: "",
+          category: "",
+          priority: "medium",
+          description: "",
+        });
+      }, 2000);
+    }, 1500);
   };
-
-  const TABS = [
-    { key: "details", label: "Details", icon: FileText },
-    { key: "timeline", label: "Timeline", icon: Activity },
-    { key: "messages", label: "Messages", icon: MessageSquare },
-  ] as const;
 
   return (
     <TenantLayout>
-      <div className="min-h-screen bg-[#FAFAF8]">
-        <div className="py-6 md:p-8 space-y-10 max-w-7xl mx-auto">
-          {/* ── HEADER ─────────────────────────────────────────────────── */}
-          <Reveal className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3 mb-1">
-                <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center">
-                  <AlertCircle className="h-4.5 w-4.5 text-[#1B5E45]" />
-                </div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#6B7280]">
+      <div className="min-h-screen" style={{ backgroundColor: "#FAFAF8" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+          
+          {/* Page Header */}
+          <Reveal>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-2">
+                <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
+                  <AlertCircle className="w-3 h-3 mr-1" />
                   Service Requests
-                </span>
+                </Badge>
+                <h1 className="text-3xl font-bold text-[#1A1A1A]">
+                  Maintenance & Support
+                </h1>
+                <p className="text-sm text-[#6B7280]">
+                  Track and manage all your property service requests
+                </p>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] tracking-tight">
-                Maintenance &amp; Support
-              </h1>
-              <p className="text-sm text-[#6B7280]">
-                Track, manage and communicate all your property service
-                requests.
-              </p>
-            </div>
 
-            <div className="flex items-center gap-3">
-              <button className="h-11 w-11 rounded-xl border border-[#E0E8E3] bg-white flex items-center justify-center hover:border-[#1B5E45] hover:bg-[#E8F5EE] transition-all shadow-sm relative">
-                <Bell className="h-4 w-4 text-[#1B5E45]" />
-                {pending > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-[#ef4444] text-white text-[9px] font-bold flex items-center justify-center">
-                    {pending}
-                  </span>
-                )}
-              </button>
-              <Button
-                onClick={() => setShowForm(true)}
-                className="h-11 px-6 rounded-xl bg-[#1B5E45] text-white font-semibold text-sm hover:bg-[#246B4F] hover:shadow-lg hover:shadow-[#1B5E45]/20 hover:-translate-y-0.5 transition-all gap-2 shadow-md shadow-[#1B5E45]/15"
-              >
-                <Plus className="h-4 w-4" strokeWidth={2.5} />
-                New Request
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-[#E8F5EE] hover:bg-[#E8F5EE] relative"
+                >
+                  <Bell className="w-4 h-4 text-[#1B5E45]" />
+                  {pendingRequests > 0 && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+                      {pendingRequests}
+                    </span>
+                  )}
+                </Button>
+                <Button
+                  onClick={() => setShowNewRequestModal(true)}
+                  className="bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  New Request
+                </Button>
+              </div>
             </div>
           </Reveal>
 
-          {/* ── KPI STRIP ──────────────────────────────────────────────── */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard
-              label="Total Requests"
-              value={total}
-              sub="All time"
-              icon={Layers}
-              accent
-              delay={0.05}
-            />
-            <StatCard
-              label="In Progress"
-              value={inProgress}
-              sub="Being worked on"
-              icon={Timer}
-              warn={inProgress > 0}
-              delay={0.1}
-            />
-            <StatCard
-              label="Pending Review"
-              value={pending}
-              sub="Awaiting response"
-              icon={AlertCircle}
-              danger={pending > 0}
-              delay={0.15}
-            />
-            <StatCard
-              label="Resolution Rate"
-              value={`${resolvePct}%`}
-              sub={`${resolved} resolved`}
-              icon={TrendingUp}
-              delay={0.2}
-            />
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            {[
+              {
+                label: "Total Requests",
+                value: totalRequests,
+                subtitle: "All time",
+                icon: FileText,
+                color: "#1B5E45",
+                bgColor: "#E8F5EE",
+              },
+              {
+                label: "In Progress",
+                value: inProgressRequests,
+                subtitle: "Being worked on",
+                icon: Timer,
+                color: "#F59E0B",
+                bgColor: "#FEF3C7",
+              },
+              {
+                label: "Pending Review",
+                value: pendingRequests,
+                subtitle: "Awaiting response",
+                icon: AlertCircle,
+                color: "#EF4444",
+                bgColor: "#FEE2E2",
+              },
+              {
+                label: "Resolution Rate",
+                value: `${resolutionRate}%`,
+                subtitle: `${resolvedRequests} resolved`,
+                icon: TrendingUp,
+                color: "#3DBE7A",
+                bgColor: "#E8F5EE",
+              },
+            ].map((stat, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <Card className="border-[#E8F5EE] bg-white hover:shadow-md transition-shadow">
+                  <CardContent className="p-3 sm:p-5">
+                    <div className="flex justify-between items-start mb-3 sm:mb-4">
+                      <div
+                        className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: stat.bgColor, color: stat.color }}
+                      >
+                        <stat.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+                      </div>
+                    </div>
+                    <div className="space-y-0.5">
+                      <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A]">{stat.value}</h3>
+                      <p className="text-[10px] sm:text-xs font-medium text-[#6B7280]">{stat.label}</p>
+                      <p className="text-[10px] text-[#6B7280]/60 hidden sm:block">{stat.subtitle}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Reveal>
+            ))}
           </div>
 
-          {/* ── RESOLUTION BANNER ─────────────────────────────────────── */}
-          <Reveal delay={0.25}>
-            <div className="rounded-2xl border border-[#E0E8E3] bg-white shadow-sm overflow-hidden">
-              <div className="p-6 flex flex-col md:flex-row items-center gap-6">
-                {/* Ring */}
-                <div className="relative shrink-0">
-                  <Ring
-                    pct={resolvePct}
-                    size={96}
-                    stroke={9}
-                    color="#3DBE7A"
-                    bg="#E8F5EE"
-                  />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-lg font-bold text-[#1B5E45] leading-none">
-                      {resolvePct}%
-                    </span>
-                    <span className="text-[8px] font-semibold uppercase text-[#6B7280] mt-0.5">
-                      Done
-                    </span>
-                  </div>
-                </div>
-
-                {/* Bar */}
-                <div className="flex-1 space-y-3 w-full">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-base font-bold text-[#1A1A1A]">
-                        Overall Resolution Progress
-                      </h3>
-                      <p className="text-xs text-[#6B7280] mt-0.5">
-                        {resolved} of {total} requests resolved
-                      </p>
+          {/* Resolution Progress */}
+          <Reveal delay={0.2}>
+            <Card className="border-[#E8F5EE] bg-white">
+              <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row md:items-center gap-6">
+                  <div className="flex-1 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-bold text-[#1A1A1A]">
+                          Overall Resolution Progress
+                        </h3>
+                        <p className="text-sm text-[#6B7280]">
+                          {resolvedRequests} of {totalRequests} requests resolved
+                        </p>
+                      </div>
+                      <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20">
+                        On Track
+                      </Badge>
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#1B5E45] bg-[#E8F5EE] px-3 py-1.5 rounded-full border border-[#C4D4C9]">
-                      On Track
-                    </span>
+                    <Progress value={resolutionRate} className="h-3 bg-[#F4F4F0]" />
+                    <div className="flex gap-4 text-xs">
+                      {[
+                        { label: "Pending", count: pendingRequests, color: "#EF4444" },
+                        { label: "In Progress", count: inProgressRequests, color: "#F59E0B" },
+                        { label: "Resolved", count: resolvedRequests, color: "#16A34A" },
+                      ].map((item) => (
+                        <div key={item.label} className="flex items-center gap-2">
+                          <div
+                            className="w-2 h-2 rounded-full"
+                            style={{ backgroundColor: item.color }}
+                          />
+                          <span className="text-[#6B7280]">
+                            {item.count} {item.label}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="h-2.5 rounded-full bg-[#E8F5EE] overflow-hidden relative">
-                    <motion.div
-                      className="h-full rounded-full bg-linear-to-r from-[#246B4F] to-[#3DBE7A]"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${resolvePct}%` }}
-                      transition={{
-                        duration: 1.3,
-                        delay: 0.5,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                    />
-                    <motion.div
-                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent"
-                      animate={{ x: ["-100%", "200%"] }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    />
-                  </div>
-                  <div className="flex gap-4 pt-1">
+
+                  <div className="grid grid-cols-2 gap-3">
                     {[
-                      {
-                        label: "Pending",
-                        count: pending,
-                        color: "#ef4444",
-                        bg: "#fef2f2",
-                      },
-                      {
-                        label: "In Progress",
-                        count: inProgress,
-                        color: "#d97706",
-                        bg: "#fffbeb",
-                      },
-                      {
-                        label: "Resolved",
-                        count: resolved,
-                        color: "#16a34a",
-                        bg: "#f0fdf4",
-                      },
-                    ].map((item) => (
+                      { label: "Avg Response", value: "18h", icon: Clock },
+                      { label: "Satisfaction", value: "4.8/5", icon: Star },
+                    ].map((metric, i) => (
                       <div
-                        key={item.label}
-                        className="flex items-center gap-1.5"
+                        key={i}
+                        className="p-4 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8] text-center"
                       >
-                        <div
-                          className="h-2 w-2 rounded-full"
-                          style={{ background: item.color }}
-                        />
-                        <span className="text-[11px] text-[#6B7280]">
-                          {item.count} {item.label}
-                        </span>
+                        <metric.icon className="w-4 h-4 text-[#3DBE7A] mx-auto mb-2" />
+                        <p className="text-xs font-medium text-[#6B7280] uppercase">
+                          {metric.label}
+                        </p>
+                        <p className="text-sm font-bold text-[#1A1A1A] mt-1">
+                          {metric.value}
+                        </p>
                       </div>
                     ))}
                   </div>
                 </div>
-
-                {/* SLA tiles */}
-                <div className="grid grid-cols-2 gap-3 shrink-0">
-                  {[
-                    { label: "Avg Response", value: avgResponse, icon: Clock },
-                    { label: "Satisfaction", value: "4.8 / 5", icon: Star },
-                  ].map((m, i) => (
-                    <div
-                      key={i}
-                      className="p-4 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] text-center"
-                    >
-                      <m.icon className="h-4 w-4 text-[#3DBE7A] mx-auto mb-2" />
-                      <p className="text-[9px] font-semibold uppercase tracking-wider text-[#6B7280]">
-                        {m.label}
-                      </p>
-                      <p className="text-sm font-bold text-[#1A1A1A] mt-0.5">
-                        {m.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </Reveal>
 
-          {/* ── QUICK CATEGORY CHIPS ─────────────────────────────────── */}
-          <Reveal delay={0.28}>
-            <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-              <button
-                onClick={() => setFilter("all")}
-                className={cn(
-                  "shrink-0 h-9 px-4 rounded-full text-xs font-semibold border transition-all",
-                  filter === "all"
-                    ? "bg-[#1B5E45] text-white border-[#1B5E45] shadow-md shadow-[#1B5E45]/20"
-                    : "bg-white border-[#E0E8E3] text-[#6B7280] hover:border-[#1B5E45] hover:text-[#1B5E45]",
-                )}
-              >
-                All ({total})
-              </button>
-              {CATEGORIES.map((cat) => {
-                const count = myComplaints.filter(
-                  (c) => c.category === cat.label,
-                ).length;
-                if (count === 0) return null;
-                return (
-                  <button
-                    key={cat.label}
-                    className="shrink-0 h-9 px-4 rounded-full text-xs font-semibold border bg-white border-[#E0E8E3] text-[#6B7280] hover:border-[#1B5E45] hover:text-[#1B5E45] transition-all flex items-center gap-1.5"
-                  >
-                    <span style={{ color: cat.color }}>{cat.icon}</span>
-                    {cat.label} ({count})
-                  </button>
-                );
-              })}
-            </div>
-          </Reveal>
-
-          {/* ── TOOLBAR ───────────────────────────────────────────────── */}
-          <Reveal delay={0.3}>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              {/* Search */}
-              <div className="relative flex-1 max-w-sm group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6B7280] group-focus-within:text-[#1B5E45] transition-colors" />
-                <input
-                  type="text"
-                  placeholder="Search requests..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-[#E0E8E3] bg-white text-sm text-[#1A1A1A] placeholder:text-[#6B7280] outline-none focus:border-[#1B5E45] focus:shadow-[0_0_0_3px_rgba(27,94,69,0.1)] transition-all shadow-sm"
-                />
-                {search && (
-                  <button
-                    onClick={() => setSearch("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
-                  >
-                    <X className="h-3.5 w-3.5 text-[#6B7280] hover:text-[#1A1A1A]" />
-                  </button>
-                )}
-              </div>
-
-              {/* Status filter pills */}
-              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
-                {(
-                  ["all", "pending", "in-progress", "resolved"] as Status[]
-                ).map((f) => {
-                  const active = filter === f;
-                  const count =
-                    f === "all"
-                      ? total
-                      : myComplaints.filter((c) => c.status === f).length;
-                  const colors = {
-                    all: { a: "#1B5E45", ring: "#E8F5EE" },
-                    pending: { a: "#dc2626", ring: "#fef2f2" },
-                    "in-progress": { a: "#d97706", ring: "#fffbeb" },
-                    resolved: { a: "#16a34a", ring: "#f0fdf4" },
-                  }[f];
-                  return (
-                    <button
-                      key={f}
-                      onClick={() => setFilter(f)}
-                      className={cn(
-                        "shrink-0 h-9 px-4 rounded-full text-xs font-semibold border transition-all",
-                        active
-                          ? "text-white border-transparent shadow-md"
-                          : "bg-white border-[#E0E8E3] text-[#6B7280] hover:border-current",
-                      )}
-                      style={
-                        active
-                          ? {
-                              background: colors?.a,
-                              boxShadow: `0 4px 12px ${colors?.a}30`,
-                            }
-                          : {}
-                      }
-                    >
-                      {f === "in-progress"
-                        ? "In Progress"
-                        : f.charAt(0).toUpperCase() + f.slice(1)}{" "}
-                      <span className={active ? "opacity-75" : "opacity-50"}>
-                        · {count}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Sort */}
-              <div className="relative ml-auto">
-                <button
-                  onClick={() => setShowSort((s) => !s)}
-                  className="h-9 px-4 rounded-xl border border-[#E0E8E3] bg-white text-xs font-semibold text-[#6B7280] hover:border-[#1B5E45] hover:text-[#1B5E45] transition-all flex items-center gap-2 shadow-sm"
-                >
-                  <Filter className="h-3.5 w-3.5" />
-                  Sort
-                  <ChevronDown
-                    className={cn(
-                      "h-3 w-3 transition-transform",
-                      showSort && "rotate-180",
-                    )}
-                  />
-                </button>
-                {showSort && (
-                  <div className="absolute right-0 top-11 z-50 w-44 rounded-xl border border-[#E0E8E3] bg-white shadow-xl overflow-hidden">
-                    {SORT_OPTIONS.map((opt) => (
+          {/* Filters */}
+          <Reveal delay={0.25}>
+            <Card className="border-[#E8F5EE] bg-white">
+              <CardContent className="p-4">
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6B7280]" />
+                    <Input
+                      placeholder="Search requests..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="pl-9 h-11 border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
+                    />
+                    {search && (
                       <button
-                        key={opt.value}
-                        onClick={() => {
-                          setSortBy(opt.value);
-                          setShowSort(false);
-                        }}
-                        className={cn(
-                          "w-full px-4 py-2.5 text-left text-xs font-medium hover:bg-[#E8F5EE] hover:text-[#1B5E45] transition-colors",
-                          sortBy === opt.value
-                            ? "text-[#1B5E45] bg-[#E8F5EE] font-semibold"
-                            : "text-[#6B7280]",
-                        )}
+                        onClick={() => setSearch("")}
+                        className="absolute right-3 top-1/2 -translate-y-1/2"
                       >
-                        {opt.label}
+                        <X className="h-4 w-4 text-[#6B7280]" />
                       </button>
-                    ))}
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+
+                  <div className="flex gap-2 overflow-x-auto">
+                    {(["all", "pending", "in-progress", "resolved"] as Status[]).map((status) => {
+                      const count =
+                        status === "all"
+                          ? totalRequests
+                          : myComplaints.filter((c) => c.status === status).length;
+                      const isActive = statusFilter === status;
+                      
+                      return (
+                        <Button
+                          key={status}
+                          variant={isActive ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setStatusFilter(status)}
+                          className={cn(
+                            "shrink-0",
+                            isActive
+                              ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
+                              : "border-[#E8F5EE] hover:bg-[#E8F5EE]"
+                          )}
+                        >
+                          {status === "in-progress"
+                            ? "In Progress"
+                            : status.charAt(0).toUpperCase() + status.slice(1)}{" "}
+                          ({count})
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </Reveal>
 
-          {/* ── CARDS GRID ────────────────────────────────────────────── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((complaint, i) => {
-                const p = priorityConf(complaint.priority);
-                const s = statusConf(complaint.status);
-                const cat = CATEGORIES.find(
-                  (c) => c.label === complaint.category,
-                );
+          {/* Requests Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <AnimatePresence>
+              {filteredComplaints.map((complaint, i) => {
+                const priority = getPriorityConfig(complaint.priority);
+                const status = getStatusConfig(complaint.status);
+                const category = CATEGORIES.find((c) => c.label === complaint.category);
+
                 return (
                   <motion.div
                     key={complaint.id}
-                    layout
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.35, delay: i * 0.04 }}
-                    onClick={() => setSelected(complaint)}
-                    className="group relative bg-white rounded-2xl border border-[#E0E8E3] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden"
+                    transition={{ delay: i * 0.05 }}
+                    onClick={() => setSelectedComplaint(complaint)}
                   >
-                    {/* Priority accent bar */}
-                    <div
-                      className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl"
-                      style={{ background: p.dot }}
-                    />
-
-                    <div className="p-5 space-y-4">
-                      {/* Row 1: category + ID */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2.5">
-                          <div
-                            className="h-8 w-8 rounded-lg flex items-center justify-center"
-                            style={{ background: `${cat?.color}15` }}
-                          >
-                            <span style={{ color: cat?.color }}>
-                              {cat?.icon || (
-                                <MoreHorizontal className="w-4 h-4" />
+                    <Card className="border-[#E8F5EE] bg-white hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer overflow-hidden">
+                      <div
+                        className="h-1 w-full"
+                        style={{ backgroundColor: priority.color }}
+                      />
+                      <CardContent className="p-5 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <div
+                              className="w-8 h-8 rounded-lg flex items-center justify-center"
+                              style={{ backgroundColor: `${category?.color}15` }}
+                            >
+                              {category && (
+                                <category.icon
+                                  className="w-4 h-4"
+                                  style={{ color: category.color }}
+                                />
                               )}
+                            </div>
+                            <span className="text-xs font-medium text-[#6B7280]">
+                              {complaint.category}
                             </span>
                           </div>
-                          <span className="text-[11px] font-semibold text-[#6B7280]">
-                            {complaint.category}
+                          <span className="text-xs font-mono text-[#6B7280]/50">
+                            #{complaint.id.split("-").pop()}
                           </span>
                         </div>
-                        <span className="text-[10px] font-mono text-[#6B7280]/50">
-                          #{complaint.id.split("-").pop()}
-                        </span>
-                      </div>
 
-                      {/* Title + description */}
-                      <div className="space-y-1.5">
-                        <h3 className="text-[15px] font-bold text-[#1A1A1A] leading-snug group-hover:text-[#1B5E45] transition-colors line-clamp-1">
-                          {complaint.title}
-                        </h3>
-                        <p className="text-xs text-[#6B7280] line-clamp-2 leading-relaxed">
-                          {complaint.description}
-                        </p>
-                      </div>
-
-                      {/* Date */}
-                      <div className="flex items-center gap-1.5 text-[10px] text-[#6B7280]/60">
-                        <Calendar className="h-3 w-3" />
-                        {complaint.createdDate}
-                      </div>
-
-                      {/* Footer: badges + arrow */}
-                      <div className="pt-3 border-t border-[#E0E8E3] flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          {/* Status badge */}
-                          <div
-                            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[10px] font-semibold"
-                            style={{
-                              background: s.bg,
-                              borderColor: s.border,
-                              color: s.color,
-                            }}
-                          >
-                            <s.Icon className="h-3 w-3" />
-                            {s.label}
-                          </div>
-                          {/* Priority badge */}
-                          <div
-                            className="px-2.5 py-1 rounded-full border text-[10px] font-semibold"
-                            style={{
-                              background: p.bg,
-                              borderColor: p.border,
-                              color: p.text,
-                            }}
-                          >
-                            {p.label}
-                          </div>
+                        <div className="space-y-2">
+                          <h3 className="text-sm font-bold text-[#1A1A1A] line-clamp-1">
+                            {complaint.title}
+                          </h3>
+                          <p className="text-xs text-[#6B7280] line-clamp-2">
+                            {complaint.description}
+                          </p>
                         </div>
-                        <div className="h-8 w-8 rounded-lg bg-[#F4F9F6] flex items-center justify-center group-hover:bg-[#1B5E45] group-hover:text-white transition-all">
-                          <ChevronRight className="h-4 w-4" />
+
+                        <div className="flex items-center gap-2 text-xs text-[#6B7280]">
+                          <Calendar className="w-3 h-3" />
+                          {complaint.createdDate}
                         </div>
-                      </div>
-                    </div>
+
+                        <Separator className="bg-[#E8F5EE]" />
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Badge
+                              variant="outline"
+                              className="text-xs"
+                              style={{
+                                backgroundColor: status.bgColor,
+                                borderColor: status.borderColor,
+                                color: status.color,
+                              }}
+                            >
+                              <status.icon className="w-3 h-3 mr-1" />
+                              {status.label}
+                            </Badge>
+                            <Badge
+                              variant="outline"
+                              className="text-xs"
+                              style={{
+                                backgroundColor: priority.bgColor,
+                                borderColor: priority.borderColor,
+                                color: priority.color,
+                              }}
+                            >
+                              {priority.label}
+                            </Badge>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-[#6B7280]" />
+                        </div>
+                      </CardContent>
+                    </Card>
                   </motion.div>
                 );
               })}
             </AnimatePresence>
 
-            {filtered.length === 0 && (
-              <div className="col-span-full py-20 flex flex-col items-center justify-center text-center space-y-5">
-                <div className="h-20 w-20 rounded-2xl bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center">
-                  <ShieldCheck className="h-10 w-10 text-[#3DBE7A]" />
+            {filteredComplaints.length === 0 && (
+              <div className="col-span-full py-16 text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#E8F5EE] flex items-center justify-center">
+                  <CheckCircle2 className="w-8 h-8 text-[#3DBE7A]" />
                 </div>
-                <div>
-                  <h4 className="text-lg font-bold text-[#1A1A1A]">
-                    All Clear!
-                  </h4>
-                  <p className="text-sm text-[#6B7280] mt-1">
-                    No requests match your current filters.
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <button
+                <h3 className="text-lg font-bold text-[#1A1A1A] mb-2">
+                  All Clear!
+                </h3>
+                <p className="text-sm text-[#6B7280] mb-4">
+                  No requests match your current filters
+                </p>
+                <div className="flex justify-center gap-3">
+                  <Button
+                    variant="outline"
                     onClick={() => {
-                      setFilter("all");
+                      setStatusFilter("all");
                       setSearch("");
                     }}
-                    className="h-10 px-5 rounded-xl border border-[#E0E8E3] text-sm font-medium text-[#6B7280] hover:border-[#1B5E45] hover:text-[#1B5E45] transition-all bg-white"
+                    className="border-[#E8F5EE] hover:bg-[#E8F5EE]"
                   >
                     Clear Filters
-                  </button>
+                  </Button>
                   <Button
-                    onClick={() => setShowForm(true)}
-                    className="h-10 px-5 rounded-xl bg-[#1B5E45] text-white text-sm font-medium hover:bg-[#246B4F]"
+                    onClick={() => setShowNewRequestModal(true)}
+                    className="bg-[#1B5E45] hover:bg-[#246B4F] text-white"
                   >
                     New Request
                   </Button>
@@ -919,746 +555,372 @@ export default function TenantComplaintsPage() {
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          DETAIL MODAL
-      ══════════════════════════════════════════════════════════════════ */}
-      <Modal
-        isOpen={!!selected}
-        onClose={() => {
-          setSelected(null);
-          setActiveTab("details");
-          setRating(0);
-          setFollowUpMsg("");
-        }}
-        size="4xl"
-      >
-        {selected &&
-          (() => {
-            const p = priorityConf(selected.priority);
-            const s = statusConf(selected.status);
-            const progressPct = s.step === 3 ? 100 : s.step === 2 ? 55 : 10;
-
-            const TIMELINE_STEPS = [
-              {
-                label: "Submitted",
-                desc: "Request received and logged",
-                date: selected.createdDate,
-                done: true,
-              },
-              {
-                label: "Under Review",
-                desc: "Management reviewed the request",
-                date: selected.createdDate,
-                done: s.step >= 2,
-              },
-              {
-                label: "In Progress",
-                desc: "Technician assigned and working",
-                date: "Today, 09:42 AM",
-                done: s.step >= 2,
-              },
-              {
-                label: "Resolved",
-                desc: "Issue fixed and marked complete",
-                date: s.step === 3 ? "Today" : "—",
-                done: s.step === 3,
-              },
-            ];
-
-            return (
-              <div className="flex flex-col h-full max-h-[90vh] bg-white rounded-2xl overflow-hidden">
-                {/* Modal Header */}
-                <div className="px-6 py-5 border-b border-[#E0E8E3] bg-[#FAFAF8] relative overflow-hidden">
+      {/* Request Details Modal */}
+      {selectedComplaint && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedComplaint(null)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="px-6 py-5 border-b border-[#E8F5EE] bg-[#FAFAF8]">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-4">
                   <div
-                    className="absolute top-0 left-0 right-0 h-0.5"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center"
                     style={{
-                      background: `linear-gradient(90deg, ${p.dot}, transparent)`,
-                    }}
-                  />
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start gap-4">
-                      <div
-                        className="h-12 w-12 rounded-xl flex items-center justify-center shrink-0"
-                        style={{
-                          background: `${CATEGORIES.find((c) => c.label === selected.category)?.color}15`,
-                        }}
-                      >
-                        <span
-                          style={{
-                            color: CATEGORIES.find(
-                              (c) => c.label === selected.category,
-                            )?.color,
-                          }}
-                        >
-                          {
-                            CATEGORIES.find(
-                              (c) => c.label === selected.category,
-                            )?.icon
-                          }
-                        </span>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
-                            {selected.category}
-                          </span>
-                          <div
-                            className="px-2 py-0.5 rounded-full border text-[9px] font-bold"
-                            style={{
-                              background: p.bg,
-                              borderColor: p.border,
-                              color: p.text,
-                            }}
-                          >
-                            {p.label}
-                          </div>
-                          <div
-                            className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[9px] font-bold"
-                            style={{
-                              background: s.bg,
-                              borderColor: s.border,
-                              color: s.color,
-                            }}
-                          >
-                            <s.Icon className="h-2.5 w-2.5" />
-                            {s.label}
-                          </div>
-                        </div>
-                        <h2 className="text-lg font-bold text-[#1A1A1A]">
-                          {selected.title}
-                        </h2>
-                        <p className="text-xs text-[#6B7280] mt-0.5 flex items-center gap-1.5">
-                          <Calendar className="h-3 w-3" /> Reported{" "}
-                          {selected.createdDate}
-                          <span className="mx-1 text-[#E0E8E3]">·</span>
-                          <Hash className="h-3 w-3" />{" "}
-                          {selected.id.split("-").pop()}
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => {
-                        setSelected(null);
-                        setActiveTab("details");
-                      }}
-                      className="h-9 w-9 rounded-xl border border-[#E0E8E3] flex items-center justify-center hover:bg-red-50 hover:border-red-200 hover:text-red-500 transition-all"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-
-                  {/* Tabs */}
-                  <div className="flex gap-1 mt-5">
-                    {TABS.map((tab) => (
-                      <button
-                        key={tab.key}
-                        onClick={() => setActiveTab(tab.key)}
-                        className={cn(
-                          "flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all",
-                          activeTab === tab.key
-                            ? "bg-[#1B5E45] text-white shadow-md shadow-[#1B5E45]/20"
-                            : "text-[#6B7280] hover:bg-[#E8F5EE] hover:text-[#1B5E45]",
-                        )}
-                      >
-                        <tab.icon className="h-3.5 w-3.5" />
-                        {tab.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Modal Body */}
-                <div className="flex-1 overflow-y-auto p-6">
-                  <AnimatePresence mode="wait">
-                    {activeTab === "details" && (
-                      <motion.div
-                        key="details"
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="space-y-6"
-                      >
-                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-                          {/* Description */}
-                          <div className="lg:col-span-3 space-y-4">
-                            <div>
-                              <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280] mb-2">
-                                Description
-                              </p>
-                              <div className="p-5 rounded-xl bg-[#FAFAF8] border border-[#E0E8E3] text-sm text-[#1A1A1A] leading-relaxed">
-                                {selected.description}
-                              </div>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-3">
-                              {[
-                                {
-                                  label: "Request ID",
-                                  value: `#${selected.id.split("-").pop()}`,
-                                },
-                                {
-                                  label: "Unit",
-                                  value: `Unit ${selected.unitId?.split("-").pop() ?? "—"}`,
-                                },
-                                { label: "Category", value: selected.category },
-                                {
-                                  label: "Submitted",
-                                  value: selected.createdDate,
-                                },
-                              ].map((item, i) => (
-                                <div
-                                  key={i}
-                                  className="p-4 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8]"
-                                >
-                                  <p className="text-[9px] font-bold uppercase tracking-wider text-[#6B7280] mb-1">
-                                    {item.label}
-                                  </p>
-                                  <p className="text-sm font-semibold text-[#1A1A1A]">
-                                    {item.value}
-                                  </p>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Progress panel */}
-                          <div className="lg:col-span-2 rounded-2xl bg-[#1B5E45] text-white p-5 relative overflow-hidden flex flex-col justify-between">
-                            <div className="absolute top-0 right-0 h-32 w-32 bg-[#3DBE7A]/20 blur-[50px] rounded-full -mr-8 -mt-8" />
-                            <div className="relative z-10 space-y-5">
-                              <p className="text-[10px] font-bold uppercase tracking-wider text-[#7FD9A8]">
-                                Resolution Progress
-                              </p>
-                              <div className="flex items-center gap-5">
-                                <div className="relative shrink-0">
-                                  <Ring
-                                    pct={progressPct}
-                                    size={72}
-                                    stroke={7}
-                                    color="#3DBE7A"
-                                    bg="rgba(255,255,255,0.1)"
-                                  />
-                                  <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-sm font-bold">
-                                      {progressPct}%
-                                    </span>
-                                  </div>
-                                </div>
-                                <div>
-                                  <p className="text-base font-bold capitalize">
-                                    {selected.status.replace("-", " ")}
-                                  </p>
-                                  <p className="text-xs text-white/50 mt-0.5">
-                                    {s.step === 3
-                                      ? "Completed successfully"
-                                      : "Work in progress"}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="space-y-1.5">
-                                {[
-                                  "Submitted",
-                                  "In Review",
-                                  "In Progress",
-                                  "Resolved",
-                                ].map((step, i) => (
-                                  <div
-                                    key={step}
-                                    className="flex items-center gap-3"
-                                  >
-                                    <div
-                                      className={cn(
-                                        "h-5 w-5 rounded-full flex items-center justify-center shrink-0 text-[9px] font-bold",
-                                        i < s.step
-                                          ? "bg-[#3DBE7A] text-white"
-                                          : i === s.step - 1
-                                            ? "bg-[#3DBE7A] text-white ring-2 ring-[#3DBE7A]/30"
-                                            : "bg-white/10 text-white/30",
-                                      )}
-                                    >
-                                      {i < s.step ? "✓" : i + 1}
-                                    </div>
-                                    <span
-                                      className={cn(
-                                        "text-xs",
-                                        i < s.step
-                                          ? "text-white"
-                                          : "text-white/30",
-                                      )}
-                                    >
-                                      {step}
-                                    </span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                            <div className="pt-4 border-t border-white/10 relative z-10 mt-4">
-                              <div className="flex items-center justify-between text-xs">
-                                <span className="text-white/40">
-                                  SLA Target
-                                </span>
-                                <span className="text-[#3DBE7A] font-semibold">
-                                  24 hours
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Rate if resolved */}
-                        {selected.status === "resolved" && (
-                          <div className="p-5 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8]">
-                            <p className="text-sm font-semibold text-[#1A1A1A] mb-3">
-                              Rate this resolution
-                            </p>
-                            <div className="flex gap-2">
-                              {[1, 2, 3, 4, 5].map((star) => (
-                                <button
-                                  key={star}
-                                  onClick={() => setRating(star)}
-                                >
-                                  <Star
-                                    className={cn(
-                                      "h-6 w-6 transition-all",
-                                      rating >= star
-                                        ? "fill-[#f59e0b] text-[#f59e0b]"
-                                        : "text-[#E0E8E3] hover:text-[#f59e0b]",
-                                    )}
-                                  />
-                                </button>
-                              ))}
-                              {rating > 0 && (
-                                <span className="text-xs text-[#6B7280] self-center ml-2">
-                                  Thanks for your feedback!
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </motion.div>
-                    )}
-
-                    {activeTab === "timeline" && (
-                      <motion.div
-                        key="timeline"
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="space-y-3"
-                      >
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280] mb-4">
-                          Activity Timeline
-                        </p>
-                        {[
-                          {
-                            t: "Request Submitted",
-                            desc: "You submitted this maintenance request.",
-                            date: selected.createdDate,
-                            icon: FileText,
-                            done: true,
-                          },
-                          {
-                            t: "Acknowledged",
-                            desc: "Property management received and reviewed.",
-                            date: selected.createdDate,
-                            icon: Eye,
-                            done: s.step >= 2,
-                          },
-                          {
-                            t: "Technician Dispatched",
-                            desc: "A technician has been assigned to your unit.",
-                            date: "Today, 09:42 AM",
-                            icon: Wrench,
-                            done: s.step >= 2,
-                          },
-                          {
-                            t: "Work In Progress",
-                            desc: "Technician is actively working on the issue.",
-                            date: "Today, 10:15 AM",
-                            icon: RefreshCw,
-                            done: s.step >= 2,
-                          },
-                          {
-                            t: "Issue Resolved",
-                            desc: "The issue has been fixed and closed.",
-                            date: s.step === 3 ? "Today, 2:00 PM" : "Pending",
-                            icon: CheckCircle2,
-                            done: s.step === 3,
-                          },
-                        ].map((log, i) => (
-                          <div key={i} className="flex items-start gap-4">
-                            <div className="flex flex-col items-center">
-                              <div
-                                className={cn(
-                                  "h-9 w-9 rounded-xl flex items-center justify-center shrink-0 transition-all",
-                                  log.done
-                                    ? "bg-[#E8F5EE] border border-[#C4D4C9]"
-                                    : "bg-[#F4F4F0] border border-[#E0E8E3]",
-                                )}
-                              >
-                                <log.icon
-                                  className={cn(
-                                    "h-4 w-4",
-                                    log.done
-                                      ? "text-[#1B5E45]"
-                                      : "text-[#6B7280]/30",
-                                  )}
-                                />
-                              </div>
-                              {i < 4 && (
-                                <div
-                                  className={cn(
-                                    "w-0.5 h-6 mt-1",
-                                    log.done ? "bg-[#C4D4C9]" : "bg-[#E0E8E3]",
-                                  )}
-                                />
-                              )}
-                            </div>
-                            <div
-                              className={cn(
-                                "flex-1 pb-4",
-                                !log.done && "opacity-40",
-                              )}
-                            >
-                              <div className="flex items-center justify-between">
-                                <p className="text-sm font-semibold text-[#1A1A1A]">
-                                  {log.t}
-                                </p>
-                                <span className="text-[10px] text-[#6B7280]">
-                                  {log.date}
-                                </span>
-                              </div>
-                              <p className="text-xs text-[#6B7280] mt-0.5">
-                                {log.desc}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </motion.div>
-                    )}
-
-                    {activeTab === "messages" && (
-                      <motion.div
-                        key="messages"
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="space-y-4"
-                      >
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280] mb-4">
-                          Communication Thread
-                        </p>
-
-                        {/* Sample messages */}
-                        <div className="space-y-4">
-                          <div className="flex gap-3 justify-end">
-                            <div className="max-w-[70%]">
-                              <div className="bg-[#1B5E45] text-white p-3.5 rounded-2xl rounded-tr-sm text-sm leading-relaxed">
-                                {selected.description}
-                              </div>
-                              <p className="text-[10px] text-[#6B7280] mt-1 text-right">
-                                {selected.createdDate} · You
-                              </p>
-                            </div>
-                          </div>
-                          {s.step >= 2 && (
-                            <div className="flex gap-3">
-                              <div className="h-8 w-8 rounded-full bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center shrink-0">
-                                <ShieldCheck className="h-4 w-4 text-[#1B5E45]" />
-                              </div>
-                              <div className="max-w-[70%]">
-                                <div className="bg-[#F4F9F6] border border-[#E0E8E3] p-3.5 rounded-2xl rounded-tl-sm text-sm text-[#1A1A1A] leading-relaxed">
-                                  Thank you for reporting this. We've dispatched
-                                  a technician and they'll be at your unit
-                                  within the next 24 hours.
-                                </div>
-                                <p className="text-[10px] text-[#6B7280] mt-1">
-                                  Today, 09:45 AM · Management
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Message input */}
-                        <div className="sticky bottom-0 pt-4 bg-white">
-                          <div className="flex gap-2 p-3 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8]">
-                            <input
-                              type="text"
-                              placeholder="Add a follow-up message..."
-                              value={followUpMsg}
-                              onChange={(e) => setFollowUpMsg(e.target.value)}
-                              className="flex-1 bg-transparent text-sm text-[#1A1A1A] placeholder:text-[#6B7280] outline-none"
-                            />
-                            <button
-                              className="h-8 w-8 rounded-lg bg-[#1B5E45] flex items-center justify-center text-white hover:bg-[#246B4F] transition-colors disabled:opacity-40"
-                              disabled={!followUpMsg.trim()}
-                            >
-                              <Send className="h-3.5 w-3.5" />
-                            </button>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Modal Footer */}
-                <div className="px-6 py-4 border-t border-[#E0E8E3] bg-[#FAFAF8] flex items-center gap-3">
-                  <Button className="flex-1 h-10 rounded-xl bg-[#1B5E45] text-white font-semibold text-sm hover:bg-[#246B4F] hover:shadow-md transition-all">
-                    Submit Follow-up
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="h-10 px-5 rounded-xl border-[#E0E8E3] text-sm font-semibold text-[#6B7280] hover:border-[#1B5E45] hover:text-[#1B5E45]"
-                    onClick={() => {
-                      setSelected(null);
-                      setActiveTab("details");
+                      backgroundColor: `${CATEGORIES.find((c) => c.label === selectedComplaint.category)?.color}15`,
                     }}
                   >
-                    Close
-                  </Button>
-                </div>
-              </div>
-            );
-          })()}
-      </Modal>
-
-      {/* ══════════════════════════════════════════════════════════════════
-          NEW REQUEST MODAL
-      ══════════════════════════════════════════════════════════════════ */}
-      <Modal isOpen={showForm} onClose={() => setShowForm(false)} size="2xl">
-        <div className="flex flex-col bg-white rounded-2xl overflow-hidden">
-          {/* Header */}
-          <div className="px-6 py-5 border-b border-[#E0E8E3] bg-[#FAFAF8]">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="h-11 w-11 rounded-xl bg-[#1B5E45] flex items-center justify-center shadow-lg shadow-[#1B5E45]/20">
-                  <Plus className="h-5 w-5 text-white" strokeWidth={2.5} />
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-[#1A1A1A]">
-                    New Service Request
-                  </h2>
-                  <p className="text-xs text-[#6B7280]">
-                    Tell us what needs to be fixed
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setShowForm(false)}
-                className="h-9 w-9 rounded-xl border border-[#E0E8E3] flex items-center justify-center hover:bg-red-50 hover:border-red-200 hover:text-red-500 transition-all"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-
-          {/* Body */}
-          <div className="p-6">
-            <AnimatePresence mode="wait">
-              {submitted ? (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="py-12 flex flex-col items-center text-center space-y-5"
-                >
-                  <div className="h-20 w-20 rounded-2xl bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center">
-                    <CheckCircle2 className="h-10 w-10 text-[#3DBE7A]" />
+                    {CATEGORIES.find((c) => c.label === selectedComplaint.category)?.icon && (
+                      <div
+                        style={{
+                          color: CATEGORIES.find((c) => c.label === selectedComplaint.category)
+                            ?.color,
+                        }}
+                      >
+                        {React.createElement(
+                          CATEGORIES.find((c) => c.label === selectedComplaint.category)!.icon,
+                          { className: "w-6 h-6" }
+                        )}
+                      </div>
+                    )}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#1A1A1A]">
-                      Request Submitted!
-                    </h3>
-                    <p className="text-sm text-[#6B7280] mt-1">
-                      We'll get back to you within 24 hours.
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-medium text-[#6B7280]">
+                        {selectedComplaint.category}
+                      </span>
+                      <Badge
+                        variant="outline"
+                        style={{
+                          backgroundColor: getPriorityConfig(selectedComplaint.priority).bgColor,
+                          borderColor: getPriorityConfig(selectedComplaint.priority).borderColor,
+                          color: getPriorityConfig(selectedComplaint.priority).color,
+                        }}
+                      >
+                        {getPriorityConfig(selectedComplaint.priority).label}
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        style={{
+                          backgroundColor: getStatusConfig(selectedComplaint.status).bgColor,
+                          borderColor: getStatusConfig(selectedComplaint.status).borderColor,
+                          color: getStatusConfig(selectedComplaint.status).color,
+                        }}
+                      >
+                        {getStatusConfig(selectedComplaint.status).label}
+                      </Badge>
+                    </div>
+                    <h2 className="text-lg font-bold text-[#1A1A1A]">
+                      {selectedComplaint.title}
+                    </h2>
+                    <p className="text-xs text-[#6B7280] flex items-center gap-2 mt-1">
+                      <Calendar className="w-3 h-3" />
+                      Reported {selectedComplaint.createdDate}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAFAF8] border border-[#E0E8E3]">
-                    <Clock className="h-4 w-4 text-[#3DBE7A]" />
-                    <span className="text-xs text-[#6B7280]">
-                      Expected response:{" "}
-                      <strong className="text-[#1B5E45]">&lt; 24 hours</strong>
-                    </span>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div key="form" className="space-y-6">
-                  {/* Title + Priority side by side */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                        Title *
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Kitchen tap leaking"
-                        value={form.title}
-                        onChange={(e) =>
-                          setForm((f) => ({ ...f, title: e.target.value }))
-                        }
-                        className="w-full px-4 py-2.5 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] text-sm text-[#1A1A1A] placeholder:text-[#6B7280] outline-none focus:border-[#1B5E45] focus:shadow-[0_0_0_3px_rgba(27,94,69,0.1)] transition-all"
-                      />
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSelectedComplaint(null)}
+                  className="hover:bg-red-50 hover:text-red-500"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+
+              <Tabs value={activeTab} onValueChange={(v: any) => setActiveTab(v)} className="mt-5">
+                <TabsList className="bg-[#E8F5EE]">
+                  <TabsTrigger value="details" className="data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">
+                    <FileText className="w-4 h-4 mr-2" />
+                    Details
+                  </TabsTrigger>
+                  <TabsTrigger value="timeline" className="data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">
+                    <Activity className="w-4 h-4 mr-2" />
+                    Timeline
+                  </TabsTrigger>
+                  <TabsTrigger value="messages" className="data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">
+                    <MessageSquare className="w-4 h-4 mr-2" />
+                    Messages
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 max-h-[60vh] overflow-y-auto">
+              <Tabs value={activeTab}>
+                <TabsContent value="details" className="space-y-4 mt-0">
+                  <div>
+                    <h3 className="text-sm font-semibold text-[#1A1A1A] mb-2">Description</h3>
+                    <div className="p-4 rounded-lg bg-[#FAFAF8] border border-[#E8F5EE] text-sm text-[#4B5563]">
+                      {selectedComplaint.description}
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                        Priority *
-                      </label>
-                      <div className="flex gap-2">
-                        {(["low", "medium", "high"] as Priority[]).map(
-                          (pLevel) => {
-                            const conf = priorityConf(pLevel);
-                            const isActive = form.priority === pLevel;
-                            return (
-                              <button
-                                key={pLevel}
-                                onClick={() =>
-                                  setForm((f) => ({ ...f, priority: pLevel }))
-                                }
-                                className="flex-1 py-2.5 rounded-xl border text-xs font-semibold transition-all"
-                                style={
-                                  isActive
-                                    ? {
-                                        background: conf.bg,
-                                        borderColor: conf.border,
-                                        color: conf.text,
-                                        boxShadow: `0 2px 8px ${conf.dot}25`,
-                                      }
-                                    : {
-                                        background: "#FAFAF8",
-                                        borderColor: "#E0E8E3",
-                                        color: "#6B7280",
-                                      }
-                                }
-                              >
-                                {conf.label}
-                              </button>
-                            );
-                          },
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { label: "Request ID", value: `#${selectedComplaint.id.split("-").pop()}` },
+                      { label: "Category", value: selectedComplaint.category },
+                      { label: "Priority", value: getPriorityConfig(selectedComplaint.priority).label },
+                      { label: "Status", value: getStatusConfig(selectedComplaint.status).label },
+                    ].map((item, i) => (
+                      <div key={i} className="p-3 rounded-lg border border-[#E8F5EE] bg-[#FAFAF8]">
+                        <p className="text-xs text-[#6B7280] mb-1">{item.label}</p>
+                        <p className="text-sm font-semibold text-[#1A1A1A]">{item.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="timeline" className="space-y-3 mt-0">
+                  {[
+                    { label: "Request Submitted", date: selectedComplaint.createdDate, icon: FileText, done: true },
+                    { label: "Acknowledged", date: selectedComplaint.createdDate, icon: Eye, done: selectedComplaint.status !== "pending" },
+                    { label: "Technician Dispatched", date: "Today, 09:42 AM", icon: Wrench, done: selectedComplaint.status === "in-progress" || selectedComplaint.status === "resolved" },
+                    { label: "Issue Resolved", date: selectedComplaint.status === "resolved" ? "Today" : "Pending", icon: CheckCircle2, done: selectedComplaint.status === "resolved" },
+                  ].map((step, i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="flex flex-col items-center">
+                        <div
+                          className={cn(
+                            "w-9 h-9 rounded-lg flex items-center justify-center shrink-0",
+                            step.done ? "bg-[#E8F5EE] border border-[#C4D4C9]" : "bg-[#F4F4F0] border border-[#E8F5EE]"
+                          )}
+                        >
+                          <step.icon className={cn("w-4 h-4", step.done ? "text-[#1B5E45]" : "text-[#6B7280]/30")} />
+                        </div>
+                        {i < 3 && (
+                          <div className={cn("w-0.5 h-6 mt-1", step.done ? "bg-[#C4D4C9]" : "bg-[#E8F5EE]")} />
                         )}
+                      </div>
+                      <div className={cn("flex-1", !step.done && "opacity-40")}>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-semibold text-[#1A1A1A]">{step.label}</p>
+                          <span className="text-xs text-[#6B7280]">{step.date}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </TabsContent>
+
+                <TabsContent value="messages" className="space-y-4 mt-0">
+                  <div className="space-y-3">
+                    <div className="flex justify-end">
+                      <div className="max-w-[70%] space-y-1">
+                        <div className="p-3 rounded-xl rounded-tr-sm bg-[#1B5E45] text-white text-sm">
+                          {selectedComplaint.description}
+                        </div>
+                        <p className="text-xs text-[#6B7280] text-right">
+                          {selectedComplaint.createdDate} · You
+                        </p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Category grid */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                      Category *
-                    </label>
-                    <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                      {CATEGORIES.map((cat) => {
-                        const isActive = form.category === cat.label;
-                        return (
+                  <div className="flex gap-2 p-3 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8]">
+                    <input
+                      type="text"
+                      placeholder="Type your message..."
+                      className="flex-1 bg-transparent text-sm outline-none"
+                    />
+                    <Button size="icon" className="bg-[#1B5E45] hover:bg-[#246B4F]">
+                      <Send className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-6 py-4 border-t border-[#E8F5EE] bg-[#FAFAF8] flex gap-3">
+              <Button
+                onClick={() => setSelectedComplaint(null)}
+                variant="outline"
+                className="flex-1 border-[#E8F5EE] hover:bg-white"
+              >
+                Close
+              </Button>
+              <Button className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white">
+                Submit Follow-up
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* New Request Modal */}
+      {showNewRequestModal && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setShowNewRequestModal(false)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-6 py-5 border-b border-[#E8F5EE] bg-[#FAFAF8]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-[#1B5E45] flex items-center justify-center">
+                    <Plus className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-[#1A1A1A]">New Service Request</h2>
+                    <p className="text-xs text-[#6B7280]">Tell us what needs to be fixed</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowNewRequestModal(false)}
+                  className="hover:bg-red-50 hover:text-red-500"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="p-6">
+              <AnimatePresence mode="wait">
+                {showSuccessMessage ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="py-12 text-center space-y-4"
+                  >
+                    <div className="w-16 h-16 mx-auto rounded-2xl bg-[#E8F5EE] flex items-center justify-center">
+                      <CheckCircle2 className="w-8 h-8 text-[#3DBE7A]" />
+                    </div>
+                    <h3 className="text-xl font-bold text-[#1A1A1A]">Request Submitted!</h3>
+                    <p className="text-sm text-[#6B7280]">
+                      We'll get back to you within 24 hours
+                    </p>
+                  </motion.div>
+                ) : (
+                  <motion.div key="form" className="space-y-5">
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                          Title *
+                        </label>
+                        <Input
+                          placeholder="e.g., Kitchen tap leaking"
+                          value={form.title}
+                          onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                          className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                          Priority *
+                        </label>
+                        <div className="flex gap-2">
+                          {(["low", "medium", "high"] as Priority[]).map((priority) => (
+                            <Button
+                              key={priority}
+                              variant={form.priority === priority ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => setForm((f) => ({ ...f, priority }))}
+                              className={cn(
+                                "flex-1",
+                                form.priority === priority
+                                  ? "bg-[#1B5E45] hover:bg-[#246B4F]"
+                                  : "border-[#E8F5EE] hover:bg-[#E8F5EE]"
+                              )}
+                            >
+                              {getPriorityConfig(priority).label}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                        Category *
+                      </label>
+                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                        {CATEGORIES.map((cat) => (
                           <button
                             key={cat.label}
-                            onClick={() =>
-                              setForm((f) => ({ ...f, category: cat.label }))
-                            }
-                            className="flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all"
-                            style={
-                              isActive
-                                ? {
-                                    background: `${cat.color}10`,
-                                    borderColor: cat.color,
-                                  }
-                                : {
-                                    background: "#FAFAF8",
-                                    borderColor: "#E0E8E3",
-                                  }
-                            }
+                            onClick={() => setForm((f) => ({ ...f, category: cat.label }))}
+                            className={cn(
+                              "flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all",
+                              form.category === cat.label
+                                ? "border-[#1B5E45] bg-[#E8F5EE]"
+                                : "border-[#E8F5EE] bg-[#FAFAF8] hover:border-[#1B5E45]/30"
+                            )}
                           >
-                            <span
+                            <cat.icon
+                              className="w-5 h-5"
                               style={{
-                                color: isActive ? cat.color : "#6B7280",
+                                color: form.category === cat.label ? cat.color : "#6B7280",
                               }}
-                            >
-                              {cat.icon}
-                            </span>
-                            <span
-                              className="text-[9px] font-semibold"
-                              style={{
-                                color: isActive ? cat.color : "#6B7280",
-                              }}
-                            >
-                              {cat.label}
-                            </span>
+                            />
+                            <span className="text-xs font-medium">{cat.label}</span>
                           </button>
-                        );
-                      })}
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Description */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                      Description *
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Describe the issue in detail — when it started, what you've tried, etc."
-                      value={form.description}
-                      onChange={(e) =>
-                        setForm((f) => ({ ...f, description: e.target.value }))
-                      }
-                      className="w-full px-4 py-3 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] text-sm text-[#1A1A1A] placeholder:text-[#6B7280] outline-none focus:border-[#1B5E45] focus:shadow-[0_0_0_3px_rgba(27,94,69,0.1)] transition-all resize-none"
-                    />
-                    <p className="text-[10px] text-[#6B7280] text-right">
-                      {form.description.length} / 500
-                    </p>
-                  </div>
-
-                  {/* Attachment */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                      Attachment (optional)
-                    </label>
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-dashed border-[#C4D4C9] bg-[#F4F9F6] hover:border-[#1B5E45] hover:bg-[#E8F5EE] transition-all cursor-pointer">
-                      <Paperclip className="h-4 w-4 text-[#1B5E45]" />
-                      <span className="text-xs text-[#6B7280]">
-                        Attach a photo or document
-                      </span>
+                    <div className="space-y-2">
+                      <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                        Description *
+                      </label>
+                      <textarea
+                        rows={4}
+                        placeholder="Describe the issue in detail..."
+                        value={form.description}
+                        onChange={(e) =>
+                          setForm((f) => ({ ...f, description: e.target.value }))
+                        }
+                        className="w-full px-4 py-3 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8] text-sm outline-none focus:border-[#1B5E45] focus:ring-2 focus:ring-[#1B5E45]/10 resize-none"
+                      />
                     </div>
-                  </div>
 
-                  {/* Info bar */}
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-[#E8F5EE] border border-[#C4D4C9]">
-                    <Info className="h-4 w-4 text-[#1B5E45] shrink-0 mt-0.5" />
-                    <p className="text-xs text-[#1B5E45] leading-relaxed">
-                      Our team will review your request within{" "}
-                      <strong>2 hours</strong> and respond with an action plan.
-                      For emergencies, please call the front desk directly.
-                    </p>
-                  </div>
+                    <div className="flex items-start gap-3 p-4 rounded-xl bg-[#E8F5EE]">
+                      <Info className="w-4 h-4 text-[#1B5E45] shrink-0 mt-0.5" />
+                      <p className="text-xs text-[#1B5E45]">
+                        Our team will review your request within 2 hours and respond with an action plan.
+                      </p>
+                    </div>
 
-                  {/* Actions */}
-                  <div className="flex gap-3 pt-2">
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={
-                        !form.title || !form.category || !form.description
-                      }
-                      className="flex-1 h-11 rounded-xl bg-[#1B5E45] text-white font-semibold text-sm hover:bg-[#246B4F] hover:shadow-lg hover:shadow-[#1B5E45]/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed gap-2"
-                    >
-                      <Send className="h-4 w-4" />
-                      Submit Request
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="h-11 px-5 rounded-xl border-[#E0E8E3] text-sm font-semibold text-[#6B7280] hover:border-[#1B5E45] hover:text-[#1B5E45]"
-                      onClick={() => setShowForm(false)}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                    <div className="flex gap-3 pt-2">
+                      <Button
+                        onClick={handleSubmitRequest}
+                        disabled={!form.title || !form.category || !form.description || isSubmitting}
+                        className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
+                      >
+                        <Send className="w-4 h-4 mr-2" />
+                        {isSubmitting ? "Submitting..." : "Submit Request"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowNewRequestModal(false)}
+                        className="border-[#E8F5EE] hover:bg-[#E8F5EE]"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
         </div>
-      </Modal>
+      )}
     </TenantLayout>
   );
 }
