@@ -52,14 +52,14 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-4 rounded-xl border border-[#E8F5EE] shadow-xl">
-        <p className="text-xs font-semibold text-[#1A1A1A] mb-2">{label}</p>
+        <p className="text-xs text-[#1A1A1A] mb-2">{label}</p>
         {payload.map((entry: any, i: number) => (
           <div key={i} className="flex items-center justify-between gap-6">
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full" style={{ backgroundColor: entry.color }} />
-              <span className="text-xs font-medium text-[#6B7280]">{entry.name}</span>
+              <span className="text-xs text-[#6B7280]">{entry.name}</span>
             </div>
-            <span className="text-sm font-bold text-[#1A1A1A]">
+            <span className="text-sm text-[#1A1A1A]">
               KSh {entry.value.toLocaleString()}
             </span>
           </div>
@@ -94,7 +94,7 @@ export default function ReportsPage() {
                 <BarChart3 className="w-3 h-3 mr-1" />
                 Analytics & Reports
               </Badge>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A]">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl text-[#1A1A1A]">
                 Performance Dashboard
               </h1>
               <p className="text-sm text-[#6B7280]">
@@ -105,12 +105,12 @@ export default function ReportsPage() {
             <div className="flex flex-row items-center gap-2 sm:gap-3">
               <div className="flex items-center gap-2 px-4 h-11 rounded-xl bg-white border border-[#E8F5EE]">
                 <Calendar className="w-4 h-4 text-[#6B7280]" />
-                <span className="text-xs font-medium text-[#6B7280]">Period:</span>
-                <span className="text-xs font-semibold text-[#1B5E45]">Q1 2024</span>
+                <span className="text-xs text-[#6B7280]">Period:</span>
+                <span className="text-xs text-[#1B5E45]">Q1 2024</span>
               </div>
               <Button
                 variant="outline"
-                className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
+                className="border-[#E8F5EE] hover:bg-[#E8F5EE] "
               >
                 <Download className="w-4 h-4 mr-2" />
                 Export Report
@@ -191,8 +191,8 @@ export default function ReportsPage() {
                       </Badge>
                     </div>
                     <div className="space-y-1">
-                      <p className="text-[10px] sm:text-xs font-medium text-[#6B7280]">{metric.label}</p>
-                      <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A]">{metric.value}</h3>
+                      <p className="text-[10px] sm:text-xs text-[#6B7280]">{metric.label}</p>
+                      <h3 className="text-lg sm:text-2xl text-[#1A1A1A]">{metric.value}</h3>
                     </div>
                   </CardContent>
                 </Card>
@@ -208,7 +208,7 @@ export default function ReportsPage() {
               <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <CardTitle className="text-[#1A1A1A] text-xl font-bold">
+                    <CardTitle className="text-[#1A1A1A] text-xl ">
                       Revenue Analytics
                     </CardTitle>
                     <CardDescription className="text-[#6B7280] mt-1">
@@ -265,13 +265,13 @@ export default function ReportsPage() {
                           dataKey="month"
                           axisLine={false}
                           tickLine={false}
-                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 400 }}
                           dy={10}
                         />
                         <YAxis
                           axisLine={false}
                           tickLine={false}
-                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 400 }}
                           tickFormatter={(val) => `${val / 1000}K`}
                         />
                         <Tooltip content={<CustomTooltip />} />
@@ -279,7 +279,7 @@ export default function ReportsPage() {
                           wrapperStyle={{ paddingTop: "20px" }}
                           iconType="circle"
                           formatter={(value) => (
-                            <span className="text-sm font-medium text-[#4B5563]">{value}</span>
+                            <span className="text-sm text-[#4B5563]">{value}</span>
                           )}
                         />
                         <Area
@@ -309,13 +309,13 @@ export default function ReportsPage() {
                           dataKey="month"
                           axisLine={false}
                           tickLine={false}
-                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 400 }}
                           dy={10}
                         />
                         <YAxis
                           axisLine={false}
                           tickLine={false}
-                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 500 }}
+                          tick={{ fontSize: 12, fill: "#6B7280", fontWeight: 400 }}
                           tickFormatter={(val) => `${val / 1000}K`}
                         />
                         <Tooltip content={<CustomTooltip />} />
@@ -323,7 +323,7 @@ export default function ReportsPage() {
                           wrapperStyle={{ paddingTop: "20px" }}
                           iconType="circle"
                           formatter={(value) => (
-                            <span className="text-sm font-medium text-[#4B5563]">{value}</span>
+                            <span className="text-sm text-[#4B5563]">{value}</span>
                           )}
                         />
                         <Line
@@ -360,8 +360,8 @@ export default function ReportsPage() {
                     { label: "Net Income", value: "KSh 1.2M", sublabel: "This Quarter" },
                   ].map((insight, i) => (
                     <div key={i} className="space-y-1">
-                      <p className="text-xs font-medium text-[#6B7280]">{insight.label}</p>
-                      <p className="text-lg font-bold text-[#1B5E45]">{insight.value}</p>
+                      <p className="text-xs text-[#6B7280]">{insight.label}</p>
+                      <p className="text-lg text-[#1B5E45]">{insight.value}</p>
                       <p className="text-xs text-[#6B7280]">{insight.sublabel}</p>
                     </div>
                   ))}
@@ -380,7 +380,7 @@ export default function ReportsPage() {
                       <BarChart3 className="w-5 h-5 text-[#1B5E45]" />
                     </div>
                     <div>
-                      <CardTitle className="text-[#1A1A1A] text-lg font-bold">
+                      <CardTitle className="text-[#1A1A1A] text-lg ">
                         Occupancy
                       </CardTitle>
                       <CardDescription className="text-[#6B7280] text-xs">
@@ -399,7 +399,7 @@ export default function ReportsPage() {
                           type="category"
                           axisLine={false}
                           tickLine={false}
-                          tick={{ fontSize: 11, fill: "#6B7280", fontWeight: 500 }}
+                          tick={{ fontSize: 11, fill: "#6B7280", fontWeight: 400 }}
                           width={90}
                         />
                         <Tooltip content={<CustomTooltip />} />
@@ -420,7 +420,7 @@ export default function ReportsPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-[#3DBE7A] animate-pulse" />
-                      <span className="text-xs font-medium text-[#6B7280]">
+                      <span className="text-xs text-[#6B7280]">
                         Overall Performance
                       </span>
                     </div>
@@ -439,7 +439,7 @@ export default function ReportsPage() {
                       <Activity className="w-5 h-5 text-[#1B5E45]" />
                     </div>
                     <div>
-                      <CardTitle className="text-[#1A1A1A] text-lg font-bold">
+                      <CardTitle className="text-[#1A1A1A] text-lg ">
                         Operations
                       </CardTitle>
                       <CardDescription className="text-[#6B7280] text-xs">
@@ -456,8 +456,8 @@ export default function ReportsPage() {
                   ].map((metric, i) => (
                     <div key={i} className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium text-[#4B5563]">{metric.label}</span>
-                        <span className="font-bold text-[#1A1A1A]">{metric.value}%</span>
+                        <span className=" text-[#4B5563]">{metric.label}</span>
+                        <span className=" text-[#1A1A1A]">{metric.value}%</span>
                       </div>
                       <div className="h-2 w-full bg-[#F4F4F0] rounded-full overflow-hidden">
                         <motion.div
@@ -475,7 +475,7 @@ export default function ReportsPage() {
 
                   <div className="flex items-center gap-2 p-3 rounded-lg bg-[#E8F5EE]">
                     <CheckCircle2 className="w-4 h-4 text-[#1B5E45]" />
-                    <span className="text-xs font-semibold text-[#1B5E45]">
+                    <span className="text-xs text-[#1B5E45]">
                       All systems operational
                     </span>
                   </div>
@@ -487,7 +487,7 @@ export default function ReportsPage() {
           {/* Additional Insights Section */}
           <Card className="border-[#E8F5EE] bg-white">
             <CardHeader>
-              <CardTitle className="text-[#1A1A1A] text-xl font-bold">
+              <CardTitle className="text-[#1A1A1A] text-xl ">
                 Portfolio Insights
               </CardTitle>
               <CardDescription className="text-[#6B7280]">
@@ -530,7 +530,7 @@ export default function ReportsPage() {
                       <insight.icon className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-bold text-[#1A1A1A] mb-1">
+                      <h4 className="text-sm text-[#1A1A1A] mb-1">
                         {insight.title}
                       </h4>
                       <p className="text-xs text-[#6B7280]">{insight.description}</p>

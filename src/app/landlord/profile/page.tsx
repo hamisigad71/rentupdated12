@@ -94,7 +94,7 @@ export default function ProfilePage() {
             {/* Avatar and Basic Info */}
             <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row items-center gap-6">
               <div className="relative group">
-                <div className="h-32 w-32 rounded-2xl bg-gradient-to-br from-[#E8F5EE] to-[#FAFAF8] border-2 border-[#1B5E45]/10 flex items-center justify-center text-2xl font-bold text-[#1B5E45] shadow-xl shadow-[#E8F5EE]/50">
+                <div className="h-32 w-32 rounded-2xl bg-gradient-to-br from-[#E8F5EE] to-[#FAFAF8] border-2 border-[#1B5E45]/10 flex items-center justify-center text-2xl text-[#1B5E45] shadow-xl shadow-[#E8F5EE]/50">
                   AJ
                 </div>
                 <button className="absolute -bottom-3 -right-3 h-10 w-10 rounded-xl bg-[#1B5E45] text-white flex items-center justify-center shadow-lg shadow-[#1B5E45]/30 border-3 border-white group-hover:scale-110 transition-all">
@@ -107,12 +107,12 @@ export default function ProfilePage() {
               
               <div className="text-center md:text-left space-y-3">
                 <div className="space-y-2">
-                  <Badge className="bg-[#E8F5EE] border-[#1B5E45]/20 text-[#1B5E45] font-semibold hover:bg-[#E8F5EE]">
+                  <Badge className="bg-[#E8F5EE] border-[#1B5E45]/20 text-[#1B5E45] hover:bg-[#E8F5EE]">
                     <ShieldCheck className="mr-1 h-3 w-3" />
                     Executive Access
                   </Badge>
-                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#1A1A1A]">{formData.name}</h1>
-                  <p className="text-sm font-medium text-[#6B7280] flex items-center justify-center md:justify-start gap-2">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl tracking-tight text-[#1A1A1A]">{formData.name}</h1>
+                  <p className="text-sm text-[#6B7280] flex items-center justify-center md:justify-start gap-2">
                     <Building2 className="h-4 w-4 text-[#1B5E45]" /> 
                     {formData.role} • {formData.company}
                   </p>
@@ -125,9 +125,9 @@ export default function ProfilePage() {
               <div className="text-center p-4 rounded-xl bg-white/80 border border-[#E8F5EE] shadow-sm">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <div className="h-2 w-2 rounded-full bg-[#3DBE7A]" />
-                  <span className="text-xs font-semibold text-[#6B7280]">Security Score</span>
+                  <span className="text-xs text-[#6B7280]">Security Score</span>
                 </div>
-                <p className="text-2xl font-bold text-[#1A1A1A]">{securityData.securityScore}%</p>
+                <p className="text-2xl text-[#1A1A1A]">{securityData.securityScore}%</p>
                 <div className="h-1.5 w-full bg-[#E8F5EE] rounded-full mt-2 overflow-hidden">
                   <motion.div initial={{ width: 0 }} animate={{ width: `${securityData.securityScore}%` }} className="h-full bg-[#1B5E45]" />
                 </div>
@@ -135,9 +135,9 @@ export default function ProfilePage() {
               <div className="text-center p-4 rounded-xl bg-white/80 border border-[#E8F5EE] shadow-sm">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Activity className="h-3 w-3 text-[#1B5E45]" />
-                  <span className="text-xs font-semibold text-[#6B7280]">Profile Complete</span>
+                  <span className="text-xs text-[#6B7280]">Profile Complete</span>
                 </div>
-                <p className="text-2xl font-bold text-[#1A1A1A]">{profileCompletion}%</p>
+                <p className="text-2xl text-[#1A1A1A]">{profileCompletion}%</p>
                 <div className="h-1.5 w-full bg-[#E8F5EE] rounded-full mt-2 overflow-hidden">
                   <motion.div initial={{ width: 0 }} animate={{ width: `${profileCompletion}%` }} className="h-full bg-[#3DBE7A]" />
                 </div>
@@ -149,7 +149,7 @@ export default function ProfilePage() {
               <Button 
                 onClick={() => setIsEditing(!isEditing)}
                 className={cn(
-                  "h-12 px-6 rounded-xl font-semibold transition-all shadow-lg",
+                  "h-12 px-6 rounded-xl  transition-all shadow-lg",
                   isEditing 
                     ? "bg-[#3DBE7A] hover:bg-[#32A86B] text-white shadow-[#3DBE7A]/20" 
                     : "bg-[#1B5E45] hover:bg-[#246B4F] text-white shadow-[#1B5E45]/20"
@@ -179,10 +179,10 @@ export default function ProfilePage() {
         {/* Enhanced Tabbed Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 lg:w-fit bg-[#FAFAF8] border border-[#E8F5EE]">
-            <TabsTrigger value="overview" className="font-semibold data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Overview</TabsTrigger>
-            <TabsTrigger value="security" className="font-semibold data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Security</TabsTrigger>
-            <TabsTrigger value="activity" className="font-semibibold data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Activity</TabsTrigger>
-            <TabsTrigger value="billing" className="font-semibold data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Billing</TabsTrigger>
+            <TabsTrigger value="overview" className=" data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Overview</TabsTrigger>
+            <TabsTrigger value="security" className=" data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Security</TabsTrigger>
+            <TabsTrigger value="activity" className="data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Activity</TabsTrigger>
+            <TabsTrigger value="billing" className=" data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">Billing</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-8">
@@ -196,7 +196,7 @@ export default function ProfilePage() {
                       <User className="h-6 w-6 text-[#1B5E45]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#1A1A1A]">Personal Information</h3>
+                      <h3 className="text-xl text-[#1A1A1A]">Personal Information</h3>
                       <p className="text-sm text-[#6B7280]">Manage your account details and preferences</p>
                     </div>
                   </div>
@@ -211,7 +211,7 @@ export default function ProfilePage() {
                       { label: "Location", name: "location", icon: MapPin, value: formData.location },
                     ].map((field) => (
                       <div key={field.name} className="space-y-3">
-                        <label className="text-sm font-semibold text-[#6B7280] flex items-center gap-2">
+                        <label className="text-sm text-[#6B7280] flex items-center gap-2">
                           <field.icon className="h-4 w-4 text-[#6B7280]" />
                           {field.label}
                         </label>
@@ -234,14 +234,14 @@ export default function ProfilePage() {
                       <Briefcase className="h-6 w-6 text-[#1B5E45]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#1A1A1A]">Professional Details</h3>
+                      <h3 className="text-xl text-[#1A1A1A]">Professional Details</h3>
                       <p className="text-sm text-[#6B7280]">Work-related information and preferences</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-3">
-                      <label className="text-sm font-semibold text-[#6B7280]">Job Title</label>
+                      <label className="text-sm text-[#6B7280]">Job Title</label>
                       <Input 
                         value={formData.role} 
                         disabled={!isEditing}
@@ -249,7 +249,7 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-sm font-semibold text-[#6B7280]">Time Zone</label>
+                      <label className="text-sm text-[#6B7280]">Time Zone</label>
                       <Input 
                         value={formData.timezone} 
                         disabled={!isEditing}
@@ -257,7 +257,7 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-sm font-semibold text-[#6B7280]">Start Date</label>
+                      <label className="text-sm text-[#6B7280]">Start Date</label>
                       <Input 
                         value={formData.joined} 
                         disabled
@@ -265,7 +265,7 @@ export default function ProfilePage() {
                       />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-sm font-semibold text-[#6B7280]">Company</label>
+                      <label className="text-sm text-[#6B7280]">Company</label>
                       <Input 
                         value={formData.company} 
                         disabled={!isEditing}
@@ -280,7 +280,7 @@ export default function ProfilePage() {
               <div className="space-y-6">
                 {/* Quick Actions */}
                 <div className="bg-white p-6 rounded-2xl border border-[#E8F5EE] shadow-lg">
-                  <h4 className="text-lg font-bold text-[#1A1A1A] mb-6">Quick Actions</h4>
+                  <h4 className="text-lg text-[#1A1A1A] mb-6">Quick Actions</h4>
                   <div className="space-y-3">
                     {[
                       { label: "Download Profile Data", icon: Download, color: "text-[#1B5E45] hover:bg-[#E8F5EE]" },
@@ -305,7 +305,7 @@ export default function ProfilePage() {
                 <div className="bg-white p-6 rounded-2xl border border-[#E8F5EE] shadow-lg">
                   <div className="flex items-center gap-3 mb-6">
                     <Bell className="h-5 w-5 text-[#6B7280]" />
-                    <h4 className="text-lg font-bold text-[#1A1A1A]">Notifications</h4>
+                    <h4 className="text-lg text-[#1A1A1A]">Notifications</h4>
                   </div>
 
                   <div className="space-y-4">
@@ -316,7 +316,7 @@ export default function ProfilePage() {
                       { label: "Marketing Updates", enabled: false },
                     ].map((pref, i) => (
                       <div key={i} className="flex items-center justify-between p-3 rounded-lg hover:bg-[#FAFAF8] transition-colors">
-                        <span className="text-sm font-medium text-[#6B7280]">{pref.label}</span>
+                        <span className="text-sm text-[#6B7280]">{pref.label}</span>
                         <div className={cn(
                           "h-6 w-11 rounded-full transition-all cursor-pointer",
                           pref.enabled ? "bg-[#1B5E45]" : "bg-slate-300"
@@ -345,7 +345,7 @@ export default function ProfilePage() {
                       <Shield className="h-6 w-6 text-[#1B5E45]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#1A1A1A]">Security Overview</h3>
+                      <h3 className="text-xl text-[#1A1A1A]">Security Overview</h3>
                       <p className="text-sm text-[#6B7280]">Your account protection status</p>
                     </div>
                   </div>
@@ -354,7 +354,7 @@ export default function ProfilePage() {
                     <div className="p-6 rounded-xl bg-[#E8F5EE] border border-[#1B5E45]/20">
                       <div className="flex items-center gap-3 mb-3">
                         <CheckCircle className="h-5 w-5 text-[#1B5E45]" />
-                        <span className="font-semibold text-[#1B5E45]">Excellent Security</span>
+                        <span className=" text-[#1B5E45]">Excellent Security</span>
                       </div>
                       <p className="text-sm text-[#1B5E45]/80">Your security score is {securityData.securityScore}% - your account is well protected.</p>
                     </div>
@@ -393,12 +393,12 @@ export default function ProfilePage() {
                             <item.icon className="h-5 w-5" />
                           </div>
                           <div>
-                            <p className="font-semibold text-[#1A1A1A]">{item.label}</p>
+                            <p className=" text-[#1A1A1A]">{item.label}</p>
                             <p className="text-sm text-[#6B7280]">{item.desc}</p>
                           </div>
                         </div>
                         <Badge className={cn(
-                          "font-semibold",
+                          "",
                           item.color === "emerald" ? "bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/10" :
                           item.color === "amber" ? "bg-amber-50 text-amber-700 border-amber-200" :
                           "bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/10"
@@ -419,7 +419,7 @@ export default function ProfilePage() {
                       <Monitor className="h-6 w-6 text-[#1B5E45]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#1A1A1A]">Connected Devices</h3>
+                      <h3 className="text-xl text-[#1A1A1A]">Connected Devices</h3>
                       <p className="text-sm text-[#6B7280]">Manage your active sessions</p>
                     </div>
                   </div>
@@ -434,7 +434,7 @@ export default function ProfilePage() {
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
-                                <p className="font-semibold text-[#1A1A1A]">{device.name}</p>
+                                <p className=" text-[#1A1A1A]">{device.name}</p>
                                 {device.current && (
                                   <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 text-xs">
                                     Current
@@ -473,7 +473,7 @@ export default function ProfilePage() {
                   <Activity className="h-6 w-6 text-[#1B5E45]" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-[#1A1A1A]">Recent Activity</h3>
+                  <h3 className="text-xl text-[#1A1A1A]">Recent Activity</h3>
                   <p className="text-sm text-[#6B7280]">Track your account activity and changes</p>
                 </div>
               </div>
@@ -485,7 +485,7 @@ export default function ProfilePage() {
                       {getActivityIcon(activity.type)}
                     </div>
                     <div className="flex-1">
-                      <p className="font-semibold text-[#1A1A1A]">{activity.action}</p>
+                      <p className=" text-[#1A1A1A]">{activity.action}</p>
                       <div className="flex items-center gap-4 text-sm text-[#6B7280]">
                         <span className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
@@ -524,7 +524,7 @@ export default function ProfilePage() {
                       <CreditCard className="h-6 w-6 text-[#1B5E45]" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#1A1A1A]">Subscription Details</h3>
+                      <h3 className="text-xl text-[#1A1A1A]">Subscription Details</h3>
                       <p className="text-sm text-[#6B7280]">Manage your billing and subscription</p>
                     </div>
                   </div>
@@ -532,25 +532,25 @@ export default function ProfilePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="p-6 rounded-xl bg-gradient-to-br from-[#E8F5EE] to-[#FAFAF8] border border-[#1B5E45]/10">
                       <div className="flex items-center justify-between mb-4">
-                        <Badge className="bg-[#1B5E45] text-white font-semibold">ENTERPRISE</Badge>
+                        <Badge className="bg-[#1B5E45] text-white ">ENTERPRISE</Badge>
                         <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200">ACTIVE</Badge>
                       </div>
-                      <p className="text-3xl font-bold text-[#1A1A1A] mb-2">KSh 45,000</p>
+                      <p className="text-3xl text-[#1A1A1A] mb-2">KSh 45,000</p>
                       <p className="text-sm text-[#6B7280]">per month</p>
                     </div>
                     
                     <div className="space-y-4">
                       <div className="flex justify-between">
-                        <span className="text-sm font-medium text-[#6B7280]">Next billing date</span>
-                        <span className="text-sm font-semibold text-[#1A1A1A]">April 01, 2025</span>
+                        <span className="text-sm text-[#6B7280]">Next billing date</span>
+                        <span className="text-sm text-[#1A1A1A]">April 01, 2025</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm font-medium text-[#6B7280]">Payment method</span>
-                        <span className="text-sm font-semibold text-[#1A1A1A]">•••• 4532</span>
+                        <span className="text-sm text-[#6B7280]">Payment method</span>
+                        <span className="text-sm text-[#1A1A1A]">•••• 4532</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm font-medium text-[#6B7280]">Billing email</span>
-                        <span className="text-sm font-semibold text-[#1A1A1A]">{formData.email}</span>
+                        <span className="text-sm text-[#6B7280]">Billing email</span>
+                        <span className="text-sm text-[#1A1A1A]">{formData.email}</span>
                       </div>
                     </div>
                   </div>
@@ -560,7 +560,7 @@ export default function ProfilePage() {
               {/* Billing Actions */}
               <div className="space-y-6">
                 <div className="bg-white p-6 rounded-2xl border border-[#E8F5EE] shadow-lg">
-                  <h4 className="text-lg font-bold text-[#1A1A1A] mb-6">Billing Actions</h4>
+                  <h4 className="text-lg text-[#1A1A1A] mb-6">Billing Actions</h4>
                   <div className="space-y-3">
                     <Button className="w-full justify-start h-12 bg-[#1B5E45] hover:bg-[#246B4F] text-white">
                       <CreditCard className="h-4 w-4 mr-3" />
@@ -584,7 +584,7 @@ export default function ProfilePage() {
                       <AlertTriangle className="h-6 w-6 text-rose-600" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-rose-900 mb-2">Account Management</h4>
+                      <h4 className=" text-rose-900 mb-2">Account Management</h4>
                       <p className="text-sm text-rose-700 mb-4">Need help with your account or want to make changes?</p>
                     </div>
                     <Button variant="outline" className="w-full border-rose-300 text-rose-700 hover:bg-rose-100">

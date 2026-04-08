@@ -52,7 +52,7 @@ export default function Logo({ className, variant = "full", size = "md", light =
             </span>
           </div>
           <span className={cn(
-            "font-bold uppercase tracking-[0.2em] -mt-0.5 transition-colors",
+            "uppercase tracking-[0.2em] -mt-0.5 transition-colors",
             light ? "text-white/30" : "text-[#1B5E45]/40",
             size === "lg" ? "text-[10px]" : "text-[8px]"
           )}>

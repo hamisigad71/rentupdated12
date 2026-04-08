@@ -63,7 +63,7 @@ export function TenantSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="px-6 text-xs uppercase font-medium tracking-[0.2em] text-muted-foreground/40 group-data-[collapsible=icon]:hidden">Resident Hub</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-6 text-xs uppercase tracking-[0.2em] text-muted-foreground/40 group-data-[collapsible=icon]:hidden">Resident Hub</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="px-2 space-y-1">
               {mainItems.map((item) => (
@@ -104,7 +104,7 @@ export function TenantSidebar() {
           ))}
         </SidebarMenu>
         <div className="group-data-[collapsible=icon]:hidden space-y-2">
-          <Button className="w-full gap-2 rounded-xl h-11 bg-[#1B5E45] text-white shadow-lg shadow-[#1B5E45]/20 hover:bg-[#246B4F] hover:shadow-xl active:scale-95 transition-all font-medium text-sm">
+          <Button className="w-full gap-2 rounded-xl h-11 bg-[#1B5E45] text-white shadow-lg shadow-[#1B5E45]/20 hover:bg-[#246B4F] hover:shadow-xl active:scale-95 transition-all text-sm">
             <Zap className="h-4 w-4" />
             <span>Fast Pay Rent</span>
           </Button>

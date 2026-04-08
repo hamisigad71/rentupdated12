@@ -101,16 +101,16 @@ export default function BuildingLedgerModal({
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="text-xs font-bold uppercase  text-muted-foreground/60 leading-none">
+                  <span className="text-xs  uppercase text-muted-foreground/60 leading-none">
                     Asset Digital Ledger
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <h2 className="text-2xl font-bold tracking-tight leading-none text-white uppercase">
+                  <h2 className="text-2xl tracking-tight leading-none text-white uppercase">
                     {building.name}
                   </h2>
-                  <div className="flex items-center gap-4 text-xs font-bold text-white/40 uppercase ">
+                  <div className="flex items-center gap-4 text-xs text-white/40 uppercase ">
                     <div className="flex items-center gap-1.5">
                       <Users className="h-3 w-3" />
                       {buildingTenants.length} Occupants
@@ -126,18 +126,18 @@ export default function BuildingLedgerModal({
 
               <div className="flex gap-4">
                 <div className="px-6 py-4 rounded-2xl bg-primary/10 border border-primary/20 text-center min-w-[160px]">
-                  <p className="text-[9px] font-bold uppercase  text-primary mb-1">
+                  <p className="text-[9px]  uppercase text-primary mb-1">
                     Building Yield
                   </p>
-                  <p className="text-2xl font-bold text-white tracking-tight leading-tight">
+                  <p className="text-2xl text-white tracking-tight leading-tight">
                     KSh {(totalCollected / 1000).toFixed(1)}K
                   </p>
                 </div>
                 <div className="px-6 py-4 rounded-2xl bg-destructive/10 border border-destructive/20 text-center min-w-[160px]">
-                  <p className="text-[9px] font-bold uppercase  text-destructive mb-1">
+                  <p className="text-[9px]  uppercase text-destructive mb-1">
                     Exposure
                   </p>
-                  <p className="text-2xl font-bold text-white tracking-tight leading-tight">
+                  <p className="text-2xl text-white tracking-tight leading-tight">
                     KSh {(totalArrears / 1000).toFixed(1)}K
                   </p>
                 </div>
@@ -155,13 +155,13 @@ export default function BuildingLedgerModal({
               <TabsList className="bg-foreground/5 h-12 p-1 rounded-xl">
                 <TabsTrigger
                   value="tenants"
-                  className="rounded-lg px-8 py-2 text-xs font-bold uppercase  data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm"
+                  className="rounded-lg px-8 py-2 text-xs  uppercase data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm"
                 >
                   Occupants
                 </TabsTrigger>
                 <TabsTrigger
                   value="payments"
-                  className="rounded-lg px-8 py-2 text-xs font-bold uppercase  data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm"
+                  className="rounded-lg px-8 py-2 text-xs  uppercase data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm"
                 >
                   Ledger
                 </TabsTrigger>
@@ -175,7 +175,7 @@ export default function BuildingLedgerModal({
                   placeholder="Universal Filter..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-11 pr-6 py-3 h-12 rounded-xl text-xs font-bold border-foreground/10 bg-background w-full md:w-72"
+                  className="pl-11 pr-6 py-3 h-12 rounded-xl text-xs border-foreground/10 bg-background w-full md:w-72"
                 />
               </div>
               <Button
@@ -203,16 +203,16 @@ export default function BuildingLedgerModal({
                   <Table>
                     <TableHeader className="bg-foreground/[0.02] border-b border-foreground/5">
                       <TableRow>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40">
                           Occupant
                         </TableHead>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40 text-center">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40 text-center">
                           Protocol
                         </TableHead>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40">
                           Status
                         </TableHead>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40 text-right">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40 text-right">
                           Horizon
                         </TableHead>
                       </TableRow>
@@ -226,14 +226,14 @@ export default function BuildingLedgerModal({
                           >
                             <TableCell className="px-8 py-6">
                               <div className="flex items-center gap-4">
-                                <div className="h-11 w-11 rounded-2xl bg-foreground/5 border border-foreground/5 flex items-center justify-center font-bold text-muted-foreground transition-transform group-hover:scale-105">
+                                <div className="h-11 w-11 rounded-2xl bg-foreground/5 border border-foreground/5 flex items-center justify-center text-muted-foreground transition-transform group-hover:scale-105">
                                   {tenant.name[0]}
                                 </div>
                                 <div className="flex flex-col">
-                                  <span className="text-sm font-bold tracking-tight">
+                                  <span className="text-sm tracking-tight">
                                     {tenant.name}
                                   </span>
-                                  <span className="text-xs font-bold text-muted-foreground/40 uppercase ">
+                                  <span className="text-xs text-muted-foreground/40 uppercase ">
                                     ID: {tenant.id.split("-").pop()}
                                   </span>
                                 </div>
@@ -243,7 +243,7 @@ export default function BuildingLedgerModal({
                               <div className="flex justify-center">
                                 <Badge
                                   variant="outline"
-                                  className="rounded-xl h-6 px-3 border uppercase text-[8px] font-bold  border-primary/20 text-primary bg-primary/5"
+                                  className="rounded-xl h-6 px-3 border uppercase text-[8px]  border-primary/20 text-primary bg-primary/5"
                                 >
                                   UNIT {tenant.unitId.split("-").pop()}
                                 </Badge>
@@ -251,10 +251,10 @@ export default function BuildingLedgerModal({
                             </TableCell>
                             <TableCell className="px-8 py-6">
                               <div className="flex flex-col gap-1">
-                                <span className="text-sm font-bold tracking-tight">
+                                <span className="text-sm tracking-tight">
                                   KSh {tenant.rent.toLocaleString()}
                                 </span>
-                                <div className="flex items-center gap-2 text-xs font-bold uppercase ">
+                                <div className="flex items-center gap-2 text-xs uppercase ">
                                   <span
                                     className={
                                       tenant.arrears > 0
@@ -274,7 +274,7 @@ export default function BuildingLedgerModal({
                               </div>
                             </TableCell>
                             <TableCell className="px-8 py-6 text-right">
-                              <span className="text-xs font-bold uppercase  text-muted-foreground/40 leading-none">
+                              <span className="text-xs  uppercase text-muted-foreground/40 leading-none">
                                 In: {tenant.moveInDate}
                               </span>
                             </TableCell>
@@ -291,10 +291,10 @@ export default function BuildingLedgerModal({
                                 <Users className="h-8 w-8" />
                               </div>
                               <div className="space-y-1">
-                                <p className="text-sm font-bold tracking-tight text-muted-foreground">
+                                <p className="text-sm tracking-tight text-muted-foreground">
                                   No occupants located
                                 </p>
-                                <p className="text-xs font-bold uppercase  text-muted-foreground/40">
+                                <p className="text-xs  uppercase text-muted-foreground/40">
                                   Try adjusting your search criteria
                                 </p>
                               </div>
@@ -308,19 +308,19 @@ export default function BuildingLedgerModal({
                   <Table>
                     <TableHeader className="bg-foreground/[0.02] border-b border-foreground/5">
                       <TableRow>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40">
                           Stakeholder
                         </TableHead>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40">
                           Cycle
                         </TableHead>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40">
                           Capital
                         </TableHead>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40">
                           Status
                         </TableHead>
-                        <TableHead className="px-8 h-14 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/40 text-right">
+                        <TableHead className="px-8 h-14 text-xs uppercase tracking-[0.2em] text-muted-foreground/40 text-right">
                           Timestamp
                         </TableHead>
                       </TableRow>
@@ -334,10 +334,10 @@ export default function BuildingLedgerModal({
                           >
                             <TableCell className="px-8 py-6">
                               <div className="flex flex-col">
-                                <span className="text-sm font-bold tracking-tight">
+                                <span className="text-sm tracking-tight">
                                   {payment.tenantName}
                                 </span>
-                                <span className="text-xs font-bold text-muted-foreground/40 uppercase ">
+                                <span className="text-xs text-muted-foreground/40 uppercase ">
                                   Unit {payment.unitId.split("-").pop()}
                                 </span>
                               </div>
@@ -345,18 +345,18 @@ export default function BuildingLedgerModal({
                             <TableCell className="px-8 py-6">
                               <Badge
                                 variant="outline"
-                                className="rounded-xl h-6 px-3 border uppercase text-[8px] font-bold  border-foreground/10 bg-foreground/5 text-muted-foreground"
+                                className="rounded-xl h-6 px-3 border uppercase text-[8px]  border-foreground/10 bg-foreground/5 text-muted-foreground"
                               >
                                 {payment.month}
                               </Badge>
                             </TableCell>
-                            <TableCell className="px-8 py-6 text-sm font-bold tracking-tight text-primary uppercase">
+                            <TableCell className="px-8 py-6 text-sm tracking-tight text-primary uppercase">
                               KSh {payment.amount.toLocaleString()}
                             </TableCell>
                             <TableCell className="px-8 py-6">
                               <div
                                 className={cn(
-                                  "inline-flex items-center gap-2 px-3 py-1.5 rounded-full font-bold text-[8px] uppercase  border",
+                                  "inline-flex items-center gap-2 px-3 py-1.5 rounded-full  text-[8px] uppercase  border",
                                   payment.status === "completed"
                                     ? "bg-primary/5 border-primary/20 text-primary"
                                     : payment.status === "pending"
@@ -375,7 +375,7 @@ export default function BuildingLedgerModal({
                               </div>
                             </TableCell>
                             <TableCell className="px-8 py-6 text-right">
-                              <span className="text-xs font-bold text-muted-foreground/40 uppercase ">
+                              <span className="text-xs text-muted-foreground/40 uppercase ">
                                 {payment.date}
                               </span>
                             </TableCell>
@@ -392,10 +392,10 @@ export default function BuildingLedgerModal({
                                 <CreditCard className="h-8 w-8" />
                               </div>
                               <div className="space-y-1">
-                                <p className="text-sm font-bold tracking-tight text-muted-foreground">
+                                <p className="text-sm tracking-tight text-muted-foreground">
                                   No transactions recorded
                                 </p>
-                                <p className="text-xs font-bold uppercase  text-muted-foreground/40">
+                                <p className="text-xs  uppercase text-muted-foreground/40">
                                   Financial activity will appear here
                                 </p>
                               </div>
@@ -413,7 +413,7 @@ export default function BuildingLedgerModal({
           {/* Footer Bar */}
           <div className="p-5 flex items-center justify-between shrink-0 bg-foreground/[0.02] border-t border-foreground/5">
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground/60 uppercase ">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground/60 uppercase ">
                 <ShieldCheck className="h-3 w-3 text-primary" />
                 System Synchronized
                 <span className="text-primary ml-1">Real-time</span>
@@ -422,12 +422,12 @@ export default function BuildingLedgerModal({
             <div className="flex gap-4">
               <Button
                 variant="ghost"
-                className="h-12 px-8 rounded-xl text-xs font-bold uppercase "
+                className="h-12 px-8 rounded-xl text-xs uppercase "
                 onClick={onClose}
               >
                 Close View
               </Button>
-              <Button className="h-12 px-8 rounded-xl text-xs font-bold uppercase  bg-primary shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all">
+              <Button className="h-12 px-8 rounded-xl text-xs  uppercase bg-primary shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all">
                 Synchronize Ledger
               </Button>
             </div>

@@ -67,7 +67,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="px-6 text-xs uppercase font-medium text-muted-foreground/60 group-data-[collapsible=icon]:hidden">Management</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-6 text-xs uppercase text-muted-foreground/60 group-data-[collapsible=icon]:hidden">Management</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="px-2 space-y-1">
               {mainItems.map((item) => (

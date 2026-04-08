@@ -32,20 +32,20 @@ export default function LandlordLayout({ children }: { children: React.ReactNode
                    <span className="text-sm font-black tracking-tighter text-foreground">NEXUS</span>
                    <span className="text-sm font-black tracking-tighter text-primary">LANDLORD</span>
                  </div>
-                 <span className="text-[10px] uppercase font-bold text-muted-foreground/40 leading-none">Management Suite</span>
+                 <span className="text-[10px] uppercase text-muted-foreground/40 leading-none">Management Suite</span>
                </div>
              </div>
             <div className="flex items-center gap-4">
               <div className="hidden md:flex flex-col items-end mr-2">
-                <span className="text-sm font-bold text-foreground">Alex Johnson</span>
-                <span className="text-xs uppercase font-bold  text-primary/80 leading-none underline decoration-primary/30 underline-offset-4">Super Admin</span>
+                <span className="text-sm text-foreground">Alex Johnson</span>
+                <span className="text-xs uppercase text-primary/80 leading-none">Super Admin</span>
               </div>
               <div className="h-10 w-10 rounded-full border-2 border-primary/20 bg-muted/50 p-0.5 shadow-inner">
-                <div className="h-full w-full rounded-full bg-linear-to-br from-primary/10 to-primary/30 flex items-center justify-center font-bold text-primary">AJ</div>
+                <div className="h-full w-full rounded-full bg-linear-to-br from-primary/10 to-primary/30 flex items-center justify-center text-primary">AJ</div>
               </div>
             </div>
           </header>
-          <main className="flex-1 overflow-auto px-4 py-6 sm:p-6 md:p-8 lg:p-5 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-28 md:pb-8">
+          <main className="flex-1 overflow-auto px-0.5 sm:px-4 py-6 md:p-8 lg:p-5 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-28 md:pb-8">
             {children}
           </main>
           <BottomNav items={landlordItems} />

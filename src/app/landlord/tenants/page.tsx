@@ -116,7 +116,7 @@ export default function TenantsPage() {
                 <Users className="w-3 h-3 mr-1" />
                 Tenant Management
               </Badge>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A]">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl text-[#1A1A1A]">
                 Tenants
               </h1>
               <p className="text-sm text-[#6B7280]">
@@ -127,14 +127,14 @@ export default function TenantsPage() {
             <div className="flex flex-row items-center gap-2 sm:gap-3">
               <Button
                 variant="outline"
-                className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
+                className="border-[#E8F5EE] hover:bg-[#E8F5EE] "
               >
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </Button>
               <Button
                 onClick={() => setShowAddTenant(true)}
-                className="bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold shadow-lg"
+                className="bg-[#1B5E45] hover:bg-[#246B4F] text-white shadow-lg"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Tenant
@@ -191,8 +191,8 @@ export default function TenantsPage() {
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <p className="text-[10px] sm:text-xs font-medium text-[#6B7280]">{stat.label}</p>
-                      <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A]">{stat.value}</h3>
+                      <p className="text-[10px] sm:text-xs text-[#6B7280]">{stat.label}</p>
+                      <h3 className="text-lg sm:text-2xl text-[#1A1A1A]">{stat.value}</h3>
                     </div>
                   </CardContent>
                 </Card>
@@ -238,8 +238,8 @@ export default function TenantsPage() {
                   </Select>
 
                   <Badge variant="outline" className="h-11 px-4 bg-[#FAFAF8] border-[#E8F5EE] text-[#4B5563] flex items-center gap-2">
-                    <span className="text-xs font-medium">Results:</span>
-                    <span className="text-sm font-bold text-[#1B5E45]">
+                    <span className="text-xs ">Results:</span>
+                    <span className="text-sm text-[#1B5E45]">
                       {filteredTenants.length}
                     </span>
                   </Badge>
@@ -254,22 +254,22 @@ export default function TenantsPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-[#FAFAF8] border-b border-[#E8F5EE] hover:bg-[#FAFAF8]">
-                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase">
+                    <TableHead className="px-6 py-4 text-xs text-[#6B7280] uppercase">
                       Tenant
                     </TableHead>
-                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase">
+                    <TableHead className="px-6 py-4 text-xs text-[#6B7280] uppercase">
                       Unit
                     </TableHead>
-                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase">
+                    <TableHead className="px-6 py-4 text-xs text-[#6B7280] uppercase">
                       Contact
                     </TableHead>
-                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase text-right">
+                    <TableHead className="px-6 py-4 text-xs text-[#6B7280] uppercase text-right">
                       Rent
                     </TableHead>
-                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase text-right">
+                    <TableHead className="px-6 py-4 text-xs text-[#6B7280] uppercase text-right">
                       Arrears
                     </TableHead>
-                    <TableHead className="px-6 py-4 text-xs font-semibold text-[#6B7280] uppercase text-center">
+                    <TableHead className="px-6 py-4 text-xs text-[#6B7280] uppercase text-center">
                       Status
                     </TableHead>
                     <TableHead className="px-6 py-4"></TableHead>
@@ -288,11 +288,11 @@ export default function TenantsPage() {
                       >
                         <TableCell className="px-6 py-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg bg-[#E8F5EE] flex items-center justify-center font-semibold text-[#1B5E45]">
+                            <div className="w-10 h-10 rounded-lg bg-[#E8F5EE] flex items-center justify-center text-[#1B5E45]">
                               {tenant.name[0]}
                             </div>
                             <div>
-                              <p className="text-sm font-semibold text-[#1A1A1A]">
+                              <p className="text-sm text-[#1A1A1A]">
                                 {tenant.name}
                               </p>
                               <p className="text-xs text-[#6B7280]">
@@ -304,7 +304,7 @@ export default function TenantsPage() {
                         
                         <TableCell className="px-6 py-4">
                           <div>
-                            <p className="text-sm font-semibold text-[#1B5E45]">
+                            <p className="text-sm text-[#1B5E45]">
                               {tenant.unitId}
                             </p>
                             <p className="text-xs text-[#6B7280]">
@@ -327,7 +327,7 @@ export default function TenantsPage() {
                         </TableCell>
 
                         <TableCell className="px-6 py-4 text-right">
-                          <p className="text-sm font-bold text-[#1A1A1A]">
+                          <p className="text-sm text-[#1A1A1A]">
                             KSh {tenant.rent.toLocaleString()}
                           </p>
                         </TableCell>
@@ -335,7 +335,7 @@ export default function TenantsPage() {
                         <TableCell className="px-6 py-4 text-right">
                           <p
                             className={cn(
-                              "text-sm font-bold",
+                              "text-sm ",
                               tenant.arrears > 0 ? "text-red-600" : "text-[#3DBE7A]"
                             )}
                           >
@@ -412,7 +412,7 @@ export default function TenantsPage() {
             {filteredTenants.length === 0 && (
               <div className="p-12 text-center">
                 <Users className="w-12 h-12 mx-auto text-[#6B7280] mb-4" />
-                <h3 className="text-lg font-semibold text-[#1A1A1A] mb-2">
+                <h3 className="text-lg text-[#1A1A1A] mb-2">
                   No tenants found
                 </h3>
                 <p className="text-sm text-[#6B7280]">
@@ -432,11 +432,11 @@ export default function TenantsPage() {
             {/* Modal Header */}
             <div className="px-6 py-5 border-b border-[#E8F5EE] bg-[#FAFAF8]">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 rounded-xl bg-[#E8F5EE] flex items-center justify-center text-2xl font-bold text-[#1B5E45]">
+                <div className="w-16 h-16 rounded-xl bg-[#E8F5EE] flex items-center justify-center text-2xl text-[#1B5E45]">
                   {selectedTenant?.name[0]}
                 </div>
                 <div className="flex-1">
-                  <DialogTitle className="text-xl font-bold text-[#1A1A1A] mb-1">
+                  <DialogTitle className="text-xl text-[#1A1A1A] mb-1">
                     {selectedTenant?.name}
                   </DialogTitle>
                   <DialogDescription className="text-sm text-[#6B7280]">
@@ -494,10 +494,10 @@ export default function TenantsPage() {
                     >
                       <stat.icon className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-medium text-[#6B7280] mb-1">
+                    <p className="text-xs text-[#6B7280] mb-1">
                       {stat.label}
                     </p>
-                    <p className="text-lg font-bold" style={{ color: stat.color }}>
+                    <p className="text-lg " style={{ color: stat.color }}>
                       {stat.value}
                     </p>
                   </div>
@@ -508,7 +508,7 @@ export default function TenantsPage() {
 
               {/* Contact Information */}
               <div>
-                <h3 className="text-sm font-semibold text-[#1A1A1A] mb-4">
+                <h3 className="text-sm text-[#1A1A1A] mb-4">
                   Contact Information
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -525,7 +525,7 @@ export default function TenantsPage() {
                       <field.icon className="w-4 h-4 text-[#6B7280]" />
                       <div>
                         <p className="text-xs text-[#6B7280]">{field.label}</p>
-                        <p className="text-sm font-semibold text-[#1A1A1A]">
+                        <p className="text-sm text-[#1A1A1A]">
                           {field.value}
                         </p>
                       </div>
@@ -538,15 +538,15 @@ export default function TenantsPage() {
 
               {/* Payment Compliance */}
               <div>
-                <h3 className="text-sm font-semibold text-[#1A1A1A] mb-4">
+                <h3 className="text-sm text-[#1A1A1A] mb-4">
                   Payment Performance
                 </h3>
                 <div className="p-4 rounded-xl bg-[#FAFAF8] border border-[#E8F5EE] space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-[#6B7280]">
+                    <span className="text-sm text-[#6B7280]">
                       Compliance Rate
                     </span>
-                    <span className="text-sm font-bold text-[#1B5E45]">
+                    <span className="text-sm text-[#1B5E45]">
                       {selectedTenant?.rent 
                         ? Math.round(((selectedTenant.paidAmount / selectedTenant.rent) * 100))
                         : 0}%
@@ -598,7 +598,7 @@ export default function TenantsPage() {
       <Dialog open={showAddTenant} onOpenChange={setShowAddTenant}>
         <DialogContent className="max-w-2xl bg-white">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-[#1A1A1A]">
+            <DialogTitle className="text-xl text-[#1A1A1A]">
               Add New Tenant
             </DialogTitle>
             <DialogDescription className="text-sm text-[#6B7280]">

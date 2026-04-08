@@ -46,28 +46,28 @@ export default function TenantLayout({
                     TENANT
                   </span>
                 </div>
-                <span className="text-[10px] uppercase font-bold text-muted-foreground/40 leading-none">
+                <span className="text-[10px] uppercase text-muted-foreground/40 leading-none">
                   Resident Portal
                 </span>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="hidden md:flex flex-col items-end mr-2">
-                <span className="text-sm font-bold text-foreground">
+                <span className="text-sm text-foreground">
                   Sarah Mitchell
                 </span>
-                <span className="text-xs uppercase font-bold text-primary/80 leading-none underline decoration-primary/30 underline-offset-4">
+                <span className="text-xs uppercase text-primary/80 leading-none">
                   Premium Tenant
                 </span>
               </div>
               <div className="h-10 w-10 rounded-full border-2 border-primary/20 bg-muted/50 p-0.5 shadow-inner">
-                <div className="h-full w-full rounded-full bg-linear-to-br from-primary/10 to-primary/30 flex items-center justify-center font-bold text-primary">
+                <div className="h-full w-full rounded-full bg-linear-to-br from-primary/10 to-primary/30 flex items-center justify-center text-primary">
                   SM
                 </div>
               </div>
             </div>
           </header>
-          <main className="flex-1 overflow-auto bg-background px-4 no-scrollbar relative mb-20 md:mb-0">
+          <main className="flex-1 overflow-auto bg-background px-0.5 sm:px-4 no-scrollbar relative mb-20 md:mb-0">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/2 blur-[120px] rounded-full -mr-64 -mt-64 pointer-events-none hidden md:block" />
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/2 blur-[100px] rounded-full -ml-48 -mb-48 pointer-events-none hidden md:block" />
             {children}

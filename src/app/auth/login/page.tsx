@@ -64,7 +64,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
 
       {/* Heading */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#1A1A1A] tracking-tight">Welcome back</h1>
+        <h1 className="text-2xl text-[#1A1A1A] tracking-tight">Welcome back</h1>
         <p className="text-sm text-[#6B7280] mt-1">Sign in to your account to continue.</p>
       </div>
 
@@ -73,7 +73,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
         {(["landlord", "tenant"] as const).map(r => (
           <button key={r} type="button" onClick={() => setRole(r)}
             className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px] font-semibold transition-all",
+              "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px]  transition-all",
               role === r
                 ? "bg-white text-[#1B5E45] shadow-sm shadow-black/8"
                 : "text-[#6B7280] hover:text-[#1A1A1A]"
@@ -87,7 +87,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Email */}
         <div className="space-y-1.5">
-          <label className="text-[12px] font-semibold text-[#374151] ml-0.5">Email address</label>
+          <label className="text-[12px] text-[#374151] ml-0.5">Email address</label>
           <div className="relative group">
             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF] group-focus-within:text-[#1B5E45] transition-colors" />
             <input type="email" required placeholder="you@example.com"
@@ -100,8 +100,8 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
         {/* Password */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between ml-0.5">
-            <label className="text-[12px] font-semibold text-[#374151]">Password</label>
-            <Link href="#" className="text-[12px] text-[#1B5E45] font-medium hover:underline">Forgot password?</Link>
+            <label className="text-[12px] text-[#374151]">Password</label>
+            <Link href="#" className="text-[12px] text-[#1B5E45]">Forgot password?</Link>
           </div>
           <div className="relative group">
             <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF] group-focus-within:text-[#1B5E45] transition-colors" />
@@ -127,7 +127,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
 
         {/* Submit */}
         <button type="submit"
-          className="w-full h-11 rounded-xl bg-[#1B5E45] text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#246B4F] hover:shadow-lg hover:shadow-[#1B5E45]/25 hover:-translate-y-px active:translate-y-0 transition-all shadow-md shadow-[#1B5E45]/20 mt-2">
+          className="w-full h-11 rounded-xl bg-[#1B5E45] text-white text-sm flex items-center justify-center gap-2 hover:bg-[#246B4F] hover:shadow-lg hover:shadow-[#1B5E45]/25 hover:-translate-y-px active:translate-y-0 transition-all shadow-md shadow-[#1B5E45]/20 mt-2">
           Sign in
           <ArrowRight className="h-4 w-4" />
         </button>
@@ -139,7 +139,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
           <div className="w-full border-t border-[#E0E8E3]" />
         </div>
         <div className="relative flex justify-center">
-          <span className="px-3 bg-[#FAFAF8] text-[11px] text-[#9CA3AF] font-medium">or continue with</span>
+          <span className="px-3 bg-[#FAFAF8] text-[11px] text-[#9CA3AF] ">or continue with</span>
         </div>
       </div>
 
@@ -150,7 +150,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
           { label: "Facebook", svg: <svg className="h-4 w-4" fill="#1877F2" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> },
         ].map(s => (
           <button key={s.label}
-            className="h-11 rounded-xl border border-[#E0E8E3] bg-white text-[13px] font-semibold text-[#374151] hover:border-[#C4D4C9] hover:bg-[#F4F9F6] transition-all flex items-center justify-center gap-2.5 shadow-sm">
+            className="h-11 rounded-xl border border-[#E0E8E3] bg-white text-[13px] text-[#374151] hover:border-[#C4D4C9] hover:bg-[#F4F9F6] transition-all flex items-center justify-center gap-2.5 shadow-sm">
             {s.svg} {s.label}
           </button>
         ))}
@@ -160,7 +160,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
       <div className="mt-8 space-y-4">
         <p className="text-center text-[13px] text-[#6B7280]">
           Don't have an account?{" "}
-          <Link href="/auth/register" className="text-[#1B5E45] font-semibold hover:underline">Create one free</Link>
+          <Link href="/auth/register" className="text-[#1B5E45]">Create one free</Link>
         </p>
         <Link href="/" className="flex items-center justify-center gap-2 text-[12px] text-[#9CA3AF] hover:text-[#6B7280] transition-colors">
           <ArrowLeft className="h-3 w-3" /> Back to home
@@ -209,11 +209,11 @@ function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
 
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#3DBE7A]/20 border border-[#3DBE7A]/30">
               <div className="h-1.5 w-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
-              <span className="text-[11px] font-semibold text-[#3DBE7A] uppercase tracking-wider">{h.label}</span>
+              <span className="text-[11px] text-[#3DBE7A] uppercase tracking-wider">{h.label}</span>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold text-white leading-tight tracking-tight">{h.headline}</h2>
+              <h2 className="text-3xl text-white leading-tight tracking-tight">{h.headline}</h2>
               <p className="text-[#7FD9A8]/70 text-[15px] leading-relaxed mt-4 max-w-sm">{h.body}</p>
             </div>
 
@@ -221,7 +221,7 @@ function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
             <div className="grid grid-cols-3 gap-4">
               {h.stat.map((s, i) => (
                 <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                  <p className="text-2xl font-bold text-white">{s.v}</p>
+                  <p className="text-2xl text-white">{s.v}</p>
                   <p className="text-[11px] text-white/40 mt-0.5">{s.l}</p>
                 </div>
               ))}
@@ -231,7 +231,7 @@ function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
 
         {/* Bottom: trust badges */}
         <div className="space-y-3">
-          <p className="text-[11px] font-semibold text-white/30 uppercase tracking-wider">Trusted & Secure</p>
+          <p className="text-[11px] text-white/30 uppercase tracking-wider">Trusted & Secure</p>
           <div className="flex flex-col gap-2">
             {TRUST.map((t, i) => (
               <div key={i} className="flex items-center gap-2.5">
@@ -256,7 +256,7 @@ function LoginContent() {
   return (
     <div className="min-h-screen grid lg:grid-cols-[1fr_1.1fr] bg-[#FAFAF8]">
       {/* Left: Form */}
-      <div className="flex flex-col items-center justify-center px-4 sm:px-6 py-12 lg:px-16">
+      <div className="flex flex-col items-center justify-center px-0.5 sm:px-6 py-12 lg:px-16">
         <LoginForm onRoleChange={setRole} />
       </div>
       {/* Right: Hero */}
@@ -273,7 +273,7 @@ export default function LoginPage() {
           <div className="h-12 w-12 rounded-2xl bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center animate-pulse">
             <div className="h-6 w-6 rounded-lg bg-[#1B5E45]" />
           </div>
-          <p className="text-sm text-[#6B7280] font-medium">Loading...</p>
+          <p className="text-sm text-[#6B7280] ">Loading...</p>
         </div>
       </div>
     }>

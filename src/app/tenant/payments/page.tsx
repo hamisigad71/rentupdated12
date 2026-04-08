@@ -111,7 +111,7 @@ function PaymentMethodButton({
         <Icon className="w-5 h-5" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className={cn("text-sm font-semibold", active ? "text-[#1B5E45]" : "text-[#1A1A1A]")}>
+        <p className={cn("text-sm ", active ? "text-[#1B5E45]" : "text-[#1A1A1A]")}>
           {label}
         </p>
         <p className="text-xs text-[#6B7280]">{subtitle}</p>
@@ -179,18 +179,18 @@ export default function TenantPaymentsPage() {
           
           {/* Breadcrumb Navigation */}
           <div className="sticky top-0 z-40 border-b border-[#E8F5EE] bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-0.5 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm">
                 <Home className="w-4 h-4 text-[#1B5E45]" />
                 <ChevronRight className="w-3.5 h-3.5 text-[#6B7280]" />
                 <span className="text-[#6B7280]">Dashboard</span>
                 <ChevronRight className="w-3.5 h-3.5 text-[#6B7280]" />
-                <span className="font-semibold text-[#1A1A1A]">Payments</span>
+                <span className=" text-[#1A1A1A]">Payments</span>
               </div>
               <Button
                 variant="outline"
                 size="sm"
-                className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
+                className="border-[#E8F5EE] hover:bg-[#E8F5EE] "
               >
                 <Download className="w-4 h-4 mr-2" />
                 Export
@@ -198,7 +198,7 @@ export default function TenantPaymentsPage() {
             </div>
           </div>
 
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+          <main className="max-w-7xl mx-auto px-0.5 sm:px-6 lg:px-8 py-8 space-y-6">
             
             {/* Page Header */}
             <Reveal>
@@ -225,7 +225,7 @@ export default function TenantPaymentsPage() {
                           </Badge>
                         </div>
                         
-                        <h1 className="text-3xl font-bold text-[#1A1A1A] mb-3">
+                        <h1 className="text-3xl text-[#1A1A1A] mb-3">
                           Payments & Billing
                         </h1>
                         
@@ -240,7 +240,7 @@ export default function TenantPaymentsPage() {
                           </div>
                           <div className="flex items-center gap-2">
                             <Receipt className="w-4 h-4 text-[#1B5E45]" />
-                            <span className="font-mono font-semibold text-[#1A1A1A]">
+                            <span className="font-mono text-[#1A1A1A]">
                               {referenceId}
                             </span>
                           </div>
@@ -259,7 +259,7 @@ export default function TenantPaymentsPage() {
                         )}
                       >
                         <div className="flex items-center justify-between mb-3">
-                          <p className="text-xs font-semibold text-[#6B7280] uppercase">
+                          <p className="text-xs text-[#6B7280] uppercase">
                             Outstanding Balance
                           </p>
                           <Badge
@@ -274,7 +274,7 @@ export default function TenantPaymentsPage() {
                         </div>
                         <p
                           className={cn(
-                            "text-3xl font-bold mb-3",
+                            "text-3xl mb-3 font-money",
                             isFullyPaid ? "text-[#1A1A1A]" : "text-red-600"
                           )}
                         >
@@ -283,7 +283,7 @@ export default function TenantPaymentsPage() {
                         <Button
                           onClick={handlePayment}
                           className={cn(
-                            "w-full font-semibold",
+                            "w-full ",
                             isFullyPaid
                               ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
                               : "bg-red-600 hover:bg-red-700 text-white"
@@ -326,17 +326,17 @@ export default function TenantPaymentsPage() {
                         <div key={i} className="space-y-2">
                           <div className="flex items-center gap-2">
                             <stat.icon className="w-4 h-4 text-[#1B5E45]" />
-                            <p className="text-xs font-medium text-[#6B7280]">{stat.label}</p>
+                            <p className="text-xs text-[#6B7280]">{stat.label}</p>
                           </div>
-                          <p className="text-lg font-bold text-[#1A1A1A]">{stat.value}</p>
+                          <p className={cn("text-lg text-[#1A1A1A]", typeof stat.value === 'string' && stat.value.includes('KSh') && "font-money")}>{stat.value}</p>
                         </div>
                       ))}
                     </div>
 
                     <div className="lg:w-64 space-y-2">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-medium text-[#6B7280]">Payment Completion</span>
-                        <span className="font-bold text-[#1B5E45]">{paymentProgress}%</span>
+                        <span className=" text-[#6B7280]">Payment Completion</span>
+                        <span className=" text-[#1B5E45]">{paymentProgress}%</span>
                       </div>
                       <Progress value={paymentProgress} className="h-2 bg-[#F4F4F0]" />
                       <p className="text-xs text-[#6B7280]">
@@ -358,26 +358,26 @@ export default function TenantPaymentsPage() {
                 <Reveal delay={0.1}>
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
-                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
                         <DollarSign className="w-5 h-5 text-[#1B5E45]" />
                         Payment Amount
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-[#1B5E45]">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-lg text-[#1B5E45] font-money">
                           KSh
                         </div>
                         <Input
                           type="number"
                           value={amount}
                           onChange={(e) => setAmount(Number(e.target.value))}
-                          className="pl-16 h-14 text-2xl font-bold border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
+                          className="pl-16 h-14 text-2xl border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45] font-money"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <p className="text-xs font-medium text-[#6B7280]">Quick select:</p>
+                        <p className="text-xs text-[#6B7280]">Quick select:</p>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                           {[
                             { label: "Full Rent", value: currentTenant.rent },
@@ -404,13 +404,13 @@ export default function TenantPaymentsPage() {
 
                       <div className="flex items-center justify-between p-4 rounded-lg bg-[#E8F5EE] border border-[#1B5E45]/10">
                         <div>
-                          <p className="text-xs font-medium text-[#6B7280]">Payment Reference</p>
-                          <p className="text-sm font-semibold text-[#1A1A1A] font-mono">
+                          <p className="text-xs text-[#6B7280]">Payment Reference</p>
+                          <p className="text-sm text-[#1A1A1A] font-mono">
                             {referenceId}
                           </p>
                         </div>
                         <Tooltip>
-                          <TooltipTrigger asChild>
+                        <TooltipTrigger>
                             <Button
                               size="icon"
                               variant="ghost"
@@ -435,7 +435,7 @@ export default function TenantPaymentsPage() {
                 <Reveal delay={0.15}>
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
-                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
                         <CreditCard className="w-5 h-5 text-[#1B5E45]" />
                         Payment Method
                       </CardTitle>
@@ -480,7 +480,7 @@ export default function TenantPaymentsPage() {
                             className="space-y-4"
                           >
                             <div>
-                              <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
+                              <label className="block text-xs text-[#4B5563] uppercase mb-2">
                                 M-PESA Phone Number
                               </label>
                               <div className="relative">
@@ -500,9 +500,9 @@ export default function TenantPaymentsPage() {
                             </div>
                             <Button
                               onClick={handlePayment}
-                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
+                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white "
                             >
-                              Send STK Push · KSh {amount.toLocaleString()}
+                              Send STK Push · <span className="font-money">KSh {amount.toLocaleString()}</span>
                               <ArrowRight className="w-4 h-4 ml-2" />
                             </Button>
                           </motion.div>
@@ -517,7 +517,7 @@ export default function TenantPaymentsPage() {
                             className="space-y-4"
                           >
                             <div>
-                              <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
+                              <label className="block text-xs text-[#4B5563] uppercase mb-2">
                                 Card Number
                               </label>
                               <Input
@@ -527,7 +527,7 @@ export default function TenantPaymentsPage() {
                               />
                             </div>
                             <div>
-                              <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
+                              <label className="block text-xs text-[#4B5563] uppercase mb-2">
                                 Cardholder Name
                               </label>
                               <Input
@@ -538,7 +538,7 @@ export default function TenantPaymentsPage() {
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                               <div>
-                                <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
+                                <label className="block text-xs text-[#4B5563] uppercase mb-2">
                                   Expiry
                                 </label>
                                 <Input
@@ -548,7 +548,7 @@ export default function TenantPaymentsPage() {
                                 />
                               </div>
                               <div>
-                                <label className="block text-xs font-semibold text-[#4B5563] uppercase mb-2">
+                                <label className="block text-xs text-[#4B5563] uppercase mb-2">
                                   CVV
                                 </label>
                                 <Input
@@ -560,9 +560,9 @@ export default function TenantPaymentsPage() {
                             </div>
                             <Button
                               onClick={handlePayment}
-                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
+                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white "
                             >
-                              Pay Securely · KSh {amount.toLocaleString()}
+                              Pay Securely · <span className="font-money">KSh {amount.toLocaleString()}</span>
                               <ArrowRight className="w-4 h-4 ml-2" />
                             </Button>
                           </motion.div>
@@ -584,9 +584,9 @@ export default function TenantPaymentsPage() {
                                 { label: "Reference", value: referenceId },
                               ].map((row) => (
                                 <div key={row.label} className="flex items-center justify-between p-3">
-                                  <span className="text-xs text-[#6B7280] font-medium">{row.label}</span>
+                                  <span className="text-xs text-[#6B7280] ">{row.label}</span>
                                   <div className="flex items-center gap-2">
-                                    <span className="text-sm font-semibold text-[#1A1A1A] font-mono">
+                                    <span className="text-sm text-[#1A1A1A] font-mono">
                                       {row.value}
                                     </span>
                                     <Button
@@ -610,9 +610,9 @@ export default function TenantPaymentsPage() {
                             <Button
                               onClick={handlePayment}
                               variant="outline"
-                              className="w-full border-[#1B5E45] text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold"
+                              className="w-full border-[#1B5E45] text-[#1B5E45] hover:bg-[#E8F5EE] "
                             >
-                              Confirm Transfer · KSh {amount.toLocaleString()}
+                              Confirm Transfer · <span className="font-money">KSh {amount.toLocaleString()}</span>
                             </Button>
                           </motion.div>
                         )}
@@ -626,7 +626,7 @@ export default function TenantPaymentsPage() {
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                        <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
                           <History className="w-5 h-5 text-[#1B5E45]" />
                           Transaction History
                         </CardTitle>
@@ -648,12 +648,12 @@ export default function TenantPaymentsPage() {
                                 <Receipt className="w-4 h-4 text-[#1B5E45]" />
                               </div>
                               <div>
-                                <p className="text-sm font-semibold text-[#1A1A1A]">{payment.month}</p>
+                                <p className="text-sm text-[#1A1A1A]">{payment.month}</p>
                                 <p className="text-xs text-[#6B7280]">{payment.date}</p>
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className="text-sm font-bold text-[#1B5E45]">
+                              <p className="text-sm text-[#1B5E45] font-money">
                                 KSh {payment.amount.toLocaleString()}
                               </p>
                               <Badge className="bg-[#E8F5EE] text-[#1B5E45] text-xs">M-PESA</Badge>
@@ -673,7 +673,7 @@ export default function TenantPaymentsPage() {
                 <Reveal delay={0.1}>
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
-                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
                         <FileText className="w-5 h-5 text-[#1B5E45]" />
                         Payment Summary
                       </CardTitle>
@@ -687,20 +687,20 @@ export default function TenantPaymentsPage() {
                         ].map((row) => (
                           <div key={row.label} className="flex items-center justify-between text-sm">
                             <span className="text-[#6B7280]">{row.label}</span>
-                            <span className="font-medium text-[#1A1A1A]">{row.value}</span>
+                            <span className="text-[#1A1A1A] font-money">{row.value}</span>
                           </div>
                         ))}
                       </div>
                       <Separator className="bg-[#E8F5EE]" />
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-bold text-[#1A1A1A]">Total</span>
-                        <span className="text-lg font-bold text-[#1B5E45]">
+                        <span className="text-sm text-[#1A1A1A]">Total</span>
+                        <span className="text-lg text-[#1B5E45] font-money">
                           KSh {amount.toLocaleString()}
                         </span>
                       </div>
                       <Button
                         onClick={handlePayment}
-                        className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
+                        className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white "
                       >
                         Confirm & Pay
                         <ArrowRight className="w-4 h-4 ml-2" />
@@ -717,7 +717,7 @@ export default function TenantPaymentsPage() {
                 <Reveal delay={0.15}>
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
-                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
                         <ShieldCheck className="w-5 h-5 text-[#1B5E45]" />
                         Security & Trust
                       </CardTitle>
@@ -733,7 +733,7 @@ export default function TenantPaymentsPage() {
                             <item.icon className="w-4 h-4 text-[#1B5E45]" />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-[#1A1A1A]">{item.title}</p>
+                            <p className="text-sm text-[#1A1A1A]">{item.title}</p>
                             <p className="text-xs text-[#6B7280]">{item.desc}</p>
                           </div>
                         </div>
@@ -746,7 +746,7 @@ export default function TenantPaymentsPage() {
                 <Reveal delay={0.2}>
                   <Card className="border-[#E8F5EE] bg-[#E8F5EE]">
                     <CardHeader>
-                      <CardTitle className="text-lg font-bold text-[#1A1A1A] flex items-center gap-2">
+                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
                         <Calendar className="w-5 h-5 text-[#1B5E45]" />
                         Billing Schedule
                       </CardTitle>
@@ -760,7 +760,7 @@ export default function TenantPaymentsPage() {
                       ].map((row) => (
                         <div key={row.label} className="flex items-center justify-between text-sm">
                           <span className="text-[#6B7280]">{row.label}</span>
-                          <span className="font-semibold text-[#1A1A1A]">{row.value}</span>
+                          <span className=" text-[#1A1A1A]">{row.value}</span>
                         </div>
                       ))}
                     </CardContent>

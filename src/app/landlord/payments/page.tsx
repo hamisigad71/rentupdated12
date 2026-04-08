@@ -63,22 +63,22 @@ export default function PaymentsPage() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1">
-            <Badge variant="outline" className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs font-bold  px-3 py-1 mb-2">
+            <Badge variant="outline" className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs  px-3 py-1 mb-2">
               Financial Operations
             </Badge>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight leading-none uppercase">
+            <h1 className="text-xl md:text-2xl tracking-tight leading-none uppercase">
               Payments <span className="text-primary ">& Ledger</span>
             </h1>
-            <p className="text-sm font-bold text-muted-foreground/30 uppercase tracking-tight">
+            <p className="text-sm text-muted-foreground/30 uppercase tracking-tight">
               Enterprise-grade transaction & reconciliation center
             </p>
           </div>
           
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="h-12 rounded-xl border-foreground/10 font-bold uppercase text-[9px]  group">
+            <Button variant="outline" className="h-12 rounded-xl border-foreground/10  uppercase text-[9px] group">
               <Download className="mr-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" /> Export Ledger
             </Button>
-            <Button className="h-12 rounded-xl px-6 bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all font-bold uppercase text-xs ">
+            <Button className="h-12 rounded-xl px-6 bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all uppercase text-xs ">
               <Plus className="h-4 w-4 mr-2" /> Post Transaction
             </Button>
           </div>
@@ -108,12 +108,12 @@ export default function PaymentsPage() {
                   )}>
                     <stat.icon className="h-7 w-7" />
                   </div>
-                  <Badge variant="ghost" className="text-[8px] font-bold uppercase  text-muted-foreground/30">Live Update</Badge>
+                  <Badge variant="ghost" className="text-[8px]  uppercase text-muted-foreground/30">Live Update</Badge>
                </div>
-               <p className="text-xl font-bold tracking-tight mb-1 uppercase leading-none">{stat.val}</p>
+               <p className="text-xl tracking-tight mb-1 uppercase leading-none font-money">{stat.val}</p>
                <div className="flex flex-col">
-                  <span className="text-[11px] font-bold uppercase  text-muted-foreground/60">{stat.label}</span>
-                  <span className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">{stat.sub}</span>
+                  <span className="text-[11px]  uppercase text-muted-foreground/60">{stat.label}</span>
+                  <span className="text-[9px] text-muted-foreground/30 uppercase tracking-[0.2em]">{stat.sub}</span>
                </div>
              </motion.div>
            ))}
@@ -127,17 +127,17 @@ export default function PaymentsPage() {
                 placeholder="Search Reference, Resident or Asset ID..." 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-16 pr-6 py-8 h-12 rounded-2xl text-sm font-bold border-foreground/5 bg-foreground/[0.02] w-full group-focus-within/search:border-primary/20 shadow-inner"
+                className="pl-16 pr-6 py-8 h-12 rounded-2xl text-sm border-foreground/5 bg-foreground/[0.02] w-full group-focus-within/search:border-primary/20 shadow-inner"
               />
            </div>
            
            <div className="flex items-center gap-4 w-full lg:w-auto">
               <div className="flex h-12 items-center gap-2 px-6 rounded-2xl bg-foreground/[0.02] border border-foreground/5">
                  <Calendar className="h-4 w-4 text-muted-foreground/40" />
-                 <span className="text-xs font-bold uppercase  text-muted-foreground/60">Cycle:</span>
-                 <span className="text-xs font-bold text-primary">March 2024</span>
+                 <span className="text-xs  uppercase text-muted-foreground/60">Cycle:</span>
+                 <span className="text-xs text-primary">March 2024</span>
               </div>
-              <Button variant="outline" className="h-12 px-8 rounded-2xl border-foreground/10 gap-3 font-bold uppercase text-xs tracking-[0.2em] hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all shadow-lg">
+              <Button variant="outline" className="h-12 px-8 rounded-2xl border-foreground/10 gap-3 uppercase text-xs tracking-[0.2em] hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all shadow-lg">
                  <Filter className="h-4 w-4" /> Comprehensive Audit
               </Button>
            </div>
@@ -149,11 +149,11 @@ export default function PaymentsPage() {
               <Table>
                 <TableHeader className="bg-foreground/[0.03]">
                   <TableRow className="border-b border-foreground/5">
-                    <TableHead className="px-10 py-8 text-[11px] font-bold uppercase  text-muted-foreground/40">System Hash</TableHead>
-                    <TableHead className="px-8 py-8 text-[11px] font-bold uppercase  text-muted-foreground/40">Entity / Node</TableHead>
-                    <TableHead className="px-8 py-8 text-[11px] font-bold uppercase  text-muted-foreground/40">Temporal Stamp</TableHead>
-                    <TableHead className="px-8 py-8 text-[11px] font-bold uppercase  text-muted-foreground/40 text-right">Magnitude</TableHead>
-                    <TableHead className="px-8 py-8 text-[11px] font-bold uppercase  text-muted-foreground/40 text-center">Protocol Integrity</TableHead>
+                    <TableHead className="px-10 py-8 text-[11px]  uppercase text-muted-foreground/40">System Hash</TableHead>
+                    <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40">Entity / Node</TableHead>
+                    <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40">Temporal Stamp</TableHead>
+                    <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40 text-right">Magnitude</TableHead>
+                    <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40 text-center">Protocol Integrity</TableHead>
                     <TableHead className="px-10 py-8 text-right"></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -172,29 +172,29 @@ export default function PaymentsPage() {
                               <div className="h-10 w-10 rounded-xl bg-foreground/5 border border-foreground/5 flex items-center justify-center text-muted-foreground/20 group-hover:text-primary/40 group-hover:border-primary/20 transition-all">
                                  <FileText className="h-5 w-5" />
                               </div>
-                              <span className="text-xs font-bold font-mono text-primary lowercase ">{pay.id}</span>
+                              <span className="text-xs font-mono text-primary lowercase ">{pay.id}</span>
                            </div>
                         </TableCell>
                         <TableCell className="px-8 py-8">
                            <div className="flex flex-col">
-                              <span className="text-sm font-bold uppercase tracking-tight group-hover:text-primary transition-colors leading-none mb-1">{pay.tenantName}</span>
-                              <span className="text-xs font-bold text-muted-foreground/40 uppercase  leading-none">{pay.unitId} • {pay.month}</span>
+                              <span className="text-sm uppercase tracking-tight group-hover:text-primary transition-colors leading-none mb-1">{pay.tenantName}</span>
+                              <span className="text-xs  text-muted-foreground/40 uppercase leading-none">{pay.unitId} • {pay.month}</span>
                            </div>
                         </TableCell>
                         <TableCell className="px-8 py-8">
-                           <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground/40 uppercase ">
+                           <div className="flex items-center gap-2 text-[11px] text-muted-foreground/40 uppercase ">
                               <Calendar className="h-3.5 w-3.5" /> {pay.date}
                            </div>
                         </TableCell>
                         <TableCell className="px-8 py-8 text-right">
-                           <span className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                           <span className="text-xl tracking-tight text-foreground group-hover:text-primary transition-colors font-money">
                               KSh {pay.amount.toLocaleString()}
                            </span>
                         </TableCell>
                         <TableCell className="px-8 py-8">
                            <div className="flex justify-center">
                               <Badge className={cn(
-                                "rounded-2xl h-8 px-5 border uppercase text-[9px] font-bold tracking-[0.2em] transition-all",
+                                "rounded-2xl h-8 px-5 border uppercase text-[9px]  tracking-[0.2em] transition-all",
                                 pay.status === 'completed' 
                                   ? "bg-primary/10 border-primary/20 text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)]" 
                                   : pay.status === 'pending'
@@ -219,13 +219,13 @@ export default function PaymentsPage() {
            </div>
            
            <div className="p-8 bg-foreground/[0.02] border-t border-foreground/5 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-4 text-xs font-bold uppercase  text-muted-foreground/40">
+              <div className="flex items-center gap-4 text-xs  uppercase text-muted-foreground/40">
                  Showing {filteredPayments.length} of {mockPayments.length} Recorded Sequences
               </div>
               <div className="flex items-center gap-2">
                  {[1, 2, 3].map(p => (
                    <button key={p} className={cn(
-                     "h-10 w-10 rounded-xl border font-bold text-xs transition-all",
+                     "h-10 w-10 rounded-xl border  text-xs transition-all",
                      p === 1 ? "bg-primary border-primary text-white shadow-lg shadow-primary/20" : "bg-background border-foreground/5 text-muted-foreground hover:border-primary/20"
                    )}>{p}</button>
                  ))}

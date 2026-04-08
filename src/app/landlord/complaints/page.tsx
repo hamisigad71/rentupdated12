@@ -67,13 +67,13 @@ export default function ComplaintsPage() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1">
-            <Badge variant="outline" className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs font-bold  px-3 py-1 mb-2">
+            <Badge variant="outline" className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs px-3 py-1 mb-2">
               Facility Integrity
             </Badge>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight leading-none uppercase">
+            <h1 className="text-xl md:text-2xl tracking-tight leading-none uppercase">
               Complaints <span className="text-primary ">& Support</span>
             </h1>
-            <p className="text-sm font-bold text-muted-foreground/30 uppercase tracking-tight">
+            <p className="text-sm text-muted-foreground/30 uppercase tracking-tight">
               Maintenance synchronization & resolution node
             </p>
           </div>
@@ -81,9 +81,9 @@ export default function ComplaintsPage() {
           <div className="flex items-center gap-3">
              <div className="flex items-center gap-2 px-6 h-12 rounded-xl bg-destructive/5 border border-destructive/10">
                 <ShieldAlert className="h-4 w-4 text-destructive animate-pulse" />
-                <span className="text-xs font-bold uppercase text-destructive ">{stats.activeComplaints} High Risk Tickets</span>
+                <span className="text-xs uppercase text-destructive ">{stats.activeComplaints} High Risk Tickets</span>
              </div>
-             <Button className="h-12 rounded-xl px-6 bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all font-bold uppercase text-xs ">
+             <Button className="h-12 rounded-xl px-6 bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all uppercase text-xs ">
                 <Plus className="h-4 w-4 mr-2" /> Log Incident
              </Button>
           </div>
@@ -97,7 +97,7 @@ export default function ComplaintsPage() {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={cn(
-                    "px-8 py-3 rounded-[1.4rem] text-xs font-bold uppercase  transition-all whitespace-nowrap",
+                    "px-8 py-3 rounded-[1.4rem] text-xs uppercase  transition-all whitespace-nowrap",
                     activeTab === tab 
                       ? "bg-background shadow-xl text-primary border border-foreground/5" 
                       : "text-muted-foreground/40 hover:text-muted-foreground"
@@ -114,7 +114,7 @@ export default function ComplaintsPage() {
                 placeholder="Search Incident, Tenant or Asset..." 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-14 pr-6 py-4 h-14 rounded-2xl text-xs font-bold border-foreground/5 bg-foreground/[0.02] w-full group-focus-within/search:border-primary/20"
+                className="pl-14 pr-6 py-4 h-14 rounded-2xl text-xs border-foreground/5 bg-foreground/[0.02] w-full group-focus-within/search:border-primary/20"
               />
            </div>
            
@@ -141,12 +141,12 @@ export default function ComplaintsPage() {
                        <div className="h-14 w-1 flex rounded-full bg-primary/20 group-hover:bg-primary transition-colors" />
                        <div className="flex-1 px-4">
                           <div className="flex items-center gap-2 mb-1">
-                             <Badge variant="outline" className={cn("text-[8px] font-bold uppercase h-5 px-2 border rounded-lg", getPriorityColor(comp.priority))}>
+                             <Badge variant="outline" className={cn("text-[8px] uppercase h-5 px-2 border rounded-lg", getPriorityColor(comp.priority))}>
                                 {comp.priority} Risk
                              </Badge>
-                             <span className="text-[9px] font-bold text-muted-foreground/30 uppercase ">{comp.createdDate}</span>
+                             <span className="text-[9px] text-muted-foreground/30 uppercase ">{comp.createdDate}</span>
                           </div>
-                          <h3 className="text-sm font-bold tracking-tight uppercase group-hover:text-primary transition-colors leading-tight truncate">
+                          <h3 className="text-sm tracking-tight uppercase group-hover:text-primary transition-colors leading-tight truncate">
                              {comp.title}
                           </h3>
                        </div>
@@ -160,20 +160,20 @@ export default function ComplaintsPage() {
                        </Badge>
                     </div>
 
-                    <p className="text-[11px] font-bold text-muted-foreground/60 leading-relaxed uppercase tracking-tight line-clamp-2">
+                    <p className="text-[11px] text-muted-foreground/60 leading-relaxed uppercase tracking-tight line-clamp-2">
                        {comp.description}
                     </p>
 
                     <div className="grid grid-cols-2 gap-3 py-4 border-y border-foreground/5">
                        <div className="space-y-1">
-                          <p className="text-[8px] font-bold uppercase  text-muted-foreground/30">Resident Entity</p>
-                          <div className="flex items-center gap-2 text-xs font-bold uppercase truncate">
+                          <p className="text-[8px] uppercase text-muted-foreground/30">Resident Entity</p>
+                          <div className="flex items-center gap-2 text-xs uppercase truncate">
                              <User className="h-3 w-3 text-primary/40" /> {comp.tenantName}
                           </div>
                        </div>
                        <div className="space-y-1">
-                          <p className="text-[8px] font-bold uppercase  text-muted-foreground/30">Asset Node</p>
-                          <div className="flex items-center gap-2 text-xs font-bold uppercase truncate">
+                          <p className="text-[8px] uppercase text-muted-foreground/30">Asset Node</p>
+                          <div className="flex items-center gap-2 text-xs uppercase truncate">
                              <Home className="h-3 w-3 text-primary/40" /> {comp.unitId}
                           </div>
                        </div>
@@ -182,7 +182,7 @@ export default function ComplaintsPage() {
                     <div className="flex items-center gap-3">
                        <div className="flex-1 h-12 px-6 rounded-xl bg-foreground/[0.02] border border-foreground/5 flex items-center gap-3">
                           <Wrench className="h-3.5 w-3.5 text-muted-foreground/30" />
-                          <span className="text-[9px] font-bold uppercase  text-muted-foreground/40">{comp.category}</span>
+                          <span className="text-[9px] uppercase text-muted-foreground/40">{comp.category}</span>
                        </div>
                        <Button variant="outline" size="icon" className="h-12 w-12 rounded-xl border-foreground/5 hover:bg-primary/5 hover:text-primary hover:border-primary/20 shadow-xl transition-all">
                           <MessageSquare className="h-4 w-4" />
@@ -191,11 +191,11 @@ export default function ComplaintsPage() {
 
                     <div className="flex gap-3 mt-2">
                        {comp.status !== 'resolved' ? (
-                         <Button className="flex-1 h-14 rounded-2xl bg-[#0F0F0F] text-white shadow-2xl hover:bg-primary transition-all font-bold uppercase text-xs tracking-[0.2em] group">
+                         <Button className="flex-1 h-14 rounded-2xl bg-[#0F0F0F] text-white shadow-2xl hover:bg-primary transition-all uppercase text-xs tracking-[0.2em] group">
                             Mark Resolved <CheckCircle2 className="ml-2 h-4 w-4 group-hover:scale-125 transition-transform" />
                          </Button>
                        ) : (
-                         <Button variant="outline" className="flex-1 h-14 rounded-2xl border-foreground/5 font-bold uppercase text-xs tracking-[0.2em]">
+                         <Button variant="outline" className="flex-1 h-14 rounded-2xl border-foreground/5 uppercase text-xs tracking-[0.2em]">
                             Issue Closed <ChevronRight className="ml-2 h-4 w-4" />
                          </Button>
                        )}
@@ -217,8 +217,8 @@ export default function ComplaintsPage() {
                 <ShieldAlert className="h-10 w-10" />
              </div>
              <div className="space-y-2">
-               <p className="text-xl font-bold uppercase leading-none tracking-tight">Post New Incident</p>
-               <p className="text-xs font-bold text-muted-foreground/40 uppercase ">Initialization Protocol Required</p>
+               <p className="text-xl uppercase leading-none tracking-tight">Post New Incident</p>
+               <p className="text-xs text-muted-foreground/40 uppercase ">Initialization Protocol Required</p>
              </div>
            </motion.div>
         </div>

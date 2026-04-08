@@ -96,7 +96,7 @@ function ProfileField({
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="block text-xs font-semibold uppercase tracking-widest text-muted-foreground px-1">
+      <label className="block text-xs uppercase tracking-widest text-muted-foreground px-1">
         {label}
       </label>
       <div className="relative group">
@@ -110,10 +110,10 @@ function ProfileField({
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-border bg-[#FAFAF8] text-sm font-medium outline-none focus:border-[#1B5E45] focus:ring-2 focus:ring-[#1B5E45]/10 transition-all"
+            className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-border bg-[#FAFAF8] text-sm outline-none focus:border-[#1B5E45] focus:ring-2 focus:ring-[#1B5E45]/10 transition-all"
           />
         ) : (
-          <div className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-[#FAFAF8] text-sm font-medium text-foreground">
+          <div className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-[#FAFAF8] text-sm text-foreground">
             {value || <span className="text-muted-foreground/50">Not set</span>}
           </div>
         )}
@@ -139,12 +139,13 @@ function StatRow({
       <span className="text-sm text-muted-foreground">{label}</span>
       <span
         className={cn(
-          "text-sm font-semibold",
+          "text-sm",
           danger
             ? "text-red-600"
             : success
               ? "text-[#1B5E45]"
               : "text-foreground",
+          value.includes('KSh') && "font-money"
         )}
       >
         {value}
@@ -239,7 +240,7 @@ export default function TenantProfilePage() {
                 <ChevronRight className="h-3.5 w-3.5" />
                 <span className="text-muted-foreground">Dashboard</span>
                 <ChevronRight className="h-3.5 w-3.5" />
-                <span className="font-medium text-foreground">My Profile</span>
+                <span className=" text-foreground">My Profile</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -249,7 +250,7 @@ export default function TenantProfilePage() {
                       initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 10 }}
-                      className="flex items-center gap-1.5 text-xs font-medium text-[#1B5E45] bg-[#E8F5EE] px-3 py-1.5 rounded-full"
+                      className="flex items-center gap-1.5 text-xs text-[#1B5E45] bg-[#E8F5EE] px-3 py-1.5 rounded-full"
                     >
                       <CheckCircle className="h-3.5 w-3.5" />
                       Profile updated
@@ -263,7 +264,7 @@ export default function TenantProfilePage() {
                       variant="outline"
                       size="sm"
                       onClick={handleDiscard}
-                      className="h-9 px-4 rounded-xl border-border text-sm font-medium"
+                      className="h-9 px-4 rounded-xl border-border text-sm "
                     >
                       <X className="h-3.5 w-3.5 mr-1.5" />
                       Discard
@@ -271,7 +272,7 @@ export default function TenantProfilePage() {
                     <Button
                       size="sm"
                       onClick={handleSave}
-                      className="h-9 px-4 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm font-semibold"
+                      className="h-9 px-4 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm "
                     >
                       <Save className="h-3.5 w-3.5 mr-1.5" />
                       Save Changes
@@ -281,7 +282,7 @@ export default function TenantProfilePage() {
                   <Button
                     size="sm"
                     onClick={() => setIsEditing(true)}
-                    className="h-9 px-4 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm font-semibold"
+                    className="h-9 px-4 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm "
                   >
                     <Edit3 className="h-3.5 w-3.5 mr-1.5" />
                     Edit Profile
@@ -325,7 +326,7 @@ export default function TenantProfilePage() {
                   {/* Identity */}
                   <div className="flex-1 text-center md:text-left">
                     <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
-                      <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500/10 text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full">
+                      <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 hover:bg-emerald-500/10 text-[10px] uppercase tracking-wide px-2.5 py-1 rounded-full">
                         Verified Resident
                       </Badge>
                       <div className="flex items-center gap-0.5">
@@ -337,7 +338,7 @@ export default function TenantProfilePage() {
                         ))}
                       </div>
                     </div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+                    <h1 className="text-2xl md:text-3xl text-foreground tracking-tight">
                       {formData.name}
                     </h1>
                     <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
@@ -358,7 +359,7 @@ export default function TenantProfilePage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="h-9 px-4 rounded-xl border-border text-foreground bg-secondary/50 hover:bg-secondary text-sm font-medium"
+                      className="h-9 px-4 rounded-xl border-border text-foreground bg-secondary/50 hover:bg-secondary text-sm "
                     >
                       <Download className="h-4 w-4 mr-1.5" />
                       Export Profile
@@ -377,14 +378,14 @@ export default function TenantProfilePage() {
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-4">
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-semibold flex items-center gap-2">
+                        <CardTitle className="text-base flex items-center gap-2">
                           <User className="h-4 w-4 text-[#1B5E45]" />
                           Personal Information
                         </CardTitle>
                         {!isEditing && (
                           <button
                             onClick={() => setIsEditing(true)}
-                            className="text-xs font-medium text-[#1B5E45] hover:underline flex items-center gap-1"
+                            className="text-xs text-[#1B5E45] flex items-center gap-0.5"
                           >
                             <Edit3 className="h-3.5 w-3.5" /> Edit
                           </button>
@@ -423,14 +424,14 @@ export default function TenantProfilePage() {
                           placeholder="+254 7XX XXX XXX"
                         />
                         <div className="space-y-1.5">
-                          <label className="block text-xs font-semibold uppercase tracking-widest text-muted-foreground px-1">
+                          <label className="block text-xs uppercase tracking-widest text-muted-foreground px-1">
                             Unit
                           </label>
                           <div className="relative">
-                            <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none text-muted-foreground/50">
+                            <h4 className="text-xs  text-foreground uppercase flex items-center gap-3">
                               <Building2 className="h-4 w-4" />
-                            </div>
-                            <div className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-[#F4F4F0] text-sm font-medium text-muted-foreground select-none">
+                            </h4>
+                            <div className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-[#F4F4F0] text-sm text-muted-foreground select-none">
                               {currentTenant?.unitId || "N/A"}
                             </div>
                           </div>
@@ -457,7 +458,7 @@ export default function TenantProfilePage() {
                               <Button
                                 size="sm"
                                 onClick={handleSave}
-                                className="rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white h-9 px-5 text-sm font-semibold"
+                                className="rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white h-9 px-5 text-sm "
                               >
                                 <Save className="h-3.5 w-3.5 mr-1.5" />
                                 Save Changes
@@ -474,7 +475,7 @@ export default function TenantProfilePage() {
                 <Reveal delay={0.15}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-4">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <AlertCircle className="h-4 w-4 text-amber-500" />
                         Emergency Contact
                       </CardTitle>
@@ -512,7 +513,7 @@ export default function TenantProfilePage() {
                 <Reveal delay={0.2}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-4">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <FileText className="h-4 w-4 text-[#1B5E45]" />
                         Lease Details
                       </CardTitle>
@@ -544,10 +545,10 @@ export default function TenantProfilePage() {
                               <item.icon className="h-4 w-4 text-[#1B5E45]" />
                             </div>
                             <div>
-                              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+                              <p className="text-[10px] uppercase tracking-wider text-muted-foreground/70">
                                 {item.label}
                               </p>
-                              <p className="text-sm font-semibold text-foreground mt-0.5">
+                              <p className="text-sm text-foreground mt-0.5">
                                 {item.value}
                               </p>
                             </div>
@@ -556,10 +557,10 @@ export default function TenantProfilePage() {
                       </div>
                       <div className="mt-4">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs text-muted-foreground font-medium">
+                          <span className="text-xs text-muted-foreground ">
                             Lease progress
                           </span>
-                          <span className="text-xs font-semibold text-[#1B5E45]">
+                          <span className="text-xs text-[#1B5E45]">
                             72% completed
                           </span>
                         </div>
@@ -584,7 +585,7 @@ export default function TenantProfilePage() {
                 <Reveal delay={0.25}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-4">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <Bell className="h-4 w-4 text-[#1B5E45]" />
                         Notification Preferences
                       </CardTitle>
@@ -598,7 +599,7 @@ export default function TenantProfilePage() {
                             onClick={() => togglePreference(pref.id)}
                           >
                             <div>
-                              <p className="text-sm font-medium text-foreground">
+                              <p className="text-sm text-foreground">
                                 {pref.label}
                               </p>
                               <p className="text-xs text-muted-foreground mt-0.5">
@@ -655,19 +656,19 @@ export default function TenantProfilePage() {
                             />
                           </div>
                         </div>
-                        <p className="text-base font-bold text-foreground">
+                        <p className="text-base text-foreground">
                           {formData.name}
                         </p>
                         <p className="text-xs text-muted-foreground mt-0.5">
                           {formData.email}
                         </p>
-                        <Badge className="mt-2 bg-[#E8F5EE] text-[#1B5E45] border-0 hover:bg-[#E8F5EE] text-[10px] font-semibold uppercase tracking-wide px-2.5 rounded-full">
+                        <Badge className="mt-2 bg-[#E8F5EE] text-[#1B5E45] border-0 hover:bg-[#E8F5EE] text-[10px] uppercase tracking-wide px-2.5 rounded-full">
                           Verified Resident
                         </Badge>
                         <Button
                           variant="outline"
                           size="sm"
-                          className="mt-4 w-full rounded-xl h-9 border-border text-xs font-medium hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
+                          className="mt-4 w-full rounded-xl h-9 border-border text-xs hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
                           onClick={() => setShowAvatarModal(true)}
                         >
                           <Upload className="h-3.5 w-3.5 mr-1.5" />
@@ -682,7 +683,7 @@ export default function TenantProfilePage() {
                 <Reveal delay={0.15}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-3">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <Activity className="h-4 w-4 text-[#1B5E45]" />
                         Account Summary
                       </CardTitle>
@@ -715,7 +716,7 @@ export default function TenantProfilePage() {
                 <Reveal delay={0.2}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-3">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <Lock className="h-4 w-4 text-[#1B5E45]" />
                         Security
                       </CardTitle>
@@ -749,7 +750,7 @@ export default function TenantProfilePage() {
                             <item.icon className="h-4 w-4 text-[#1B5E45]" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-foreground leading-tight">
+                            <p className="text-sm text-foreground leading-tight">
                               {item.label}
                             </p>
                             <p className="text-xs text-muted-foreground">
@@ -762,7 +763,7 @@ export default function TenantProfilePage() {
 
                       <div className="flex items-center gap-2 mt-1 p-3 rounded-xl bg-[#E8F5EE] border border-[#1B5E45]/10">
                         <div className="h-2 w-2 rounded-full bg-[#3DBE7A] animate-pulse" />
-                        <span className="text-xs font-medium text-[#1B5E45]">
+                        <span className="text-xs text-[#1B5E45]">
                           All systems secure · AES-256 encrypted
                         </span>
                       </div>
@@ -774,14 +775,14 @@ export default function TenantProfilePage() {
                 <Reveal delay={0.25}>
                   <Card className="rounded-2xl border-border shadow-sm bg-[#FAFAF8]">
                     <CardContent className="px-6 py-5">
-                      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
                         Account Actions
                       </p>
                       <div className="space-y-2">
                         <Button
                           variant="outline"
                           size="sm"
-                          className="w-full rounded-xl h-9 border-border text-sm font-medium hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
+                          className="w-full rounded-xl h-9 border-border text-sm hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
                         >
                           <Download className="h-3.5 w-3.5 mr-2" />
                           Export My Data
@@ -789,7 +790,7 @@ export default function TenantProfilePage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="w-full rounded-xl h-9 border-red-200 text-sm font-medium text-red-500 hover:bg-red-50 hover:border-red-300"
+                          className="w-full rounded-xl h-9 border-red-200 text-sm text-red-500 hover:bg-red-50 hover:border-red-300"
                         >
                           <X className="h-3.5 w-3.5 mr-2" />
                           Request Account Closure
@@ -812,7 +813,7 @@ export default function TenantProfilePage() {
           <div className="p-6 space-y-6">
             {/* Header */}
             <div>
-              <h3 className="text-lg font-bold text-foreground tracking-tight">
+              <h3 className="text-lg text-foreground tracking-tight">
                 Update Profile Photo
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
@@ -839,7 +840,7 @@ export default function TenantProfilePage() {
                   <Upload className="h-5 w-5 text-[#1B5E45] group-hover:text-white transition-colors" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-semibold text-foreground">
+                  <p className="text-sm text-foreground">
                     Click to upload photo
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5">

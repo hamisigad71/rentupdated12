@@ -215,7 +215,7 @@ function DocumentPreviewModal({
                 <doc.icon className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-[#1A1A1A]">{doc.name}</h3>
+                <h3 className="text-sm text-[#1A1A1A]">{doc.name}</h3>
                 <p className="text-xs text-[#6B7280]">{doc.type} • {doc.size}</p>
               </div>
             </div>
@@ -232,10 +232,10 @@ function DocumentPreviewModal({
           {/* Content */}
           <div className="p-6 max-h-[70vh] overflow-y-auto space-y-6">
             {/* Preview Placeholder */}
-            <div className="rounded-xl border-2 border-dashed border-[#E8F5EE] bg-[#FAFAF8] aspect-[3/4] flex items-center justify-center">
+            <div className="rounded-xl border-2 border-dashed border-[#E8F5EE] bg-[#FAFAF8] aspect-3/4 flex items-center justify-center">
               <div className="text-center space-y-3">
                 <doc.icon className="w-16 h-16 mx-auto" style={{ color: doc.color }} strokeWidth={1} />
-                <p className="text-sm font-semibold text-[#4B5563]">{doc.name}</p>
+                <p className="text-sm text-[#4B5563]">{doc.name}</p>
                 <p className="text-xs text-[#6B7280]">{doc.pages} {doc.pages === 1 ? "page" : "pages"}</p>
               </div>
             </div>
@@ -243,7 +243,7 @@ function DocumentPreviewModal({
             {/* Document Details */}
             <Card className="border-[#E8F5EE] bg-white">
               <CardHeader>
-                <CardTitle className="text-sm font-semibold text-[#1A1A1A]">
+                <CardTitle className="text-sm text-[#1A1A1A]">
                   Document Details
                 </CardTitle>
               </CardHeader>
@@ -257,8 +257,8 @@ function DocumentPreviewModal({
                   { label: "Document ID", value: `DOC-${doc.id.padStart(4, "0")}` },
                 ].map(({ label, value }) => (
                   <div key={label} className="flex items-center justify-between text-sm">
-                    <span className="text-[#6B7280] font-medium">{label}</span>
-                    <span className="font-semibold text-[#1A1A1A] text-right max-w-[200px] truncate">
+                    <span className="text-[#6B7280] ">{label}</span>
+                    <span className="text-[#1A1A1A] text-right max-w-50 truncate">
                       {value}
                     </span>
                   </div>
@@ -273,7 +273,7 @@ function DocumentPreviewModal({
                   <ShieldCheck className="w-5 h-5 text-[#1B5E45]" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-[#1B5E45]">Verified Document</p>
+                  <p className="text-sm text-[#1B5E45]">Verified Document</p>
                   <p className="text-xs text-[#1B5E45]/70">Authenticated and secure</p>
                 </div>
               </div>
@@ -282,11 +282,11 @@ function DocumentPreviewModal({
 
           {/* Actions */}
           <div className="px-6 py-4 border-t border-[#E8F5EE] bg-[#FAFAF8] flex gap-3">
-            <Button className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold">
+            <Button className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white">
               <Download className="w-4 h-4 mr-2" />
               Download
             </Button>
-            <Button variant="outline" className="flex-1 border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold">
+            <Button variant="outline" className="flex-1 border-[#E8F5EE] hover:bg-[#E8F5EE]">
               <Share2 className="w-4 h-4 mr-2" />
               Share
             </Button>
@@ -336,7 +336,7 @@ export default function TenantDocumentsPage() {
                 <HardDrive className="w-3 h-3 mr-1" />
                 Document Vault
               </Badge>
-              <h1 className="text-3xl font-bold text-[#1A1A1A]">
+              <h1 className="text-3xl text-[#1A1A1A]">
                 My Documents
               </h1>
               <p className="text-sm text-[#6B7280]">
@@ -347,9 +347,9 @@ export default function TenantDocumentsPage() {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 h-11 px-4 rounded-xl bg-white border border-[#E8F5EE]">
                 <Lock className="w-4 h-4 text-[#1B5E45]" />
-                <span className="text-xs font-semibold text-[#1B5E45]">AES-256 Encrypted</span>
+                <span className="text-xs text-[#1B5E45]">AES-256 Encrypted</span>
               </div>
-              <Button className="bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold">
+              <Button className="bg-[#1B5E45] hover:bg-[#246B4F] text-white">
                 <Upload className="w-4 h-4 mr-2" />
                 Upload
               </Button>
@@ -404,8 +404,8 @@ export default function TenantDocumentsPage() {
                       </div>
                     </div>
                     <div className="space-y-0.5 sm:space-y-1">
-                      <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A] truncate">{stat.value}</h3>
-                      <p className="text-[10px] sm:text-xs font-medium text-[#6B7280] truncate">{stat.label}</p>
+                      <h3 className="text-lg sm:text-2xl text-[#1A1A1A] truncate">{stat.value}</h3>
+                      <p className="text-[10px] sm:text-xs text-[#6B7280] truncate">{stat.label}</p>
                       <p className="text-[10px] sm:text-xs text-[#6B7280]/60 truncate">{stat.sublabel}</p>
                     </div>
                   </CardContent>
@@ -446,7 +446,7 @@ export default function TenantDocumentsPage() {
                         key={cat}
                         onClick={() => setActiveCategory(cat)}
                         className={cn(
-                          "h-9 px-4 rounded-lg text-xs font-semibold transition-all border",
+                          "h-9 px-4 rounded-lg text-xs transition-all border",
                           activeCategory === cat
                             ? "bg-[#1B5E45] text-white border-[#1B5E45]"
                             : "border-[#E8F5EE] bg-white text-[#6B7280] hover:border-[#1B5E45]/30"
@@ -492,11 +492,11 @@ export default function TenantDocumentsPage() {
 
               {/* Results Info */}
               <div className="px-6 py-3 border-b border-[#E8F5EE]/50 flex items-center justify-between bg-[#FAFAF8]/50">
-                <p className="text-xs font-medium text-[#6B7280]">
-                  Showing <span className="font-bold text-[#1A1A1A]">{filtered.length}</span> of{" "}
-                  <span className="font-bold text-[#1A1A1A]">{MOCK_DOCS.length}</span> documents
+                <p className="text-xs text-[#6B7280]">
+                  Showing <span className="text-[#1A1A1A]">{filtered.length}</span> of{" "}
+                  <span className="text-[#1A1A1A]">{MOCK_DOCS.length}</span> documents
                 </p>
-                <button className="flex items-center gap-1.5 text-xs font-semibold text-[#6B7280] hover:text-[#1B5E45] transition-colors">
+                <button className="flex items-center gap-1.5 text-xs text-[#6B7280] hover:text-[#1B5E45] transition-colors">
                   <RefreshCw className="h-3 w-3" />
                   Refresh
                 </button>
@@ -532,7 +532,7 @@ export default function TenantDocumentsPage() {
 
                             {/* Info */}
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-semibold text-[#1A1A1A] truncate group-hover:text-[#1B5E45] transition-colors">
+                              <p className="text-sm text-[#1A1A1A] truncate group-hover:text-[#1B5E45] transition-colors">
                                 {doc.name}
                               </p>
                               <div className="flex items-center gap-2 mt-1 text-xs text-[#6B7280]">
@@ -556,7 +556,7 @@ export default function TenantDocumentsPage() {
                             </Badge>
 
                             {/* Size */}
-                            <span className="hidden md:block text-sm font-medium text-[#6B7280] w-20 text-right">
+                            <span className="hidden md:block text-sm text-[#6B7280] w-20 text-right">
                               {doc.size}
                             </span>
 
@@ -628,7 +628,7 @@ export default function TenantDocumentsPage() {
                             >
                               <doc.icon className="w-6 h-6" />
                             </div>
-                            <p className="font-semibold text-sm text-[#1A1A1A] mb-2 line-clamp-2 group-hover:text-[#1B5E45] transition-colors">
+                            <p className="text-sm text-[#1A1A1A] mb-2 line-clamp-2 group-hover:text-[#1B5E45] transition-colors">
                               {doc.name}
                             </p>
                             <p className="text-xs text-[#6B7280] mb-3">{doc.date}</p>
@@ -642,7 +642,7 @@ export default function TenantDocumentsPage() {
                               <span className="text-xs text-[#6B7280]">{doc.size}</span>
                             </div>
                             {doc.status === "Verified" && (
-                              <div className="flex items-center gap-1.5 mt-3 text-xs font-semibold text-[#1B5E45]">
+                              <div className="flex items-center gap-1.5 mt-3 text-xs text-[#1B5E45]">
                                 <CheckCircle2 className="w-3 h-3" />
                                 Verified
                               </div>
@@ -671,7 +671,7 @@ export default function TenantDocumentsPage() {
                         <Clock className="w-4 h-4 text-[#1B5E45]" />
                       </div>
                       <div>
-                        <CardTitle className="text-sm font-bold text-[#1A1A1A]">
+                        <CardTitle className="text-sm text-[#1A1A1A]">
                           Recent Activity
                         </CardTitle>
                         <CardDescription className="text-xs">Last 30 days</CardDescription>
@@ -695,7 +695,7 @@ export default function TenantDocumentsPage() {
                         <item.icon className="w-4 h-4 text-[#1B5E45]" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium text-[#1A1A1A] truncate">
+                        <p className="text-xs text-[#1A1A1A] truncate">
                           <span className="text-[#6B7280]">{item.action} • </span>
                           {item.doc}
                         </p>
@@ -716,7 +716,7 @@ export default function TenantDocumentsPage() {
                       <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
                         <Zap className="w-4 h-4 text-[#1B5E45]" />
                       </div>
-                      <CardTitle className="text-sm font-bold text-[#1A1A1A]">
+                      <CardTitle className="text-sm text-[#1A1A1A]">
                         Quick Actions
                       </CardTitle>
                     </div>
@@ -743,8 +743,8 @@ export default function TenantDocumentsPage() {
                 <Card className="border-[#E8F5EE] bg-white">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-semibold text-[#1A1A1A]">Storage Used</p>
-                      <p className="text-sm font-bold text-[#1B5E45]">
+                      <p className="text-sm text-[#1A1A1A]">Storage Used</p>
+                      <p className="text-sm text-[#1B5E45]">
                         {storageUsed} / {storageTotal} MB
                       </p>
                     </div>
@@ -765,9 +765,9 @@ export default function TenantDocumentsPage() {
                 <div className="p-8 space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#E8F5EE]">
                     <ShieldCheck className="w-4 h-4 text-[#1B5E45]" />
-                    <span className="text-xs font-semibold text-[#1B5E45]">Security</span>
+                    <span className="text-xs text-[#1B5E45]">Security</span>
                   </div>
-                  <h2 className="text-2xl font-bold text-[#1A1A1A]">
+                  <h2 className="text-2xl text-[#1A1A1A]">
                     Your documents are <span className="text-[#1B5E45]">protected</span>
                   </h2>
                   <p className="text-sm text-[#6B7280] leading-relaxed">
@@ -781,7 +781,7 @@ export default function TenantDocumentsPage() {
                       { label: "Backups", value: "Daily" },
                     ].map((stat, i) => (
                       <div key={i}>
-                        <p className="text-xl font-bold text-[#1A1A1A]">{stat.value}</p>
+                        <p className="text-xl text-[#1A1A1A]">{stat.value}</p>
                         <p className="text-xs text-[#6B7280]">{stat.label}</p>
                       </div>
                     ))}
@@ -789,7 +789,7 @@ export default function TenantDocumentsPage() {
                 </div>
 
                 <div className="p-8">
-                  <p className="text-xs font-semibold text-[#6B7280] uppercase mb-4">
+                  <p className="text-xs text-[#6B7280] uppercase mb-4">
                     Compliance
                   </p>
                   <div className="grid grid-cols-2 gap-3">
@@ -806,7 +806,7 @@ export default function TenantDocumentsPage() {
                         <div className="w-8 h-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
                           <item.icon className="w-4 h-4 text-[#1B5E45]" />
                         </div>
-                        <p className="text-xs font-semibold text-[#1A1A1A]">{item.label}</p>
+                        <p className="text-xs text-[#1A1A1A]">{item.label}</p>
                       </div>
                     ))}
                   </div>
@@ -831,7 +831,7 @@ function EmptyState() {
       <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#F4F4F0] flex items-center justify-center">
         <FileText className="w-8 h-8 text-[#6B7280]" />
       </div>
-      <h3 className="text-lg font-bold text-[#1A1A1A] mb-2">No documents found</h3>
+      <h3 className="text-lg text-[#1A1A1A] mb-2">No documents found</h3>
       <p className="text-sm text-[#6B7280] mb-4">
         Try adjusting your search or filters
       </p>

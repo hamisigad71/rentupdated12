@@ -85,7 +85,7 @@ export default function BuildingDetailsPage() {
     <LandlordLayout>
       <div className="min-h-screen bg-[#FAFAF8] pb-12">
         {/* --- Sticky Header --- */}
-        <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#E8F5EE] px-4 sm:px-8 py-4">
+        <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#E8F5EE] px-0.5 sm:px-8 py-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Button 
@@ -97,7 +97,7 @@ export default function BuildingDetailsPage() {
                 <ChevronLeft className="h-5 w-5" />
               </Button>
               <div className="flex flex-col">
-                <h1 className="text-xl font-bold text-[#1A1A1A] leading-none">
+                <h1 className="text-xl text-[#1A1A1A] leading-none">
                   {building.name}
                 </h1>
                 <p className="text-xs text-[#6B7280] flex items-center gap-1 mt-1">
@@ -116,7 +116,7 @@ export default function BuildingDetailsPage() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-8 space-y-8">
+        <div className="max-w-7xl mx-auto px-0.5 sm:px-8 pt-8 space-y-8">
           
           {/* --- Hero Section --- */}
           <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -133,7 +133,7 @@ export default function BuildingDetailsPage() {
                   <Badge className="bg-[#3DBE7A] text-white border-none">
                     Built in {building.yearBuilt}
                   </Badge>
-                  <h2 className="text-3xl font-bold text-white tracking-tight">
+                  <h2 className="text-3xl text-white tracking-tight">
                     Premium Residency
                   </h2>
                 </div>
@@ -159,7 +159,7 @@ export default function BuildingDetailsPage() {
               />
               <StatCard 
                 label="Monthly Income" 
-                value={`KSh ${totalMonthlyRent.toLocaleString()}`} 
+                value={<span className="font-money">KSh {totalMonthlyRent.toLocaleString()}</span>} 
                 icon={TrendingUp} 
                 color="#3DBE7A" 
                 bgColor="#E8F5EE"
@@ -223,7 +223,7 @@ export default function BuildingDetailsPage() {
                                 <Home className="h-5 w-5" />
                               </div>
                               <div>
-                                <h4 className="font-bold text-[#1A1A1A]">Unit {unit.number}</h4>
+                                <h4 className=" text-[#1A1A1A]">Unit {unit.number}</h4>
                                 <p className="text-[10px] text-[#6B7280] uppercase tracking-wider">{unit.type}</p>
                               </div>
                             </div>
@@ -237,9 +237,9 @@ export default function BuildingDetailsPage() {
                           <div className="flex items-center justify-between pt-4 border-t border-[#F4F4F0]">
                             <div>
                               <p className="text-[10px] text-[#6B7280] uppercase">Monthly Rent</p>
-                              <p className="font-bold text-[#1B5E45]">KSh {unit.rent.toLocaleString()}</p>
+                              <p className="text-[#1B5E45] font-money">KSh {unit.rent.toLocaleString()}</p>
                             </div>
-                            <Button variant="ghost" size="sm" className="text-[#1B5E45] hover:bg-[#E8F5EE] text-xs font-semibold">
+                            <Button variant="ghost" size="sm" className="text-[#1B5E45] hover:bg-[#E8F5EE] text-xs ">
                               Manage Unit
                             </Button>
                           </div>
@@ -263,7 +263,7 @@ export default function BuildingDetailsPage() {
                             <div className="p-6 flex items-center gap-4 flex-1">
                               <img src={`https://i.pravatar.cc/100?u=${tenant.id}`} alt="" className="w-12 h-12 rounded-full object-cover border-2 border-[#E8F5EE]" />
                               <div>
-                                <h4 className="font-bold text-[#1A1A1A]">{tenant.name}</h4>
+                                <h4 className=" text-[#1A1A1A]">{tenant.name}</h4>
                                 <p className="text-xs text-[#6B7280]">Resident since {new Date(tenant.moveInDate).toLocaleDateString()}</p>
                               </div>
                             </div>
@@ -272,20 +272,20 @@ export default function BuildingDetailsPage() {
                                 <p className="text-[10px] text-[#6B7280] uppercase mb-0.5">Contact</p>
                                 <div className="flex items-center gap-2">
                                   <Phone className="h-3 w-3 text-[#1B5E45]" />
-                                  <span className="text-xs font-medium">{tenant.phone}</span>
+                                  <span className="text-xs ">{tenant.phone}</span>
                                 </div>
                               </div>
                               <div className="min-w-[140px]">
                                 <p className="text-[10px] text-[#6B7280] uppercase mb-0.5">Email</p>
                                 <div className="flex items-center gap-2">
                                   <Mail className="h-3 w-3 text-[#1B5E45]" />
-                                  <span className="text-xs font-medium truncate max-w-[120px]">{tenant.email}</span>
+                                  <span className="text-xs truncate max-w-[120px]">{tenant.email}</span>
                                 </div>
                               </div>
                               <div className="min-w-[100px]">
                                 <p className="text-[10px] text-[#6B7280] uppercase mb-0.5">Arrears</p>
                                 <span className={cn(
-                                  "text-xs font-bold",
+                                  "text-xs font-money",
                                   tenant.arrears > 0 ? "text-[#E11D48]" : "text-[#1B5E45]"
                                 )}>KSh {tenant.arrears.toLocaleString()}</span>
                               </div>
@@ -311,21 +311,21 @@ export default function BuildingDetailsPage() {
                         <table className="w-full text-left">
                           <thead>
                             <tr className="bg-[#FAFAF8] border-b border-[#E8F5EE]">
-                              <th className="px-6 py-4 text-[10px] font-bold text-[#6B7280] uppercase tracking-wider">Tenant</th>
-                              <th className="px-6 py-4 text-[10px] font-bold text-[#6B7280] uppercase tracking-wider">Unit</th>
-                              <th className="px-6 py-4 text-[10px] font-bold text-[#6B7280] uppercase tracking-wider">Month</th>
-                              <th className="px-6 py-4 text-[10px] font-bold text-[#6B7280] uppercase tracking-wider">Amount</th>
-                              <th className="px-6 py-4 text-[10px] font-bold text-[#6B7280] uppercase tracking-wider">Date</th>
-                              <th className="px-6 py-4 text-[10px] font-bold text-[#6B7280] uppercase tracking-wider text-right">Status</th>
+                              <th className="px-6 py-4 text-[10px] text-[#6B7280] uppercase tracking-wider">Tenant</th>
+                              <th className="px-6 py-4 text-[10px] text-[#6B7280] uppercase tracking-wider">Unit</th>
+                              <th className="px-6 py-4 text-[10px] text-[#6B7280] uppercase tracking-wider">Month</th>
+                              <th className="px-6 py-4 text-[10px] text-[#6B7280] uppercase tracking-wider">Amount</th>
+                              <th className="px-6 py-4 text-[10px] text-[#6B7280] uppercase tracking-wider">Date</th>
+                              <th className="px-6 py-4 text-[10px] text-[#6B7280] uppercase tracking-wider text-right">Status</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-[#F4F4F0]">
                             {buildingPayments.map(payment => (
                               <tr key={payment.id} className="hover:bg-[#FAFAF8] transition-colors">
-                                <td className="px-6 py-4 text-sm font-semibold text-[#1A1A1A]">{payment.tenantName}</td>
+                                <td className="px-6 py-4 text-sm text-[#1A1A1A]">{payment.tenantName}</td>
                                 <td className="px-6 py-4 text-sm text-[#6B7280]">{mockUnits.find(u => u.id === payment.unitId)?.number}</td>
                                 <td className="px-6 py-4 text-sm text-[#6B7280]">{payment.month}</td>
-                                <td className="px-6 py-4 text-sm font-bold text-[#1B5E45]">KSh {payment.amount.toLocaleString()}</td>
+                                <td className="px-6 py-4 text-sm text-[#1B5E45] font-money">KSh {payment.amount.toLocaleString()}</td>
                                 <td className="px-6 py-4 text-sm text-[#6B7280]">{new Date(payment.date).toLocaleDateString()}</td>
                                 <td className="px-6 py-4 text-right">
                                   <Badge className={cn(
@@ -362,7 +362,7 @@ function StatCard({
   isAlert = false 
 }: { 
   label: string; 
-  value: string | number; 
+  value: React.ReactNode; 
   icon: any; 
   color: string; 
   bgColor: string;
@@ -383,8 +383,10 @@ function StatCard({
             <Icon className="h-6 w-6" strokeWidth={2.5} />
           </div>
           <div className="flex-1 min-w-0">
-            <h4 className="text-2xl font-bold text-[#1A1A1A] truncate">{value}</h4>
-            <p className="text-[10px] font-bold text-[#6B7280] uppercase tracking-widest">{label}</p>
+            <h4 className={cn("text-2xl text-[#1A1A1A] truncate", typeof value === 'string' && value.includes('KSh') && "font-money")}>
+              {value}
+            </h4>
+            <p className="text-[10px] text-[#6B7280] uppercase tracking-widest">{label}</p>
           </div>
         </div>
         {subtext && (

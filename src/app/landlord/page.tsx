@@ -45,46 +45,46 @@ export default function LandlordDashboard() {
   return (
     <LandlordLayout>
       <div 
-        className="min-h-screen px-4 lg:px-4 py-4 sm:py-6 lg:py-8"
+        className="min-h-screen px-0.5 sm:px-4 lg:px-4 py-4 sm:py-6 lg:py-8"
         style={{ backgroundColor: "#FAFAF8" }}
       >
         <div className="max-w-7xl mx-auto space-y-8">
           
           {/* Professional Welcome Header */}
           <Card className="border-[#E8F5EE] bg-white overflow-hidden">
-            <CardContent className="p-6 lg:p-8">
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                <div className="space-y-4">
+            <CardContent className="p-5 md:p-6 lg:p-8">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 lg:gap-6">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#E8F5EE] rounded-full">
                     <Calendar className="w-3.5 h-3.5 text-[#1B5E45]" />
-                    <span className="text-xs font-semibold text-[#1B5E45]">{today}</span>
+                    <span className="text-xs text-[#1B5E45]">{today}</span>
                   </div>
                   
                   <div>
-                    <p className="text-sm font-medium text-[#6B7280] mb-1">Good {greeting},</p>
-                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1A1A1A]">
+                    <p className="text-sm text-[#6B7280] mb-1">Good {greeting},</p>
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl text-[#1A1A1A]">
                       {userName || "Property Manager"}
                     </h1>
                   </div>
                   
-                  <div className="flex items-center gap-6 pt-2">
+                  <div className="flex items-center gap-4 sm:gap-6 pt-2">
                     {[
                       { label: "Properties", val: stats.totalBuildings },
                       { label: "Occupancy", val: `${occupancyRate}%` },
                       { label: "Revenue", val: `KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K` },
                     ].map((item, i) => (
                       <div key={i} className="space-y-1">
-                        <p className="text-2xl font-bold text-[#1A1A1A]">{item.val}</p>
-                        <p className="text-xs font-medium text-[#6B7280]">{item.label}</p>
+                        <p className={cn("text-2xl text-[#1A1A1A]", item.label === "Revenue" && "font-money")}>{item.val}</p>
+                        <p className="text-xs text-[#6B7280]">{item.label}</p>
                       </div>
                     ))}
                   </div>
                 </div>
                 
-                <div className="flex flex-row items-center gap-3 w-full lg:w-auto">
+                <div className="flex flex-row items-center gap-2 sm:gap-3 w-full lg:w-auto">
                   <Button 
                     size="lg"
-                    className="bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold shadow-lg"
+                    className="bg-[#1B5E45] hover:bg-[#246B4F] text-white shadow-lg"
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Add Property
@@ -93,7 +93,7 @@ export default function LandlordDashboard() {
                   {stats.tenantsInArrears > 0 && (
                     <div className="flex items-center gap-2 px-4 py-2.5 bg-red-50 border border-red-200 rounded-xl">
                       <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-semibold text-red-700">
+                      <span className="text-xs text-red-700">
                         {stats.tenantsInArrears} Arrears Pending
                       </span>
                     </div>
@@ -124,7 +124,7 @@ export default function LandlordDashboard() {
               },
               { 
                 label: "Monthly Revenue", 
-                value: `KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K`, 
+                value: <span className="font-money">KSh {(stats.monthlyIncome / 1000).toFixed(0)}K</span>, 
                 icon: DollarSign, 
                 color: "#1B5E45",
                 bgColor: "#E8F5EE",
@@ -164,8 +164,10 @@ export default function LandlordDashboard() {
                     )}
                   </div>
                   <div className="space-y-0.5 sm:space-y-1">
-                    <p className="text-[10px] sm:text-xs font-medium text-[#6B7280] truncate">{stat.label}</p>
-                    <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A] truncate">{stat.value}</h3>
+                    <p className="text-[10px] sm:text-xs text-[#6B7280] truncate">{stat.label}</p>
+                    <h3 className={cn("text-lg sm:text-2xl text-[#1A1A1A] truncate", typeof stat.value === 'string' && stat.value.includes('KSh') && "font-money")}>
+                      {stat.value}
+                    </h3>
                   </div>
                 </CardContent>
               </Card>
@@ -180,13 +182,13 @@ export default function LandlordDashboard() {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-[#1A1A1A] text-xl font-bold">Portfolio Overview</CardTitle>
+                    <CardTitle className="text-[#1A1A1A] text-xl ">Portfolio Overview</CardTitle>
                     <CardDescription className="text-[#6B7280] mt-1">
                       Performance metrics and occupancy analytics
                     </CardDescription>
                   </div>
                   <Link href="/landlord/reports">
-                    <Button variant="ghost" size="sm" className="text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold">
+                    <Button variant="ghost" size="sm" className="text-[#1B5E45] hover:bg-[#E8F5EE] ">
                       View Reports
                       <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
@@ -199,8 +201,8 @@ export default function LandlordDashboard() {
                 <div className="space-y-4">
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="text-sm font-medium text-[#6B7280] mb-1">Occupancy Rate</p>
-                      <p className="text-3xl font-bold text-[#1A1A1A]">
+                      <p className="text-sm text-[#6B7280] mb-1">Occupancy Rate</p>
+                      <p className="text-3xl text-[#1A1A1A]">
                         {stats.occupiedUnits}
                         <span className="text-lg text-[#6B7280] font-normal ml-2">
                           of {stats.totalUnits} units
@@ -219,7 +221,7 @@ export default function LandlordDashboard() {
                       className="h-full rounded-full bg-[#1B5E45]" 
                     />
                   </div>
-                  <div className="flex items-center justify-between text-xs font-medium text-[#6B7280]">
+                  <div className="flex items-center justify-between text-xs text-[#6B7280]">
                     <span>{stats.occupiedUnits} Leased Units</span>
                     <span>{stats.vacantUnits} Vacant</span>
                   </div>
@@ -237,8 +239,8 @@ export default function LandlordDashboard() {
                         <BarChart3 className="w-4 h-4 text-[#1B5E45]" />
                       </div>
                       <div>
-                        <p className="text-xs font-medium text-[#6B7280]">Revenue Trend</p>
-                        <p className="text-sm font-bold text-[#1A1A1A]">6-Month View</p>
+                        <p className="text-xs text-[#6B7280]">Revenue Trend</p>
+                        <p className="text-sm text-[#1A1A1A]">6-Month View</p>
                       </div>
                     </div>
                     <div className="flex items-end gap-1.5 h-20">
@@ -267,8 +269,8 @@ export default function LandlordDashboard() {
                           <Activity className="w-4 h-4 text-red-600" />
                         </div>
                         <div>
-                          <p className="text-xs font-medium text-[#6B7280]">Arrears Aging</p>
-                          <p className="text-sm font-bold text-[#1A1A1A]">Outstanding</p>
+                          <p className="text-xs text-[#6B7280]">Arrears Aging</p>
+                          <p className="text-sm text-[#1A1A1A]">Outstanding</p>
                         </div>
                       </div>
                       <Badge variant="outline" className="text-xs border-red-200 text-red-600 bg-red-50">
@@ -277,8 +279,8 @@ export default function LandlordDashboard() {
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium text-[#6B7280]">30+ Days</span>
-                        <span className="text-sm font-bold text-[#1A1A1A]">KSh 124,000</span>
+                        <span className="text-xs text-[#6B7280]">30+ Days</span>
+                        <span className="text-sm text-[#1A1A1A] font-money">KSh 124,000</span>
                       </div>
                       <div className="h-2 w-full rounded-full bg-red-50 overflow-hidden">
                         <motion.div 
@@ -289,8 +291,8 @@ export default function LandlordDashboard() {
                         />
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium text-[#6B7280]">60+ Days</span>
-                        <span className="text-sm font-bold text-red-600">KSh 45,000</span>
+                        <span className="text-xs text-[#6B7280]">60+ Days</span>
+                        <span className="text-sm text-red-600 font-money">KSh 45,000</span>
                       </div>
                       <div className="h-2 w-full rounded-full bg-red-50 overflow-hidden">
                         <motion.div 
@@ -313,8 +315,8 @@ export default function LandlordDashboard() {
               <Card className="border-[#E8F5EE] bg-white">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-[#1A1A1A] text-lg font-bold">Support Tickets</CardTitle>
-                    <Link href="/landlord/complaints" className="text-xs font-semibold text-[#1B5E45] hover:underline">
+                    <CardTitle className="text-[#1A1A1A] text-lg ">Support Tickets</CardTitle>
+                    <Link href="/landlord/complaints" className="text-xs text-[#1B5E45]">
                       View All
                     </Link>
                   </div>
@@ -341,10 +343,10 @@ export default function LandlordDashboard() {
                             </Badge>
                             <span className="text-xs text-[#6B7280]">{ticket.createdDate}</span>
                           </div>
-                          <h4 className="text-sm font-semibold text-[#1A1A1A] truncate group-hover:text-[#1B5E45] transition-colors">
+                          <h4 className="text-xs  text-foreground uppercase flex items-center gap-3">
                             {ticket.title}
                           </h4>
-                          <p className="text-xs font-medium text-[#6B7280]">{ticket.tenantName}</p>
+                          <p className="text-xs text-[#6B7280]">{ticket.tenantName}</p>
                         </div>
                         <div className={`w-8 h-8 shrink-0 rounded-lg flex items-center justify-center ${
                           ticket.status === 'in-progress' 
@@ -365,7 +367,7 @@ export default function LandlordDashboard() {
               {/* Quick Actions */}
               <Card className="border-[#E8F5EE] bg-white">
                 <CardHeader>
-                  <CardTitle className="text-[#1A1A1A] text-lg font-bold flex items-center gap-2">
+                  <CardTitle className="text-[#1A1A1A] text-lg flex items-center gap-2">
                     <Zap className="w-5 h-5 text-[#1B5E45]" />
                     Quick Actions
                   </CardTitle>
@@ -374,7 +376,7 @@ export default function LandlordDashboard() {
                   <Link href="/landlord/tenants">
                     <Button 
                       variant="outline" 
-                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 font-semibold"
+                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 "
                     >
                       <Plus className="w-4 h-4 mr-3 text-[#1B5E45]" />
                       Add New Tenant
@@ -383,7 +385,7 @@ export default function LandlordDashboard() {
                   <Link href="/landlord/payments">
                     <Button 
                       variant="outline" 
-                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 font-semibold"
+                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 "
                     >
                       <DollarSign className="w-4 h-4 mr-3 text-[#1B5E45]" />
                       Record Payment
@@ -392,7 +394,7 @@ export default function LandlordDashboard() {
                   <Link href="/landlord/reports">
                     <Button 
                       variant="outline" 
-                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 font-semibold"
+                      className="w-full justify-start h-12 border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20 "
                     >
                       <BarChart3 className="w-4 h-4 mr-3 text-[#1B5E45]" />
                       Generate Report
@@ -408,7 +410,7 @@ export default function LandlordDashboard() {
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div>
-                  <CardTitle className="text-[#1A1A1A] text-xl font-bold">Recent Transactions</CardTitle>
+                  <CardTitle className="text-[#1A1A1A] text-xl ">Recent Transactions</CardTitle>
                   <CardDescription className="text-[#6B7280] mt-1">
                     Latest payment activity across all properties
                   </CardDescription>
@@ -416,7 +418,7 @@ export default function LandlordDashboard() {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="border-[#E8F5EE] hover:bg-[#E8F5EE] font-semibold"
+                  className="border-[#E8F5EE] hover:bg-[#E8F5EE] "
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Export
@@ -429,19 +431,19 @@ export default function LandlordDashboard() {
                   <table className="w-full">
                     <thead>
                       <tr className="bg-[#FAFAF8] border-b border-[#E8F5EE]">
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-[#6B7280] uppercase">
+                        <th className="px-6 py-4 text-left text-xs text-[#6B7280] uppercase">
                           Transaction ID
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-[#6B7280] uppercase">
+                        <th className="px-6 py-4 text-left text-xs text-[#6B7280] uppercase">
                           Tenant
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-[#6B7280] uppercase">
+                        <th className="px-6 py-4 text-left text-xs text-[#6B7280] uppercase">
                           Unit
                         </th>
-                        <th className="px-6 py-4 text-right text-xs font-semibold text-[#6B7280] uppercase">
+                        <th className="px-6 py-4 text-right text-xs text-[#6B7280] uppercase">
                           Amount
                         </th>
-                        <th className="px-6 py-4 text-center text-xs font-semibold text-[#6B7280] uppercase">
+                        <th className="px-6 py-4 text-center text-xs text-[#6B7280] uppercase">
                           Status
                         </th>
                       </tr>
@@ -451,7 +453,7 @@ export default function LandlordDashboard() {
                         <tr key={payment.id} className="hover:bg-[#FAFAF8] transition-colors">
                           <td className="px-6 py-4">
                             <div className="space-y-1">
-                              <p className="text-sm font-mono font-semibold text-[#1A1A1A]">
+                              <p className="text-sm font-mono text-[#1A1A1A]">
                                 {payment.id}
                               </p>
                               <p className="text-xs text-[#6B7280]">{payment.date}</p>
@@ -459,22 +461,22 @@ export default function LandlordDashboard() {
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center font-semibold text-[#1B5E45]">
+                              <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center text-[#1B5E45]">
                                 {payment.tenantName[0]}
                               </div>
                               <div>
-                                <p className="text-sm font-semibold text-[#1A1A1A]">
+                                <p className="text-sm text-[#1A1A1A]">
                                   {payment.tenantName}
                                 </p>
                                 <p className="text-xs text-[#6B7280]">{payment.month}</p>
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-sm font-medium text-[#4B5563]">
+                          <td className="px-6 py-4 text-sm text-[#4B5563]">
                             {payment.unitId}
                           </td>
                           <td className="px-6 py-4 text-right">
-                            <p className="text-sm font-bold text-[#1B5E45]">
+                            <p className="text-sm text-[#1B5E45] font-money">
                               KSh {payment.amount.toLocaleString()}
                             </p>
                           </td>
@@ -501,7 +503,7 @@ export default function LandlordDashboard() {
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="text-[#1B5E45] hover:bg-[#E8F5EE] font-semibold"
+                      className="text-[#1B5E45] hover:bg-[#E8F5EE] "
                     >
                       View All Transactions
                       <ArrowUpRight className="w-4 h-4 ml-2" />

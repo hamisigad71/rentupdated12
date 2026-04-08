@@ -204,7 +204,7 @@ export default function TenantComplaintsPage() {
   return (
     <TenantLayout>
       <div className="min-h-screen" style={{ backgroundColor: "#FAFAF8" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <div className="max-w-7xl mx-auto px-0.5 sm:px-6 lg:px-8 py-8 space-y-6">
           
           {/* Page Header */}
           <Reveal>
@@ -214,7 +214,7 @@ export default function TenantComplaintsPage() {
                   <AlertCircle className="w-3 h-3 mr-1" />
                   Service Requests
                 </Badge>
-                <h1 className="text-3xl font-bold text-[#1A1A1A]">
+                <h1 className="text-3xl text-[#1A1A1A]">
                   Maintenance & Support
                 </h1>
                 <p className="text-sm text-[#6B7280]">
@@ -237,7 +237,7 @@ export default function TenantComplaintsPage() {
                 </Button>
                 <Button
                   onClick={() => setShowNewRequestModal(true)}
-                  className="bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
+                  className="bg-[#1B5E45] hover:bg-[#246B4F] text-white"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   New Request
@@ -294,8 +294,8 @@ export default function TenantComplaintsPage() {
                       </div>
                     </div>
                     <div className="space-y-0.5">
-                      <h3 className="text-lg sm:text-2xl font-bold text-[#1A1A1A]">{stat.value}</h3>
-                      <p className="text-[10px] sm:text-xs font-medium text-[#6B7280]">{stat.label}</p>
+                      <h3 className="text-lg sm:text-2xl text-[#1A1A1A]">{stat.value}</h3>
+                      <p className="text-[10px] sm:text-xs text-[#6B7280]">{stat.label}</p>
                       <p className="text-[10px] text-[#6B7280]/60 hidden sm:block">{stat.subtitle}</p>
                     </div>
                   </CardContent>
@@ -312,7 +312,7 @@ export default function TenantComplaintsPage() {
                   <div className="flex-1 space-y-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-lg font-bold text-[#1A1A1A]">
+                        <h3 className="text-lg text-[#1A1A1A]">
                           Overall Resolution Progress
                         </h3>
                         <p className="text-sm text-[#6B7280]">
@@ -353,10 +353,10 @@ export default function TenantComplaintsPage() {
                         className="p-4 rounded-xl border border-[#E8F5EE] bg-[#FAFAF8] text-center"
                       >
                         <metric.icon className="w-4 h-4 text-[#3DBE7A] mx-auto mb-2" />
-                        <p className="text-xs font-medium text-[#6B7280] uppercase">
+                        <p className="text-xs text-[#6B7280] uppercase">
                           {metric.label}
                         </p>
-                        <p className="text-sm font-bold text-[#1A1A1A] mt-1">
+                        <p className="text-sm text-[#1A1A1A] mt-1">
                           {metric.value}
                         </p>
                       </div>
@@ -460,7 +460,7 @@ export default function TenantComplaintsPage() {
                                 />
                               )}
                             </div>
-                            <span className="text-xs font-medium text-[#6B7280]">
+                            <span className="text-xs text-[#6B7280]">
                               {complaint.category}
                             </span>
                           </div>
@@ -470,7 +470,7 @@ export default function TenantComplaintsPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <h3 className="text-sm font-bold text-[#1A1A1A] line-clamp-1">
+                          <h3 className="text-sm text-[#1A1A1A] line-clamp-1">
                             {complaint.title}
                           </h3>
                           <p className="text-xs text-[#6B7280] line-clamp-2">
@@ -525,7 +525,7 @@ export default function TenantComplaintsPage() {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#E8F5EE] flex items-center justify-center">
                   <CheckCircle2 className="w-8 h-8 text-[#3DBE7A]" />
                 </div>
-                <h3 className="text-lg font-bold text-[#1A1A1A] mb-2">
+                <h3 className="text-lg text-[#1A1A1A] mb-2">
                   All Clear!
                 </h3>
                 <p className="text-sm text-[#6B7280] mb-4">
@@ -593,7 +593,7 @@ export default function TenantComplaintsPage() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs font-medium text-[#6B7280]">
+                      <span className="text-xs text-[#6B7280]">
                         {selectedComplaint.category}
                       </span>
                       <Badge
@@ -617,7 +617,7 @@ export default function TenantComplaintsPage() {
                         {getStatusConfig(selectedComplaint.status).label}
                       </Badge>
                     </div>
-                    <h2 className="text-lg font-bold text-[#1A1A1A]">
+                    <h2 className="text-lg text-[#1A1A1A]">
                       {selectedComplaint.title}
                     </h2>
                     <p className="text-xs text-[#6B7280] flex items-center gap-2 mt-1">
@@ -659,7 +659,7 @@ export default function TenantComplaintsPage() {
               <Tabs value={activeTab}>
                 <TabsContent value="details" className="space-y-4 mt-0">
                   <div>
-                    <h3 className="text-sm font-semibold text-[#1A1A1A] mb-2">Description</h3>
+                    <h3 className="text-sm text-[#1A1A1A] mb-2">Description</h3>
                     <div className="p-4 rounded-lg bg-[#FAFAF8] border border-[#E8F5EE] text-sm text-[#4B5563]">
                       {selectedComplaint.description}
                     </div>
@@ -674,7 +674,7 @@ export default function TenantComplaintsPage() {
                     ].map((item, i) => (
                       <div key={i} className="p-3 rounded-lg border border-[#E8F5EE] bg-[#FAFAF8]">
                         <p className="text-xs text-[#6B7280] mb-1">{item.label}</p>
-                        <p className="text-sm font-semibold text-[#1A1A1A]">{item.value}</p>
+                        <p className="text-sm text-[#1A1A1A]">{item.value}</p>
                       </div>
                     ))}
                   </div>
@@ -703,7 +703,7 @@ export default function TenantComplaintsPage() {
                       </div>
                       <div className={cn("flex-1", !step.done && "opacity-40")}>
                         <div className="flex items-center justify-between">
-                          <p className="text-sm font-semibold text-[#1A1A1A]">{step.label}</p>
+                          <p className="text-sm text-[#1A1A1A]">{step.label}</p>
                           <span className="text-xs text-[#6B7280]">{step.date}</span>
                         </div>
                       </div>
@@ -775,7 +775,7 @@ export default function TenantComplaintsPage() {
                     <Plus className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-[#1A1A1A]">New Service Request</h2>
+                    <h2 className="text-lg text-[#1A1A1A]">New Service Request</h2>
                     <p className="text-xs text-[#6B7280]">Tell us what needs to be fixed</p>
                   </div>
                 </div>
@@ -802,7 +802,7 @@ export default function TenantComplaintsPage() {
                     <div className="w-16 h-16 mx-auto rounded-2xl bg-[#E8F5EE] flex items-center justify-center">
                       <CheckCircle2 className="w-8 h-8 text-[#3DBE7A]" />
                     </div>
-                    <h3 className="text-xl font-bold text-[#1A1A1A]">Request Submitted!</h3>
+                    <h3 className="text-xl text-[#1A1A1A]">Request Submitted!</h3>
                     <p className="text-sm text-[#6B7280]">
                       We'll get back to you within 24 hours
                     </p>
@@ -811,7 +811,7 @@ export default function TenantComplaintsPage() {
                   <motion.div key="form" className="space-y-5">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                        <label className="text-xs text-[#4B5563] uppercase">
                           Title *
                         </label>
                         <Input
@@ -823,7 +823,7 @@ export default function TenantComplaintsPage() {
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                        <label className="text-xs text-[#4B5563] uppercase">
                           Priority *
                         </label>
                         <div className="flex gap-2">
@@ -848,7 +848,7 @@ export default function TenantComplaintsPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                      <label className="text-xs text-[#4B5563] uppercase">
                         Category *
                       </label>
                       <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
@@ -869,14 +869,14 @@ export default function TenantComplaintsPage() {
                                 color: form.category === cat.label ? cat.color : "#6B7280",
                               }}
                             />
-                            <span className="text-xs font-medium">{cat.label}</span>
+                            <span className="text-xs ">{cat.label}</span>
                           </button>
                         ))}
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-xs font-semibold text-[#4B5563] uppercase">
+                      <label className="text-xs text-[#4B5563] uppercase">
                         Description *
                       </label>
                       <textarea
@@ -901,7 +901,7 @@ export default function TenantComplaintsPage() {
                       <Button
                         onClick={handleSubmitRequest}
                         disabled={!form.title || !form.category || !form.description || isSubmitting}
-                        className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white font-semibold"
+                        className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white "
                       >
                         <Send className="w-4 h-4 mr-2" />
                         {isSubmitting ? "Submitting..." : "Submit Request"}

@@ -139,7 +139,7 @@ export function Navbar() {
                   <NavigationMenuItem>
                     <NavigationMenuTrigger
                       className={cn(
-                        "h-9 px-4 rounded-lg text-[13px] font-semibold transition-all bg-transparent",
+                        "h-9 px-4 rounded-lg text-[13px] transition-all bg-transparent",
                         "text-[#374151] hover:text-[#1B5E45] hover:bg-[#F4F9F6]",
                         "data-[state=open]:text-[#1B5E45] data-[state=open]:bg-[#E8F5EE]",
                       )}
@@ -151,12 +151,12 @@ export function Navbar() {
                       <div className="w-170 p-5 bg-white border border-[#E0E8E3] rounded-2xl shadow-xl shadow-[#1B5E45]/8">
                         {/* Top label */}
                         <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#E0E8E3]">
-                          <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#6B7280]">
+                          <p className="text-[10px] uppercase tracking-[0.25em] text-[#6B7280]">
                             Everything you need
                           </p>
                           <Link
                             href="/solutions"
-                            className="flex items-center gap-1 text-[11px] font-semibold text-[#1B5E45] hover:underline"
+                            className="flex items-center gap-1 text-[11px] text-[#1B5E45]"
                           >
                             View all <ArrowRight className="h-3 w-3" />
                           </Link>
@@ -172,7 +172,7 @@ export function Navbar() {
                         {/* Footer CTA */}
                         <div className="mt-4 pt-4 border-t border-[#E0E8E3] flex items-center justify-between">
                           <div>
-                            <p className="text-sm font-semibold text-[#1A1A1A]">
+                            <p className="text-sm text-[#1A1A1A]">
                               Not sure where to start?
                             </p>
                             <p className="text-xs text-[#6B7280]">
@@ -180,7 +180,7 @@ export function Navbar() {
                             </p>
                           </div>
                           <Link href="/contact">
-                            <button className="h-9 px-4 rounded-xl bg-[#1B5E45] text-white text-xs font-semibold hover:bg-[#246B4F] transition-colors shadow-md shadow-[#1B5E45]/20 flex items-center gap-2">
+                            <button className="h-9 px-4 rounded-xl bg-[#1B5E45] text-white text-xs hover:bg-[#246B4F] transition-colors shadow-md shadow-[#1B5E45]/20 flex items-center gap-2">
                               Book a Demo{" "}
                               <ChevronRight className="h-3.5 w-3.5" />
                             </button>
@@ -200,7 +200,7 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "h-9 px-4 rounded-lg text-[13px] font-semibold transition-all flex items-center",
+                      "h-9 px-4 rounded-lg text-[13px] transition-all flex items-center",
                       active
                         ? "text-[#1B5E45] bg-[#E8F5EE]"
                         : "text-[#374151] hover:text-[#1B5E45] hover:bg-[#F4F9F6]",
@@ -215,12 +215,12 @@ export function Navbar() {
             {/* ── Desktop CTA ───────────────────────────────────────── */}
             <div className="hidden md:flex items-center gap-2.5">
               <Link href="/auth/login">
-                <button className="h-9 px-5 rounded-lg text-[13px] font-semibold text-[#374151] hover:text-[#1B5E45] hover:bg-[#F4F9F6] transition-all">
+                <button className="h-9 px-5 rounded-lg text-[13px] text-[#374151] hover:text-[#1B5E45] hover:bg-[#F4F9F6] transition-all">
                   Sign In
                 </button>
               </Link>
               <Link href="/auth/register">
-                <button className="h-9 px-5 rounded-xl bg-[#1B5E45] text-white text-[13px] font-semibold hover:bg-[#246B4F] transition-all shadow-md shadow-[#1B5E45]/20 hover:shadow-lg hover:shadow-[#1B5E45]/25 hover:-translate-y-px active:translate-y-0 flex items-center gap-2">
+                <button className="h-9 px-5 rounded-xl bg-[#1B5E45] text-white text-[13px] hover:bg-[#246B4F] transition-all shadow-md shadow-[#1B5E45]/20 hover:shadow-lg hover:shadow-[#1B5E45]/25 hover:-translate-y-px active:translate-y-0 flex items-center gap-2">
                   Get Started
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
@@ -260,7 +260,7 @@ export function Navbar() {
               {/* Solutions section */}
               <button
                 onClick={() => setSolutionsOpen((o) => !o)}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-[14px] font-semibold text-[#374151] hover:bg-[#F4F9F6] hover:text-[#1B5E45] transition-all"
+                className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-[14px] text-[#374151] hover:bg-[#F4F9F6] hover:text-[#1B5E45] transition-all"
               >
                 Solutions
                 <ChevronRight
@@ -297,7 +297,7 @@ export function Navbar() {
                             />
                           </div>
                           <div>
-                            <p className="text-[13px] font-semibold text-[#1A1A1A] group-hover:text-[#1B5E45] transition-colors">
+                            <p className="text-[13px] text-[#1A1A1A] group-hover:text-[#1B5E45] transition-colors">
                               {item.title}
                             </p>
                             <p className="text-[11px] text-[#6B7280] line-clamp-1">
@@ -316,7 +316,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] font-semibold transition-all",
+                    "flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] transition-all",
                     pathname === link.href
                       ? "text-[#1B5E45] bg-[#E8F5EE]"
                       : "text-[#374151] hover:bg-[#F4F9F6] hover:text-[#1B5E45]",
@@ -330,12 +330,12 @@ export function Navbar() {
               {/* Mobile CTAs */}
               <div className="pt-4 pb-2 flex flex-col gap-3 border-t border-[#E0E8E3] mt-4">
                 <Link href="/auth/login" className="w-full">
-                  <button className="w-full h-11 rounded-xl border border-[#E0E8E3] text-[14px] font-semibold text-[#374151] hover:border-[#1B5E45] hover:text-[#1B5E45] hover:bg-[#F4F9F6] transition-all">
+                  <button className="w-full h-11 rounded-xl border border-[#E0E8E3] text-[14px] text-[#374151] hover:border-[#1B5E45] hover:text-[#1B5E45] hover:bg-[#F4F9F6] transition-all">
                     Sign In
                   </button>
                 </Link>
                 <Link href="/auth/register" className="w-full">
-                  <button className="w-full h-11 rounded-xl bg-[#1B5E45] text-white text-[14px] font-semibold hover:bg-[#246B4F] transition-all shadow-md shadow-[#1B5E45]/20 flex items-center justify-center gap-2">
+                  <button className="w-full h-11 rounded-xl bg-[#1B5E45] text-white text-[14px] hover:bg-[#246B4F] transition-all shadow-md shadow-[#1B5E45]/20 flex items-center justify-center gap-2">
                     Get Started <ArrowRight className="h-4 w-4" />
                   </button>
                 </Link>
@@ -378,7 +378,7 @@ function SolutionItem({
             <Icon className="h-4.5 w-4.5" style={{ color }} />
           </div>
           <div className="min-w-0">
-            <p className="text-[13px] font-semibold text-[#1A1A1A] group-hover:text-[#1B5E45] transition-colors leading-tight">
+            <p className="text-[13px] text-[#1A1A1A] group-hover:text-[#1B5E45] transition-colors leading-tight">
               {title}
             </p>
             <p className="text-[11px] text-[#6B7280] mt-0.5 leading-snug line-clamp-2">

@@ -12,7 +12,7 @@ export default function Loader({ show }: { show: boolean }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center"
+          className="fixed inset-0 z-200 flex flex-col items-center justify-center"
           style={{ background: "#F7F8F5" }}
         >
           {/* Subtle paper texture overlay */}
@@ -29,7 +29,7 @@ export default function Loader({ show }: { show: boolean }) {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="absolute top-0 left-0 right-0 h-[2px] origin-left"
+            className="absolute top-0 left-0 right-0 h-0.5 origin-left"
             style={{ background: "linear-gradient(90deg, #1B5E45, #3DBE7A, transparent)" }}
           />
 
@@ -203,7 +203,7 @@ export default function Loader({ show }: { show: boolean }) {
               fontSize: 9,
               color: "#C4C4C0",
               letterSpacing: "0.25em",
-              fontWeight: 700,
+              fontWeight: 400,
               textTransform: "uppercase",
             }}
           >

@@ -140,7 +140,7 @@ function StatCard({
           {badge && (
             <span
               className={cn(
-                "text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full",
+                "text-[9px] sm:text-[10px]  uppercase tracking-wider px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full",
                 badgeStyles[badge.color],
               )}
             >
@@ -150,15 +150,17 @@ function StatCard({
         </div>
         <p
           className={cn(
-            "text-xl sm:text-3xl font-bold tracking-tight mb-0.5 sm:mb-1 truncate",
+            "text-xl sm:text-3xl  tracking-tight mb-0.5 sm:mb-1 truncate",
             accent ? "text-white" : "text-foreground",
           )}
         >
-          {value}
+          <span className={cn(typeof value === 'string' && value.includes('KSh') && "font-money")}>
+            {value}
+          </span>
         </p>
         <p
           className={cn(
-            "text-[10px] sm:text-sm font-medium truncate",
+            "text-[10px] sm:text-sm  truncate",
             accent ? "text-white/70" : "text-muted-foreground",
           )}
         >
@@ -198,17 +200,17 @@ function PaymentRow({
           <Receipt className="h-4 w-4 text-[#1B5E45]" />
         </div>
         <div>
-          <p className="text-sm font-medium text-foreground leading-tight">
+          <p className="text-sm text-foreground leading-tight">
             {description}
           </p>
           <p className="text-xs text-muted-foreground mt-0.5">{date}</p>
         </div>
       </div>
       <div className="text-right">
-        <p className="text-sm font-semibold text-[#1B5E45]">
-          ${amount.toLocaleString()}
+        <p className="text-sm text-[#1B5E45] font-money">
+          KSh {amount.toLocaleString()}
         </p>
-        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full mt-1">
+        <span className="inline-flex items-center gap-1 text-[10px] text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full mt-1">
           <CheckCircle className="h-2.5 w-2.5" />
           {status}
         </span>
@@ -242,7 +244,7 @@ function MaintenanceRow({
         <Wrench className="h-3.5 w-3.5 text-amber-600" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-foreground leading-tight truncate">
+        <p className="text-sm text-foreground leading-tight truncate">
           {title}
         </p>
         <div className="flex items-center gap-2 mt-1">
@@ -251,7 +253,7 @@ function MaintenanceRow({
           </span>
           <span
             className={cn(
-              "text-[10px] font-semibold px-2 py-0.5 rounded-full",
+              "text-[10px]  px-2 py-0.5 rounded-full",
               cfg.color,
             )}
           >
@@ -288,7 +290,7 @@ function QuickAction({
           <Icon className="h-5 w-5" strokeWidth={1.8} />
         </div>
         <div>
-          <p className="text-sm font-semibold text-foreground">{label}</p>
+          <p className="text-sm text-foreground">{label}</p>
           <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
             {description}
           </p>
@@ -324,10 +326,10 @@ function HeroMiniStat({
         />
       </div>
       <div>
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground leading-none mb-0.5">
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground leading-none mb-0.5">
           {label}
         </p>
-        <p className="text-sm font-bold text-foreground leading-none">
+        <p className={cn("text-sm text-foreground leading-none", typeof value === 'string' && value.includes('KSh') && "font-money")}>
           {value}
         </p>
       </div>
@@ -353,11 +355,11 @@ export default function TenantDashboard() {
         <div className="min-h-screen bg-[#FAFAF8]">
           {/* ── Top Nav Bar ───────────────────────────────────── */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto md:px-10 h-16 flex items-center justify-between gap-4">
+            <div className="max-w-7xl mx-auto px-0.5 sm:px-6 md:px-10 h-16 flex items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Home className="h-4 w-4 text-[#1B5E45]" />
                 <ChevronRight className="h-3.5 w-3.5" />
-                <span className="font-medium text-foreground">Dashboard</span>
+                <span className=" text-foreground">Dashboard</span>
               </div>
               <div className="flex items-center gap-3">
                 <Tooltip>
@@ -389,7 +391,7 @@ export default function TenantDashboard() {
                   href="/tenant/payments"
                   className={cn(
                     buttonVariants({ variant: "default", size: "default" }),
-                    "h-9 px-5 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm font-semibold shadow-sm",
+                    "h-9 px-5 rounded-xl bg-[#1B5E45] hover:bg-[#246B4F] text-white text-sm  shadow-sm",
                   )}
                 >
                   Pay Rent
@@ -399,7 +401,7 @@ export default function TenantDashboard() {
             </div>
           </header>
 
-          <main className="max-w-7xl mx-auto md:px-10 py-8 space-y-8">
+          <main className="max-w-7xl mx-auto px-0.5 sm:px-6 lg:px-8 space-y-8">
             {/* ══ HERO SECTION ════════════════════════════════════════════ */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">
@@ -418,7 +420,7 @@ export default function TenantDashboard() {
                     <div className="flex items-start gap-5">
                       {/* Avatar / initials */}
                       <div className="shrink-0 h-16 w-16 rounded-2xl bg-[#E8F5EE] border-2 border-[#1B5E45]/15 flex items-center justify-center shadow-sm">
-                        <span className="text-2xl font-black text-[#1B5E45] tracking-tight select-none">
+                        <span className="text-2xl text-[#1B5E45] tracking-tight select-none">
                           {(userName || "Alex").charAt(0).toUpperCase()}
                         </span>
                       </div>
@@ -426,33 +428,33 @@ export default function TenantDashboard() {
                       {/* Name + location + status badges */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#1B5E45]">
+                          <span className="text-[10px] uppercase tracking-[0.15em] text-[#1B5E45]">
                             {greeting}
                           </span>
                           <span className="w-1 h-1 bg-[#1B5E45]/30 rounded-full" />
-                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
+                          <span className="inline-flex items-center gap-1 text-[10px] text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
                             Active Tenant
                           </span>
                         </div>
 
-                        <h1 className="text-2xl md:text-3xl font-extrabold text-[#1A1A1A] tracking-tight leading-tight">
+                        <h1 className="text-2xl md:text-3xl text-[#1A1A1A] tracking-tight leading-tight">
                           {userName?.split(" ")[0] || "Alex"}{" "}
                           {userName?.split(" ")[1] || "Johnson"}
                         </h1>
 
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-2.5">
-                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                             <MapPin className="h-3.5 w-3.5 text-[#1B5E45]" />
                             {currentTenant?.roomNumber || currentTenant?.unitId}
                           </span>
                           <span className="w-px h-3.5 bg-border hidden sm:block" />
-                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                             <Home className="h-3.5 w-3.5 text-[#1B5E45]" />
                             2-Bedroom · 4th Floor
                           </span>
                           <span className="w-px h-3.5 bg-border hidden sm:block" />
-                          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                             <Calendar className="h-3.5 w-3.5 text-[#1B5E45]" />
                             Lease ends Mar 14, 2027
                           </span>
@@ -473,11 +475,11 @@ export default function TenantDashboard() {
                               />
                             ))}
                           </div>
-                          <span className="text-xs font-semibold text-muted-foreground">
+                          <span className="text-xs text-muted-foreground">
                             4.8 resident score
                           </span>
                           <span className="w-px h-3.5 bg-border" />
-                          <span className="text-xs font-medium text-muted-foreground">
+                          <span className="text-xs text-muted-foreground">
                             Member since Oct 2023
                           </span>
                         </div>
@@ -488,17 +490,17 @@ export default function TenantDashboard() {
                     <div className="shrink-0 lg:max-w-[220px] w-full lg:w-auto">
                       <div className="rounded-xl border border-[#1B5E45]/12 bg-[#F0F5F1] p-4">
                         <div className="flex items-center justify-between mb-3">
-                          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#1B5E45]/60">
+                          <p className="text-[10px] uppercase tracking-[0.15em] text-[#1B5E45]/60">
                             Rent Due
                           </p>
-                          <span className="text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                          <span className="text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
                             {daysUntilRent} days left
                           </span>
                         </div>
-                        <p className="text-3xl font-black text-[#1A1A1A] tracking-tight leading-none">
-                          $2,450
+                        <p className="text-3xl text-[#1A1A1A] tracking-tight leading-none">
+                          <span className="font-money">KSh 2,450</span>
                         </p>
-                        <p className="text-xs font-medium text-muted-foreground mt-1.5 flex items-center gap-1">
+                        <p className="text-xs text-muted-foreground mt-1.5 flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           Due April 1, 2025
                         </p>
@@ -506,7 +508,7 @@ export default function TenantDashboard() {
                           href="/tenant/payments"
                           className={cn(
                             buttonVariants({ variant: "default", size: "sm" }),
-                            "mt-3.5 w-full rounded-lg bg-[#1B5E45] hover:bg-[#246B4F] text-white font-bold text-xs h-9 flex items-center justify-center shadow-sm gap-1.5",
+                            "mt-3.5 w-full rounded-lg bg-[#1B5E45] hover:bg-[#246B4F] text-white  text-xs h-9 flex items-center justify-center shadow-sm gap-1.5",
                           )}
                         >
                           Pay Now
@@ -532,7 +534,7 @@ export default function TenantDashboard() {
                       <HeroMiniStat
                         icon={CreditCard}
                         label="Balance"
-                        value="$0.00 Clear"
+                        value={<span className="font-money">KSh 0 Clear</span>}
                       />
                       <HeroMiniStat
                         icon={Wrench}
@@ -549,10 +551,10 @@ export default function TenantDashboard() {
                     {/* Lease progress bar block */}
                     <div className="lg:w-56 shrink-0">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
                           Lease Progress
                         </span>
-                        <span className="text-[10px] font-black text-[#1B5E45]">
+                        <span className="text-[10px] text-[#1B5E45]">
                           {leaseProgress}%
                         </span>
                       </div>
@@ -584,7 +586,7 @@ export default function TenantDashboard() {
                 <StatCard
                   icon={DollarSign}
                   label="Monthly Rent"
-                  value="$2,450"
+                  value={<span className="font-money">KSh 12,450</span>}
                   sub="Due Apr 1, 2025"
                   badge={{ label: "Due Soon", color: "amber" }}
                 />
@@ -593,7 +595,7 @@ export default function TenantDashboard() {
                 <StatCard
                   icon={CreditCard}
                   label="Account Balance"
-                  value="$0.00"
+                  value={<span className="font-money">KSh 0</span>}
                   sub="No outstanding dues"
                   badge={{ label: "Clear", color: "green" }}
                 />
@@ -627,13 +629,13 @@ export default function TenantDashboard() {
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="pb-4 px-6 pt-6">
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-semibold flex items-center gap-2">
+                        <CardTitle className="text-base flex items-center gap-2">
                           <Zap className="h-4 w-4 text-[#1B5E45]" />
                           Quick Actions
                         </CardTitle>
                         <Link
                           href="/tenant/services"
-                          className="text-xs font-medium text-[#1B5E45] hover:underline flex items-center gap-0.5"
+                          className="text-xs text-[#1B5E45] flex items-center gap-0.5"
                         >
                           All services <ChevronRight className="h-3.5 w-3.5" />
                         </Link>
@@ -675,7 +677,7 @@ export default function TenantDashboard() {
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="pb-0 px-6 pt-6">
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-semibold flex items-center gap-2">
+                        <CardTitle className="text-base flex items-center gap-2">
                           <History className="h-4 w-4 text-[#1B5E45]" />
                           Payment History
                         </CardTitle>
@@ -683,7 +685,7 @@ export default function TenantDashboard() {
                           href="/tenant/payments"
                           className={cn(
                             buttonVariants({ variant: "ghost", size: "sm" }),
-                            "text-xs text-[#1B5E45] hover:bg-[#E8F5EE] h-8 px-3 rounded-lg font-medium flex items-center justify-center",
+                            "text-xs text-[#1B5E45] hover:bg-[#E8F5EE] h-8 px-3 rounded-lg  flex items-center justify-center",
                           )}
                         >
                           View all <ArrowRight className="ml-1 h-3 w-3" />
@@ -710,7 +712,7 @@ export default function TenantDashboard() {
                 <Reveal delay={0.35}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="pb-4 px-6 pt-6">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <Bell className="h-4 w-4 text-[#1B5E45]" />
                         Notices & Announcements
                       </CardTitle>
@@ -749,7 +751,7 @@ export default function TenantDashboard() {
                             <notice.icon className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-sm text-foreground">
                               {notice.title}
                             </p>
                             <p className="text-xs text-muted-foreground mt-0.5">
@@ -773,10 +775,10 @@ export default function TenantDashboard() {
                         <Home className="h-5 w-5 text-white" />
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground font-medium">
+                        <p className="text-xs text-muted-foreground ">
                           Your Residence
                         </p>
-                        <p className="text-sm font-bold text-foreground leading-tight">
+                        <p className="text-sm text-foreground leading-tight">
                           {currentTenant?.roomNumber || currentTenant?.unitId}
                         </p>
                       </div>
@@ -784,21 +786,21 @@ export default function TenantDashboard() {
                     <CardContent className="px-6 py-5 space-y-4">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Unit</span>
-                        <span className="font-semibold text-foreground">
+                        <span className=" text-foreground">
                           {currentTenant?.unitId || "N/A"}
                         </span>
                       </div>
                       <Separator />
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Type</span>
-                        <span className="font-semibold text-foreground">
+                        <span className=" text-foreground">
                           2-Bedroom
                         </span>
                       </div>
                       <Separator />
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Floor</span>
-                        <span className="font-semibold text-foreground">
+                        <span className=" text-foreground">
                           4th Floor
                         </span>
                       </div>
@@ -819,7 +821,7 @@ export default function TenantDashboard() {
                               )}
                             />
                           ))}
-                          <span className="text-xs font-medium text-muted-foreground ml-1">
+                          <span className="text-xs text-muted-foreground ml-1">
                             4.8
                           </span>
                         </div>
@@ -831,7 +833,7 @@ export default function TenantDashboard() {
                             variant: "outline",
                             size: "default",
                           }),
-                          "w-full rounded-xl h-10 text-sm border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45] font-medium mt-2 flex items-center justify-center",
+                          "w-full rounded-xl h-10 text-sm border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]  mt-2 flex items-center justify-center",
                         )}
                       >
                         View Property Details
@@ -846,11 +848,11 @@ export default function TenantDashboard() {
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="pb-3 px-6 pt-6">
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-semibold flex items-center gap-2">
+                        <CardTitle className="text-base flex items-center gap-2">
                           <Wrench className="h-4 w-4 text-[#1B5E45]" />
                           Maintenance
                         </CardTitle>
-                        <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-50 border-0 text-[10px] font-semibold px-2.5 rounded-full">
+                        <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-50 border-0 text-[10px] px-2.5 rounded-full">
                           2 Open
                         </Badge>
                       </div>
@@ -872,7 +874,7 @@ export default function TenantDashboard() {
                           href="/tenant/maintenance"
                           className={cn(
                             buttonVariants({ variant: "outline", size: "sm" }),
-                            "rounded-xl h-9 text-xs border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45] font-medium flex items-center justify-center",
+                            "rounded-xl h-9 text-xs border-border hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]  flex items-center justify-center",
                           )}
                         >
                           View All
@@ -881,7 +883,7 @@ export default function TenantDashboard() {
                           href="/tenant/maintenance/new"
                           className={cn(
                             buttonVariants({ variant: "default", size: "sm" }),
-                            "rounded-xl h-9 text-xs bg-[#1B5E45] hover:bg-[#246B4F] text-white font-medium flex items-center justify-center",
+                            "rounded-xl h-9 text-xs bg-[#1B5E45] hover:bg-[#246B4F] text-white  flex items-center justify-center",
                           )}
                         >
                           <Plus className="h-3 w-3 mr-1" />
@@ -896,7 +898,7 @@ export default function TenantDashboard() {
                 <Reveal delay={0.35}>
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="pb-4 px-6 pt-6">
-                      <CardTitle className="text-base font-semibold flex items-center gap-2">
+                      <CardTitle className="text-base flex items-center gap-2">
                         <Sparkles className="h-4 w-4 text-[#1B5E45]" />
                         Building Amenities
                       </CardTitle>
@@ -918,7 +920,7 @@ export default function TenantDashboard() {
                             <div className="h-7 w-7 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
                               <a.icon className="h-3.5 w-3.5 text-[#1B5E45]" />
                             </div>
-                            <span className="text-xs font-medium text-foreground leading-tight">
+                            <span className="text-xs text-foreground leading-tight">
                               {a.label}
                             </span>
                           </div>
@@ -932,7 +934,7 @@ export default function TenantDashboard() {
                 <Reveal delay={0.4}>
                   <Card className="rounded-2xl border-border shadow-sm bg-[#F0F5F1]">
                     <CardContent className="px-6 py-6">
-                      <p className="text-sm font-semibold text-foreground mb-1">
+                      <p className="text-sm text-foreground mb-1">
                         Need Help?
                       </p>
                       <p className="text-xs text-muted-foreground mb-4 leading-snug">
@@ -943,7 +945,7 @@ export default function TenantDashboard() {
                           href="/tenant/contact"
                           className={cn(
                             buttonVariants({ variant: "outline", size: "sm" }),
-                            "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE] font-medium flex items-center justify-center",
+                            "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE]  flex items-center justify-center",
                           )}
                         >
                           <MessageSquare className="h-3.5 w-3.5 mr-2 text-[#1B5E45]" />
@@ -953,7 +955,7 @@ export default function TenantDashboard() {
                           href="tel:+1234567890"
                           className={cn(
                             buttonVariants({ variant: "outline", size: "sm" }),
-                            "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE] font-medium flex items-center justify-center",
+                            "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE]  flex items-center justify-center",
                           )}
                         >
                           <Phone className="h-3.5 w-3.5 mr-2 text-[#1B5E45]" />

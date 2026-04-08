@@ -62,14 +62,14 @@ const RoleCard = ({
           <Icon className="h-10 w-10" strokeWidth={1.5} />
         </div>
 
-        <p className="text-xs font-bold uppercase  text-primary mb-3">{role}</p>
-        <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-8 leading-none">
+        <p className="text-xs uppercase text-primary mb-3">{role}</p>
+        <h3 className="text-xl md:text-2xl tracking-tight mb-8 leading-none">
           {title}
         </h3>
 
         <p
           className={cn(
-            "text-sm font-medium leading-relaxed mb-12",
+            "text-sm  leading-relaxed mb-12",
             accent ? "text-background/40" : "text-muted-foreground/40",
           )}
         >
@@ -77,7 +77,7 @@ const RoleCard = ({
         </p>
 
         <div className="flex items-center justify-between mt-auto pt-8 border-t border-current/10 opacity-30 group-hover:opacity-100 transition-opacity">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase ">
+          <div className="flex items-center gap-2 text-xs uppercase ">
             Continue to Dashboard
           </div>
           <ArrowRight className="h-6 w-6 transform group-hover:translate-x-2 transition-transform duration-500" />
@@ -99,20 +99,20 @@ export default function RoleSelection() {
         <Link href="/auth/login">
           <Button
             variant="ghost"
-            className="text-xs font-bold uppercase  hover:bg-foreground/5 transition-all"
+            className="text-xs uppercase hover:bg-foreground/5 transition-all"
           >
             Abort <ArrowRight className="ml-2 h-3 w-3" />
           </Button>
         </Link>
       </header>
 
-      <main className="flex-1 container relative z-10 px-4 sm:px-6 flex flex-col items-center justify-center py-10">
+      <main className="flex-1 container relative z-10 px-0.5 sm:px-6 flex flex-col items-center justify-center py-10">
         <div className="text-center space-y-6 mb-24 max-w-2xl mx-auto">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-xs font-bold uppercase tracking-[0.5em] text-primary"
+            className="text-xs uppercase tracking-[0.5em] text-primary"
           >
             Authentication
           </motion.p>
@@ -120,7 +120,7 @@ export default function RoleSelection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-2xl font-bold tracking-tight leading-[0.85]"
+            className="text-3xl md:text-2xl tracking-tight leading-[0.85]"
           >
             Select Your <br /> <span className="gradient-text ">Dimension</span>
           </motion.h1>
@@ -128,7 +128,7 @@ export default function RoleSelection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-muted-foreground/40 font-medium"
+            className="text-xl text-muted-foreground/40 "
           >
             Choose your role to continue to your professional dashboard.
           </motion.p>
@@ -164,10 +164,10 @@ export default function RoleSelection() {
             { l: "Security", v: "EAL7+" },
           ].map((stat, i) => (
             <div key={i} className="space-y-2">
-              <p className="text-[8px] font-bold uppercase  text-muted-foreground">
+              <p className="text-[8px] uppercase text-muted-foreground">
                 {stat.l}
               </p>
-              <p className="text-base font-bold tracking-tight">{stat.v}</p>
+              <p className="text-base tracking-tight">{stat.v}</p>
             </div>
           ))}
         </div>

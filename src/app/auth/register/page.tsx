@@ -36,7 +36,7 @@ const HERO = {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <label className="text-[12px] font-semibold text-[#374151] ml-0.5">{label}</label>
+      <label className="text-[12px] text-[#374151] ml-0.5">{label}</label>
       {children}
     </div>
   );
@@ -60,7 +60,7 @@ function InputBase({ icon: Icon, className = "", ...props }: { icon: React.Eleme
 /* ── Role selector screen ────────────────────────────────────────────── */
 function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => void }) {
   return (
-    <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center px-4 py-6 sm:p-6">
+    <div className="min-h-screen bg-[#FAFAF8] flex flex-col items-center justify-center px-0.5 py-6 sm:p-6">
       <div className="max-w-lg w-full">
 
         {/* Wordmark */}
@@ -69,7 +69,7 @@ function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => vo
         </Link>
 
         <div className="mb-10">
-          <h1 className="text-2xl font-bold text-[#1A1A1A] tracking-tight">Create your account</h1>
+          <h1 className="text-2xl text-[#1A1A1A] tracking-tight">Create your account</h1>
           <p className="text-sm text-[#6B7280] mt-1.5">First, tell us how you'll be using NexusRent.</p>
         </div>
 
@@ -85,7 +85,7 @@ function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => vo
                 <box.icon className="h-6 w-6 text-[#1B5E45] group-hover:text-white transition-colors" />
               </div>
 
-              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-1">{box.t}</h3>
+              <h3 className="text-[15px] text-[#1A1A1A] mb-1">{box.t}</h3>
               <p className="text-[12px] text-[#6B7280] mb-5">{box.d}</p>
 
               <ul className="space-y-2">
@@ -97,7 +97,7 @@ function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => vo
                 ))}
               </ul>
 
-              <div className="mt-6 flex items-center gap-1.5 text-[12px] font-semibold text-[#1B5E45]">
+              <div className="mt-6 flex items-center gap-1.5 text-[12px] text-[#1B5E45]">
                 Get started <ArrowRight className="h-3.5 w-3.5" />
               </div>
             </button>
@@ -106,7 +106,7 @@ function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => vo
 
         <p className="text-center text-[13px] text-[#6B7280] mt-8">
           Already have an account?{" "}
-          <Link href="/auth/login" className="text-[#1B5E45] font-semibold hover:underline">Sign in</Link>
+          <Link href="/auth/login" className="text-[#1B5E45]">Sign in</Link>
         </p>
 
         <Link href="/" className="flex items-center justify-center gap-2 text-[12px] text-[#9CA3AF] hover:text-[#6B7280] transition-colors mt-4">
@@ -162,7 +162,7 @@ function RegisterContent() {
     <div className="min-h-screen grid lg:grid-cols-[1fr_1.1fr] bg-[#FAFAF8]">
 
       {/* ── Left: Form ───────────────────────────────────────────────── */}
-      <div className="overflow-y-auto flex flex-col px-4 py-12 sm:px-6 lg:px-14">
+      <div className="overflow-y-auto flex flex-col px-0.5 py-12 sm:px-6 lg:px-14">
         <div className="max-w-md w-full mx-auto">
 
           {/* Wordmark */}
@@ -174,9 +174,9 @@ function RegisterContent() {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F5EE] border border-[#C4D4C9] mb-4">
               {role === "landlord" ? <Building2 className="h-3.5 w-3.5 text-[#1B5E45]" /> : <Home className="h-3.5 w-3.5 text-[#1B5E45]" />}
-              <span className="text-[11px] font-semibold text-[#1B5E45]">{role === "landlord" ? "Landlord" : "Tenant"} Account</span>
+              <span className="text-[11px] text-[#1B5E45]">{role === "landlord" ? "Landlord" : "Tenant"} Account</span>
             </div>
-            <h1 className="text-2xl font-bold text-[#1A1A1A] tracking-tight">Create your account</h1>
+            <h1 className="text-2xl text-[#1A1A1A] tracking-tight">Create your account</h1>
             <p className="text-sm text-[#6B7280] mt-1">Fill in your details to get started. It only takes a minute.</p>
           </div>
 
@@ -189,7 +189,7 @@ function RegisterContent() {
                   <CheckCircle2 className="h-10 w-10 text-[#3DBE7A]" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-[#1A1A1A]">Account created!</h2>
+                  <h2 className="text-xl text-[#1A1A1A]">Account created!</h2>
                   <p className="text-sm text-[#6B7280] mt-1">Signing you in...</p>
                 </div>
               </motion.div>
@@ -209,9 +209,9 @@ function RegisterContent() {
                       className="absolute inset-0 opacity-0 cursor-pointer" />
                   </div>
                   <div>
-                    <p className="text-[13px] font-semibold text-[#1A1A1A]">Profile photo</p>
+                    <p className="text-[13px] text-[#1A1A1A]">Profile photo</p>
                     <p className="text-[11px] text-[#6B7280] mt-0.5">Optional — JPG, PNG up to 5MB</p>
-                    <div className="flex items-center gap-1.5 mt-2 text-[11px] font-semibold text-[#1B5E45]">
+                    <div className="flex items-center gap-1.5 mt-2 text-[11px] text-[#1B5E45]">
                       <Upload className="h-3 w-3" /> Upload photo
                     </div>
                   </div>
@@ -314,16 +314,16 @@ function RegisterContent() {
                     className="h-4 w-4 mt-0.5 rounded border-[#E0E8E3] accent-[#1B5E45] cursor-pointer shrink-0" />
                   <label htmlFor="terms" className="text-[12px] text-[#6B7280] leading-relaxed cursor-pointer">
                     I agree to the{" "}
-                    <Link href="/terms" className="text-[#1B5E45] font-semibold hover:underline">Terms of Service</Link>
+                    <Link href="/terms" className="text-[#1B5E45]">Terms of Service</Link>
                     {" "}and{" "}
-                    <Link href="/privacy" className="text-[#1B5E45] font-semibold hover:underline">Privacy Policy</Link>
+                    <Link href="/privacy" className="text-[#1B5E45]">Privacy Policy</Link>
                   </label>
                 </div>
 
                 {/* Submit */}
                 <button type="submit"
                   disabled={form.password !== form.confirmPassword && !!form.confirmPassword}
-                  className="w-full h-11 rounded-xl bg-[#1B5E45] text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-[#246B4F] hover:shadow-lg hover:shadow-[#1B5E45]/25 hover:-translate-y-px active:translate-y-0 transition-all shadow-md shadow-[#1B5E45]/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-2">
+                  className="w-full h-11 rounded-xl bg-[#1B5E45] text-white text-sm flex items-center justify-center gap-2 hover:bg-[#246B4F] hover:shadow-lg hover:shadow-[#1B5E45]/25 hover:-translate-y-px active:translate-y-0 transition-all shadow-md shadow-[#1B5E45]/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-2">
                   Create account
                   <ArrowRight className="h-4 w-4" />
                 </button>
@@ -332,7 +332,7 @@ function RegisterContent() {
                 <div className="space-y-3 pt-2">
                   <p className="text-center text-[13px] text-[#6B7280]">
                     Already have an account?{" "}
-                    <Link href="/auth/login" className="text-[#1B5E45] font-semibold hover:underline">Sign in</Link>
+                    <Link href="/auth/login" className="text-[#1B5E45]">Sign in</Link>
                   </p>
                   <button type="button" onClick={() => setRole(null)}
                     className="w-full flex items-center justify-center gap-2 text-[12px] text-[#9CA3AF] hover:text-[#6B7280] transition-colors">
@@ -378,11 +378,11 @@ function RegisterContent() {
 
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#3DBE7A]/20 border border-[#3DBE7A]/30">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
-                <span className="text-[11px] font-semibold text-[#3DBE7A] uppercase tracking-wider">{hero.label}</span>
+                <span className="text-[11px] text-[#3DBE7A] uppercase tracking-wider">{hero.label}</span>
               </div>
 
               <div>
-                <h2 className="text-3xl font-bold text-white leading-tight tracking-tight">{hero.headline}</h2>
+                <h2 className="text-3xl text-white leading-tight tracking-tight">{hero.headline}</h2>
                 <p className="text-[#7FD9A8]/70 text-[15px] leading-relaxed mt-4 max-w-sm">{hero.body}</p>
               </div>
 
@@ -407,7 +407,7 @@ function RegisterContent() {
                   className="h-9 w-9 rounded-full border-2 border-[#1B5E45] object-cover" />
               ))}
             </div>
-            <p className="text-[12px] text-white/50">Joined by <strong className="text-white/70">2,000+</strong> landlords and tenants across Kenya.</p>
+            <p className="text-[12px] text-white/50">Joined by <span className="text-white/70">2,000+</span> landlords and tenants across Kenya.</p>
           </div>
         </div>
       </div>
@@ -423,7 +423,7 @@ export default function RegisterPage() {
           <div className="h-12 w-12 rounded-2xl bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center animate-pulse">
             <div className="h-6 w-6 rounded-lg bg-[#1B5E45]" />
           </div>
-          <p className="text-sm text-[#6B7280] font-medium">Loading...</p>
+          <p className="text-sm text-[#6B7280] ">Loading...</p>
         </div>
       </div>
     }>

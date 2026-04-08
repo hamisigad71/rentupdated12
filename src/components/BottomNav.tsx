@@ -84,7 +84,7 @@ export default function BottomNav({ items }: BottomNavProps) {
                     {item.icon}
                   </div>
                   <span
-                    className={`text-[10px] font-bold mt-1 tracking-tight transition-all duration-300 ${isActive ? "opacity-100" : "opacity-50"}`}
+                    className={`text-[10px] mt-1 tracking-tight transition-all duration-300 ${isActive ? "opacity-100" : "opacity-50"}`}
                   >
                     {item.label}
                   </span>

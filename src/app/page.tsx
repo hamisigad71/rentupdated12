@@ -272,7 +272,7 @@ function HeroCarousel() {
                     {slide.tag}
                   </span>
                   <div className="h-3 w-px bg-white/20" />
-                  <span className="text-[11px] text-white/40 font-medium">{slide.eyebrow}</span>
+                  <span className="text-[11px] text-white/40 ">{slide.eyebrow}</span>
                 </motion.div>
 
                 {/* Headline */}
@@ -281,7 +281,7 @@ function HeroCarousel() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.65, ease: [0.23, 1, 0.32, 1] }}
-                    className="text-[2.5rem] sm:text-[3.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-[-0.04em] leading-[0.88] text-white"
+                    className="text-[2.5rem] sm:text-[3.5rem] md:text-[5.5rem] lg:text-[6.5rem] tracking-[-0.04em] leading-[0.88] text-white"
                   >
                     {slide.headline}
                   </motion.h1>
@@ -289,7 +289,7 @@ function HeroCarousel() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.22, duration: 0.65, ease: [0.23, 1, 0.32, 1] }}
-                    className="text-[2.5rem] sm:text-[3.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black tracking-[-0.04em] leading-[0.88] text-[#3DBE7A]"
+                    className="text-[2.5rem] sm:text-[3.5rem] md:text-[5.5rem] lg:text-[6.5rem] tracking-[-0.04em] leading-[0.88] text-[#3DBE7A]"
                   >
                     {slide.headlineAccent}
                   </motion.h1>
@@ -318,7 +318,7 @@ function HeroCarousel() {
                       <ArrowRight className="h-4 w-4 shrink-0 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </Link>
-                  <button className="w-full group h-12 md:h-14 px-4 md:px-10 rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md text-white font-semibold text-[13px] md:text-sm flex items-center justify-center gap-2 md:gap-3 hover:bg-white/15 hover:border-white/25 transition-all duration-200">
+                  <button className="w-full group h-12 md:h-14 px-4 md:px-10 rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md text-white text-[13px] md:text-sm flex items-center justify-center gap-2 md:gap-3 hover:bg-white/15 hover:border-white/25 transition-all duration-200">
                     <div className="h-7 w-7 rounded-full bg-white/10 flex items-center justify-center shrink-0 hidden sm:flex">
                       <Play className="h-3 w-3 text-white fill-white ml-0.5" />
                     </div>
@@ -338,7 +338,7 @@ function HeroCarousel() {
                     <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 pl-4 pr-5 py-2.5 rounded-2xl bg-white/6 backdrop-blur-sm border border-white/10 w-full md:w-auto">
                       <div className="flex items-center gap-2">
                         <div className="h-1.5 w-1.5 rounded-full bg-[#3DBE7A] shrink-0" />
-                        <span className="text-[10px] sm:text-[11px] text-white/50 font-medium uppercase tracking-wider truncate">{kpi.label}</span>
+                        <span className="text-[10px] sm:text-[11px] text-white/50 uppercase tracking-wider truncate">{kpi.label}</span>
                       </div>
                       <span className="text-xs sm:text-[13px] md:text-sm font-normal text-white whitespace-nowrap">{kpi.value}</span>
                     </div>
@@ -364,7 +364,7 @@ function HeroCarousel() {
                     <div className="flex gap-0.5 mb-0.5">
                       {[...Array(5)].map((_, i) => <Star key={i} className="h-3 w-3 fill-[#3DBE7A] text-[#3DBE7A]" />)}
                     </div>
-                    <p className="text-[11px] font-medium text-white/50">2,000+ property professionals</p>
+                    <p className="text-[11px] text-white/50">2,000+ property professionals</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -399,7 +399,7 @@ function HeroCarousel() {
           />
         </div>
 
-        <div className="container max-w-7xl mx-auto px-6 md:px-10">
+        <div className="container max-w-7xl mx-auto px-0.5 sm:px-6 md:px-10">
           <div className="flex items-center justify-between py-5 gap-6">
 
             {/* Slide pills */}
@@ -483,7 +483,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
         ].map((s, i) => (
           <div key={i} className="space-y-2.5">
             <div className="flex justify-between text-xs">
-              <span className="text-[#6B7280] font-semibold">{s.label}</span>
+              <span className="text-[#6B7280]">{s.label}</span>
               <span className="font-normal text-[#1B5E45]">{s.value}</span>
             </div>
             <div className="h-1.5 bg-[#E8F5EE] rounded-full overflow-hidden">
@@ -504,7 +504,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
           { label: "Markets",      val: "14" },
         ].map((s, i) => (
           <div key={i} className="text-center p-3 rounded-xl bg-[#FAFAF8] border border-[#E0E8E3]">
-            <p className="text-[9px] uppercase tracking-widest text-[#6B7280] font-semibold mb-1">{s.label}</p>
+            <p className="text-[9px] uppercase tracking-widest text-[#6B7280] mb-1">{s.label}</p>
             <p className="text-lg md:text-xl font-normal text-[#1A1A1A] tracking-tight">{s.val}</p>
           </div>
         ))}
@@ -522,7 +522,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
       </div>
       <div className="grid grid-cols-2 gap-3 mb-5">
         {[
-          { icon: DollarSign, label: "Revenue",  val: "KES 4.2M", delta: "+18%" },
+          { icon: DollarSign, label: "Revenue",  val: "KSh 4.2M", delta: "+18%" },
           { icon: HomeIcon,   label: "Units",    val: "1,247",    delta: "+34" },
           { icon: Percent,    label: "Vacancy",  val: "6.0%",     delta: "-2.1%" },
           { icon: Activity,   label: "Requests", val: "384",      delta: "-12%" },
@@ -532,8 +532,8 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
               <s.icon className="h-4 w-4 text-[#1B5E45]" />
               <span className="text-[9px] font-normal text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">{s.delta}</span>
             </div>
-            <p className="text-base md:text-xl font-normal tracking-tight text-[#1A1A1A]">{s.val}</p>
-            <p className="text-[8px] sm:text-[9px] md:text-[10px] text-[#6B7280] font-medium mt-0.5">{s.label}</p>
+            <p className="text-base md:text-xl font-normal tracking-tight text-[#1A1A1A] font-money">{s.val}</p>
+            <p className="text-[8px] sm:text-[9px] md:text-[10px] text-[#6B7280] mt-0.5">{s.label}</p>
           </div>
         ))}
       </div>
@@ -567,7 +567,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
       </div>
       <div className="space-y-2.5 mb-5">
         {[
-          { icon: CreditCard, label: "Next Payment", val: "KES 45,000", sub: "Due Apr 1",      color: "text-[#1B5E45]" },
+          { icon: CreditCard, label: "Next Payment", val: "KSh 45,000", sub: "Due Apr 1",      color: "text-[#1B5E45]" },
           { icon: Wrench,     label: "Open Request", val: "Plumbing",   sub: "In Progress",    color: "text-amber-600" },
           { icon: FileText,   label: "Lease Expires", val: "Dec 31, 2026", sub: "14 months",   color: "text-[#1A1A1A]" },
         ].map((item, i) => (
@@ -576,8 +576,8 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
               <item.icon className="h-4 w-4 text-[#1B5E45]" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] text-[#6B7280] font-semibold">{item.label}</p>
-              <p className={cn("text-sm font-normal truncate", item.color)}>{item.val}</p>
+              <p className="text-[10px] text-[#6B7280]">{item.label}</p>
+              <p className={cn("text-sm font-normal truncate", item.color, item.val.includes('KSh') && "font-money")}>{item.val}</p>
             </div>
             <p className="text-[9px] text-[#6B7280]">{item.sub}</p>
           </div>
@@ -632,7 +632,7 @@ export default function Home() {
     <>
       <Loader show={isLoading} />
       <div className={cn("flex min-h-screen flex-col bg-background", isLoading ? "h-screen overflow-hidden" : "")}>
-        <Navbar />
+        <Navbar className="px-0.5 sm:px-6 lg:px-8" />
         <main className="flex-1 overflow-y-auto overflow-x-hidden">
         <HeroCarousel />
         <TrustLogosBar />
@@ -775,7 +775,7 @@ function MetricBar() {
   return (
     <section className="bg-primary/5 py-14 text-foreground relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle_at_20%_50%,#3DBE7A,transparent_50%),radial-gradient(circle_at_80%_50%,#246B4F,transparent_50%)]" />
-      <div className="container px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-10">
           {stats.map((s,i) => (
             <Reveal key={i} delay={i*0.08} className="text-center group">
@@ -784,7 +784,7 @@ function MetricBar() {
                   <s.icon className="h-4 w-4 text-primary" />
                 </div>
               </div>
-              <p className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter tabular-nums">
+              <p className="text-2xl sm:text-3xl md:text-4xl tracking-tighter tabular-nums">
                 <Counter to={s.val} suffix={s.suffix} decimals={s.decimals} />
               </p>
               <div className="h-px w-8 bg-primary/30 mx-auto my-3" />
@@ -801,10 +801,10 @@ function MetricBar() {
 function SolutionsSection() {
   return (
     <section className="py-16 md:py-28 bg-background">
-      <div className="container px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Built for Both Sides</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em] mt-2">Dual Portals. One Powerful Engine.</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em] mt-2">Dual Portals. One Powerful Engine.</h2>
           <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto font-light">Purpose-built experiences that serve every stakeholder — flawlessly.</p>
         </Reveal>
         <div className="grid md:grid-cols-2 gap-6">
@@ -846,12 +846,12 @@ function SolutionsSection() {
                 <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center mb-10 transition-transform group-hover:scale-105",card.accent?"bg-primary text-primary-foreground":"bg-primary/10 text-primary")}>
                   <card.icon className="h-8 w-8" strokeWidth={1.6} />
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.15em] text-primary">{card.role}</span>
-                <h3 className="text-2xl md:text-3xl font-black tracking-tight mt-1 mb-5">{card.title}</h3>
+                <span className="text-[10px] uppercase tracking-[0.15em] text-primary">{card.role}</span>
+                <h3 className="text-2xl md:text-3xl tracking-tight mt-1 mb-5">{card.title}</h3>
                 <p className={cn("text-base leading-relaxed mb-8",card.accent?"text-muted-foreground":"text-muted-foreground")}>{card.desc}</p>
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {card.features.map((f,j) => (
-                    <div key={j} className={cn("flex items-center gap-2.5 text-sm font-medium",card.accent?"text-foreground/80":"text-foreground/80")}>
+                    <div key={j} className={cn("flex items-center gap-2.5 text-sm ",card.accent?"text-foreground/80":"text-foreground/80")}>
                       <div className="h-6 w-6 rounded-lg bg-primary/12 flex items-center justify-center shrink-0">
                         <f.icon className="h-3.5 w-3.5 text-primary" />
                       </div>
@@ -894,10 +894,10 @@ function HowItWorksSection() {
   return (
     <section className="py-16 md:py-28 bg-muted/30 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(#1B5E45_0.6px,transparent_1px)] bg-size-[28px_28px] opacity-[0.03]" />
-      <div className="container px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Simple Process</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Up & running<br />in under 10 minutes.</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Up & running<br />in under 10 minutes.</h2>
         </Reveal>
         <Reveal className="flex justify-center mb-16">
           <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl bg-foreground/6 border border-border">
@@ -920,7 +920,7 @@ function HowItWorksSection() {
                     <div className="h-13 w-13 rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
                       <s.icon className="h-6 w-6 text-primary" />
                     </div>
-                    <span className="text-3xl md:text-4xl font-black text-foreground/6 tabular-nums">{s.step}</span>
+                    <span className="text-3xl md:text-4xl text-foreground/6 tabular-nums">{s.step}</span>
                   </div>
                   <h4 className="font-normal text-sm md:text-base mb-2">{s.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
@@ -940,7 +940,7 @@ function FeatureGridSection() {
     {icon:Shield,   title:"Bank-Grade Security",    desc:"256-bit AES encryption, zero-trust architecture, and SOC 2 Type II compliance protect every transaction.", large:true, bg:"bg-foreground text-background"},
     {icon:Smartphone,title:"Mobile-First Design",   desc:"Full functionality from any device. Native app experience in the browser.",                                  large:false,bg:"bg-card"},
     {icon:Zap,      title:"< 14 Min Response",      desc:"Our automated workflows ensure maintenance and support requests are acknowledged fast.",                      large:false,bg:"bg-emerald-soft"},
-    {icon:Globe,    title:"Multi-Currency & M-Pesa", desc:"Accept payments in KES, USD, or GBP. M-Pesa integration built-in with instant reconciliation.",             large:false,bg:"bg-card"},
+    {icon:Globe,    title:"Multi-Currency & M-Pesa", desc:"Accept payments in KSh, USD, or GBP. M-Pesa integration built-in with instant reconciliation.",             large:false,bg:"bg-card"},
     {icon:BarChart3,title:"Real-Time Reporting",    desc:"Live dashboards, PDF exports, and scheduled email reports keep all stakeholders informed.",                   large:false,bg:"bg-card"},
     {icon:Bell,     title:"Smart Notifications",    desc:"Automated rent reminders, maintenance updates, and lease renewal alerts — all customisable.",                 large:true, bg:"bg-primary text-primary-foreground"},
     {icon:Award,    title:"Compliance Ready",       desc:"Audit trails, digital signatures, and document retention built for regulatory requirements.",                  large:false,bg:"bg-card"},
@@ -948,10 +948,10 @@ function FeatureGridSection() {
   ];
   return (
     <section className="py-16 md:py-28 bg-background">
-      <div className="container px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Full Feature Set</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Everything you need.<br />Nothing you don't.</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Everything you need.<br />Nothing you don't.</h2>
         </Reveal>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
           {features.map((f,i) => (
@@ -960,7 +960,7 @@ function FeatureGridSection() {
                 <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-105",f.bg==="bg-foreground text-background"?"bg-primary/15":f.bg==="bg-primary text-primary-foreground"?"bg-primary-foreground/15":f.bg==="bg-emerald-soft"?"bg-primary/15":"bg-primary/8")}>
                   <f.icon className={cn("h-5 w-5",f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground":"text-primary")} />
                 </div>
-                <h4 className="font-black text-sm md:text-base mb-2">{f.title}</h4>
+                <h4 className="text-sm md:text-base mb-2">{f.title}</h4>
                 <p className={cn("text-sm leading-relaxed",f.bg==="bg-foreground text-background"?"text-background/60":f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground/70":"text-muted-foreground")}>{f.desc}</p>
               </div>
             </Reveal>
@@ -984,10 +984,10 @@ function TestimonialsSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   return (
     <section className="py-16 md:py-28 bg-muted/25 overflow-hidden">
-      <div className="container px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Social Proof</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Loved by managers<br />and residents alike.</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Loved by managers<br />and residents alike.</h2>
         </Reveal>
         <div className="relative">
           <AnimatePresence mode="wait">
@@ -1029,10 +1029,10 @@ function PricingSection() {
   return (
     <section className="py-16 md:py-28 bg-background relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(27,94,69,0.04),transparent)]" />
-      <div className="container px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-8">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Transparent Pricing</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em]">Simple, honest pricing.<br />No surprises.</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Simple, honest pricing.<br />No surprises.</h2>
         </Reveal>
         <Reveal className="flex justify-center mb-14">
           <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl bg-foreground/5 border border-border">
@@ -1048,19 +1048,19 @@ function PricingSection() {
           {plans.map((plan,i) => (
             <Reveal key={i} delay={i*0.1}>
               <div className={cn("relative h-full rounded-3xl p-8 border transition-all duration-300 flex flex-col",plan.highlight?"bg-foreground text-background border-foreground shadow-2xl scale-[1.02]":"bg-card border-border hover:border-primary/20 hover:shadow-lg")}>
-                {plan.highlight && <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest shadow-lg">Most Popular</div>}
+                {plan.highlight && <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs uppercase tracking-widest shadow-lg">Most Popular</div>}
                 <div className="mb-6">
-                  <h3 className="font-black text-lg md:text-xl mb-1">{plan.name}</h3>
+                  <h3 className="text-lg md:text-xl mb-1">{plan.name}</h3>
                   <p className={cn("text-sm",plan.highlight?"text-background/60":"text-muted-foreground")}>{plan.desc}</p>
                 </div>
                 <div className="mb-6">
                   {plan.price ? (
                     <div className="flex items-end gap-1">
-                      <span className="text-3xl md:text-4xl font-black tracking-tight">KES {plan.price.toLocaleString()}</span>
+                      <span className="text-3xl md:text-4xl tracking-tight font-money">KSh {plan.price.toLocaleString()}</span>
                       <span className={cn("text-sm mb-1.5",plan.highlight?"text-background/50":"text-muted-foreground")}>/mo</span>
                     </div>
-                  ) : <p className="text-2xl md:text-3xl font-black">Custom</p>}
-                  <p className="text-xs font-semibold mt-1.5 text-primary">{plan.units}</p>
+                  ) : <p className="text-2xl md:text-3xl">Custom</p>}
+                  <p className="text-xs mt-1.5 text-primary">{plan.units}</p>
                 </div>
                 <ul className="space-y-3 mb-8 flex-1">
                   {plan.features.map((f,j) => (
@@ -1095,15 +1095,15 @@ function FinalCTASection() {
         <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80" alt="" className="w-full h-full object-cover" />
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(61,190,122,0.08),transparent)]" />
-      <div className="container px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
         <Reveal>
           <span className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Ready when you are</span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-[-0.04em] text-background leading-tight">Start building<br />your legacy today.</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl tracking-[-0.04em] text-background leading-tight">Start building<br />your legacy today.</h2>
           <p className="text-lg text-background/50 max-w-lg mx-auto font-light mt-5">Join 2,000+ property professionals who manage their portfolios with confidence on Nova.</p>
         </Reveal>
         <Reveal delay={0.2} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/auth/register">
-            <Button size="lg" className="h-16 px-14 rounded-3xl text-sm md:text-base font-black shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
+            <Button size="lg" className="h-16 px-14 rounded-3xl text-sm md:text-base shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
               Get Started — Free<ArrowRight className="ml-3 h-5 w-5" />
             </Button>
           </Link>
@@ -1112,7 +1112,7 @@ function FinalCTASection() {
           </Button>
         </Reveal>
         <Reveal delay={0.35}>
-          <div className="flex flex-wrap justify-center gap-8 text-sm text-background/40 font-medium">
+          <div className="flex flex-wrap justify-center gap-8 text-sm text-background/40 ">
             {["14-day free trial","No credit card","Cancel anytime","Free data migration"].map(item => (
               <div key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" />{item}</div>
             ))}
@@ -1127,7 +1127,7 @@ function FinalCTASection() {
 function Footer() {
   return (
     <footer className="border-t border-border bg-background pt-20 pb-12">
-      <div className="container px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-16 mb-20">
           <div className="lg:col-span-4 space-y-6">
             <Logo />

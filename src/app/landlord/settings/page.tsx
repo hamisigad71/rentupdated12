@@ -29,18 +29,18 @@ export default function SettingsPage() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1">
-            <Badge variant="outline" className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs font-bold  px-3 py-1 mb-2">
+            <Badge variant="outline" className="rounded-xl border-primary/20 bg-primary/5 text-primary uppercase text-xs px-3 py-1 mb-2">
               System Configuration
             </Badge>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight leading-none uppercase">
+            <h1 className="text-xl md:text-2xl tracking-tight leading-none uppercase">
               Global <span className="text-primary ">Settings</span>
             </h1>
-            <p className="text-sm font-bold text-muted-foreground/30 uppercase tracking-tight">
+            <p className="text-sm text-muted-foreground/30 uppercase tracking-tight">
               Enterprise resource & protocol management center
             </p>
           </div>
           
-          <Button className="h-12 rounded-xl px-6 bg-[#0F0F0F] text-white shadow-xl hover:bg-primary transition-all font-bold uppercase text-xs  group">
+          <Button className="h-12 rounded-xl px-6 bg-[#0F0F0F] text-white shadow-xl hover:bg-primary transition-all uppercase text-xs group">
              <RefreshCw className="mr-2 h-4 w-4 group-hover:rotate-180 transition-transform duration-700" /> Reset to Defaults
           </Button>
         </div>
@@ -55,8 +55,8 @@ export default function SettingsPage() {
                     <Shield className="h-7 w-7" strokeWidth={1.5} />
                  </div>
                  <div className="space-y-0.5">
-                    <h4 className="text-xl font-bold uppercase tracking-tight">Security Shield</h4>
-                    <p className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">Access Control Protocols</p>
+                    <h4 className="text-xl uppercase tracking-tight">Security Shield</h4>
+                    <p className="text-[9px] text-muted-foreground/30 uppercase tracking-[0.2em]">Access Control Protocols</p>
                  </div>
               </div>
 
@@ -66,8 +66,8 @@ export default function SettingsPage() {
                    { l: "Biometric Link", s: false },
                    { l: "API Shielding", s: true },
                  ].map((opt, i) => (
-                   <div key={i} className="flex items-center justify-between p-5 rounded-2xl border border-foreground/5 hover:bg-foreground/[0.01] transition-all group cursor-pointer">
-                      <span className="text-xs font-bold uppercase  text-muted-foreground/60">{opt.l}</span>
+                   <div key={i} className="flex items-center justify-between p-5 rounded-2xl border border-foreground/5 hover:bg-foreground/1 transition-all group cursor-pointer">
+                      <span className="text-xs uppercase text-muted-foreground/60">{opt.l}</span>
                       <div className={cn(
                         "h-6 w-12 rounded-full flex items-center px-1 transition-all",
                         opt.s ? "bg-primary/20 border border-primary/40" : "bg-foreground/5 border border-foreground/10"
@@ -86,8 +86,8 @@ export default function SettingsPage() {
                     <Bell className="h-7 w-7" strokeWidth={1.5} />
                  </div>
                  <div className="space-y-0.5">
-                    <h4 className="text-xl font-bold uppercase tracking-tight">Pulse Center</h4>
-                    <p className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">Signal & Notification Flow</p>
+                    <h4 className="text-xl uppercase tracking-tight">Pulse Center</h4>
+                    <p className="text-[9px] text-muted-foreground/30 uppercase tracking-[0.2em]">Signal & Notification Flow</p>
                  </div>
               </div>
 
@@ -97,8 +97,8 @@ export default function SettingsPage() {
                    { l: "Email Digests", s: true },
                    { l: "Mobile Pings", s: true },
                  ].map((opt, i) => (
-                   <div key={i} className="flex items-center justify-between p-5 rounded-2xl border border-foreground/5 hover:bg-foreground/[0.01] transition-all group cursor-pointer">
-                      <span className="text-xs font-bold uppercase  text-muted-foreground/60">{opt.l}</span>
+                   <div key={i} className="flex items-center justify-between p-5 rounded-2xl border border-foreground/5 hover:bg-foreground/1 transition-all group cursor-pointer">
+                      <span className="text-xs uppercase text-muted-foreground/60">{opt.l}</span>
                       <div className={cn(
                         "h-6 w-12 rounded-full flex items-center px-1 transition-all",
                         opt.s ? "bg-primary/20 border border-primary/40" : "bg-foreground/5 border border-foreground/10"
@@ -117,8 +117,8 @@ export default function SettingsPage() {
                     <Paintbrush className="h-7 w-7" strokeWidth={1.5} />
                  </div>
                  <div className="space-y-0.5">
-                    <h4 className="text-xl font-bold uppercase tracking-tight">Interface Style</h4>
-                    <p className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">Visual Environment Config</p>
+                    <h4 className="text-xl uppercase tracking-tight">Interface Style</h4>
+                    <p className="text-[9px] text-muted-foreground/30 uppercase tracking-[0.2em]">Visual Environment Config</p>
                  </div>
               </div>
 
@@ -131,10 +131,10 @@ export default function SettingsPage() {
                  ].map((t, i) => (
                    <button key={i} className={cn(
                      "flex flex-col items-center justify-center p-6 rounded-2xl border transition-all gap-4",
-                     t.active ? "border-primary bg-primary/5" : "border-foreground/5 bg-foreground/[0.02] hover:border-primary/20"
+                     t.active ? "border-primary bg-primary/5" : "border-foreground/5 bg-foreground/2 hover:border-primary/20"
                    )}>
                       <div className={cn("h-10 w-10 rounded-full shadow-xl", t.color)} />
-                      <span className="text-[9px] font-bold uppercase  opacity-60">{t.l}</span>
+                      <span className="text-[9px] uppercase opacity-60">{t.l}</span>
                    </button>
                  ))}
               </div>
@@ -147,23 +147,23 @@ export default function SettingsPage() {
                     <Database className="h-7 w-7" strokeWidth={1.5} />
                  </div>
                  <div className="space-y-0.5">
-                    <h4 className="text-xl font-bold uppercase tracking-tight">Storage Node</h4>
-                    <p className="text-[9px] font-bold text-muted-foreground/30 uppercase tracking-[0.2em]">Ledger & Asset Archival</p>
+                    <h4 className="text-xl uppercase tracking-tight">Storage Node</h4>
+                    <p className="text-[9px] text-muted-foreground/30 uppercase tracking-[0.2em]">Ledger & Asset Archival</p>
                  </div>
               </div>
 
               <div className="space-y-4">
-                 <div className="p-6 rounded-2xl bg-foreground/[0.02] border border-foreground/5 space-y-4">
+                 <div className="p-6 rounded-2xl bg-foreground/2 border border-foreground/5 space-y-4">
                     <div className="flex items-center justify-between">
-                       <span className="text-xs font-bold uppercase  text-muted-foreground/40">In-Memory Cache</span>
-                       <span className="text-xs font-bold text-primary">94.2 MB Cached</span>
+                       <span className="text-xs uppercase text-muted-foreground/40">In-Memory Cache</span>
+                       <span className="text-xs text-primary">94.2 MB Cached</span>
                     </div>
                     <div className="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
                        <div className="h-full w-[40%] bg-primary rounded-full" />
                     </div>
                  </div>
                  
-                 <Button variant="outline" className="w-full h-12 rounded-xl text-[9px] font-bold uppercase  border-foreground/5 hover:bg-destructive/5 hover:text-destructive hover:border-destructive/20 transition-all">
+                 <Button variant="outline" className="w-full h-12 rounded-xl text-[9px] uppercase border-foreground/5 hover:bg-destructive/5 hover:text-destructive hover:border-destructive/20 transition-all">
                     Purge Transactional Cache
                  </Button>
               </div>
@@ -178,14 +178,14 @@ export default function SettingsPage() {
                  <Zap className="h-8 w-8" />
               </div>
               <div>
-                 <h4 className="text-xl font-bold uppercase tracking-tight">Synchronize Protocol</h4>
-                 <p className="text-xs font-bold text-white/20 uppercase tracking-[0.4em]">Apply global configuration changes</p>
+                 <h4 className="text-xl uppercase tracking-tight">Synchronize Protocol</h4>
+                 <p className="text-xs text-white/20 uppercase tracking-[0.4em]">Apply global configuration changes</p>
               </div>
            </div>
            
            <div className="flex items-center gap-4 relative z-10">
-              <Button variant="ghost" className="h-14 px-8 rounded-2xl text-white/40 hover:text-white font-bold uppercase text-xs ">Discard Changes</Button>
-              <Button className="h-14 px-10 rounded-2xl bg-primary text-white shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all font-bold uppercase text-xs ">Write To Hardware <ChevronRight className="ml-2 h-4 w-4" /></Button>
+              <Button variant="ghost" className="h-14 px-8 rounded-2xl text-white/40 hover:text-white uppercase text-xs ">Discard Changes</Button>
+              <Button className="h-14 px-10 rounded-2xl bg-primary text-white shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all uppercase text-xs ">Write To Hardware <ChevronRight className="ml-2 h-4 w-4" /></Button>
            </div>
         </div>
 

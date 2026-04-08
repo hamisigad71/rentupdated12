@@ -35,7 +35,7 @@ export default function DashboardCard({
     <Card className={cn("glass group relative overflow-hidden transition-all hover:-translate-y-1 hover:shadow-2xl", className)}>
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_100%_0%,var(--color-brand-primary)/0.05_0%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-        <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+        <CardTitle className="text-sm text-muted-foreground uppercase tracking-wider">
           {title}
         </CardTitle>
         <div className={cn("flex h-10 w-10 items-center justify-center rounded-xl border transition-all duration-500 group-hover:rotate-12 group-hover:scale-110", colorMap[color])}>
@@ -44,18 +44,18 @@ export default function DashboardCard({
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-1">
-          <span className="text-xl font-bold tracking-tight md:text-2xl">
+          <span className="text-xl tracking-tight md:text-2xl">
             {value}
           </span>
           {trend && (
             <div className="flex items-center gap-2 mt-2">
               <div className={cn(
-                "flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-bold",
+                "flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs",
                 trend.direction === "up" ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"
               )}>
                 {trend.direction === "up" ? "↑" : "↓"} {trend.value}%
               </div>
-              <span className="text-xs text-muted-foreground uppercase font-semibold">vs last month</span>
+              <span className="text-xs text-muted-foreground uppercase">vs last month</span>
             </div>
           )}
         </div>
