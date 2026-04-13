@@ -410,7 +410,7 @@ export default function TenantPaymentsPage() {
                           </p>
                         </div>
                         <Tooltip>
-                        <TooltipTrigger>
+                          <TooltipTrigger render={<span />}>
                             <Button
                               size="icon"
                               variant="ghost"

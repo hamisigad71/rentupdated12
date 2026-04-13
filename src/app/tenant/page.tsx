@@ -99,7 +99,7 @@ function StatCard({
 }: {
   icon: React.ElementType;
   label: string;
-  value: string;
+  value: React.ReactNode;
   sub?: string;
   accent?: boolean;
   badge?: { label: string; color: "green" | "amber" | "blue" | "red" };
@@ -309,7 +309,7 @@ function HeroMiniStat({
 }: {
   icon: React.ElementType;
   label: string;
-  value: string;
+  value: React.ReactNode;
   highlight?: boolean;
 }) {
   return (
@@ -363,7 +363,7 @@ export default function TenantDashboard() {
               </div>
               <div className="flex items-center gap-3">
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger render={<span />}>
                     <Button
                       variant="ghost"
                       size="icon"
@@ -376,7 +376,7 @@ export default function TenantDashboard() {
                   <TooltipContent>Notifications</TooltipContent>
                 </Tooltip>
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger render={<span />}>
                     <Button
                       variant="ghost"
                       size="icon"

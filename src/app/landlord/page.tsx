@@ -252,7 +252,7 @@ export default function LandlordDashboard() {
 
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger render={<span />}>
                     <Button
                       variant="ghost"
                       size="icon"

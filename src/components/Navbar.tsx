@@ -97,7 +97,11 @@ const navLinks = [
 ];
 
 /* ─────────────────────────────────────────────────────────────────────── */
-export function Navbar() {
+interface NavbarProps {
+  className?: string;
+}
+
+export function Navbar({ className }: NavbarProps) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -122,6 +126,7 @@ export function Navbar() {
           scrolled
             ? "bg-white/95 backdrop-blur-md border-b border-[#E0E8E3] shadow-sm shadow-[#1B5E45]/5"
             : "bg-white border-b border-[#E0E8E3]",
+          className,
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
