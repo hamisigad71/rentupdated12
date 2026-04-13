@@ -66,7 +66,7 @@ const solutions = [
     title: "Properties",
     href: "/properties",
     description:
-      "Manage your entire portfolio from one unified command center.",
+      "Manage your entire Property from one unified command center.",
     icon: Building2,
     color: "#7c3aed",
     bg: "#f5f3ff",

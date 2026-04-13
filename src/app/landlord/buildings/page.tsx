@@ -145,11 +145,11 @@ export default function BuildingsPage() {
     }, 1200);
   };
 
-  /* Portfolio Statistics */
+  /* Property Statistics */
   const totalUnits = buildings.reduce((s, b) => s + b.units, 0);
   const totalOccupied = buildings.reduce((s, b) => s + b.occupiedUnits, 0);
   const totalRevenue = mockTenants.reduce((s, t) => s + t.rent, 0);
-  const portfolioOccupancy = totalUnits ? Math.round((totalOccupied / totalUnits) * 100) : 0;
+  const PropertyOccupancy = totalUnits ? Math.round((totalOccupied / totalUnits) * 100) : 0;
 
   const filteredBuildings = buildings.filter((b) =>
     `${b.name} ${b.address}`.toLowerCase().includes(search.toLowerCase())
@@ -177,13 +177,13 @@ export default function BuildingsPage() {
             <div className="space-y-2">
               <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
                 <Building2 className="w-3 h-3 mr-1" />
-                Portfolio Management
+                Property Management
               </Badge>
               <h1 className="text-xl sm:text-2xl lg:text-3xl text-[#1A1A1A]">
                 Properties
               </h1>
               <p className="text-sm text-[#6B7280]">
-                Manage your real estate portfolio
+                Manage your real estate Property
               </p>
             </div>
 
@@ -207,7 +207,7 @@ export default function BuildingsPage() {
             </div>
           </div>
 
-          {/* Portfolio KPIs */}
+          {/* Property KPIs */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
@@ -226,7 +226,7 @@ export default function BuildingsPage() {
               },
               {
                 label: "Occupancy Rate",
-                value: `${portfolioOccupancy}%`,
+                value: `${PropertyOccupancy}%`,
                 icon: Target,
                 color: "#1B5E45",
                 bgColor: "#E8F5EE",
@@ -383,7 +383,7 @@ export default function BuildingsPage() {
                     Add New Property
                   </h3>
                   <p className="text-sm text-[#6B7280]">
-                    Register a new building to your portfolio
+                    Register a new building to your Property
                   </p>
                 </CardContent>
               </Card>
@@ -405,7 +405,7 @@ export default function BuildingsPage() {
                     Add New Property
                   </DialogTitle>
                   <p className="text-sm text-[#6B7280]">
-                    Register a new building to your portfolio
+                    Register a new building to your Property
                   </p>
                 </div>
                 <Button

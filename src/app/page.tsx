@@ -121,7 +121,7 @@ function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: strin
 const SLIDES = [
   {
     img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2400&q=85",
-    tag: "Portfolio Management",
+    tag: "Property Management",
     eyebrow: "Trusted by 2,000+ Professionals",
     headline: "Properties",
     headlineAccent: "Perfected.",
@@ -140,12 +140,12 @@ const SLIDES = [
     eyebrow: "Real-time intelligence",
     headline: "Insights",
     headlineAccent: "Amplified.",
-    sub: "Turn complex portfolios into clear, actionable intelligence. Real-time dashboards that drive confident, profitable decisions.",
+    sub: "Turn complex Propertys into clear, actionable intelligence. Real-time dashboards that drive confident, profitable decisions.",
     cta: "View Dashboard",
     ctaHref: "/auth/login?role=landlord",
     ctaSecondary: "See Analytics",
     kpis: [
-      { label: "Portfolio Growth", value: "+24%" },
+      { label: "Property Growth", value: "+24%" },
       { label: "Avg Yield", value: "8.4%" },
     ],
   },
@@ -245,7 +245,7 @@ function HeroCarousel() {
       </div>
 
       {/* ── Main content ──────────────────────────────────────────────── */}
-      <div className="container relative z-10 px-6 md:px-10 max-w-7xl mx-auto w-full pb-28 md:pb-0">
+      <div className="container relative z-10 px-6 md:px-[4px]0 max-w-7xl mx-auto w-full pb-28 md:pb-0">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(70dvh)] md:min-h-[calc(100dvh-4rem)]">
 
 
@@ -313,12 +313,12 @@ function HeroCarousel() {
                   className="grid grid-cols-2 gap-3 md:flex md:flex-wrap"
                 >
                   <Link href={slide.ctaHref} className="w-full md:w-auto">
-                    <button className="w-full group h-12 md:h-14 px-4 md:px-10 rounded-2xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-normal text-[11px] sm:text-[12px] md:text-sm flex items-center justify-center gap-2 md:gap-3 shadow-xl shadow-[#1B5E45]/30 hover:shadow-2xl hover:shadow-[#1B5E45]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                    <button className="w-full group h-12 md:h-14 px-4 md:px-[4px]0 rounded-2xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-normal text-[11px] sm:text-[12px] md:text-sm flex items-center justify-center gap-2 md:gap-3 shadow-xl shadow-[#1B5E45]/30 hover:shadow-2xl hover:shadow-[#1B5E45]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
                       <span className="truncate">{slide.cta}</span>
                       <ArrowRight className="h-4 w-4 shrink-0 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </Link>
-                  <button className="w-full group h-12 md:h-14 px-4 md:px-10 rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md text-white text-[13px] md:text-sm flex items-center justify-center gap-2 md:gap-3 hover:bg-white/15 hover:border-white/25 transition-all duration-200">
+                  <button className="w-full group h-12 md:h-14 px-4 md:px-[4px]0 rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md text-white text-[13px] md:text-sm flex items-center justify-center gap-2 md:gap-3 hover:bg-white/15 hover:border-white/25 transition-all duration-200">
                     <div className="h-7 w-7 rounded-full bg-white/10 flex items-center justify-center shrink-0 hidden sm:flex">
                       <Play className="h-3 w-3 text-white fill-white ml-0.5" />
                     </div>
@@ -399,7 +399,7 @@ function HeroCarousel() {
           />
         </div>
 
-        <div className="container max-w-7xl mx-auto px-0.5 sm:px-6 md:px-10">
+        <div className="container max-w-7xl mx-auto px-[4px] sm:px-6 md:px-[4px]0">
           <div className="flex items-center justify-between py-5 gap-6">
 
             {/* Slide pills */}
@@ -458,7 +458,7 @@ function HeroCarousel() {
 // ─── DASHBOARD PREVIEW CARD ─────────────────────────────────────────────────
 function DashboardPreviewCard({ slide }: { slide: number }) {
   const cards = [
-    // Slide 0 – Portfolio overview
+    // Slide 0 – Property overview
     <div key={0}>
       <div className="flex justify-between items-start mb-7">
         <div className="flex items-center gap-3.5">
@@ -632,7 +632,7 @@ export default function Home() {
     <>
       <Loader show={isLoading} />
       <div className={cn("flex min-h-screen flex-col bg-background", isLoading ? "h-screen overflow-hidden" : "")}>
-        <Navbar className="px-0.5 sm:px-6 lg:px-8" />
+        <Navbar className="px-[4px] sm:px-6 lg:px-8" />
         <main className="flex-1 overflow-y-auto overflow-x-hidden">
         <HeroCarousel />
         <TrustLogosBar />
@@ -775,7 +775,7 @@ function MetricBar() {
   return (
     <section className="bg-primary/5 py-14 text-foreground relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle_at_20%_50%,#3DBE7A,transparent_50%),radial-gradient(circle_at_80%_50%,#246B4F,transparent_50%)]" />
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-10">
           {stats.map((s,i) => (
             <Reveal key={i} delay={i*0.08} className="text-center group">
@@ -801,7 +801,7 @@ function MetricBar() {
 function SolutionsSection() {
   return (
     <section className="py-16 md:py-28 bg-background">
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Built for Both Sides</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em] mt-2">Dual Portals. One Powerful Engine.</h2>
@@ -811,14 +811,14 @@ function SolutionsSection() {
           {[
             {
               title:"For Landlords",role:"Property Managers",
-              desc:"Complete control over your portfolio with intelligent yield tools, automated workflows, and institutional-grade reporting.",
+              desc:"Complete control over your Property with intelligent yield tools, automated workflows, and institutional-grade reporting.",
               icon:Briefcase,accent:true,href:"/auth/login?role=landlord",
               features:[
                 {icon:BarChart3,text:"Real-time Yield Analytics"},
                 {icon:CreditCard,text:"Automated Collections"},
                 {icon:FileText,text:"Audit Trails & Compliance"},
                 {icon:Bell,text:"Smart Alert System"},
-                {icon:PieChart,text:"Portfolio Intelligence"},
+                {icon:PieChart,text:"Property Intelligence"},
                 {icon:Users,text:"Tenant CRM"},
               ],
             },
@@ -879,7 +879,7 @@ function HowItWorksSection() {
   const [activeTab, setActiveTab] = useState<"landlord"|"tenant">("landlord");
   const steps = {
     landlord:[
-      {icon:Building2,step:"01",title:"Register Your Portfolio",desc:"Add your properties in minutes. Our smart onboarding imports existing data and auto-generates unit profiles."},
+      {icon:Building2,step:"01",title:"Register Your Property",desc:"Add your properties in minutes. Our smart onboarding imports existing data and auto-generates unit profiles."},
       {icon:Users,step:"02",title:"Onboard Tenants",desc:"Invite residents via SMS or email. Digital lease signing and KYC verification happen seamlessly in-app."},
       {icon:BarChart3,step:"03",title:"Automate & Collect",desc:"Set rent schedules, M-Pesa prompts, and late fees. Collections happen automatically with real-time reconciliation."},
       {icon:PieChart,step:"04",title:"Track & Grow",desc:"Monitor occupancy, yields, and maintenance from one dashboard. Export compliance reports with one click."},
@@ -894,7 +894,7 @@ function HowItWorksSection() {
   return (
     <section className="py-16 md:py-28 bg-muted/30 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(#1B5E45_0.6px,transparent_1px)] bg-size-[28px_28px] opacity-[0.03]" />
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Simple Process</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Up & running<br />in under 10 minutes.</h2>
@@ -948,7 +948,7 @@ function FeatureGridSection() {
   ];
   return (
     <section className="py-16 md:py-28 bg-background">
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Full Feature Set</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Everything you need.<br />Nothing you don't.</h2>
@@ -973,9 +973,9 @@ function FeatureGridSection() {
 
 // ─── TESTIMONIALS ────────────────────────────────────────────────────────────
 const TESTIMONIALS = [
-  {name:"James Kariuki",   role:"Portfolio Manager · 340 Units", img:33, quote:"Nova cut our arrears from 18% to under 2% in three months. The automated M-Pesa collections alone saved us two full-time staff.",                                                rating:5},
+  {name:"James Kariuki",   role:"Property Manager · 340 Units", img:33, quote:"Nova cut our arrears from 18% to under 2% in three months. The automated M-Pesa collections alone saved us two full-time staff.",                                                rating:5},
   {name:"Grace Muthoni",  role:"Resident · Westlands Heights",  img:41, quote:"I pay rent in seconds via M-Pesa and can track my maintenance request from submission to completion. Finally a landlord app that respects residents.",                              rating:5},
-  {name:"David Omondi",   role:"Real Estate Developer · 12 blocks",img:35,quote:"The portfolio analytics are institutional-grade. I can see yield performance, vacancy trends, and compliance status across all properties in one dashboard.",                   rating:5},
+  {name:"David Omondi",   role:"Real Estate Developer · 12 blocks",img:35,quote:"The Property analytics are institutional-grade. I can see yield performance, vacancy trends, and compliance status across all properties in one dashboard.",                   rating:5},
   {name:"Fatuma Hassan",  role:"Property Manager · Mombasa",    img:42, quote:"Onboarding was done in a day. The support team is phenomenal — they migrated 200 tenant records and had us live before the end of the week.",                                    rating:5},
   {name:"Peter Njoroge",  role:"Tenant · Karen Grove",          img:36, quote:"The document vault keeps my lease, receipts, and correspondence in one place. I've never had this level of transparency with a landlord before.",                                 rating:5},
 ];
@@ -984,7 +984,7 @@ function TestimonialsSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   return (
     <section className="py-16 md:py-28 bg-muted/25 overflow-hidden">
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Social Proof</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Loved by managers<br />and residents alike.</h2>
@@ -1022,14 +1022,14 @@ function TestimonialsSection() {
 function PricingSection() {
   const [annual, setAnnual] = useState(true);
   const plans = [
-    {name:"Starter",     price:annual?2900:3500,   desc:"Perfect for individual landlords managing a small portfolio.",      units:"Up to 20 units",  features:["Basic analytics","M-Pesa collections","Maintenance requests","Email support","Tenant portal","2 admin users"],                                          cta:"Start Free Trial",highlight:false},
-    {name:"Professional",price:annual?8900:10500,  desc:"For growing portfolios that demand professional-grade tools.",       units:"Up to 150 units", features:["Full analytics suite","Automated workflows","Digital lease signing","Priority support","Audit trails","Unlimited admins","API access","Custom reports"],cta:"Get Started",    highlight:true},
-    {name:"Enterprise",  price:null,               desc:"Tailored solutions for institutional portfolios and developers.",    units:"Unlimited units", features:["Custom integrations","Dedicated account manager","White-label option","SLA guarantee","On-premise option","Custom compliance","Training & onboarding","24/7 phone support"],cta:"Contact Sales",  highlight:false},
+    {name:"Starter",     price:annual?2900:3500,   desc:"Perfect for individual landlords managing a small Property.",      units:"Up to 20 units",  features:["Basic analytics","M-Pesa collections","Maintenance requests","Email support","Tenant portal","2 admin users"],                                          cta:"Start Free Trial",highlight:false},
+    {name:"Professional",price:annual?8900:10500,  desc:"For growing Propertys that demand professional-grade tools.",       units:"Up to 150 units", features:["Full analytics suite","Automated workflows","Digital lease signing","Priority support","Audit trails","Unlimited admins","API access","Custom reports"],cta:"Get Started",    highlight:true},
+    {name:"Enterprise",  price:null,               desc:"Tailored solutions for institutional Propertys and developers.",    units:"Unlimited units", features:["Custom integrations","Dedicated account manager","White-label option","SLA guarantee","On-premise option","Custom compliance","Training & onboarding","24/7 phone support"],cta:"Contact Sales",  highlight:false},
   ];
   return (
     <section className="py-16 md:py-28 bg-background relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(27,94,69,0.04),transparent)]" />
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-8">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Transparent Pricing</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Simple, honest pricing.<br />No surprises.</h2>
@@ -1095,19 +1095,19 @@ function FinalCTASection() {
         <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80" alt="" className="w-full h-full object-cover" />
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(61,190,122,0.08),transparent)]" />
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
         <Reveal>
           <span className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Ready when you are</span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl tracking-[-0.04em] text-background leading-tight">Start building<br />your legacy today.</h2>
-          <p className="text-lg text-background/50 max-w-lg mx-auto font-light mt-5">Join 2,000+ property professionals who manage their portfolios with confidence on Nova.</p>
+          <p className="text-lg text-background/50 max-w-lg mx-auto font-light mt-5">Join 2,000+ property professionals who manage their Propertys with confidence on Nova.</p>
         </Reveal>
         <Reveal delay={0.2} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link href="/auth/register">
-            <Button size="lg" className="h-16 px-14 rounded-3xl text-sm md:text-base shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
+            <Button size="lg" className="h-16 px-[4px]4 rounded-3xl text-sm md:text-base shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
               Get Started — Free<ArrowRight className="ml-3 h-5 w-5" />
             </Button>
           </Link>
-          <Button size="lg" variant="outline" className="h-16 px-10 rounded-3xl border border-background/10 text-background bg-transparent hover:bg-background/5 text-sm md:text-base font-normal">
+          <Button size="lg" variant="outline" className="h-16 px-[4px]0 rounded-3xl border border-background/10 text-background bg-transparent hover:bg-background/5 text-sm md:text-base font-normal">
             Schedule a Demo<Calendar className="ml-3 h-5 w-5" />
           </Button>
         </Reveal>
@@ -1127,7 +1127,7 @@ function FinalCTASection() {
 function Footer() {
   return (
     <footer className="border-t border-border bg-background pt-20 pb-12">
-      <div className="container px-0.5 sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-16 mb-20">
           <div className="lg:col-span-4 space-y-6">
             <Logo />

@@ -179,7 +179,7 @@ export default function TenantPaymentsPage() {
           
           {/* Breadcrumb Navigation */}
           <div className="sticky top-0 z-40 border-b border-[#E8F5EE] bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-0.5 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-[4px] sm:px-6 lg:px-8 h-16 flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm">
                 <Home className="w-4 h-4 text-[#1B5E45]" />
                 <ChevronRight className="w-3.5 h-3.5 text-[#6B7280]" />
@@ -198,7 +198,7 @@ export default function TenantPaymentsPage() {
             </div>
           </div>
 
-          <main className="max-w-7xl mx-auto px-0.5 sm:px-6 lg:px-8 py-8 space-y-6">
+          <main className="max-w-7xl mx-auto px-[4px] sm:px-6 lg:px-8 py-8 space-y-6">
             
             {/* Page Header */}
             <Reveal>

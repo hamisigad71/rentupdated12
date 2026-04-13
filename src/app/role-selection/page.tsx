@@ -106,7 +106,7 @@ export default function RoleSelection() {
         </Link>
       </header>
 
-      <main className="flex-1 container relative z-10 px-0.5 sm:px-6 flex flex-col items-center justify-center py-10">
+      <main className="flex-1 container relative z-10 px-[4px] sm:px-6 flex flex-col items-center justify-center py-10">
         <div className="text-center space-y-6 mb-24 max-w-2xl mx-auto">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -137,7 +137,7 @@ export default function RoleSelection() {
         <div className="grid md:grid-cols-2 gap-5 w-full max-w-6xl">
           <RoleCard
             title="Landlord"
-            role="Portfolio Manager"
+            role="Property Manager"
             description="Access global property clusters, yield analytics, and automated financial auditing logs."
             icon={Building2}
             href="/landlord"

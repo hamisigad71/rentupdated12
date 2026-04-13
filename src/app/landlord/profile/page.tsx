@@ -83,7 +83,7 @@ export default function ProfilePage() {
 
   return (
     <LandlordLayout>
-      <div className="max-w-7xl mx-auto space-y-8 px-0.5 sm:px-4 lg:px-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="max-w-7xl mx-auto space-y-8 px-[4px] sm:px-4 lg:px-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
         
         {/* Enhanced Profile Header */}
         <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#FAFAF8] via-white to-[#E8F5EE]/30 p-8 border border-[#E8F5EE] shadow-2xl">

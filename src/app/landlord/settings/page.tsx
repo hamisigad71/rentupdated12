@@ -69,7 +69,7 @@ export default function SettingsPage() {
                    <div key={i} className="flex items-center justify-between p-5 rounded-2xl border border-foreground/5 hover:bg-foreground/1 transition-all group cursor-pointer">
                       <span className="text-xs uppercase text-muted-foreground/60">{opt.l}</span>
                       <div className={cn(
-                        "h-6 w-12 rounded-full flex items-center px-1 transition-all",
+                        "h-6 w-12 rounded-full flex items-center px-[4px] transition-all",
                         opt.s ? "bg-primary/20 border border-primary/40" : "bg-foreground/5 border border-foreground/10"
                       )}>
                          <div className={cn("h-4 w-4 rounded-full transition-all", opt.s ? "bg-primary ml-auto" : "bg-muted-foreground/30")} />
@@ -100,7 +100,7 @@ export default function SettingsPage() {
                    <div key={i} className="flex items-center justify-between p-5 rounded-2xl border border-foreground/5 hover:bg-foreground/1 transition-all group cursor-pointer">
                       <span className="text-xs uppercase text-muted-foreground/60">{opt.l}</span>
                       <div className={cn(
-                        "h-6 w-12 rounded-full flex items-center px-1 transition-all",
+                        "h-6 w-12 rounded-full flex items-center px-[4px] transition-all",
                         opt.s ? "bg-primary/20 border border-primary/40" : "bg-foreground/5 border border-foreground/10"
                       )}>
                          <div className={cn("h-4 w-4 rounded-full transition-all", opt.s ? "bg-primary ml-auto" : "bg-muted-foreground/30")} />
@@ -185,7 +185,7 @@ export default function SettingsPage() {
            
            <div className="flex items-center gap-4 relative z-10">
               <Button variant="ghost" className="h-14 px-8 rounded-2xl text-white/40 hover:text-white uppercase text-xs ">Discard Changes</Button>
-              <Button className="h-14 px-10 rounded-2xl bg-primary text-white shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all uppercase text-xs ">Write To Hardware <ChevronRight className="ml-2 h-4 w-4" /></Button>
+              <Button className="h-14 px-[4px]0 rounded-2xl bg-primary text-white shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all uppercase text-xs ">Write To Hardware <ChevronRight className="ml-2 h-4 w-4" /></Button>
            </div>
         </div>
 

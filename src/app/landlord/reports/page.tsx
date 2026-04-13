@@ -75,7 +75,7 @@ export default function ReportsPage() {
   const [chartView, setChartView] = useState<"area" | "line">("area");
   const [timeRange, setTimeRange] = useState("6m");
 
-  const portfolioPerformance = Math.round((stats.occupiedUnits / stats.totalUnits) * 100);
+  const PropertyPerformance = Math.round((stats.occupiedUnits / stats.totalUnits) * 100);
   const revenueGrowth = 12.4;
   const arrearsRate = Math.round((stats.totalArrears / stats.monthlyIncome) * 100);
 
@@ -98,7 +98,7 @@ export default function ReportsPage() {
                 Performance Dashboard
               </h1>
               <p className="text-sm text-[#6B7280]">
-                Comprehensive portfolio analytics and insights
+                Comprehensive Property analytics and insights
               </p>
             </div>
 
@@ -131,7 +131,7 @@ export default function ReportsPage() {
                 bgColor: "#E8F5EE",
               },
               {
-                label: "Portfolio Yield",
+                label: "Property Yield",
                 value: "14.2%",
                 change: "+0.8%",
                 isPositive: true,
@@ -141,7 +141,7 @@ export default function ReportsPage() {
               },
               {
                 label: "Occupancy Rate",
-                value: `${portfolioPerformance}%`,
+                value: `${PropertyPerformance}%`,
                 change: "+1.5%",
                 isPositive: true,
                 icon: Home,
@@ -176,7 +176,7 @@ export default function ReportsPage() {
                       <Badge
                         variant="outline"
                         className={cn(
-                          "px-1.5 py-0 text-[10px] sm:text-xs",
+                          "px-[4px].5 py-0 text-[10px] sm:text-xs",
                           metric.isPositive
                             ? "border-[#3DBE7A] text-[#3DBE7A] bg-[#E8F5EE]"
                             : "border-red-300 text-red-600 bg-red-50"
@@ -425,7 +425,7 @@ export default function ReportsPage() {
                       </span>
                     </div>
                     <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20">
-                      {portfolioPerformance}%
+                      {PropertyPerformance}%
                     </Badge>
                   </div>
                 </CardContent>
@@ -488,7 +488,7 @@ export default function ReportsPage() {
           <Card className="border-[#E8F5EE] bg-white">
             <CardHeader>
               <CardTitle className="text-[#1A1A1A] text-xl ">
-                Portfolio Insights
+                Property Insights
               </CardTitle>
               <CardDescription className="text-[#6B7280]">
                 Key takeaways and recommendations

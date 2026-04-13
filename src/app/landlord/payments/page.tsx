@@ -149,12 +149,12 @@ export default function PaymentsPage() {
               <Table>
                 <TableHeader className="bg-foreground/[0.03]">
                   <TableRow className="border-b border-foreground/5">
-                    <TableHead className="px-10 py-8 text-[11px]  uppercase text-muted-foreground/40">System Hash</TableHead>
+                    <TableHead className="px-[4px]0 py-8 text-[11px]  uppercase text-muted-foreground/40">System Hash</TableHead>
                     <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40">Entity / Node</TableHead>
                     <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40">Temporal Stamp</TableHead>
                     <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40 text-right">Magnitude</TableHead>
                     <TableHead className="px-8 py-8 text-[11px]  uppercase text-muted-foreground/40 text-center">Protocol Integrity</TableHead>
-                    <TableHead className="px-10 py-8 text-right"></TableHead>
+                    <TableHead className="px-[4px]0 py-8 text-right"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -167,7 +167,7 @@ export default function PaymentsPage() {
                         transition={{ delay: i * 0.05 }}
                         className="group border-b border-foreground/5 last:border-0 hover:bg-foreground/[0.01] transition-all"
                       >
-                        <TableCell className="px-10 py-8">
+                        <TableCell className="px-[4px]0 py-8">
                            <div className="flex items-center gap-3">
                               <div className="h-10 w-10 rounded-xl bg-foreground/5 border border-foreground/5 flex items-center justify-center text-muted-foreground/20 group-hover:text-primary/40 group-hover:border-primary/20 transition-all">
                                  <FileText className="h-5 w-5" />
@@ -206,7 +206,7 @@ export default function PaymentsPage() {
                               </Badge>
                            </div>
                         </TableCell>
-                        <TableCell className="px-10 py-8 text-right">
+                        <TableCell className="px-[4px]0 py-8 text-right">
                            <Button variant="ghost" size="icon" className="h-12 w-12 rounded-2xl border border-foreground/5 opacity-0 group-hover:opacity-100 transition-all hover:bg-primary/5 hover:text-primary">
                               <ArrowUpRight className="h-5 w-5" />
                            </Button>

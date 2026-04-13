@@ -74,7 +74,7 @@ export default function BottomNav({ items }: BottomNavProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex flex-col items-center justify-center py-2 px-1 rounded-xl transition-all duration-300 w-full"
+                  className="flex flex-col items-center justify-center py-2 px-[4px] rounded-xl transition-all duration-300 w-full"
                   style={{
                     color: isActive ? "#3DBE7A" : "rgba(30, 41, 59, 0.6)",
                     background: isActive ? "rgba(61, 190, 122, 0.15)" : "transparent",

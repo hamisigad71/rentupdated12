@@ -85,7 +85,7 @@ export default function BuildingDetailsPage() {
     <LandlordLayout>
       <div className="min-h-screen bg-[#FAFAF8] pb-12">
         {/* --- Sticky Header --- */}
-        <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#E8F5EE] px-0.5 sm:px-8 py-4">
+        <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#E8F5EE] px-[4px] sm:px-8 py-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Button 
@@ -107,7 +107,7 @@ export default function BuildingDetailsPage() {
             </div>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="hidden sm:flex bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20">
-                Active Portfolio
+                Active Property
               </Badge>
               <Button className="bg-[#1B5E45] hover:bg-[#246B4F] text-white size-sm sm:size-default">
                 <Plus className="h-4 w-4 mr-1.5" /> <span className="hidden sm:inline">Add Unit</span>
@@ -116,7 +116,7 @@ export default function BuildingDetailsPage() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-0.5 sm:px-8 pt-8 space-y-8">
+        <div className="max-w-7xl mx-auto px-[4px] sm:px-8 pt-8 space-y-8">
           
           {/* --- Hero Section --- */}
           <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">

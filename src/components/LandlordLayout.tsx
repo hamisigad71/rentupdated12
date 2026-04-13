@@ -45,7 +45,7 @@ export default function LandlordLayout({ children }: { children: React.ReactNode
               </div>
             </div>
           </header>
-          <main id="main-scroll-container" className="flex-1 overflow-auto px-0.5 sm:px-4 py-6 md:p-8 lg:p-5 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-28 md:pb-8">
+          <main id="main-scroll-container" className="flex-1 overflow-auto px-[4px] sm:px-4 py-6 md:p-8 lg:p-5 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-28 md:pb-8">
             {children}
           </main>
           <BottomNav items={landlordItems} />

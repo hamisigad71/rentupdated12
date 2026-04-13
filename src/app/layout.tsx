@@ -40,7 +40,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body
-        className="font-sans h-full overflow-hidden flex flex-col px-0.5 sm:px-0"
+        className="font-sans h-full overflow-hidden flex flex-col px-[4px] sm:px-0"
         suppressHydrationWarning
       >
         <ThemeProvider

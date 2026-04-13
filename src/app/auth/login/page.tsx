@@ -22,7 +22,7 @@ const TRUST = [
 const HERO = {
   landlord: {
     label: "Property Owners",
-    headline: "Manage your entire portfolio in one place.",
+    headline: "Manage your entire Property in one place.",
     body: "Track rent, monitor maintenance requests, verify tenants, and generate financial reports — all from a single unified dashboard.",
     stat: [{ v: "2,400+", l: "Properties managed" }, { v: "98%", l: "Collection rate" }, { v: "< 2h", l: "Avg. response time" }],
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
@@ -256,7 +256,7 @@ function LoginContent() {
   return (
     <div className="min-h-screen grid lg:grid-cols-[1fr_1.1fr] bg-[#FAFAF8]">
       {/* Left: Form */}
-      <div className="flex flex-col items-center justify-center px-0.5 sm:px-6 py-12 lg:px-16">
+      <div className="flex flex-col items-center justify-center px-[4px] sm:px-6 py-12 lg:px-[4px]6">
         <LoginForm onRoleChange={setRole} />
       </div>
       {/* Right: Hero */}

@@ -243,7 +243,7 @@ export default function LandlordDashboard() {
 
           {/* ── Sticky Nav ──────────────────────────────────── */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-4 md:px-10 h-16 flex items-center justify-between gap-2">
+            <div className="max-w-7xl mx-auto px-4 md:px-[4px]0 h-16 flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground shrink-0">
                 <Building2 className="h-4 w-4 text-[#1B5E45]" />
                 <ChevronRight className="h-3 w-3" />
@@ -288,7 +288,7 @@ export default function LandlordDashboard() {
             </div>
           </header>
 
-          <main className="max-w-7xl mx-auto px-6 md:px-10 py-8 space-y-8">
+          <main className="max-w-7xl mx-auto px-6 md:px-[4px]0 py-8 space-y-8">
 
             {/* ══ HERO ════════════════════════════════════════════════════ */}
             <Reveal>
@@ -321,7 +321,7 @@ export default function LandlordDashboard() {
                           <span className="w-1 h-1 bg-[#1B5E45]/30 rounded-full" />
                           <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
-                            Portfolio Active
+                            Property Active
                           </span>
                         </div>
 
@@ -498,14 +498,14 @@ export default function LandlordDashboard() {
             {/* ── Main Grid ────────────────────────────────────── */}
             <div className="grid lg:grid-cols-3 gap-6">
 
-              {/* Portfolio Analytics — left 2/3 */}
+              {/* Property Analytics — left 2/3 */}
               <Reveal delay={0.2} className="lg:col-span-2">
                 <Card className="rounded-2xl border-border shadow-sm bg-white h-full">
                   <CardHeader className="px-6 pt-6 pb-4">
                     <div className="flex items-center justify-between">
                       <div>
                         <CardTitle className="text-base font-medium text-foreground">
-                          Portfolio Overview
+                          Property Overview
                         </CardTitle>
                         <CardDescription className="text-xs mt-0.5">
                           Performance metrics and occupancy analytics
@@ -690,7 +690,7 @@ export default function LandlordDashboard() {
                                 <span className="text-xs text-muted-foreground">{ticket.tenantName}</span>
                                 <span
                                   className={cn(
-                                    "text-[10px] font-medium px-1.5 py-0.5 rounded-full",
+                                    "text-[10px] font-medium px-[4px].5 py-0.5 rounded-full",
                                     ticket.priority === "high"
                                       ? "bg-red-50 text-red-600"
                                       : "bg-[#E8F5EE] text-[#1B5E45]",
