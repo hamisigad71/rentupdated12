@@ -20,8 +20,10 @@ export default function BottomNav({ items }: BottomNavProps) {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
+    const scrollContainer = document.getElementById("main-scroll-container") || window;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = scrollContainer === window ? window.scrollY : (scrollContainer as HTMLElement).scrollTop;
       const delta = currentScrollY - lastScrollY;
       
       // Only trigger if we've scrolled a reasonable amount (threshold)
@@ -29,17 +31,17 @@ export default function BottomNav({ items }: BottomNavProps) {
 
       if (currentScrollY <= 0) {
         setIsVisible(true);
-      } else if (delta > 0 && currentScrollY > 100) {
-        setIsVisible(false); // Scrolling down
-      } else if (delta < -10) {
+      } else if (delta > 5 && currentScrollY > 50) {
+        setIsVisible(false); // Scrolling down (lowered threshold so it fires faster)
+      } else if (delta < -5) {
         setIsVisible(true); // Scrolling up
       }
       
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
   return (
