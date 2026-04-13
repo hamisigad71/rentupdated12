@@ -245,7 +245,7 @@ function HeroCarousel() {
       </div>
 
       {/* ── Main content ──────────────────────────────────────────────── */}
-      <div className="container relative z-10 px-6 md:px-[4px]0 max-w-7xl mx-auto w-full pb-28 md:pb-0">
+      <div className="container relative z-10 px-6 md:px-10 max-w-7xl mx-auto w-full pb-44 md:pb-20">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(70dvh)] md:min-h-[calc(100dvh-4rem)]">
 
 
@@ -310,15 +310,15 @@ function HeroCarousel() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.38, duration: 0.6 }}
-                  className="grid grid-cols-2 gap-3 md:flex md:flex-wrap"
+                  className="flex flex-row items-center gap-3"
                 >
-                  <Link href={slide.ctaHref} className="w-full md:w-auto">
-                    <button className="w-full group h-12 md:h-14 px-4 md:px-[4px]0 rounded-2xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-normal text-[11px] sm:text-[12px] md:text-sm flex items-center justify-center gap-2 md:gap-3 shadow-xl shadow-[#1B5E45]/30 hover:shadow-2xl hover:shadow-[#1B5E45]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                  <Link href={slide.ctaHref} className="flex-1">
+                    <button className="w-full group h-12 md:h-14 px-6 rounded-2xl bg-[#1B5E45] hover:bg-[#246B4F] text-white font-normal text-[11px] sm:text-[12px] md:text-sm flex items-center justify-center gap-2 md:gap-3 shadow-xl shadow-[#1B5E45]/30 hover:shadow-2xl hover:shadow-[#1B5E45]/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
                       <span className="truncate">{slide.cta}</span>
                       <ArrowRight className="h-4 w-4 shrink-0 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </Link>
-                  <button className="w-full group h-12 md:h-14 px-4 md:px-[4px]0 rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md text-white text-[13px] md:text-sm flex items-center justify-center gap-2 md:gap-3 hover:bg-white/15 hover:border-white/25 transition-all duration-200">
+                  <button className="flex-1 group h-12 md:h-14 px-6 rounded-2xl border border-white/15 bg-white/8 backdrop-blur-md text-white text-[11px] sm:text-[12px] md:text-sm flex items-center justify-center gap-2 md:gap-3 hover:bg-white/15 hover:border-white/25 transition-all duration-200">
                     <div className="h-7 w-7 rounded-full bg-white/10 flex items-center justify-center shrink-0 hidden sm:flex">
                       <Play className="h-3 w-3 text-white fill-white ml-0.5" />
                     </div>
@@ -351,7 +351,7 @@ function HeroCarousel() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.55, duration: 0.6 }}
-                  className="flex items-center gap-4 pt-1"
+                  className="flex items-center gap-4 pt-6 md:pt-10"
                 >
                   <div className="flex -space-x-3">
                     {[33, 34, 35, 36].map(n => (
@@ -399,7 +399,7 @@ function HeroCarousel() {
           />
         </div>
 
-        <div className="container max-w-7xl mx-auto px-[4px] sm:px-6 md:px-[4px]0">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
           <div className="flex items-center justify-between py-5 gap-6">
 
             {/* Slide pills */}
@@ -632,7 +632,7 @@ export default function Home() {
     <>
       <Loader show={isLoading} />
       <div className={cn("flex min-h-screen flex-col bg-background", isLoading ? "h-screen overflow-hidden" : "")}>
-        <Navbar className="px-[4px] sm:px-6 lg:px-8" />
+        <Navbar className="px-4 sm:px-6 lg:px-8" />
         <main className="flex-1 overflow-y-auto overflow-x-hidden">
         <HeroCarousel />
         <TrustLogosBar />
