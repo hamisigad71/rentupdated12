@@ -8,10 +8,9 @@ export default function Loader({ show }: { show: boolean }) {
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
           className="fixed inset-0 z-200 flex flex-col items-center justify-center"
           style={{ background: "#F7F8F5" }}
         >

@@ -271,9 +271,11 @@ function LoginContent() {
 
   return (
     <div className="min-h-screen grid lg:grid-cols-[1fr_1.1fr] bg-[#FAFAF8]">
-      {/* Left: Form */}
-      <div className="flex flex-col items-center justify-center px-[4px] sm:px-6 py-12 lg:px-[4px]6">
-        <LoginForm onRoleChange={setRole} />
+      {/* Left: Form Container */}
+      <div className="flex flex-col items-center justify-center p-4 sm:p-8 lg:px-16 lg:py-12 w-full">
+        <div className="w-full max-w-[480px] bg-white rounded-2xl p-6 sm:p-10 xl:p-12 border border-[#E0E8E3] shadow-[0_8px_30px_rgba(27,94,69,0.04)] flex flex-col">
+          <LoginForm onRoleChange={setRole} />
+        </div>
       </div>
       {/* Right: Hero */}
       <HeroPanel role={role} />

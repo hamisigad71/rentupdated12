@@ -265,6 +265,150 @@ const CustomAwardIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
+
+const CustomCreditCardIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/credit-card.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/credit-card.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomDocumentIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/document.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/document.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/money.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/money.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomCalendarIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/calendar.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/calendar.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomBillIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/bill.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/bill.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomFolderIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/folder.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/folder.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomRingingIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/ringing.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/ringing.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomWalletIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
 import { Navbar } from "@/components/Navbar";
 import Logo from "@/components/Logo";
 import Loader from "@/components/Loader";
@@ -380,7 +524,7 @@ function HeroCarousel() {
   const [progress, setProgress] = useState(0);
   const timer   = useRef<ReturnType<typeof setInterval> | null>(null);
   const progRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const DURATION = 4000;
+  const DURATION = 7000;
 
   const goTo = useCallback((idx: number) => {
     setActive(idx);
@@ -411,7 +555,7 @@ function HeroCarousel() {
 
   return (
     <section
-      className="relative min-h-[70dvh] md:min-h-dvh flex items-end md:items-center overflow-hidden"
+      className="relative min-h-[55dvh] md:min-h-dvh flex items-end md:items-center overflow-hidden"
 
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -453,12 +597,12 @@ function HeroCarousel() {
       </div>
 
       {/* -- Main content ------------------------------------------------ */}
-      <div className="container relative z-10 px-6 md:px-10 max-w-7xl mx-auto w-full pb-44 md:pb-20">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(70dvh)] md:min-h-[calc(100dvh-4rem)]">
+      <div className="container relative z-10 px-6 md:px-10 max-w-7xl mx-auto w-full pb-24 md:pb-20">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(55dvh)] md:min-h-[calc(100dvh-4rem)]">
 
 
           {/* Left: Text content */}
-          <div className="lg:col-span-7 space-y-6 md:space-y-8 pt-24 md:pt-0">
+          <div className="lg:col-span-7 space-y-4 md:space-y-8 pt-16 md:pt-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`content-${active}`}
@@ -466,7 +610,7 @@ function HeroCarousel() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-                className="space-y-6 md:space-y-8"
+                className="space-y-4 md:space-y-8"
               >
                 {/* Eyebrow pill */}
                 <motion.div
@@ -540,7 +684,7 @@ function HeroCarousel() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.46, duration: 0.6 }}
-                  className="grid grid-cols-2 gap-3 pt-2 md:flex md:flex-wrap"
+                  className="grid grid-cols-2 gap-3 pt-0 md:flex md:flex-wrap"
                 >
                   {slide.kpis.map((kpi, i) => (
                     <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 pl-4 pr-5 py-2.5 rounded-2xl bg-white/6 backdrop-blur-sm border border-white/10 w-full md:w-auto">
@@ -559,7 +703,7 @@ function HeroCarousel() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.55, duration: 0.6 }}
-                  className="flex items-center gap-4 pt-6 md:pt-10"
+                  className="flex items-center gap-4 pt-2 md:pt-10"
                 >
                   <div className="flex -space-x-3">
                     {[33, 34, 35, 36].map(n => (
@@ -671,7 +815,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
       <div className="flex justify-between items-start mb-7">
         <div className="flex items-center gap-3.5">
           <div className="h-12 w-12 rounded-2xl bg-[#E8F5EE] border border-[#C4D4C9] flex items-center justify-center">
-            <ShieldCheck className="h-6 w-6 text-[#1B5E45]" />
+            <CustomUserIcon className="h-6 w-6 text-[#1B5E45]" />
           </div>
           <div>
             <p className="text-[8px] sm:text-[9px] md:text-[10px] font-normal uppercase tracking-widest text-[#6B7280]">Platform Status</p>
@@ -730,14 +874,14 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
       </div>
       <div className="grid grid-cols-2 gap-3 mb-5">
         {[
-          { icon: DollarSign, label: "Revenue",  val: "KSh 4.2M", delta: "+18%" },
-          { icon: HomeIcon,   label: "Units",    val: "1,247",    delta: "+34" },
-          { icon: Percent,    label: "Vacancy",  val: "6.0%",     delta: "-2.1%" },
-          { icon: Activity,   label: "Requests", val: "384",      delta: "-12%" },
+          { icon: CustomMoneyIcon,    label: "Revenue",  val: "KSh 4.2M", delta: "+18%" },
+          { icon: CustomHomeIcon,     label: "Units",    val: "1,247",    delta: "+34" },
+          { icon: CustomWalletIcon,   label: "Vacancy",  val: "6.0%",     delta: "-2.1%" },
+          { icon: CustomAnalyticIcon, label: "Requests", val: "384",      delta: "-12%" },
         ].map((s, i) => (
           <div key={i} className="rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] p-4">
             <div className="flex items-center justify-between mb-2.5">
-              <s.icon className="h-4 w-4 text-[#1B5E45]" />
+              <s.icon className="h-6 w-6 text-[#1B5E45]" />
               <span className="text-[9px] font-normal text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">{s.delta}</span>
             </div>
             <p className="text-base md:text-xl font-normal tracking-tight text-[#1A1A1A] font-money">{s.val}</p>
@@ -775,13 +919,13 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
       </div>
       <div className="space-y-2.5 mb-5 text-left">
         {[
-          { icon: CreditCard, label: "Next Payment", val: "KSh 45,000", sub: "Due Apr 1",      color: "text-[#1B5E45]" },
-          { icon: CustomChatIcon,     label: "Open Request", val: "Plumbing",   sub: "In Progress",    color: "text-amber-600" },
-          { icon: FileText,   label: "Lease Expires", val: "Dec 31, 2026", sub: "14 months",   color: "text-[#1A1A1A]" },
+          { icon: CustomCreditCardIcon, label: "Next Payment", val: "KSh 45,000", sub: "Due Apr 1",      color: "text-[#1B5E45]" },
+          { icon: CustomChatIcon,       label: "Open Request", val: "Plumbing",   sub: "In Progress",    color: "text-amber-600" },
+          { icon: CustomDocumentIcon,   label: "Lease Expires", val: "Dec 31, 2026", sub: "14 months",   color: "text-[#1A1A1A]" },
         ].map((item, i) => (
           <div key={i} className="flex items-center gap-3.5 p-3.5 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] hover:bg-white hover:border-[#C4D4C9] transition-all">
             <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
-              <item.icon className="h-4 w-4 text-[#1B5E45]" />
+              <item.icon className="h-6 w-6 text-[#1B5E45]" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[10px] text-[#6B7280]">{item.label}</p>
@@ -792,7 +936,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
         ))}
       </div>
       <button className="w-full h-11 rounded-xl bg-[#1B5E45] text-white text-sm font-normal flex items-center justify-center gap-2 hover:bg-[#246B4F] transition-colors shadow-md shadow-[#1B5E45]/20">
-        <CreditCard className="h-4 w-4" />
+        <CustomCreditCardIcon className="h-6 w-6" />
         Pay Rent via M-Pesa
       </button>
     </div>,
@@ -830,10 +974,27 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-    return () => clearTimeout(timer);
+    const minDisplay = 1500; // minimum ms to show the loader
+    const start = Date.now();
+
+    const hide = () => {
+      const elapsed = Date.now() - start;
+      const remaining = Math.max(0, minDisplay - elapsed);
+      setTimeout(() => setIsLoading(false), remaining);
+    };
+
+    if (document.readyState === "complete") {
+      // Page already loaded (e.g. fast cache hit)
+      hide();
+    } else {
+      window.addEventListener("load", hide, { once: true });
+      // Safety fallback in case load never fires
+      const fallback = setTimeout(hide, 8000);
+      return () => {
+        window.removeEventListener("load", hide);
+        clearTimeout(fallback);
+      };
+    }
   }, []);
 
   return (
@@ -862,8 +1023,9 @@ export default function Home() {
 function TrustLogosBar() {
   const partners = [
     {
-      name: "Safaricom",
-      src: "https://i.pinimg.com/736x/ae/b7/b6/aeb7b68c1f3325404efaa619a7334cf4.jpg",
+      name: "Mpesa",
+      src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLnyv6AXS3DPxlSvGmTSRhW6BV5yUFqVMOKw&s",
+      cover: true,
     },
     {
       name: "KCB Bank",
@@ -884,10 +1046,12 @@ function TrustLogosBar() {
     {
       name: "stanbic bank",
       src: "https://i.pinimg.com/1200x/05/fb/f4/05fbf46988bcb2271efcb0ec147f5356.jpg",
+      cover: true,
     },
     {
       name: "Family Bank",
       src: "https://i.pinimg.com/1200x/3f/6d/d9/3f6dd99e7095a4a06338d967caa63501.jpg",
+      cover: true,
     },
   ];
 
@@ -895,7 +1059,7 @@ function TrustLogosBar() {
   const items = [...partners, ...partners, ...partners];
 
   return (
-    <div className="border-y border-[#E0E8E3] bg-[#FAFAF8] py-10 overflow-hidden select-none">
+    <div className="border-y border-[#E0E8E3] bg-[#FAFAF8] pt-14 pb-10 overflow-hidden select-none">
       {/* Header label */}
       <p className="text-center text-[8px] sm:text-[9px] md:text-[10px] font-normal uppercase tracking-[0.25em] text-[#6B7280]/60 mb-8">
         Trusted by Kenya&apos;s leading institutions
@@ -932,7 +1096,7 @@ function TrustLogosBar() {
                 <img 
                   src={p.src} 
                   alt={`${p.name} logo`} 
-                  className="h-8 w-auto object-contain mix-blend-multiply" 
+                  className={`w-28 h-10 mix-blend-multiply ${p.cover ? "object-cover" : "object-contain"}`} 
                 />
               ) : (
                 <span className="text-[10px] md:text-sm font-normal tracking-wide uppercase">{p.name}</span>
@@ -973,12 +1137,12 @@ function TrustLogosBar() {
 // --- METRIC BAR -------------------------------------------------------------
 function MetricBar() {
   const stats = [
-    { val: 1200, suffix: "+",    label: "Active Properties",  icon: Building2, decimals: 0 },
-    { val: 99.2, suffix: "%",    label: "Uptime SLA",         icon: Activity,  decimals: 1 },
-    { val: 14,   suffix: " min", label: "Avg Response Time",  icon: Clock,     decimals: 0 },
-    { val: 4.9,  suffix: "/5",   label: "Trust Score",        icon: Star,      decimals: 1 },
-    { val: 2000, suffix: "+",    label: "Professionals",      icon: Users,     decimals: 0 },
-    { val: 98,   suffix: "%",    label: "Collection Rate",    icon: CreditCard,decimals: 0 },
+    { val: 1200, suffix: "+",    label: "Active Properties",  icon: CustomPropertyIcon, decimals: 0 },
+    { val: 99.2, suffix: "%",    label: "Uptime SLA",         icon: CustomAnalyticIcon,  decimals: 1 },
+    { val: 14,   suffix: " min", label: "Avg Response Time",  icon: CustomResponseTimeIcon,     decimals: 0 },
+    { val: 4.9,  suffix: "/5",   label: "Trust Score",        icon: CustomAwardIcon,      decimals: 1 },
+    { val: 2000, suffix: "+",    label: "Professionals",      icon: CustomUserIcon,     decimals: 0 },
+    { val: 98,   suffix: "%",    label: "Collection Rate",    icon: CustomCreditCardIcon,decimals: 0 },
   ];
   return (
     <section className="bg-primary/5 py-14 text-foreground relative overflow-hidden">
@@ -988,8 +1152,8 @@ function MetricBar() {
           {stats.map((s,i) => (
             <Reveal key={i} delay={i*0.08} className="text-center group">
               <div className="flex justify-center mb-3">
-                <div className="h-9 w-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <s.icon className="h-4 w-4 text-primary" />
+                <div className="h-11 w-11 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <s.icon className="h-6 w-6 text-primary" />
                 </div>
               </div>
               <p className="text-2xl sm:text-3xl md:text-4xl tracking-tighter tabular-nums">
@@ -1008,7 +1172,7 @@ function MetricBar() {
 // --- SOLUTIONS --------------------------------------------------------------
 function SolutionsSection() {
   return (
-    <section className="py-16 md:py-28 bg-background">
+    <section className="py-12 md:py-16 bg-background">
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Built for Both Sides</span>
@@ -1023,10 +1187,10 @@ function SolutionsSection() {
               icon:CustomSuitcaseIcon,accent:true,href:"/auth/login?role=landlord",
               features:[
                 {icon:CustomAnalyticIcon,text:"Real-time Yield Analytics"},
-                {icon:CreditCard,text:"Automated Collections"},
-                {icon:FileText,text:"Audit Trails & Compliance"},
-                {icon:Bell,text:"Smart Alert System"},
-                {icon:PieChart,text:"Property Intelligence"},
+                {icon:CustomCreditCardIcon,text:"Automated Collections"},
+                {icon:CustomDocumentIcon,text:"Audit Trails & Compliance"},
+                {icon:CustomRingingIcon,text:"Smart Alert System"},
+                {icon:CustomPropertyIcon,text:"Property Intelligence"},
                 {icon:CustomTenantIcon,text:"Tenant CRM"},
               ],
             },
@@ -1035,11 +1199,11 @@ function SolutionsSection() {
               desc:"Frictionless payments, transparent communication, and a modern living experience built for the digital era.",
               icon:CustomTenantIcon,accent:false,href:"/auth/login?role=tenant",
               features:[
-                {icon:CreditCard,text:"Instant M-Pesa Payments"},
+                {icon:CustomCreditCardIcon,text:"Instant M-Pesa Payments"},
                 {icon:CustomWrenchIcon,text:"Maintenance Requests"},
-                {icon:Lock,text:"Secure Document Vault"},
-                {icon:Receipt,text:"Payment History"},
-                {icon:Calendar,text:"Lease Management"},
+                {icon:CustomFolderIcon,text:"Secure Document Vault"},
+                {icon:CustomBillIcon,text:"Payment History"},
+                {icon:CustomCalendarIcon,text:"Lease Management"},
                 {icon:CustomChatIcon,text:"Direct Messaging"},
               ],
             },
@@ -1051,11 +1215,15 @@ function SolutionsSection() {
                   ? "bg-primary/5 text-foreground border-primary/20 shadow-2xl shadow-primary/5 hover:border-primary/30 hover:shadow-primary/10"
                   : "bg-card border-border hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5",
               )}>
-                <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center mb-10 transition-transform group-hover:scale-105",card.accent?"bg-primary text-primary-foreground":"bg-primary/10 text-primary")}>
-                  <card.icon className="h-8 w-8" />
+                <div className="flex items-center justify-between mb-8">
+                  <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105",card.accent?"bg-primary text-primary-foreground":"bg-primary/10 text-primary")}>
+                    <card.icon className="h-8 w-8" />
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] uppercase tracking-[0.15em] text-primary block">{card.role}</span>
+                    <h3 className="text-2xl md:text-3xl tracking-tight mt-1 font-semibold">{card.title}</h3>
+                  </div>
                 </div>
-                <span className="text-[10px] uppercase tracking-[0.15em] text-primary">{card.role}</span>
-                <h3 className="text-2xl md:text-3xl tracking-tight mt-1 mb-5">{card.title}</h3>
                 <p className={cn("text-base leading-relaxed mb-8",card.accent?"text-muted-foreground":"text-muted-foreground")}>{card.desc}</p>
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {card.features.map((f,j) => (
@@ -1100,7 +1268,7 @@ function HowItWorksSection() {
     ],
   };
   return (
-    <section className="py-16 md:py-28 bg-muted/30 relative overflow-hidden">
+    <section className="py-12 md:py-16 bg-muted/30 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(#1B5E45_0.6px,transparent_1px)] bg-size-[28px_28px] opacity-[0.03]" />
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
@@ -1184,12 +1352,12 @@ function FeatureGridSection() {
     {icon:CustomResponseTimeIcon,      title:"< 14 Min Response",      desc:"Our automated workflows ensure maintenance and support requests are acknowledged fast.",                      large:false,bg:"bg-emerald-soft"},
     {icon:CustomMoneyExchangeIcon,    title:"Multi-Currency & M-Pesa", desc:"Accept payments in KSh, USD, or GBP. M-Pesa integration built-in with instant reconciliation.",             large:false,bg:"bg-card"},
     {icon:CustomAnalyticIcon,title:"Real-Time Reporting",    desc:"Live dashboards, PDF exports, and scheduled email reports keep all stakeholders informed.",                   large:false,bg:"bg-card"},
-    {icon:Bell,     title:"Smart Notifications",    desc:"Automated rent reminders, maintenance updates, and lease renewal alerts — all customisable.",                 large:true, bg:"bg-primary text-primary-foreground"},
+    {icon:CustomRingingIcon,     title:"Smart Notifications",    desc:"Automated rent reminders, maintenance updates, and lease renewal alerts — all customisable.",                 large:true, bg:"bg-primary text-primary-foreground"},
     {icon:CustomAwardIcon,    title:"Compliance Ready",       desc:"Audit trails, digital signatures, and document retention built for regulatory requirements.",                  large:false,bg:"bg-card"},
     {icon:CustomSupportIcon,title:"24/7 Priority Support",desc:"Dedicated account managers and round-the-clock technical support for enterprise clients.",               large:false,bg:"bg-card"},
   ];
   return (
-    <section className="py-16 md:py-28 bg-background">
+    <section className="py-12 md:py-16 bg-background">
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Full Feature Set</span>
@@ -1216,34 +1384,83 @@ const TESTIMONIALS = [
 
 function TestimonialsSection() {
   const [activeIdx, setActiveIdx] = useState(0);
+
+  // Auto-scroll at a much slower, readable pace
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIdx(p => (p + 1) % TESTIMONIALS.length);
+    }, 8000); // 8 seconds per slide
+    return () => clearInterval(timer);
+  }, []);
+
+  const next = () => setActiveIdx(p => (p + 1) % TESTIMONIALS.length);
+  const prev = () => setActiveIdx(p => (p - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+
   return (
-    <section className="py-16 md:py-28 bg-muted/25 overflow-hidden">
-      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
-        <Reveal className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Social Proof</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Loved by managers<br />and residents alike.</h2>
-        </Reveal>
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div key={activeIdx} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}} transition={{duration:0.5}} className="max-w-3xl mx-auto text-center mb-12">
-              <div className="flex justify-center gap-1 mb-6">
-                {[...Array(TESTIMONIALS[activeIdx].rating)].map((_,i) => <Star key={i} className="h-5 w-5 fill-primary text-primary" />)}
-              </div>
-              <blockquote className="text-xl md:text-2xl font-light leading-relaxed text-foreground mb-8">"{TESTIMONIALS[activeIdx].quote}"</blockquote>
-              <div className="flex items-center justify-center gap-4">
-                <img src={`https://i.pravatar.cc/128?img=${TESTIMONIALS[activeIdx].img}`} alt="" className="h-13 w-13 rounded-2xl object-cover border-2 border-primary/20" />
-                <div className="text-left">
-                  <p className="font-normal text-sm md:text-base">{TESTIMONIALS[activeIdx].name}</p>
-                  <p className="text-sm text-muted-foreground">{TESTIMONIALS[activeIdx].role}</p>
+    <section className="py-12 md:py-16 bg-[#FAFAF8] overflow-hidden relative">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[400px] bg-gradient-to-b from-[#3DBE7A]/10 to-transparent blur-3xl rounded-full opacity-50 pointer-events-none" />
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+        
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
+          <Reveal className="text-left">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-white border border-[#E0E8E3] text-[#1B5E45] text-[10px] font-normal uppercase tracking-[0.2em] mb-5 shadow-sm">Social Proof</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-tight font-medium text-[#1A1A1A]">
+              Loved by managers<br className="max-md:hidden" /> and residents alike.
+            </h2>
+          </Reveal>
+          
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-2">
+            <button onClick={prev} className="h-12 w-12 flex items-center justify-center rounded-2xl border border-[#E0E8E3] bg-white hover:border-[#C4D4C9] text-[#1B5E45] hover:shadow-md hover:-translate-y-0.5 transition-all">
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button onClick={next} className="h-12 w-12 flex items-center justify-center rounded-2xl border border-[#E0E8E3] bg-white hover:border-[#C4D4C9] text-[#1B5E45] hover:shadow-md hover:-translate-y-0.5 transition-all">
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="relative max-w-5xl mx-auto">
+          <div className="overflow-hidden p-2 -mx-2">
+            <motion.div 
+              className="flex"
+              animate={{ x: `-${activeIdx * 100}%` }}
+              transition={{ type: "spring", stiffness: 200, damping: 30 }}
+            >
+              {TESTIMONIALS.map((t, i) => (
+                <div key={i} className="min-w-full px-2">
+                  <div className="bg-white rounded-[2rem] p-8 md:p-12 lg:p-16 border border-[#E0E8E3] shadow-xl shadow-black/5 hover:shadow-2xl hover:shadow-[#1B5E45]/10 transition-all duration-500">
+                    <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start md:items-center">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-1 mb-6">
+                          {[...Array(t.rating)].map((_,j) => <Star key={j} className="h-5 w-5 fill-amber-400 text-amber-400" />)}
+                        </div>
+                        <blockquote className="text-xl sm:text-2xl md:text-3xl text-[#1A1A1A] leading-relaxed font-light tracking-tight mb-8">
+                          "{t.quote}"
+                        </blockquote>
+                        <div className="flex items-center gap-4">
+                          <img src={`https://i.pravatar.cc/128?img=${t.img}`} alt={t.name} className="h-14 w-14 rounded-full object-cover border-2 border-[#E8F5EE]" />
+                          <div>
+                            <h4 className="text-base font-semibold text-[#1A1A1A] tracking-tight">{t.name}</h4>
+                            <p className="text-xs text-[#6B7280]">{t.role}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </motion.div>
-          </AnimatePresence>
-          <div className="flex justify-center gap-3">
-            {TESTIMONIALS.map((t,i) => (
-              <button key={i} onClick={() => setActiveIdx(i)} className={cn("rounded-xl overflow-hidden border-2 transition-all",i===activeIdx?"border-primary scale-110 shadow-lg shadow-primary/20":"border-transparent opacity-40 hover:opacity-70")}>
-                <img src={`https://i.pravatar.cc/128?img=${t.img}`} alt="" className="h-10 w-10 object-cover" />
-              </button>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="flex justify-center gap-2 mt-8">
+            {TESTIMONIALS.map((_, i) => (
+              <button 
+                key={i} 
+                onClick={() => setActiveIdx(i)} 
+                className={cn("h-2 rounded-full transition-all duration-300", i === activeIdx ? "w-8 bg-[#3DBE7A]" : "w-2 bg-[#E0E8E3] hover:bg-[#C4D4C9]")} 
+              />
             ))}
           </div>
         </div>
@@ -1261,7 +1478,7 @@ function PricingSection() {
     {name:"Enterprise",  price:null,               desc:"Tailored solutions for institutional Propertys and developers.",    units:"Unlimited units", features:["Custom integrations","Dedicated account manager","White-label option","SLA guarantee","On-premise option","Custom compliance","Training & onboarding","24/7 phone support"],cta:"Contact Sales",  highlight:false},
   ];
   return (
-    <section className="py-16 md:py-28 bg-background relative">
+    <section className="py-12 md:py-16 bg-background relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(27,94,69,0.04),transparent)]" />
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-8">
