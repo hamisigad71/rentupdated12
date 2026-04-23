@@ -112,6 +112,22 @@ const CustomAlertIcon = ({ className }: { className?: string }) => (
     }} 
   />
 )
+
+const CustomCheckIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/check.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/check.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
  
 export default function TenantsPage() {
   const [search, setSearch] = useState("");
@@ -203,7 +219,7 @@ export default function TenantsPage() {
               {
                 label: "Active Leases",
                 value: activeTenants,
-                icon: CustomTenantIcon,
+                icon: CustomCheckIcon,
                 color: "#3DBE7A",
                 bgColor: "#E8F5EE",
               },

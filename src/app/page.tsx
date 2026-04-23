@@ -33,6 +33,7 @@ import {
   Home as HomeIcon,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Play,
   Clock,
   MapPin,
@@ -83,6 +84,181 @@ const CustomChatIcon = ({ className }: { className?: string }) => (
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
       maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomPropertyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current px-0", className)}
+    style={{
+      WebkitMaskImage: 'url(/property.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/property.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomTenantIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomAnalyticIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomSuitcaseIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/suitcase.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/suitcase.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomTrackIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/track.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/track.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomMoneyExchangeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/money-exchange.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/money-exchange.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomSmartphoneIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/smartphone.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/smartphone.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomSupportIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/support.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/support.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomUserIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/user.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/user.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomResponseTimeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/response-time.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/response-time.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+const CustomAwardIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/award-symbol.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/award-symbol.png)', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',
@@ -807,7 +983,7 @@ function MetricBar() {
   return (
     <section className="bg-primary/5 py-14 text-foreground relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle_at_20%_50%,#3DBE7A,transparent_50%),radial-gradient(circle_at_80%_50%,#246B4F,transparent_50%)]" />
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-10">
           {stats.map((s,i) => (
             <Reveal key={i} delay={i*0.08} className="text-center group">
@@ -833,7 +1009,7 @@ function MetricBar() {
 function SolutionsSection() {
   return (
     <section className="py-16 md:py-28 bg-background">
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Built for Both Sides</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em] mt-2">Dual Portals. One Powerful Engine.</h2>
@@ -844,27 +1020,27 @@ function SolutionsSection() {
             {
               title:"For Landlords",role:"Property Managers",
               desc:"Complete control over your Property with intelligent yield tools, automated workflows, and institutional-grade reporting.",
-              icon:Briefcase,accent:true,href:"/auth/login?role=landlord",
+              icon:CustomSuitcaseIcon,accent:true,href:"/auth/login?role=landlord",
               features:[
-                {icon:BarChart3,text:"Real-time Yield Analytics"},
+                {icon:CustomAnalyticIcon,text:"Real-time Yield Analytics"},
                 {icon:CreditCard,text:"Automated Collections"},
                 {icon:FileText,text:"Audit Trails & Compliance"},
                 {icon:Bell,text:"Smart Alert System"},
                 {icon:PieChart,text:"Property Intelligence"},
-                {icon:Users,text:"Tenant CRM"},
+                {icon:CustomTenantIcon,text:"Tenant CRM"},
               ],
             },
             {
               title:"For Tenants",role:"Residents",
               desc:"Frictionless payments, transparent communication, and a modern living experience built for the digital era.",
-              icon:Users,accent:false,href:"/auth/login?role=tenant",
+              icon:CustomTenantIcon,accent:false,href:"/auth/login?role=tenant",
               features:[
                 {icon:CreditCard,text:"Instant M-Pesa Payments"},
                 {icon:CustomWrenchIcon,text:"Maintenance Requests"},
                 {icon:Lock,text:"Secure Document Vault"},
                 {icon:Receipt,text:"Payment History"},
                 {icon:Calendar,text:"Lease Management"},
-                {icon:MessageSquare,text:"Direct Messaging"},
+                {icon:CustomChatIcon,text:"Direct Messaging"},
               ],
             },
           ].map((card,i) => (
@@ -911,10 +1087,10 @@ function HowItWorksSection() {
   const [activeTab, setActiveTab] = useState<"landlord"|"tenant">("landlord");
   const steps = {
     landlord:[
-      {icon:Building2,step:"01",title:"Register Your Property",desc:"Add your properties in minutes. Our smart onboarding imports existing data and auto-generates unit profiles."},
-      {icon:Users,step:"02",title:"Onboard Tenants",desc:"Invite residents via SMS or email. Digital lease signing and KYC verification happen seamlessly in-app."},
-      {icon:BarChart3,step:"03",title:"Automate & Collect",desc:"Set rent schedules, M-Pesa prompts, and late fees. Collections happen automatically with real-time reconciliation."},
-      {icon:PieChart,step:"04",title:"Track & Grow",desc:"Monitor occupancy, yields, and maintenance from one dashboard. Export compliance reports with one click."},
+      {icon:CustomPropertyIcon,step:"01",title:"Register Your Property",desc:"Add your properties in minutes. Our smart onboarding imports existing data and auto-generates unit profiles."},
+      {icon:CustomTenantIcon,step:"02",title:"Onboard Tenants",desc:"Invite residents via SMS or email. Digital lease signing and KYC verification happen seamlessly in-app."},
+      {icon:CustomAnalyticIcon,step:"03",title:"Automate & Collect",desc:"Set rent schedules, M-Pesa prompts, and late fees. Collections happen automatically with real-time reconciliation."},
+      {icon:CustomTrackIcon,step:"04",title:"Track & Grow",desc:"Monitor occupancy, yields, and maintenance from one dashboard. Export compliance reports with one click."},
     ],
     tenant:[
       {icon:HomeIcon,step:"01",title:"Receive Your Invite",desc:"Your landlord sends a digital invite. Verify your identity and sign your lease entirely online — no paper needed."},
@@ -926,7 +1102,7 @@ function HowItWorksSection() {
   return (
     <section className="py-16 md:py-28 bg-muted/30 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(#1B5E45_0.6px,transparent_1px)] bg-size-[28px_28px] opacity-[0.03]" />
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Simple Process</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Up & running<br />in under 10 minutes.</h2>
@@ -967,35 +1143,61 @@ function HowItWorksSection() {
 }
 
 // --- FEATURE GRID -----------------------------------------------------------
+function FeatureCard({ f, i }: { f: any, i: number }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  return (
+    <Reveal key={i} delay={i*0.05} className={cn(f.large?"col-span-2 row-span-1":"col-span-1")}>
+      <div className={cn("h-full rounded-3xl p-7 border border-border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl group flex flex-col",f.bg,f.bg==="bg-foreground text-background"&&"border-foreground",f.bg==="bg-primary text-primary-foreground"&&"border-primary shadow-lg shadow-primary/20")}>
+        <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-105 shrink-0",f.bg==="bg-foreground text-background"?"bg-primary/15":f.bg==="bg-primary text-primary-foreground"?"bg-primary-foreground/15":f.bg==="bg-emerald-soft"?"bg-primary/15":"bg-primary/8")}>
+          <f.icon className={cn("h-5 w-5",f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground":"text-primary")} />
+        </div>
+        <h4 className="text-sm md:text-base mb-2 font-medium shrink-0">{f.title}</h4>
+        <div className="relative flex-grow">
+          <p className={cn(
+            "text-sm leading-relaxed transition-all duration-300",
+            !isExpanded && "line-clamp-3 md:line-clamp-none",
+            f.bg==="bg-foreground text-background"?"text-background/60":f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground/70":"text-muted-foreground"
+          )}>
+            {f.desc}
+          </p>
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="md:hidden mt-3 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 opacity-60 hover:opacity-100 transition-opacity"
+          >
+            {isExpanded ? (
+              <>Show Less <ChevronUp className="h-3 w-3" /></>
+            ) : (
+              <>Read More <ChevronDown className="h-3 w-3" /></>
+            )}
+          </button>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
 function FeatureGridSection() {
   const features = [
-    {icon:Shield,   title:"Bank-Grade Security",    desc:"256-bit AES encryption, zero-trust architecture, and SOC 2 Type II compliance protect every transaction.", large:true, bg:"bg-foreground text-background"},
-    {icon:Smartphone,title:"Mobile-First Design",   desc:"Full functionality from any device. Native app experience in the browser.",                                  large:false,bg:"bg-card"},
-    {icon:Zap,      title:"< 14 Min Response",      desc:"Our automated workflows ensure maintenance and support requests are acknowledged fast.",                      large:false,bg:"bg-emerald-soft"},
-    {icon:Globe,    title:"Multi-Currency & M-Pesa", desc:"Accept payments in KSh, USD, or GBP. M-Pesa integration built-in with instant reconciliation.",             large:false,bg:"bg-card"},
-    {icon:BarChart3,title:"Real-Time Reporting",    desc:"Live dashboards, PDF exports, and scheduled email reports keep all stakeholders informed.",                   large:false,bg:"bg-card"},
+    {icon:CustomUserIcon,   title:"Bank-Grade Security",    desc:"256-bit AES encryption, zero-trust architecture, and SOC 2 Type II compliance protect every transaction.", large:true, bg:"bg-foreground text-background"},
+    {icon:CustomSmartphoneIcon,title:"Mobile-First Design",   desc:"Full functionality from any device. Native app experience in the browser.",                                  large:false,bg:"bg-card"},
+    {icon:CustomResponseTimeIcon,      title:"< 14 Min Response",      desc:"Our automated workflows ensure maintenance and support requests are acknowledged fast.",                      large:false,bg:"bg-emerald-soft"},
+    {icon:CustomMoneyExchangeIcon,    title:"Multi-Currency & M-Pesa", desc:"Accept payments in KSh, USD, or GBP. M-Pesa integration built-in with instant reconciliation.",             large:false,bg:"bg-card"},
+    {icon:CustomAnalyticIcon,title:"Real-Time Reporting",    desc:"Live dashboards, PDF exports, and scheduled email reports keep all stakeholders informed.",                   large:false,bg:"bg-card"},
     {icon:Bell,     title:"Smart Notifications",    desc:"Automated rent reminders, maintenance updates, and lease renewal alerts — all customisable.",                 large:true, bg:"bg-primary text-primary-foreground"},
-    {icon:Award,    title:"Compliance Ready",       desc:"Audit trails, digital signatures, and document retention built for regulatory requirements.",                  large:false,bg:"bg-card"},
-    {icon:HeadphonesIcon,title:"24/7 Priority Support",desc:"Dedicated account managers and round-the-clock technical support for enterprise clients.",               large:false,bg:"bg-card"},
+    {icon:CustomAwardIcon,    title:"Compliance Ready",       desc:"Audit trails, digital signatures, and document retention built for regulatory requirements.",                  large:false,bg:"bg-card"},
+    {icon:CustomSupportIcon,title:"24/7 Priority Support",desc:"Dedicated account managers and round-the-clock technical support for enterprise clients.",               large:false,bg:"bg-card"},
   ];
   return (
     <section className="py-16 md:py-28 bg-background">
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Full Feature Set</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Everything you need.<br />Nothing you don't.</h2>
         </Reveal>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
           {features.map((f,i) => (
-            <Reveal key={i} delay={i*0.05} className={cn(f.large?"col-span-2 row-span-1":"col-span-1")}>
-              <div className={cn("h-full rounded-3xl p-7 border border-border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl group",f.bg,f.bg==="bg-foreground text-background"&&"border-foreground",f.bg==="bg-primary text-primary-foreground"&&"border-primary shadow-lg shadow-primary/20")}>
-                <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-105",f.bg==="bg-foreground text-background"?"bg-primary/15":f.bg==="bg-primary text-primary-foreground"?"bg-primary-foreground/15":f.bg==="bg-emerald-soft"?"bg-primary/15":"bg-primary/8")}>
-                  <f.icon className={cn("h-5 w-5",f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground":"text-primary")} />
-                </div>
-                <h4 className="text-sm md:text-base mb-2">{f.title}</h4>
-                <p className={cn("text-sm leading-relaxed",f.bg==="bg-foreground text-background"?"text-background/60":f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground/70":"text-muted-foreground")}>{f.desc}</p>
-              </div>
-            </Reveal>
+            <FeatureCard key={i} f={f} i={i} />
           ))}
         </div>
       </div>
@@ -1016,7 +1218,7 @@ function TestimonialsSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   return (
     <section className="py-16 md:py-28 bg-muted/25 overflow-hidden">
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <Reveal className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Social Proof</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Loved by managers<br />and residents alike.</h2>
@@ -1061,7 +1263,7 @@ function PricingSection() {
   return (
     <section className="py-16 md:py-28 bg-background relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(27,94,69,0.04),transparent)]" />
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-8">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Transparent Pricing</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Simple, honest pricing.<br />No surprises.</h2>
@@ -1127,20 +1329,20 @@ function FinalCTASection() {
         <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80" alt="" className="w-full h-full object-cover" />
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(61,190,122,0.08),transparent)]" />
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
         <Reveal>
           <span className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Ready when you are</span>
           <h2 className="text-4xl sm:text-5xl md:text-6xl tracking-[-0.04em] text-background leading-tight">Start building<br />your legacy today.</h2>
           <p className="text-lg text-background/50 max-w-lg mx-auto font-light mt-5">Join 2,000+ property professionals who manage their Propertys with confidence on Nova.</p>
         </Reveal>
-        <Reveal delay={0.2} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link href="/auth/register">
-            <Button size="lg" className="h-16 px-[4px]4 rounded-3xl text-sm md:text-base shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
-              Get Started — Free<ArrowRight className="ml-3 h-5 w-5" />
+        <Reveal delay={0.2} className="flex flex-row gap-3 sm:gap-4 justify-center items-center">
+          <Link href="/auth/register" className="flex-1 sm:flex-none">
+            <Button size="lg" className="h-16 w-full sm:w-auto px-6 rounded-3xl text-[10px] sm:text-sm md:text-base shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
+              Get Started — Free<ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
           </Link>
-          <Button size="lg" variant="outline" className="h-16 px-[4px]0 rounded-3xl border border-background/10 text-background bg-transparent hover:bg-background/5 text-sm md:text-base font-normal">
-            Schedule a Demo<Calendar className="ml-3 h-5 w-5" />
+          <Button size="lg" variant="outline" className="flex-1 sm:flex-none h-16 w-full sm:w-auto px-6 rounded-3xl border border-background/10 text-background bg-transparent hover:bg-background/5 text-[10px] sm:text-sm md:text-base font-normal">
+            Schedule a Demo<Calendar className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
         </Reveal>
         <Reveal delay={0.35}>
@@ -1159,7 +1361,7 @@ function FinalCTASection() {
 function Footer() {
   return (
     <footer className="border-t border-border bg-background pt-20 pb-12">
-      <div className="container px-[4px] sm:px-6 md:px-8 max-w-7xl mx-auto">
+      <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-16 mb-20">
           <div className="lg:col-span-4 space-y-6">
             <Logo />

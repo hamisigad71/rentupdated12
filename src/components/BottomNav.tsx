@@ -76,7 +76,7 @@ export default function BottomNav({ items }: BottomNavProps) {
                   href={item.href}
                   className="flex flex-col items-center justify-center py-2 px-[4px] rounded-xl transition-all duration-300 w-full"
                   style={{
-                    color: isActive ? "#3DBE7A" : "rgba(30, 41, 59, 0.6)",
+                    color: isActive ? "#3DBE7A" : "#1B5E45",
                     background: isActive ? "rgba(61, 190, 122, 0.15)" : "transparent",
                   }}
                 >
@@ -86,7 +86,7 @@ export default function BottomNav({ items }: BottomNavProps) {
                     {item.icon}
                   </div>
                   <span
-                    className={`text-[10px] mt-1 tracking-tight transition-all duration-300 ${isActive ? "opacity-100" : "opacity-50"}`}
+                    className={`text-[10px] mt-1 tracking-tight transition-all duration-300 ${isActive ? "opacity-100 text-[#3DBE7A]" : "opacity-60 text-[#1B5E45]"}`}
                   >
                     {item.label}
                   </span>

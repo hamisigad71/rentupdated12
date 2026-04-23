@@ -188,7 +188,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     render={
                       <Link href={item.href}>
-                        <item.icon className={pathname === item.href ? "text-primary h-5 w-5" : "text-muted-foreground h-5 w-5"} />
+                        <item.icon className={pathname === item.href ? "text-[#1B5E45] h-5 w-5" : "text-[#1B5E45]/50 h-5 w-5"} />
                         <span className="font-normal group-data-[collapsible=icon]:hidden">{item.label}</span>
                       </Link>
                     }
@@ -209,7 +209,7 @@ export function AppSidebar() {
               <SidebarMenuButton
                 render={
                   <Link href={item.href}>
-                    <item.icon className="text-muted-foreground h-5 w-5" />
+                    <item.icon className={pathname === item.href ? "text-[#1B5E45] h-5 w-5" : "text-[#1B5E45]/50 h-5 w-5"} />
                     <span className="text-sm font-normal group-data-[collapsible=icon]:hidden">{item.label}</span>
                   </Link>
                 }
