@@ -300,7 +300,7 @@ export default function BuildingsPage() {
                         className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
                         style={{ backgroundColor: stat.bgColor, color: stat.color }}
                       >
-                        <stat.icon className="w-5 h-5 sm:w-7 sm:h-7" strokeWidth={2.5} />
+                        <stat.icon className="w-5 h-5 sm:w-7 sm:h-7" />
                       </div>
                     </div>
                     <div className="space-y-1">

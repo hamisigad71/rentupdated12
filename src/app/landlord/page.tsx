@@ -264,7 +264,6 @@ function HeroMiniStat({
             "h-6 w-6",
             danger ? "text-red-500" : "text-[#1B5E45]",
           )}
-          strokeWidth={1.8}
         />
       </div>
       <div>
@@ -325,7 +324,6 @@ function KpiCard({
                 "h-7 w-7",
                 accent ? "text-white" : danger ? "text-red-500" : "text-[#1B5E45]",
               )}
-              strokeWidth={1.8}
             />
           </div>
           {trend && (
@@ -894,7 +892,7 @@ export default function LandlordDashboard() {
                         <Link key={action.label} href={action.href}>
                           <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border bg-[#FAFAF8] hover:border-[#1B5E45]/30 hover:bg-[#F0F5F1] transition-all group cursor-pointer">
                             <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] text-[#1B5E45] flex items-center justify-center group-hover:bg-[#1B5E45] group-hover:text-white transition-all shrink-0">
-                              <action.icon className="h-5 w-5" strokeWidth={1.8} />
+                              <action.icon className="h-5 w-5" />
                             </div>
                             <span className="text-sm font-medium text-foreground group-hover:text-[#1B5E45] transition-colors">
                               {action.label}

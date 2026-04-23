@@ -239,7 +239,7 @@ export default function ReportsPage() {
                         className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
                         style={{ backgroundColor: metric.bgColor, color: metric.color }}
                       >
-                        <metric.icon className="w-5 h-5 sm:w-7 sm:h-7" strokeWidth={2.5} />
+                        <metric.icon className="w-5 h-5 sm:w-7 sm:h-7" />
                       </div>
                       <Badge
                         variant="outline"
