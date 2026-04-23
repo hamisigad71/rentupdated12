@@ -121,7 +121,7 @@ export default function ProfilePage() {
                 <div className="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-[#3DBE7A] border-2 border-white shadow-sm flex items-center justify-center">
                   <div className="h-2 w-2 rounded-full bg-white animate-pulse" />
                 </div>
-              </div>
+              </label>
               
               <div className="text-center md:text-left space-y-3">
                 <div className="space-y-2">
