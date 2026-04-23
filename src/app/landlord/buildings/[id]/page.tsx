@@ -38,6 +38,70 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+ 
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomTenantIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomAnalyticIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+ 
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
 export default function BuildingDetailsPage() {
   const params = useParams();
@@ -152,7 +216,7 @@ export default function BuildingDetailsPage() {
               <StatCard 
                 label="Occupancy Rate" 
                 value={`${occupancyRate}%`} 
-                icon={Users} 
+                icon={CustomTenantIcon} 
                 color="#1B5E45" 
                 bgColor="#E8F5EE"
                 subtext={`${building.occupiedUnits} of ${building.units} units occupied`}
@@ -160,7 +224,7 @@ export default function BuildingDetailsPage() {
               <StatCard 
                 label="Monthly Income" 
                 value={<span className="font-money">KSh {totalMonthlyRent.toLocaleString()}</span>} 
-                icon={TrendingUp} 
+                icon={CustomAnalyticIcon} 
                 color="#3DBE7A" 
                 bgColor="#E8F5EE"
                 subtext="Projected monthly gross"
@@ -168,7 +232,7 @@ export default function BuildingDetailsPage() {
               <StatCard 
                 label="Active Issues" 
                 value={buildingComplaints.length} 
-                icon={AlertCircle} 
+                icon={CustomAlertIcon} 
                 color="#E11D48" 
                 bgColor="#FFF1F2"
                 subtext="Pending maintenance tickets"
@@ -220,7 +284,7 @@ export default function BuildingDetailsPage() {
                                 "w-10 h-10 rounded-xl flex items-center justify-center",
                                 unit.status === "occupied" ? "bg-[#E8F5EE] text-[#1B5E45]" : "bg-[#F4F4F0] text-[#6B7280]"
                               )}>
-                                <Home className="h-5 w-5" />
+                                <CustomHomeIcon className="h-5 w-5" />
                               </div>
                               <div>
                                 <h4 className=" text-[#1A1A1A]">Unit {unit.number}</h4>

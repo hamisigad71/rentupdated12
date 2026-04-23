@@ -251,6 +251,22 @@ function Sidebar({
   )
 }
 
+const CustomSidebarIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/sidebar.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/sidebar.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+ 
 function SidebarTrigger({
   className,
   onClick,
@@ -271,7 +287,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <CustomSidebarIcon />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )

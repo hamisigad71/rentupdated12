@@ -64,7 +64,55 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+ 
+const CustomTenantIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
+const CustomAnalyticIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+ 
 export default function TenantsPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -113,7 +161,7 @@ export default function TenantsPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-2">
               <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
-                <Users className="w-3 h-3 mr-1" />
+                <CustomTenantIcon className="w-3 h-3 mr-1" />
                 Tenant Management
               </Badge>
               <h1 className="text-xl sm:text-2xl lg:text-3xl text-[#1A1A1A]">
@@ -148,28 +196,28 @@ export default function TenantsPage() {
               {
                 label: "Total Tenants",
                 value: totalTenants,
-                icon: Users,
+                icon: CustomTenantIcon,
                 color: "#1B5E45",
                 bgColor: "#E8F5EE",
               },
               {
                 label: "Active Leases",
                 value: activeTenants,
-                icon: CheckCircle2,
+                icon: CustomTenantIcon,
                 color: "#3DBE7A",
                 bgColor: "#E8F5EE",
               },
               {
                 label: "Collection Rate",
                 value: `${collectionRate}%`,
-                icon: TrendingUp,
+                icon: CustomAnalyticIcon,
                 color: "#1B5E45",
                 bgColor: "#E8F5EE",
               },
               {
                 label: "Total Arrears",
                 value: `KSh ${(totalArrears / 1000).toFixed(0)}K`,
-                icon: AlertCircle,
+                icon: CustomAlertIcon,
                 color: "#EF4444",
                 bgColor: "#FEE2E2",
               },
@@ -184,10 +232,10 @@ export default function TenantsPage() {
                   <CardContent className="p-4 sm:p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div
-                        className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
                         style={{ backgroundColor: stat.bgColor, color: stat.color }}
                       >
-                        <stat.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+                        <stat.icon className="w-5 h-5 sm:w-7 sm:h-7" strokeWidth={2.5} />
                       </div>
                     </div>
                     <div className="space-y-1">
@@ -479,7 +527,7 @@ export default function TenantsPage() {
                   {
                     label: "Arrears",
                     value: `KSh ${selectedTenant?.arrears.toLocaleString()}`,
-                    icon: AlertCircle,
+                    icon: CustomAlertIcon,
                     color: (selectedTenant?.arrears ?? 0) > 0 ? "#EF4444" : "#3DBE7A",
                     bgColor: (selectedTenant?.arrears ?? 0) > 0 ? "#FEE2E2" : "#E8F5EE",
                   },

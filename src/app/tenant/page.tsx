@@ -174,6 +174,22 @@ const CustomHomeIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
+ 
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
 
 // --- Reveal Animation ------------------------------------------------------
 function Reveal({

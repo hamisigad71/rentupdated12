@@ -33,7 +33,7 @@ import { cn } from "@/lib/utils";
 
 const CustomWrenchIcon = ({ className }: { className?: string }) => (
   <div 
-    className={`bg-current ${className || ''}`}
+    className={cn("bg-current", className)}
     style={{
       WebkitMaskImage: 'url(/request.png)', 
       WebkitMaskSize: 'contain', 
@@ -49,7 +49,7 @@ const CustomWrenchIcon = ({ className }: { className?: string }) => (
 
 const CustomChatIcon = ({ className }: { className?: string }) => (
   <div 
-    className={`bg-current ${className || ''}`}
+    className={cn("bg-current", className)}
     style={{
       WebkitMaskImage: 'url("/chat (1).png")', 
       WebkitMaskSize: 'contain', 
@@ -62,6 +62,54 @@ const CustomChatIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomTenantIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
 export default function ComplaintsPage() {
   const [activeTab, setActiveTab] = useState<"all" | "pending" | "in-progress" | "resolved">("all");
@@ -112,7 +160,7 @@ export default function ComplaintsPage() {
           
           <div className="flex items-center gap-3">
              <div className="flex items-center gap-2 px-6 h-12 rounded-xl bg-destructive/5 border border-destructive/10">
-                <ShieldAlert className="h-4 w-4 text-destructive animate-pulse" />
+                <CustomAlertIcon className="h-5 w-5 animate-pulse" />
                 <span className="text-xs uppercase text-destructive ">{stats.activeComplaints} High Risk Tickets</span>
              </div>
              <Button className="h-12 rounded-xl px-6 bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all uppercase text-xs ">
@@ -200,13 +248,13 @@ export default function ComplaintsPage() {
                        <div className="space-y-1">
                           <p className="text-[8px] uppercase text-muted-foreground/30">Resident Entity</p>
                           <div className="flex items-center gap-2 text-xs uppercase truncate">
-                             <User className="h-3 w-3 text-primary/40" /> {comp.tenantName}
+                             <CustomTenantIcon className="h-3 w-3 text-primary/40" /> {comp.tenantName}
                           </div>
                        </div>
                        <div className="space-y-1">
                           <p className="text-[8px] uppercase text-muted-foreground/30">Asset Node</p>
                           <div className="flex items-center gap-2 text-xs uppercase truncate">
-                             <Home className="h-3 w-3 text-primary/40" /> {comp.unitId}
+                             <CustomHomeIcon className="h-3 w-3 text-primary/40" /> {comp.unitId}
                           </div>
                        </div>
                     </div>
@@ -246,7 +294,7 @@ export default function ComplaintsPage() {
              className="flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed border-foreground/10 bg-foreground/[0.02] cursor-pointer hover:border-primary/40 hover:bg-primary/[0.02] transition-all gap-6 text-center group"
            >
              <div className="h-14 w-14 rounded-[2.2rem] bg-background border border-foreground/5 flex items-center justify-center text-muted-foreground/20 group-hover:text-primary group-hover:border-primary/20 transition-all shadow-xl">
-                <ShieldAlert className="h-10 w-10" />
+                <CustomAlertIcon className="h-10 w-10" />
              </div>
              <div className="space-y-2">
                <p className="text-xl uppercase leading-none tracking-tight">Post New Incident</p>

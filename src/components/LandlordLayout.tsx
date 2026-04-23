@@ -27,13 +27,85 @@ const CustomHomeIcon = () => (
     }} 
   />
 );
+ 
+const CustomLandlordIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/residential.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/residential.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+ 
+const CustomTenantIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+ 
+const CustomAnalyticIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+ 
+const CustomUserIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/user.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/user.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
 
 const landlordItems: NavItem[] = [
   { label: "Home", href: "/landlord", icon: <CustomHomeIcon /> },
-  { label: "Properties", href: "/landlord/buildings", icon: <Building2 size={20} /> },
-  { label: "Tenants", href: "/landlord/tenants", icon: <Users size={20} /> },
-  { label: "Analysis", href: "/landlord/reports", icon: <BarChart2 size={20} /> },
-  { label: "Profile", href: "/landlord/profile", icon: <User size={20} /> },
+  { label: "Properties", href: "/landlord/buildings", icon: <CustomLandlordIcon /> },
+  { label: "Tenants", href: "/landlord/tenants", icon: <CustomTenantIcon /> },
+  { label: "Analysis", href: "/landlord/reports", icon: <CustomAnalyticIcon /> },
+  { label: "Profile", href: "/landlord/profile", icon: <CustomUserIcon /> },
 ];
 
 export default function LandlordLayout({ children }: { children: React.ReactNode }) {
@@ -87,7 +159,7 @@ export default function LandlordLayout({ children }: { children: React.ReactNode
               </label>
             </div>
           </header>
-          <main id="main-scroll-container" className="flex-1 overflow-auto px-[4px] sm:px-4 py-6 md:py-8 lg:py-5 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-28 md:pb-8">
+          <main id="main-scroll-container" className="flex-1 overflow-auto px-0 pt-0 pb-28 md:pb-8">
             {children}
           </main>
           <BottomNav items={landlordItems} />

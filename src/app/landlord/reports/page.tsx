@@ -65,6 +65,54 @@ const CustomMoneyIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
+ 
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomAnalyticIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -155,7 +203,7 @@ export default function ReportsPage() {
                 value: "14.2%",
                 change: "+0.8%",
                 isPositive: true,
-                icon: Target,
+                icon: CustomAnalyticIcon,
                 color: "#3DBE7A",
                 bgColor: "#E8F5EE",
               },
@@ -164,7 +212,7 @@ export default function ReportsPage() {
                 value: `${PropertyPerformance}%`,
                 change: "+1.5%",
                 isPositive: true,
-                icon: Home,
+                icon: CustomHomeIcon,
                 color: "#1B5E45",
                 bgColor: "#E8F5EE",
               },
@@ -173,7 +221,7 @@ export default function ReportsPage() {
                 value: `${arrearsRate}%`,
                 change: "-2.1%",
                 isPositive: true,
-                icon: AlertCircle,
+                icon: CustomAlertIcon,
                 color: "#EF4444",
                 bgColor: "#FEE2E2",
               },
@@ -188,10 +236,10 @@ export default function ReportsPage() {
                   <CardContent className="p-4 sm:pt-6">
                     <div className="flex justify-between items-start mb-4">
                       <div
-                        className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
                         style={{ backgroundColor: metric.bgColor, color: metric.color }}
                       >
-                        <metric.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+                        <metric.icon className="w-5 h-5 sm:w-7 sm:h-7" strokeWidth={2.5} />
                       </div>
                       <Badge
                         variant="outline"
@@ -518,21 +566,21 @@ export default function ReportsPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   {
-                    icon: TrendingUp,
+                    icon: CustomAnalyticIcon,
                     title: "Strong Growth",
                     description: "Revenue increased 12.4% compared to last quarter",
                     color: "#3DBE7A",
                     bgColor: "#E8F5EE",
                   },
                   {
-                    icon: Target,
+                    icon: CustomAnalyticIcon,
                     title: "Target Achievement",
                     description: "Exceeded quarterly targets by 12.2%",
                     color: "#1B5E45",
                     bgColor: "#E8F5EE",
                   },
                   {
-                    icon: AlertCircle,
+                    icon: CustomAlertIcon,
                     title: "Action Required",
                     description: `${arrearsRate}% arrears rate - consider collection strategy`,
                     color: "#EF4444",

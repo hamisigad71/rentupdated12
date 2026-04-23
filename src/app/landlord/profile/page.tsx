@@ -18,6 +18,38 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/AuthContext";
 
+const CustomAnalyticIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
 export default function ProfilePage() {
   const { profileImage, updateProfileImage } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
@@ -599,7 +631,7 @@ export default function ProfilePage() {
                 <div className="bg-rose-50 p-6 rounded-2xl border border-rose-200 shadow-lg">
                   <div className="text-center space-y-4">
                     <div className="h-12 w-12 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center mx-auto">
-                      <AlertTriangle className="h-6 w-6 text-rose-600" />
+                      <CustomAlertIcon className="h-6 w-6 text-rose-600" />
                     </div>
                     <div>
                       <h4 className=" text-rose-900 mb-2">Account Management</h4>

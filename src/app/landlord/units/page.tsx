@@ -45,6 +45,70 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+ 
+const CustomLandlordIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/residential.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/residential.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomTenantIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
+
+const CustomAnalyticIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
 export default function UnitsPage() {
   const router = useRouter();
@@ -311,7 +375,7 @@ export default function UnitsPage() {
                       v: `Floor ${selectedUnit.floor}`,
                       icon: Layers,
                     },
-                    { l: "Asset Category", v: selectedUnit.type, icon: Home },
+                    { l: "Asset Category", v: selectedUnit.type, icon: CustomHomeIcon },
                     {
                       l: "Status Protocol",
                       v: selectedUnit.status.toUpperCase(),
@@ -353,7 +417,7 @@ export default function UnitsPage() {
                   <div className="space-y-8 animate-in fade-in slide-in-from-top-4 duration-1000">
                     <div className="flex items-center justify-between">
                       <h4 className="text-xs  text-foreground uppercase flex items-center gap-3">
-                        <Users className="h-4 w-4 text-primary" /> Resident
+                        <CustomTenantIcon className="h-4 w-4 text-primary" /> Resident
                         Identification
                       </h4>
                       <Badge className="bg-primary/5 text-primary border-primary/20 uppercase text-[8px]  h-6 px-3">
@@ -444,7 +508,7 @@ export default function UnitsPage() {
                           </p>
                         </div>
                         <div className="h-14 w-14 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 group-hover:scale-110 transition-all shadow-2xl">
-                          <TrendingUp className="h-7 w-7 text-primary" />
+                          <CustomAnalyticIcon className="h-7 w-7 text-primary" />
                         </div>
                       </div>
                     </div>

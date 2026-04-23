@@ -99,6 +99,22 @@ const CustomNotificationIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
+ 
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
 // --- TYPES -------------------------------------------------------------------
 type Priority = "low" | "medium" | "high";
@@ -119,7 +135,7 @@ function getPriorityConfig(priority: string) {
       color: "#F59E0B",
       bgColor: "#FEF3C7",
       borderColor: "#FDE68A",
-      icon: AlertTriangle,
+      icon: CustomAlertIcon,
     },
     low: {
       label: "Low",
@@ -259,7 +275,7 @@ export default function TenantComplaintsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-2">
                 <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
-                  <AlertCircle className="w-3 h-3 mr-1" />
+                  <CustomAlertIcon className="w-3 h-3 mr-1" />
                   Service Requests
                 </Badge>
                 <h1 className="text-3xl text-[#1A1A1A]">
@@ -315,7 +331,7 @@ export default function TenantComplaintsPage() {
                 label: "Pending Review",
                 value: pendingRequests,
                 subtitle: "Awaiting response",
-                icon: AlertCircle,
+                icon: CustomAlertIcon,
                 color: "#EF4444",
                 bgColor: "#FEE2E2",
               },

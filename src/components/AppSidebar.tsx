@@ -79,6 +79,54 @@ const CustomUserIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
+const CustomLandlordIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/residential.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/residential.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+ 
+const CustomTenantIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+ 
+const CustomAnalyticIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/analytic.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/analytic.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+ 
 
 import {
   Sidebar,
@@ -100,12 +148,12 @@ import { Button } from "@/components/ui/button";
 
 const mainItems = [
   { label: "Dashboard",  href: "/landlord",            icon: CustomHomeIcon },
-  { label: "Buildings",  href: "/landlord/buildings",  icon: Building2 },
-  { label: "Units",      href: "/landlord/units",      icon: Building2 },
-  { label: "Tenants",    href: "/landlord/tenants",    icon: Users },
+  { label: "Buildings",  href: "/landlord/buildings",  icon: CustomLandlordIcon },
+  { label: "Units",      href: "/landlord/units",      icon: CustomLandlordIcon },
+  { label: "Tenants",    href: "/landlord/tenants",    icon: CustomTenantIcon },
   { label: "Payments",   href: "/landlord/payments",   icon: CustomMoneyIcon },
   { label: "Complaints", href: "/landlord/complaints", icon: CustomChatIcon },
-  { label: "Reports",    href: "/landlord/reports",    icon: BarChart3 },
+  { label: "Reports",    href: "/landlord/reports",    icon: CustomAnalyticIcon },
 ];
 
 const footerItems = [

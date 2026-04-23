@@ -60,6 +60,22 @@ const CustomMoneyIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
+ 
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
 export default function PaymentsPage() {
   const [search, setSearch] = useState("");
@@ -106,7 +122,7 @@ export default function PaymentsPage() {
            {[
              { label: "Total Revenue", val: `KSh ${totalCollected.toLocaleString()}`, icon: TrendingUp, color: "primary", sub: "Net Collections (MTD)" },
              { label: "Pending Receipts", val: `KSh ${(stats.totalArrears / 2).toLocaleString()}`, icon: Clock, color: "accent", sub: "Expected Inflow" },
-             { label: "Arrears Exposure", val: `KSh ${stats.totalArrears.toLocaleString()}`, icon: AlertCircle, color: "destructive", sub: "Overdue Obligations" },
+             { label: "Arrears Exposure", val: `KSh ${stats.totalArrears.toLocaleString()}`, icon: CustomAlertIcon, color: "destructive", sub: "Overdue Obligations" },
            ].map((stat, i) => (
              <motion.div
                key={i}

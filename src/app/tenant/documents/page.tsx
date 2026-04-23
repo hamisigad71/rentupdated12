@@ -48,6 +48,22 @@ import {
   Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+ 
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
 // --- MOCK DATA ---------------------------------------------------------------
 const MOCK_DOCS = [
@@ -99,7 +115,7 @@ const MOCK_DOCS = [
     category: "Safety",
     status: "Active",
     pages: 24,
-    icon: AlertCircle,
+    icon: CustomAlertIcon,
     color: "#EF4444",
     bgColor: "#FEE2E2",
   },
@@ -726,7 +742,7 @@ export default function TenantDocumentsPage() {
                       { label: "Request Document", icon: Bell },
                       { label: "Download All", icon: Download },
                       { label: "Share Document", icon: Share2 },
-                      { label: "Report Issue", icon: AlertCircle },
+                      { label: "Report Issue", icon: CustomAlertIcon },
                     ].map((action, i) => (
                       <Button
                         key={i}

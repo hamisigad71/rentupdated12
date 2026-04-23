@@ -15,6 +15,38 @@ import {
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 import { cn } from "@/lib/utils";
+ 
+const CustomLandlordIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/residential.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/residential.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+ 
+const CustomTenantIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current", className)}
+    style={{
+      WebkitMaskImage: 'url(/tenant.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/tenant.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
 
 const RoleCard = ({
   title,
@@ -139,7 +171,7 @@ export default function RoleSelection() {
             title="Landlord"
             role="Property Manager"
             description="Access global property clusters, yield analytics, and automated financial auditing logs."
-            icon={Building2}
+            icon={CustomLandlordIcon}
             href="/landlord"
             accent={true}
             delay={0.3}
@@ -148,7 +180,7 @@ export default function RoleSelection() {
             title="Tenant"
             role="Residential User"
             description="Manage rent settlements, incident manifests, and your digital residency profile."
-            icon={Users}
+            icon={CustomTenantIcon}
             href="/tenant"
             accent={false}
             delay={0.4}

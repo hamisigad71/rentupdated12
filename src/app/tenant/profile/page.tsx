@@ -49,6 +49,22 @@ import {
 import { mockTenants } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+ 
+const CustomAlertIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={cn("bg-current size-4", className)}
+    style={{
+      WebkitMaskImage: 'url(/exclamation-mark.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/exclamation-mark.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+)
 
 // --- Reveal ----------------------------------------------------------------
 function Reveal({
@@ -482,7 +498,7 @@ export default function TenantProfilePage() {
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="px-6 pt-6 pb-4">
                       <CardTitle className="text-base flex items-center gap-2">
-                        <AlertCircle className="h-4 w-4 text-amber-500" />
+                        <CustomAlertIcon className="h-4 w-4 text-amber-500" />
                         Emergency Contact
                       </CardTitle>
                       <p className="text-xs text-muted-foreground mt-1">

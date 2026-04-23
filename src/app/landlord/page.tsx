@@ -59,6 +59,96 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+function CustomLandlordIcon({ className }: { className?: string }) {
+  return (
+    <div 
+      className={cn("bg-current", className)}
+      style={{
+        WebkitMaskImage: 'url(/residential.png)', 
+        WebkitMaskSize: 'contain', 
+        WebkitMaskPosition: 'center', 
+        WebkitMaskRepeat: 'no-repeat',
+        maskImage: 'url(/residential.png)', 
+        maskSize: 'contain', 
+        maskPosition: 'center', 
+        maskRepeat: 'no-repeat',
+      }} 
+    />
+  );
+}
+ 
+function CustomAnalyticIcon({ className }: { className?: string }) {
+  return (
+    <div 
+      className={cn("bg-current", className)}
+      style={{
+        WebkitMaskImage: 'url(/analytic.png)', 
+        WebkitMaskSize: 'contain', 
+        WebkitMaskPosition: 'center', 
+        WebkitMaskRepeat: 'no-repeat',
+        maskImage: 'url(/analytic.png)', 
+        maskSize: 'contain', 
+        maskPosition: 'center', 
+        maskRepeat: 'no-repeat',
+      }} 
+    />
+  );
+}
+ 
+function CustomFolderIcon({ className }: { className?: string }) {
+  return (
+    <div 
+      className={cn("bg-current", className)}
+      style={{
+        WebkitMaskImage: 'url(/folder.png)', 
+        WebkitMaskSize: 'contain', 
+        WebkitMaskPosition: 'center', 
+        WebkitMaskRepeat: 'no-repeat',
+        maskImage: 'url(/folder.png)', 
+        maskSize: 'contain', 
+        maskPosition: 'center', 
+        maskRepeat: 'no-repeat',
+      }} 
+    />
+  );
+}
+ 
+function CustomAlertIcon({ className }: { className?: string }) {
+  return (
+    <div 
+      className={cn("bg-current", className)}
+      style={{
+        WebkitMaskImage: 'url(/exclamation-mark.png)', 
+        WebkitMaskSize: 'contain', 
+        WebkitMaskPosition: 'center', 
+        WebkitMaskRepeat: 'no-repeat',
+        maskImage: 'url(/exclamation-mark.png)', 
+        maskSize: 'contain', 
+        maskPosition: 'center', 
+        maskRepeat: 'no-repeat',
+      }} 
+    />
+  );
+}
+ 
+function CustomTenantIcon({ className }: { className?: string }) {
+  return (
+    <div 
+      className={cn("bg-current", className)}
+      style={{
+        WebkitMaskImage: 'url(/tenant.png)', 
+        WebkitMaskSize: 'contain', 
+        WebkitMaskPosition: 'center', 
+        WebkitMaskRepeat: 'no-repeat',
+        maskImage: 'url(/tenant.png)', 
+        maskSize: 'contain', 
+        maskPosition: 'center', 
+        maskRepeat: 'no-repeat',
+      }} 
+    />
+  );
+}
+ 
 const CustomMoneyIcon = ({ className }: { className?: string }) => (
   <div 
     className={`bg-current ${className || ''}`}
@@ -122,7 +212,6 @@ const CustomHomeIcon = ({ className }: { className?: string }) => (
     }} 
   />
 );
-
 // --- Reveal ----------------------------------------------------------------
 function Reveal({
   children,
@@ -166,14 +255,14 @@ function HeroMiniStat({
     <div className="flex items-center gap-3">
       <div
         className={cn(
-          "h-9 w-9 rounded-xl flex items-center justify-center shrink-0",
-          highlight ? "bg-[#1B5E45]" : danger ? "bg-red-50" : "bg-[#F0F5F1]",
+          "h-11 w-11 rounded-xl flex items-center justify-center shrink-0",
+          danger ? "bg-red-50" : "bg-[#F0F5F1]",
         )}
       >
         <Icon
           className={cn(
-            "h-4 w-4",
-            highlight ? "text-white" : danger ? "text-red-500" : "text-[#1B5E45]",
+            "h-6 w-6",
+            danger ? "text-red-500" : "text-[#1B5E45]",
           )}
           strokeWidth={1.8}
         />
@@ -227,13 +316,13 @@ function KpiCard({
         <div className="flex items-start justify-between mb-4">
           <div
             className={cn(
-              "h-10 w-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
+              "h-12 w-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
               accent ? "bg-white/15" : danger ? "bg-red-50" : "bg-[#E8F5EE]",
             )}
           >
             <Icon
               className={cn(
-                "h-5 w-5",
+                "h-7 w-7",
                 accent ? "text-white" : danger ? "text-red-500" : "text-[#1B5E45]",
               )}
               strokeWidth={1.8}
@@ -312,9 +401,9 @@ export default function LandlordDashboard() {
 
           {/* -- Sticky Nav ------------------------------------ */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-4 md:px-[4px]0 h-16 flex items-center justify-between gap-2">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground shrink-0">
-                <Building2 className="h-4 w-4 text-[#1B5E45]" />
+                <CustomLandlordIcon className="h-6 w-6 text-[#1B5E45]" />
                 <ChevronRight className="h-3 w-3" />
                 <span className="font-medium text-foreground truncate max-w-[80px] sm:max-w-none">Dashboard</span>
               </div>
@@ -339,7 +428,7 @@ export default function LandlordDashboard() {
                   size="sm"
                   className="h-9 px-2.5 sm:px-4 rounded-xl border-border text-sm font-medium hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
                 >
-                  <Download className="h-4 w-4 sm:mr-2" />
+                  <CustomFolderIcon className="h-5 w-5 sm:mr-2 text-[#1B5E45]" />
                   <span className="hidden sm:inline">Export</span>
                 </Button>
 
@@ -357,7 +446,7 @@ export default function LandlordDashboard() {
             </div>
           </header>
 
-          <main className="max-w-7xl mx-auto px-6 md:px-[4px]0 py-8 space-y-8">
+          <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-8">
 
             {/* == HERO ==================================================== */}
             <Reveal>
@@ -401,7 +490,7 @@ export default function LandlordDashboard() {
                         <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 mt-5 sm:mt-4 sm:flex sm:flex-col sm:gap-2.5 -ml-[84px] sm:ml-0 w-[calc(100%+84px)] sm:w-auto">
                           <div className="contents sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-1.5">
                             <span className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-muted-foreground max-w-full overflow-hidden">
-                              <Building2 className="h-3.5 w-3.5 text-[#1B5E45] shrink-0" />
+                              <CustomLandlordIcon className="h-3.5 w-3.5 text-[#1B5E45] shrink-0" />
                               <span className="truncate">{stats.totalBuildings} Properties</span>
                             </span>
                             <span className="w-px h-3.5 bg-border hidden sm:block" />
@@ -476,23 +565,23 @@ export default function LandlordDashboard() {
                   <div className="flex flex-col lg:flex-row lg:items-end gap-6">
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
                       <HeroMiniStat
-                        icon={Building2}
+                        icon={CustomLandlordIcon}
                         label="Properties"
                         value={`${stats.totalBuildings} Buildings`}
                         highlight
                       />
                       <HeroMiniStat
-                        icon={Users}
+                        icon={CustomTenantIcon}
                         label="Occupied Units"
                         value={`${stats.occupiedUnits} / ${stats.totalUnits}`}
                       />
                       <HeroMiniStat
-                        icon={Home}
+                        icon={CustomHomeIcon}
                         label="Vacant"
                         value={`${stats.vacantUnits} Units`}
                       />
                       <HeroMiniStat
-                        icon={AlertCircle}
+                        icon={CustomAlertIcon}
                         label="In Arrears"
                         value={`${stats.tenantsInArrears} Tenants`}
                         danger={stats.tenantsInArrears > 0}
@@ -530,7 +619,7 @@ export default function LandlordDashboard() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <Reveal delay={0.05}>
                 <KpiCard
-                  icon={Home}
+                  icon={CustomHomeIcon}
                   label="Total Units"
                   value={stats.totalUnits}
                   trend={{ value: 4, isPositive: true }}
@@ -539,7 +628,7 @@ export default function LandlordDashboard() {
               </Reveal>
               <Reveal delay={0.1}>
                 <KpiCard
-                  icon={Users}
+                  icon={CustomTenantIcon}
                   label="Occupied Units"
                   value={stats.occupiedUnits}
                   trend={{ value: 2, isPositive: true }}
@@ -555,7 +644,7 @@ export default function LandlordDashboard() {
               </Reveal>
               <Reveal delay={0.2}>
                 <KpiCard
-                  icon={AlertCircle}
+                  icon={CustomAlertIcon}
                   label="Tenants in Arrears"
                   value={stats.tenantsInArrears}
                   trend={{ value: 8, isPositive: false }}
@@ -721,7 +810,7 @@ export default function LandlordDashboard() {
                     <CardHeader className="px-6 pt-6 pb-3">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-base font-medium flex items-center gap-2">
-                          <CustomWrenchIcon className="h-4 w-4 text-[#1B5E45]" />
+                          <CustomWrenchIcon className="h-5 w-5 text-[#1B5E45]" />
                           Support Tickets
                         </CardTitle>
                         <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-50 border-0 text-[10px] font-medium px-2.5 rounded-full">
@@ -748,7 +837,7 @@ export default function LandlordDashboard() {
                               {ticket.status === "in-progress" ? (
                                 <Activity className="h-4 w-4" />
                               ) : (
-                                <AlertCircle className="h-4 w-4" />
+                                <CustomAlertIcon className="h-4 w-4" />
                               )}
                             </div>
                             <div className="flex-1 min-w-0">
@@ -797,15 +886,15 @@ export default function LandlordDashboard() {
                     </CardHeader>
                     <CardContent className="px-6 pb-5 space-y-2">
                       {[
-                        { label: "Add New Tenant", icon: Users, href: "/landlord/tenants" },
+                        { label: "Add New Tenant", icon: CustomTenantIcon, href: "/landlord/tenants" },
                         { label: "Record Payment", icon: CustomMoneyIcon, href: "/landlord/payments" },
-                        { label: "Generate Report", icon: BarChart3, href: "/landlord/reports" },
-                        { label: "View All Properties", icon: Building2, href: "/landlord/properties" },
+                        { label: "Generate Report", icon: CustomAnalyticIcon, href: "/landlord/reports" },
+                        { label: "View All Properties", icon: CustomLandlordIcon, href: "/landlord/properties" },
                       ].map((action) => (
                         <Link key={action.label} href={action.href}>
                           <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border bg-[#FAFAF8] hover:border-[#1B5E45]/30 hover:bg-[#F0F5F1] transition-all group cursor-pointer">
-                            <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] text-[#1B5E45] flex items-center justify-center group-hover:bg-[#1B5E45] group-hover:text-white transition-all shrink-0">
-                              <action.icon className="h-4 w-4" strokeWidth={1.8} />
+                            <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] text-[#1B5E45] flex items-center justify-center group-hover:bg-[#1B5E45] group-hover:text-white transition-all shrink-0">
+                              <action.icon className="h-5 w-5" strokeWidth={1.8} />
                             </div>
                             <span className="text-sm font-medium text-foreground group-hover:text-[#1B5E45] transition-colors">
                               {action.label}
@@ -828,7 +917,7 @@ export default function LandlordDashboard() {
                     <div>
                       <CardTitle className="text-base font-medium flex items-center gap-2">
                         <div
-                          className="h-4 w-4 bg-[#1B5E45]"
+                          className="h-5 w-5 bg-[#1B5E45]"
                           style={{
                             WebkitMaskImage: 'url(/bill.png)',
                             WebkitMaskSize: 'contain',
