@@ -33,7 +33,7 @@ import {
 } from "lucide-react";
 import Logo from "./Logo";
 
-/* ── Solutions dropdown items ─────────────────────────────────────────── */
+/* -- Solutions dropdown items ------------------------------------------- */
 const solutions = [
   {
     title: "Analytics",
@@ -89,14 +89,14 @@ const solutions = [
   },
 ];
 
-/* ── Nav links ────────────────────────────────────────────────────────── */
+/* -- Nav links ---------------------------------------------------------- */
 const navLinks = [
   { label: "Pricing", href: "/pricing", icon: DollarSign },
   { label: "About", href: "/about", icon: Info },
   { label: "Docs", href: "/docs", icon: Layers },
 ];
 
-/* ─────────────────────────────────────────────────────────────────────── */
+/* ----------------------------------------------------------------------- */
 interface NavbarProps {
   className?: string;
 }
@@ -131,12 +131,12 @@ export function Navbar({ className }: NavbarProps) {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex h-16 items-center justify-between gap-8">
-            {/* ── Wordmark ──────────────────────────────────────────── */}
+            {/* -- Wordmark -------------------------------------------- */}
             <Link href="/" className="shrink-0">
               <Logo size="sm" />
             </Link>
 
-            {/* ── Desktop nav ───────────────────────────────────────── */}
+            {/* -- Desktop nav ----------------------------------------- */}
             <nav className="hidden md:flex items-center gap-1 flex-1">
               {/* Solutions mega-dropdown */}
               <NavigationMenu>
@@ -217,7 +217,7 @@ export function Navbar({ className }: NavbarProps) {
               })}
             </nav>
 
-            {/* ── Desktop CTA ───────────────────────────────────────── */}
+            {/* -- Desktop CTA ----------------------------------------- */}
             <div className="hidden md:flex items-center gap-2.5">
               <Link href="/auth/login">
                 <button className="h-9 px-5 rounded-lg text-[13px] text-[#374151] hover:text-[#1B5E45] hover:bg-[#F4F9F6] transition-all">
@@ -232,7 +232,7 @@ export function Navbar({ className }: NavbarProps) {
               </Link>
             </div>
 
-            {/* ── Mobile hamburger ──────────────────────────────────── */}
+            {/* -- Mobile hamburger ------------------------------------ */}
             <button
               className="md:hidden h-9 w-9 rounded-xl border border-[#E0E8E3] flex items-center justify-center text-[#374151] hover:border-[#1B5E45] hover:text-[#1B5E45] hover:bg-[#F4F9F6] transition-all"
               onClick={() => setMobileOpen((o) => !o)}
@@ -247,11 +247,11 @@ export function Navbar({ className }: NavbarProps) {
           </div>
         </div>
 
-        {/* ── Subtle progress-line accent ────────────────────────────── */}
+        {/* -- Subtle progress-line accent ------------------------------ */}
         <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-linear-to-r from-transparent via-[#3DBE7A]/30 to-transparent pointer-events-none" />
       </header>
 
-      {/* ── Mobile drawer ─────────────────────────────────────────────── */}
+      {/* -- Mobile drawer ----------------------------------------------- */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -353,7 +353,7 @@ export function Navbar({ className }: NavbarProps) {
   );
 }
 
-/* ── Solution dropdown item ─────────────────────────────────────────── */
+/* -- Solution dropdown item ------------------------------------------- */
 function SolutionItem({
   title,
   href,

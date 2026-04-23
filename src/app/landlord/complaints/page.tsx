@@ -31,6 +31,38 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+const CustomWrenchIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/request.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/request.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomChatIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
 export default function ComplaintsPage() {
   const [activeTab, setActiveTab] = useState<"all" | "pending" | "in-progress" | "resolved">("all");
   const [search, setSearch] = useState("");
@@ -181,11 +213,11 @@ export default function ComplaintsPage() {
 
                     <div className="flex items-center gap-3">
                        <div className="flex-1 h-12 px-6 rounded-xl bg-foreground/[0.02] border border-foreground/5 flex items-center gap-3">
-                          <Wrench className="h-3.5 w-3.5 text-muted-foreground/30" />
+                          <CustomWrenchIcon className="h-3.5 w-3.5 text-muted-foreground/30" />
                           <span className="text-[9px] uppercase text-muted-foreground/40">{comp.category}</span>
                        </div>
                        <Button variant="outline" size="icon" className="h-12 w-12 rounded-xl border-foreground/5 hover:bg-primary/5 hover:text-primary hover:border-primary/20 shadow-xl transition-all">
-                          <MessageSquare className="h-4 w-4" />
+                          <CustomChatIcon className="h-4 w-4" />
                        </Button>
                     </div>
 

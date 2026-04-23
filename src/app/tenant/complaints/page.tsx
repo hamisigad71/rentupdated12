@@ -52,11 +52,59 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// ─── TYPES ───────────────────────────────────────────────────────────────────
+const CustomWrenchIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/request.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/request.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomChatIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomNotificationIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/ringing.png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/ringing.png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+// --- TYPES -------------------------------------------------------------------
 type Priority = "low" | "medium" | "high";
 type Status = "all" | "pending" | "in-progress" | "resolved";
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
+// --- HELPERS -----------------------------------------------------------------
 function getPriorityConfig(priority: string) {
   const configs = {
     high: {
@@ -115,12 +163,12 @@ const CATEGORIES = [
   { label: "Plumbing", icon: Droplets, color: "#3B82F6" },
   { label: "Electrical", icon: Zap, color: "#F59E0B" },
   { label: "Internet", icon: Wifi, color: "#8B5CF6" },
-  { label: "Maintenance", icon: Wrench, color: "#F97316" },
+  { label: "Maintenance", icon: CustomWrenchIcon, color: "#F97316" },
   { label: "Security", icon: Shield, color: "#EF4444" },
   { label: "Other", icon: MoreHorizontal, color: "#6B7280" },
 ];
 
-// ─── REVEAL ANIMATION ────────────────────────────────────────────────────────
+// --- REVEAL ANIMATION --------------------------------------------------------
 function Reveal({
   children,
   delay = 0,
@@ -145,7 +193,7 @@ function Reveal({
   );
 }
 
-// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
+// --- MAIN PAGE ---------------------------------------------------------------
 export default function TenantComplaintsPage() {
   const currentTenant = mockTenants[0];
   const myComplaints = mockComplaints.filter((c) => c.tenantId === currentTenant.id);
@@ -224,15 +272,13 @@ export default function TenantComplaintsPage() {
 
               <div className="flex items-center gap-3">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="icon"
-                  className="border-[#E8F5EE] hover:bg-[#E8F5EE] relative"
+                  className="h-9 w-9 rounded-xl relative text-muted-foreground hover:text-foreground hover:bg-[#E8F5EE] shrink-0"
                 >
-                  <Bell className="w-4 h-4 text-[#1B5E45]" />
+                  <CustomNotificationIcon className="h-4 w-4" />
                   {pendingRequests > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
-                      {pendingRequests}
-                    </span>
+                    <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full" />
                   )}
                 </Button>
                 <Button
@@ -647,7 +693,7 @@ export default function TenantComplaintsPage() {
                     Timeline
                   </TabsTrigger>
                   <TabsTrigger value="messages" className="data-[state=active]:bg-[#1B5E45] data-[state=active]:text-white">
-                    <MessageSquare className="w-4 h-4 mr-2" />
+                    <CustomChatIcon className="w-4 h-4 mr-2" />
                     Messages
                   </TabsTrigger>
                 </TabsList>
@@ -684,7 +730,7 @@ export default function TenantComplaintsPage() {
                   {[
                     { label: "Request Submitted", date: selectedComplaint.createdDate, icon: FileText, done: true },
                     { label: "Acknowledged", date: selectedComplaint.createdDate, icon: Eye, done: selectedComplaint.status !== "pending" },
-                    { label: "Technician Dispatched", date: "Today, 09:42 AM", icon: Wrench, done: selectedComplaint.status === "in-progress" || selectedComplaint.status === "resolved" },
+                    { label: "Technician Dispatched", date: "Today, 09:42 AM", icon: CustomWrenchIcon, done: selectedComplaint.status === "in-progress" || selectedComplaint.status === "resolved" },
                     { label: "Issue Resolved", date: selectedComplaint.status === "resolved" ? "Today" : "Pending", icon: CheckCircle2, done: selectedComplaint.status === "resolved" },
                   ].map((step, i) => (
                     <div key={i} className="flex items-start gap-4">

@@ -37,14 +37,34 @@ import {
   Activity, 
   Zap, 
   ShieldCheck,
-  DollarSign,
   Home,
   AlertCircle,
   CheckCircle2,
   TrendingDown,
   FileText,
-  Filter
+  Filter,
+  ArrowDownRight,
+  Calculator,
+  DownloadCloud
 } from "lucide-react";
+
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current inline-block ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/money.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/money.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+      width: className?.includes('w-') ? undefined : '1em',
+      height: className?.includes('h-') ? undefined : '1em',
+    }} 
+  />
+);
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -126,7 +146,7 @@ export default function ReportsPage() {
                 value: `KSh ${(stats.monthlyIncome / 1000).toFixed(1)}K`,
                 change: "+12.4%",
                 isPositive: true,
-                icon: DollarSign,
+                icon: CustomMoneyIcon,
                 color: "#1B5E45",
                 bgColor: "#E8F5EE",
               },

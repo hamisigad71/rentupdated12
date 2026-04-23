@@ -63,7 +63,119 @@ import { mockTenants, mockPayments, mockComplaints } from "@/data/mockData";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 
-// ─── Reveal Animation ──────────────────────────────────────────────────────
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomUserIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/user.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/user.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomWalletIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomWrenchIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/request.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/request.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomChatIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomDocumentIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/document.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/document.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+// --- Reveal Animation ------------------------------------------------------
 function Reveal({
   children,
   delay = 0,
@@ -88,7 +200,7 @@ function Reveal({
   );
 }
 
-// ─── Stat Card ─────────────────────────────────────────────────────────────
+// --- Stat Card -------------------------------------------------------------
 function StatCard({
   icon: Icon,
   label,
@@ -181,7 +293,7 @@ function StatCard({
   );
 }
 
-// ─── Payment Row ───────────────────────────────────────────────────────────
+// --- Payment Row -----------------------------------------------------------
 function PaymentRow({
   description,
   date,
@@ -197,7 +309,19 @@ function PaymentRow({
     <div className="flex items-center justify-between py-3.5 group">
       <div className="flex items-center gap-3">
         <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center shrink-0">
-          <Receipt className="h-4 w-4 text-[#1B5E45]" />
+          <div
+            className="h-[18px] w-[18px] bg-[#1B5E45]"
+            style={{
+              WebkitMaskImage: 'url(/bill.png)',
+              WebkitMaskSize: 'contain',
+              WebkitMaskPosition: 'center',
+              WebkitMaskRepeat: 'no-repeat',
+              maskImage: 'url(/bill.png)',
+              maskSize: 'contain',
+              maskPosition: 'center',
+              maskRepeat: 'no-repeat',
+            }}
+          />
         </div>
         <div>
           <p className="text-sm text-foreground leading-tight">
@@ -219,7 +343,7 @@ function PaymentRow({
   );
 }
 
-// ─── Maintenance Row ───────────────────────────────────────────────────────
+// --- Maintenance Row -------------------------------------------------------
 function MaintenanceRow({
   title,
   status,
@@ -241,7 +365,7 @@ function MaintenanceRow({
   return (
     <div className="flex items-start gap-3 py-3.5">
       <div className="mt-0.5 h-8 w-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-        <Wrench className="h-3.5 w-3.5 text-amber-600" />
+        <CustomWrenchIcon className="h-3.5 w-3.5 text-amber-600" />
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm text-foreground leading-tight truncate">
@@ -271,7 +395,7 @@ function MaintenanceRow({
   );
 }
 
-// ─── Quick Action ──────────────────────────────────────────────────────────
+// --- Quick Action ----------------------------------------------------------
 function QuickAction({
   label,
   icon: Icon,
@@ -300,7 +424,7 @@ function QuickAction({
   );
 }
 
-// ─── Hero Mini Stat ────────────────────────────────────────────────────────
+// --- Hero Mini Stat --------------------------------------------------------
 function HeroMiniStat({
   icon: Icon,
   label,
@@ -337,9 +461,31 @@ function HeroMiniStat({
   );
 }
 
-// ─── Main Dashboard ────────────────────────────────────────────────────────
+// --- Main Dashboard --------------------------------------------------------
+const CustomNotificationIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/ringing.png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/ringing.png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
 export default function TenantDashboard() {
   const { userName } = useAuth();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const currentTenant = mockTenants[0];
   const daysUntilRent = 5;
   const leaseProgress = 72;
@@ -347,31 +493,31 @@ export default function TenantDashboard() {
   const now = new Date();
   const hour = now.getHours();
   const greeting =
-    hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+    !mounted ? "" : hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
 
   return (
     <TenantLayout>
       <TooltipProvider>
         <div className="min-h-screen bg-[#FAFAF8]">
-          {/* ── Top Nav Bar ───────────────────────────────────── */}
+          {/* --- Top Nav Bar ------------------------------------- */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-[4px] sm:px-6 md:px-[4px]0 h-16 flex items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Home className="h-4 w-4 text-[#1B5E45]" />
+                <CustomHomeIcon className="h-4 w-4 text-[#1B5E45]" />
                 <ChevronRight className="h-3.5 w-3.5" />
                 <span className=" text-foreground">Dashboard</span>
               </div>
               <div className="flex items-center gap-3">
                 <Tooltip>
                   <TooltipTrigger render={<span />}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 rounded-xl relative text-muted-foreground hover:text-foreground hover:bg-[#E8F5EE]"
-                    >
-                      <Bell className="h-4.5 w-4.5" />
-                      <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full" />
-                    </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-10 w-10 rounded-xl relative text-muted-foreground hover:text-foreground hover:bg-[#E8F5EE]"
+                      >
+                        <CustomNotificationIcon className="h-5 w-5" />
+                        <span className="absolute top-2.5 right-2.5 h-2 w-2 bg-red-500 rounded-full border-2 border-white" />
+                      </Button>
                   </TooltipTrigger>
                   <TooltipContent>Notifications</TooltipContent>
                 </Tooltip>
@@ -382,7 +528,7 @@ export default function TenantDashboard() {
                       size="icon"
                       className="h-9 w-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-[#E8F5EE]"
                     >
-                      <MessageSquare className="h-4.5 w-4.5" />
+                      <CustomChatIcon className="h-4.5 w-4.5" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>Messages</TooltipContent>
@@ -402,19 +548,19 @@ export default function TenantDashboard() {
           </header>
 
           <main className="max-w-7xl mx-auto px-[4px] sm:px-6 lg:px-8 space-y-8">
-            {/* ══ HERO SECTION ════════════════════════════════════════════ */}
+            {/* == HERO SECTION ============================================================ */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">
-                {/* ── Decorative background elements ── */}
+                {/* --- Decorative background elements --- */}
                 <div className="pointer-events-none absolute top-0 right-0 w-[360px] h-[360px] rounded-full bg-[#E8F5EE]/60 translate-x-1/2 -translate-y-1/2" />
                 <div className="pointer-events-none absolute bottom-0 left-1/3 w-48 h-48 rounded-full bg-[#E8F5EE]/30 translate-y-1/2" />
                 <div className="pointer-events-none absolute top-1/2 right-1/4 w-24 h-24 rounded-full bg-[#3DBE7A]/8 -translate-y-1/2" />
 
-                {/* ── Top accent strip ── */}
+                {/* --- Top accent strip --- */}
                 <div className="h-1 w-full bg-gradient-to-r from-[#1B5E45] via-[#3DBE7A] to-[#E8F5EE]" />
 
                 <div className="relative p-7 md:p-8">
-                  {/* ── Top row: greeting + pay CTA ── */}
+                  {/* --- Top row: greeting + pay CTA --- */}
                   <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
                     {/* Left: Identity block */}
                     <div className="flex items-start gap-5">
@@ -450,7 +596,7 @@ export default function TenantDashboard() {
                           </span>
                           <span className="w-px h-3.5 bg-border hidden sm:block" />
                           <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <Home className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            <CustomHomeIcon className="h-3.5 w-3.5 text-[#1B5E45]" />
                             2-Bedroom · 4th Floor
                           </span>
                           <span className="w-px h-3.5 bg-border hidden sm:block" />
@@ -518,26 +664,26 @@ export default function TenantDashboard() {
                     </div>
                   </div>
 
-                  {/* ── Divider ── */}
+                  {/* --- Divider --- */}
                   <div className="my-6 border-t border-dashed border-border" />
 
-                  {/* ── Bottom row: 4 mini stats + lease progress ── */}
+                  {/* --- Bottom row: 4 mini stats + lease progress --- */}
                   <div className="flex flex-col lg:flex-row lg:items-end gap-6">
                     {/* Mini stat pills */}
                     <div className="hidden sm:grid sm:grid-cols-4 gap-4 flex-1">
                       <HeroMiniStat
-                        icon={ShieldCheck}
+                        icon={CustomUserIcon}
                         label="Lease Status"
                         value="Active"
                         highlight
                       />
                       <HeroMiniStat
-                        icon={CreditCard}
+                        icon={CustomWalletIcon}
                         label="Balance"
                         value={<span className="font-money">KSh 0 Clear</span>}
                       />
                       <HeroMiniStat
-                        icon={Wrench}
+                        icon={CustomWrenchIcon}
                         label="Open Requests"
                         value="2 Pending"
                       />
@@ -578,13 +724,13 @@ export default function TenantDashboard() {
                 </div>
               </div>
             </Reveal>
-            {/* ══ END HERO ════════════════════════════════════════════════ */}
+            {/* == END HERO ================================================================ */}
 
-            {/* ── Stat Cards ───────────────────────────────────── */}
+            {/* --- Stat Cards ------------------------------------- */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <Reveal delay={0.05}>
                 <StatCard
-                  icon={DollarSign}
+                  icon={CustomMoneyIcon}
                   label="Monthly Rent"
                   value={<span className="font-money">KSh 12,450</span>}
                   sub="Due Apr 1, 2025"
@@ -593,7 +739,7 @@ export default function TenantDashboard() {
               </Reveal>
               <Reveal delay={0.1}>
                 <StatCard
-                  icon={CreditCard}
+                  icon={CustomWalletIcon}
                   label="Account Balance"
                   value={<span className="font-money">KSh 0</span>}
                   sub="No outstanding dues"
@@ -602,7 +748,7 @@ export default function TenantDashboard() {
               </Reveal>
               <Reveal delay={0.15}>
                 <StatCard
-                  icon={Wrench}
+                  icon={CustomWrenchIcon}
                   label="Open Requests"
                   value="2"
                   sub="1 in progress"
@@ -611,7 +757,7 @@ export default function TenantDashboard() {
               </Reveal>
               <Reveal delay={0.2}>
                 <StatCard
-                  icon={ShieldCheck}
+                  icon={CustomUserIcon}
                   label="Lease Status"
                   value="Active"
                   sub="Valid until Mar 2027"
@@ -620,7 +766,7 @@ export default function TenantDashboard() {
               </Reveal>
             </div>
 
-            {/* ── Main Grid ────────────────────────────────────── */}
+            {/* --- Main Grid -------------------------------------- */}
             <div className="grid lg:grid-cols-12 gap-6">
               {/* Left Column */}
               <div className="lg:col-span-8 space-y-6">
@@ -645,19 +791,19 @@ export default function TenantDashboard() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         <QuickAction
                           label="Pay Rent"
-                          icon={DollarSign}
+                          icon={CustomMoneyIcon}
                           href="/tenant/payments"
                           description="Make a payment securely"
                         />
                         <QuickAction
                           label="Report Issue"
-                          icon={Wrench}
+                          icon={CustomWrenchIcon}
                           href="/tenant/maintenance"
                           description="Submit a maintenance request"
                         />
                         <QuickAction
                           label="Documents"
-                          icon={FileText}
+                          icon={CustomDocumentIcon}
                           href="/tenant/documents"
                           description="View & download your docs"
                         />
@@ -772,7 +918,7 @@ export default function TenantDashboard() {
                   <Card className="rounded-2xl border-border shadow-sm bg-white overflow-hidden">
                     <div className="bg-[#F0F5F1] px-6 py-5 border-b border-border flex items-center gap-3">
                       <div className="h-10 w-10 rounded-xl bg-[#1B5E45] flex items-center justify-center">
-                        <Home className="h-5 w-5 text-white" />
+                        <CustomHomeIcon className="h-5 w-5 text-white" />
                       </div>
                       <div>
                         <p className="text-xs text-muted-foreground ">

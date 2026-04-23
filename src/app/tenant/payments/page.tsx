@@ -36,20 +36,165 @@ import {
   Receipt,
   AlertCircle,
   Banknote,
-  Wallet,
   FileText,
   Copy,
   MapPin,
   Activity,
   Info,
   X,
+  BadgeCheck
 } from "lucide-react";
+import Logo from "@/components/Logo";
 import { mockPayments, mockTenants } from "@/data/mockData";
 import { useAction } from "@/context/ActionContext";
 import { LOADER_DURATION } from "@/utils/constants";
 import { cn } from "@/lib/utils";
 
-// ─── REVEAL ANIMATION ────────────────────────────────────────────────────────
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/money.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/money.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomWalletIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomTransferenceIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/transference.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/transference.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomTransactionIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/transaction.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/transaction.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomCreditCardIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/credit-card.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/credit-card.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomDocumentIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/document.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/document.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomSmartphoneIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/smartphone.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/smartphone.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomGlobalAccessIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/global-access.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/global-access.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomCalendarIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current self-center shrink-0 ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/calendar.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/calendar.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+// --- REVEAL ANIMATION --------------------------------------------------------
 function Reveal({
   children,
   delay = 0,
@@ -74,7 +219,7 @@ function Reveal({
   );
 }
 
-// ─── PAYMENT METHOD BUTTON ───────────────────────────────────────────────────
+// --- PAYMENT METHOD BUTTON ---------------------------------------------------
 function PaymentMethodButton({
   id,
   label,
@@ -125,7 +270,7 @@ function PaymentMethodButton({
   );
 }
 
-// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
+// --- MAIN PAGE ---------------------------------------------------------------
 export default function TenantPaymentsPage() {
   const currentTenant = mockTenants[0];
   const tenantPayments = mockPayments.filter((p) => p.tenantId === currentTenant.id);
@@ -209,8 +354,8 @@ export default function TenantPaymentsPage() {
                     
                     {/* Left: Page Info */}
                     <div className="flex items-start gap-5">
-                      <div className="w-16 h-16 rounded-xl bg-[#E8F5EE] border-2 border-[#1B5E45]/10 flex items-center justify-center">
-                        <CreditCard className="w-7 h-7 text-[#1B5E45]" />
+                      <div className="w-16 h-8 rounded-sm bg-[#E8F5EE] border-2 border-[#1B5E45]/3 flex items-center justify-center">
+                        <CustomWalletIcon className="w-7 h-7 text-[#1B5E45]" />
                       </div>
                       
                       <div className="flex-1">
@@ -310,7 +455,7 @@ export default function TenantPaymentsPage() {
                         {
                           label: "Arrears",
                           value: isFullyPaid ? "Clear" : `KSh ${currentTenant.arrears.toLocaleString()}`,
-                          icon: Wallet,
+                          icon: CustomWalletIcon,
                         },
                         {
                           label: "Paid This Year",
@@ -359,7 +504,7 @@ export default function TenantPaymentsPage() {
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
                       <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <DollarSign className="w-5 h-5 text-[#1B5E45]" />
+                        <CustomMoneyIcon className="w-5 h-5 text-[#1B5E45]" />
                         Payment Amount
                       </CardTitle>
                     </CardHeader>
@@ -436,7 +581,7 @@ export default function TenantPaymentsPage() {
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
                       <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <CreditCard className="w-5 h-5 text-[#1B5E45]" />
+                        <CustomWalletIcon className="w-5 h-5 text-[#1B5E45]" />
                         Payment Method
                       </CardTitle>
                     </CardHeader>
@@ -446,7 +591,7 @@ export default function TenantPaymentsPage() {
                           id="mpesa"
                           label="M-PESA"
                           subtitle="Instant mobile money"
-                          icon={Smartphone}
+                          icon={CustomTransactionIcon}
                           active={paymentMethod === "mpesa"}
                           onClick={() => setPaymentMethod("mpesa")}
                         />
@@ -454,7 +599,7 @@ export default function TenantPaymentsPage() {
                           id="card"
                           label="Card"
                           subtitle="Visa & Mastercard"
-                          icon={CreditCard}
+                          icon={CustomCreditCardIcon}
                           active={paymentMethod === "card"}
                           onClick={() => setPaymentMethod("card")}
                         />
@@ -462,7 +607,7 @@ export default function TenantPaymentsPage() {
                           id="bank"
                           label="Bank Transfer"
                           subtitle="Direct bank wire"
-                          icon={Building2}
+                          icon={CustomTransferenceIcon}
                           active={paymentMethod === "bank"}
                           onClick={() => setPaymentMethod("bank")}
                         />
@@ -484,11 +629,11 @@ export default function TenantPaymentsPage() {
                                 M-PESA Phone Number
                               </label>
                               <div className="relative">
-                                <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#1B5E45]" />
+                                <CustomSmartphoneIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 text-[#1B5E45]" />
                                 <Input
                                   type="tel"
                                   placeholder="0712 345 678"
-                                  className="pl-10 border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
+                                  className="pl-12 border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
                                 />
                               </div>
                             </div>
@@ -645,7 +790,19 @@ export default function TenantPaymentsPage() {
                           >
                             <div className="flex items-center gap-3">
                               <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
-                                <Receipt className="w-4 h-4 text-[#1B5E45]" />
+                                <div
+                                  className="w-[18px] h-[18px] bg-[#1B5E45]"
+                                  style={{
+                                    WebkitMaskImage: 'url(/bill.png)',
+                                    WebkitMaskSize: 'contain',
+                                    WebkitMaskPosition: 'center',
+                                    WebkitMaskRepeat: 'no-repeat',
+                                    maskImage: 'url(/bill.png)',
+                                    maskSize: 'contain',
+                                    maskPosition: 'center',
+                                    maskRepeat: 'no-repeat',
+                                  }}
+                                />
                               </div>
                               <div>
                                 <p className="text-sm text-[#1A1A1A]">{payment.month}</p>
@@ -674,7 +831,7 @@ export default function TenantPaymentsPage() {
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
                       <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <FileText className="w-5 h-5 text-[#1B5E45]" />
+                        <CustomDocumentIcon className="w-5 h-5 text-[#1B5E45]" />
                         Payment Summary
                       </CardTitle>
                     </CardHeader>
@@ -718,7 +875,7 @@ export default function TenantPaymentsPage() {
                   <Card className="border-[#E8F5EE] bg-white">
                     <CardHeader>
                       <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <ShieldCheck className="w-5 h-5 text-[#1B5E45]" />
+                        <CustomGlobalAccessIcon className="w-5 h-5 text-[#1B5E45]" />
                         Security & Trust
                       </CardTitle>
                     </CardHeader>
@@ -747,7 +904,7 @@ export default function TenantPaymentsPage() {
                   <Card className="border-[#E8F5EE] bg-[#E8F5EE]">
                     <CardHeader>
                       <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <Calendar className="w-5 h-5 text-[#1B5E45]" />
+                        <CustomCalendarIcon className="w-5 h-5 text-[#1B5E45]" />
                         Billing Schedule
                       </CardTitle>
                     </CardHeader>

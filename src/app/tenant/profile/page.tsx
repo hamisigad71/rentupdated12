@@ -50,7 +50,7 @@ import { mockTenants } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ─── Reveal ────────────────────────────────────────────────────────────────
+// --- Reveal ----------------------------------------------------------------
 function Reveal({
   children,
   delay = 0,
@@ -74,7 +74,7 @@ function Reveal({
   );
 }
 
-// ─── Field Component ───────────────────────────────────────────────────────
+// --- Field Component -------------------------------------------------------
 function ProfileField({
   label,
   name,
@@ -122,7 +122,7 @@ function ProfileField({
   );
 }
 
-// ─── Stat Row ──────────────────────────────────────────────────────────────
+// --- Stat Row --------------------------------------------------------------
 function StatRow({
   label,
   value,
@@ -154,10 +154,10 @@ function StatRow({
   );
 }
 
-// ─── Main Page ─────────────────────────────────────────────────────────────
+// --- Main Page -------------------------------------------------------------
 export default function TenantProfilePage() {
   const currentTenant = mockTenants[0];
-  const { displayImage, updateProfileImage, userName, updateUserName } =
+  const { profileImage, displayImage, updateProfileImage, userName, updateUserName } =
     useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -232,7 +232,7 @@ export default function TenantProfilePage() {
     <TenantLayout>
       <TooltipProvider>
         <div className="min-h-screen bg-[#FAFAF8]">
-          {/* ── Sticky Nav ──────────────────────────────────── */}
+          {/* -- Sticky Nav ------------------------------------ */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto md:px-[4px]0 h-16 flex items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -293,7 +293,7 @@ export default function TenantProfilePage() {
           </header>
 
           <main className="max-w-7xl mx-auto md:px-[4px]0 py-8 space-y-8">
-            {/* ── Profile Hero Banner ──────────────────────── */}
+            {/* -- Profile Hero Banner ------------------------ */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm dark:bg-card">
                 <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-amber-500/5" />
@@ -306,10 +306,16 @@ export default function TenantProfilePage() {
                       className="h-24 w-24 rounded-2xl border-4 border-white overflow-hidden cursor-pointer shadow-xl transition-transform duration-300 group-hover:scale-105"
                       onClick={() => setShowAvatarModal(true)}
                     >
-                      <img
-                        src={displayImage}
-                        className="w-full h-full object-cover"
-                      />
+                      {profileImage ? (
+                        <img
+                          src={profileImage}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-[#E8F5EE] flex items-center justify-center">
+                          <User className="h-12 w-12 text-[#1B5E45]" strokeWidth={1.5} />
+                        </div>
+                      )}
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <Camera className="h-6 w-6 text-white" />
                       </div>
@@ -369,7 +375,7 @@ export default function TenantProfilePage() {
               </div>
             </Reveal>
 
-            {/* ── Main Grid ────────────────────────────────── */}
+            {/* -- Main Grid ---------------------------------- */}
             <div className="grid lg:grid-cols-12 gap-6">
               {/* Left — Forms */}
               <div className="lg:col-span-8 space-y-6">
@@ -641,10 +647,16 @@ export default function TenantProfilePage() {
                           onClick={() => setShowAvatarModal(true)}
                         >
                           <div className="h-20 w-20 rounded-2xl border-4 border-[#E8F5EE] overflow-hidden shadow-md group-hover:shadow-lg transition-shadow">
-                            <img
-                              src={displayImage}
-                              className="w-full h-full object-cover"
-                            />
+                            {profileImage ? (
+                              <img
+                                src={profileImage}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-[#E8F5EE] flex items-center justify-center">
+                                <User className="h-10 w-10 text-[#1B5E45]" strokeWidth={1.5} />
+                              </div>
+                            )}
                           </div>
                           <div className="absolute inset-0 rounded-2xl bg-[#1B5E45]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <Camera className="h-5 w-5 text-white" />
@@ -804,7 +816,7 @@ export default function TenantProfilePage() {
           </main>
         </div>
 
-        {/* ── Avatar Modal ─────────────────────────────────── */}
+        {/* -- Avatar Modal ----------------------------------- */}
         <Modal
           isOpen={showAvatarModal}
           onClose={() => setShowAvatarModal(false)}
@@ -824,10 +836,16 @@ export default function TenantProfilePage() {
             {/* Current photo */}
             <div className="flex justify-center">
               <div className="h-24 w-24 rounded-2xl border-4 border-[#E8F5EE] overflow-hidden shadow-md">
-                <img
-                  src={displayImage}
-                  className="w-full h-full object-cover"
-                />
+                {profileImage ? (
+                  <img
+                    src={profileImage}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#FAFAF8] flex items-center justify-center">
+                    <User className="h-12 w-12 text-[#1B5E45]" strokeWidth={1.5} />
+                  </div>
+                )}
               </div>
             </div>
 

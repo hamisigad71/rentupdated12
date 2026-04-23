@@ -14,6 +14,87 @@ import {
   LogOut,
 } from "lucide-react";
 import Logo from "./Logo";
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomChatIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomDocumentIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/document.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/document.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomUserIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/user.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/user.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
 import {
   Sidebar,
   SidebarContent,
@@ -31,16 +112,33 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
+
+const CustomNotificationIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/ringing.png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/ringing.png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
 const mainItems = [
-  { label: "Dashboard",   href: "/tenant",            icon: Home },
-  { label: "Payments",    href: "/tenant/payments",   icon: CreditCard },
-  { label: "Complaints",  href: "/tenant/complaints", icon: MessageSquare },
-  { label: "Documents",   href: "/tenant/documents",  icon: FileText },
-  { label: "Alerts",      href: "/tenant/alerts",     icon: Bell },
+  { label: "Dashboard",   href: "/tenant",            icon: CustomHomeIcon },
+  { label: "Payments",    href: "/tenant/payments",   icon: CustomMoneyIcon },
+  { label: "Complaints",  href: "/tenant/complaints", icon: CustomChatIcon },
+  { label: "Documents",   href: "/tenant/documents",  icon: CustomDocumentIcon },
+  { label: "Alerts",      href: "/tenant/alerts",     icon: CustomNotificationIcon },
 ];
 
 const footerItems = [
-  { label: "Profile",    href: "/tenant/profile",    icon: User },
+  { label: "Profile",    href: "/tenant/profile",    icon: CustomUserIcon },
   { label: "Settings",   href: "/tenant/settings",   icon: Settings },
   { label: "Help Center", href: "/help",               icon: HelpCircle },
 ];

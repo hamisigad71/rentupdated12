@@ -58,12 +58,43 @@ import {
   Pause,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const CustomWrenchIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/request.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/request.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+const CustomChatIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
 import { Navbar } from "@/components/Navbar";
 import Logo from "@/components/Logo";
 import Loader from "@/components/Loader";
 import { cn } from "@/lib/utils";
 
-// ─── REVEAL ────────────────────────────────────────────────────────────────
+// --- REVEAL ----------------------------------------------------------------
 function Reveal({
   children,
   delay = 0,
@@ -97,7 +128,7 @@ function Reveal({
   );
 }
 
-// ─── COUNTER ────────────────────────────────────────────────────────────────
+// --- COUNTER ----------------------------------------------------------------
 function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: string; decimals?: number }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -117,7 +148,7 @@ function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: strin
   return <span ref={ref}>{decimals ? count.toFixed(decimals) : Math.floor(count)}{suffix}</span>;
 }
 
-// ─── HERO SLIDES ────────────────────────────────────────────────────────────
+// --- HERO SLIDES ------------------------------------------------------------
 const SLIDES = [
   {
     img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2400&q=85",
@@ -166,14 +197,14 @@ const SLIDES = [
   },
 ];
 
-// ─── HERO CAROUSEL ──────────────────────────────────────────────────────────
+// --- HERO CAROUSEL ----------------------------------------------------------
 function HeroCarousel() {
   const [active, setActive]   = useState(0);
   const [paused, setPaused]   = useState(false);
   const [progress, setProgress] = useState(0);
   const timer   = useRef<ReturnType<typeof setInterval> | null>(null);
   const progRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const DURATION = 6000;
+  const DURATION = 4000;
 
   const goTo = useCallback((idx: number) => {
     setActive(idx);
@@ -186,12 +217,13 @@ function HeroCarousel() {
   useEffect(() => {
     if (paused) return;
     setProgress(0);
+    const intervalMs = 16;
     progRef.current = setInterval(() => {
       setProgress(p => {
         if (p >= 100) return 100;
-        return p + 100 / (DURATION / 50);
+        return p + 100 / (DURATION / intervalMs);
       });
-    }, 50);
+    }, intervalMs);
     timer.current = setTimeout(next, DURATION);
     return () => {
       if (progRef.current) clearInterval(progRef.current);
@@ -208,7 +240,7 @@ function HeroCarousel() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* ── Background images with crossfade ─────────────────────────── */}
+      {/* -- Background images with crossfade --------------------------- */}
       <AnimatePresence>
         {SLIDES.map((s, i) => (
           <motion.div
@@ -233,7 +265,7 @@ function HeroCarousel() {
         ))}
       </AnimatePresence>
 
-      {/* ── Slide number — top right ───────────────────────────────────── */}
+      {/* -- Slide number — top right ------------------------------------- */}
       <div className="absolute top-24 right-6 z-20 md:top-28 md:right-10 hidden sm:flex items-center gap-2">
         <span className="text-[8px] sm:text-[9px] md:text-[11px] font-normal text-white/30 tabular-nums tracking-[0.2em]">
           0{active + 1}
@@ -244,7 +276,7 @@ function HeroCarousel() {
         </span>
       </div>
 
-      {/* ── Main content ──────────────────────────────────────────────── */}
+      {/* -- Main content ------------------------------------------------ */}
       <div className="container relative z-10 px-6 md:px-10 max-w-7xl mx-auto w-full pb-44 md:pb-20">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(70dvh)] md:min-h-[calc(100dvh-4rem)]">
 
@@ -388,7 +420,7 @@ function HeroCarousel() {
         </div>
       </div>
 
-      {/* ── Bottom controls bar ───────────────────────────────────────── */}
+      {/* -- Bottom controls bar ----------------------------------------- */}
       <div className="absolute bottom-0 left-0 right-0 z-20">
         {/* Thin progress bar across full width */}
         <div className="h-[2px] bg-white/10">
@@ -455,7 +487,7 @@ function HeroCarousel() {
   );
 }
 
-// ─── DASHBOARD PREVIEW CARD ─────────────────────────────────────────────────
+// --- DASHBOARD PREVIEW CARD -------------------------------------------------
 function DashboardPreviewCard({ slide }: { slide: number }) {
   const cards = [
     // Slide 0 – Property overview
@@ -565,10 +597,10 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
         </div>
         <div className="ml-auto px-3 py-1 rounded-full bg-[#E8F5EE] text-[#1B5E45] text-[10px] font-normal border border-[#C4D4C9]">Active</div>
       </div>
-      <div className="space-y-2.5 mb-5">
+      <div className="space-y-2.5 mb-5 text-left">
         {[
           { icon: CreditCard, label: "Next Payment", val: "KSh 45,000", sub: "Due Apr 1",      color: "text-[#1B5E45]" },
-          { icon: Wrench,     label: "Open Request", val: "Plumbing",   sub: "In Progress",    color: "text-amber-600" },
+          { icon: CustomChatIcon,     label: "Open Request", val: "Plumbing",   sub: "In Progress",    color: "text-amber-600" },
           { icon: FileText,   label: "Lease Expires", val: "Dec 31, 2026", sub: "14 months",   color: "text-[#1A1A1A]" },
         ].map((item, i) => (
           <div key={i} className="flex items-center gap-3.5 p-3.5 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] hover:bg-white hover:border-[#C4D4C9] transition-all">
@@ -617,7 +649,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
   );
 }
 
-// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
+// --- MAIN PAGE ---------------------------------------------------------------
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -650,7 +682,7 @@ export default function Home() {
   );
 }
 
-// ─── TRUST LOGOS BAR ────────────────────────────────────────────────────────
+// --- TRUST LOGOS BAR --------------------------------------------------------
 function TrustLogosBar() {
   const partners = [
     {
@@ -762,7 +794,7 @@ function TrustLogosBar() {
   );
 }
 
-// ─── METRIC BAR ─────────────────────────────────────────────────────────────
+// --- METRIC BAR -------------------------------------------------------------
 function MetricBar() {
   const stats = [
     { val: 1200, suffix: "+",    label: "Active Properties",  icon: Building2, decimals: 0 },
@@ -797,7 +829,7 @@ function MetricBar() {
   );
 }
 
-// ─── SOLUTIONS ──────────────────────────────────────────────────────────────
+// --- SOLUTIONS --------------------------------------------------------------
 function SolutionsSection() {
   return (
     <section className="py-16 md:py-28 bg-background">
@@ -828,7 +860,7 @@ function SolutionsSection() {
               icon:Users,accent:false,href:"/auth/login?role=tenant",
               features:[
                 {icon:CreditCard,text:"Instant M-Pesa Payments"},
-                {icon:Wrench,text:"Maintenance Requests"},
+                {icon:CustomWrenchIcon,text:"Maintenance Requests"},
                 {icon:Lock,text:"Secure Document Vault"},
                 {icon:Receipt,text:"Payment History"},
                 {icon:Calendar,text:"Lease Management"},
@@ -874,7 +906,7 @@ function SolutionsSection() {
   );
 }
 
-// ─── HOW IT WORKS ───────────────────────────────────────────────────────────
+// --- HOW IT WORKS -----------------------------------------------------------
 function HowItWorksSection() {
   const [activeTab, setActiveTab] = useState<"landlord"|"tenant">("landlord");
   const steps = {
@@ -887,7 +919,7 @@ function HowItWorksSection() {
     tenant:[
       {icon:HomeIcon,step:"01",title:"Receive Your Invite",desc:"Your landlord sends a digital invite. Verify your identity and sign your lease entirely online — no paper needed."},
       {icon:CreditCard,step:"02",title:"Set Up Payments",desc:"Link your M-Pesa or bank account. Enable auto-pay reminders to never miss a rent deadline again."},
-      {icon:Wrench,step:"03",title:"Submit Requests",desc:"Log maintenance issues with photos directly from your phone. Track resolution status in real time."},
+      {icon:CustomWrenchIcon,step:"03",title:"Submit Requests",desc:"Log maintenance issues with photos directly from your phone. Track resolution status in real time."},
       {icon:FileText,step:"04",title:"Manage Your Tenancy",desc:"Access all your documents, payment history, and communications in one secure, beautiful dashboard."},
     ],
   };
@@ -934,7 +966,7 @@ function HowItWorksSection() {
   );
 }
 
-// ─── FEATURE GRID ───────────────────────────────────────────────────────────
+// --- FEATURE GRID -----------------------------------------------------------
 function FeatureGridSection() {
   const features = [
     {icon:Shield,   title:"Bank-Grade Security",    desc:"256-bit AES encryption, zero-trust architecture, and SOC 2 Type II compliance protect every transaction.", large:true, bg:"bg-foreground text-background"},
@@ -971,7 +1003,7 @@ function FeatureGridSection() {
   );
 }
 
-// ─── TESTIMONIALS ────────────────────────────────────────────────────────────
+// --- TESTIMONIALS ------------------------------------------------------------
 const TESTIMONIALS = [
   {name:"James Kariuki",   role:"Property Manager · 340 Units", img:33, quote:"Nova cut our arrears from 18% to under 2% in three months. The automated M-Pesa collections alone saved us two full-time staff.",                                                rating:5},
   {name:"Grace Muthoni",  role:"Resident · Westlands Heights",  img:41, quote:"I pay rent in seconds via M-Pesa and can track my maintenance request from submission to completion. Finally a landlord app that respects residents.",                              rating:5},
@@ -1018,7 +1050,7 @@ function TestimonialsSection() {
   );
 }
 
-// ─── PRICING ────────────────────────────────────────────────────────────────
+// --- PRICING ----------------------------------------------------------------
 function PricingSection() {
   const [annual, setAnnual] = useState(true);
   const plans = [
@@ -1087,7 +1119,7 @@ function PricingSection() {
   );
 }
 
-// ─── FINAL CTA ───────────────────────────────────────────────────────────────
+// --- FINAL CTA ---------------------------------------------------------------
 function FinalCTASection() {
   return (
     <section className="py-32 bg-foreground relative overflow-hidden">
@@ -1123,7 +1155,7 @@ function FinalCTASection() {
   );
 }
 
-// ─── FOOTER ──────────────────────────────────────────────────────────────────
+// --- FOOTER ------------------------------------------------------------------
 function Footer() {
   return (
     <footer className="border-t border-border bg-background pt-20 pb-12">

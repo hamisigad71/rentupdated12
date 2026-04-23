@@ -11,14 +11,30 @@ import { cn } from "@/lib/utils";
 import Logo from "@/components/Logo";
 
 
-/* ── trust badges ────────────────────────────────────────────────────── */
+/* -- trust badges ------------------------------------------------------ */
 const TRUST = [
   "256-bit SSL Encryption",
   "M-Pesa Integrated",
   "2,000+ Active Users",
 ];
 
-/* ── hero content ────────────────────────────────────────────────────── */
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+/* -- hero content ------------------------------------------------------ */
 const HERO = {
   landlord: {
     label: "Property Owners",
@@ -36,7 +52,7 @@ const HERO = {
   },
 };
 
-/* ─────────────────────────────────────────────────────────────────────── */
+/* ----------------------------------------------------------------------- */
 function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") => void }) {
   const searchParams = useSearchParams();
   const initialRole  = searchParams.get("role") === "tenant" ? "tenant" : "landlord";
@@ -78,7 +94,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
                 ? "bg-white text-[#1B5E45] shadow-sm shadow-black/8"
                 : "text-[#6B7280] hover:text-[#1A1A1A]"
             )}>
-            {r === "landlord" ? <Building2 className="h-4 w-4" /> : <Home className="h-4 w-4" />}
+            {r === "landlord" ? <Building2 className="h-4 w-4" /> : <CustomHomeIcon className="h-4 w-4" />}
             {r === "landlord" ? "Landlord" : "Tenant"}
           </button>
         ))}
@@ -170,7 +186,7 @@ function LoginForm({ onRoleChange }: { onRoleChange: (r: "landlord" | "tenant") 
   );
 }
 
-/* ── Hero Panel ──────────────────────────────────────────────────────── */
+/* -- Hero Panel -------------------------------------------------------- */
 function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
   const h = HERO[role];
   return (
@@ -246,7 +262,7 @@ function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
   );
 }
 
-/* ── Page ────────────────────────────────────────────────────────────── */
+/* -- Page -------------------------------------------------------------- */
 function LoginContent() {
   const searchParams = useSearchParams();
   const [role, setRole] = useState<"landlord" | "tenant">(

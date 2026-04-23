@@ -16,12 +16,25 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ProfilePage() {
+  const { profileImage, updateProfileImage } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const [showPassword, setShowPassword] = useState(false);
   const [profileCompletion, setProfileCompletion] = useState(85);
+  
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   
   const [formData, setFormData] = useState({
     name: "Alex Johnson",
@@ -93,13 +106,18 @@ export default function ProfilePage() {
           <div className="relative z-10 grid lg:grid-cols-3 gap-8 items-center">
             {/* Avatar and Basic Info */}
             <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row items-center gap-6">
-              <div className="relative group">
-                <div className="h-32 w-32 rounded-2xl bg-gradient-to-br from-[#E8F5EE] to-[#FAFAF8] border-2 border-[#1B5E45]/10 flex items-center justify-center text-2xl text-[#1B5E45] shadow-xl shadow-[#E8F5EE]/50">
-                  AJ
+              <label className="relative group cursor-pointer block">
+                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+                <div className="h-32 w-32 rounded-2xl bg-gradient-to-br from-[#E8F5EE] to-[#FAFAF8] border-2 border-[#1B5E45]/10 flex items-center justify-center text-[#1B5E45] shadow-xl shadow-[#E8F5EE]/50 overflow-hidden">
+                  {profileImage ? (
+                    <img src={profileImage} alt="Profile" className="h-full w-full object-cover" />
+                  ) : (
+                    <User className="h-16 w-16" strokeWidth={1.5} />
+                  )}
                 </div>
-                <button className="absolute -bottom-3 -right-3 h-10 w-10 rounded-xl bg-[#1B5E45] text-white flex items-center justify-center shadow-lg shadow-[#1B5E45]/30 border-3 border-white group-hover:scale-110 transition-all">
+                <div className="absolute -bottom-3 -right-3 h-10 w-10 rounded-xl bg-[#1B5E45] text-white flex items-center justify-center shadow-lg shadow-[#1B5E45]/30 border-3 border-white group-hover:scale-110 transition-all pointer-events-none">
                   <Camera className="h-4 w-4" />
-                </button>
+                </div>
                 <div className="absolute -top-2 -left-2 h-6 w-6 rounded-full bg-[#3DBE7A] border-2 border-white shadow-sm flex items-center justify-center">
                   <div className="h-2 w-2 rounded-full bg-white animate-pulse" />
                 </div>

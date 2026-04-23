@@ -6,7 +6,6 @@ import {
   Building2,
   Home,
   Users,
-  DollarSign,
   AlertCircle,
   Plus,
   ArrowUpRight,
@@ -60,7 +59,71 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// ─── Reveal ────────────────────────────────────────────────────────────────
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomWrenchIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/request.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/request.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomNotificationIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/ringing.png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/ringing.png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+// --- Reveal ----------------------------------------------------------------
 function Reveal({
   children,
   delay = 0,
@@ -85,7 +148,7 @@ function Reveal({
   );
 }
 
-// ─── Hero Mini Stat ────────────────────────────────────────────────────────
+// --- Hero Mini Stat --------------------------------------------------------
 function HeroMiniStat({
   icon: Icon,
   label,
@@ -132,7 +195,7 @@ function HeroMiniStat({
   );
 }
 
-// ─── KPI Card ──────────────────────────────────────────────────────────────
+// --- KPI Card --------------------------------------------------------------
 function KpiCard({
   label,
   value,
@@ -215,8 +278,14 @@ function KpiCard({
   );
 }
 
-// ─── Main Dashboard ────────────────────────────────────────────────────────
+// --- Main Dashboard --------------------------------------------------------
 export default function LandlordDashboard() {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const { userName } = useAuth();
   const stats = getLandlordStats();
   const recentPayments = mockPayments.slice(0, 5);
@@ -225,7 +294,7 @@ export default function LandlordDashboard() {
   const now = new Date();
   const hour = now.getHours();
   const greeting =
-    hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+    !mounted ? "" : hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
   const today = now.toLocaleDateString("en-KE", {
     weekday: "long",
     month: "long",
@@ -241,7 +310,7 @@ export default function LandlordDashboard() {
       <TooltipProvider>
         <div className="min-h-screen bg-[#FAFAF8]">
 
-          {/* ── Sticky Nav ──────────────────────────────────── */}
+          {/* -- Sticky Nav ------------------------------------ */}
           <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-4 md:px-[4px]0 h-16 flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground shrink-0">
@@ -258,7 +327,7 @@ export default function LandlordDashboard() {
                       size="icon"
                       className="h-9 w-9 rounded-xl relative text-muted-foreground hover:text-foreground hover:bg-[#E8F5EE]"
                     >
-                      <Bell className="h-4 w-4" />
+                      <CustomNotificationIcon className="h-4 w-4" />
                       <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-red-500 rounded-full" />
                     </Button>
                   </TooltipTrigger>
@@ -290,7 +359,7 @@ export default function LandlordDashboard() {
 
           <main className="max-w-7xl mx-auto px-6 md:px-[4px]0 py-8 space-y-8">
 
-            {/* ══ HERO ════════════════════════════════════════════════════ */}
+            {/* == HERO ==================================================== */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">
                 {/* Decorative circles */}
@@ -337,7 +406,7 @@ export default function LandlordDashboard() {
                             </span>
                             <span className="w-px h-3.5 bg-border hidden sm:block" />
                             <span className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-muted-foreground max-w-full overflow-hidden">
-                              <Home className="h-3.5 w-3.5 text-[#1B5E45] shrink-0" />
+                              <CustomHomeIcon className="h-3.5 w-3.5 text-[#1B5E45] shrink-0" />
                               <span className="truncate">{stats.totalUnits} Total Units</span>
                             </span>
                             <span className="w-px h-3.5 bg-border hidden sm:block" />
@@ -457,7 +526,7 @@ export default function LandlordDashboard() {
               </div>
             </Reveal>
 
-            {/* ── KPI Cards ────────────────────────────────────── */}
+            {/* -- KPI Cards -------------------------------------- */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <Reveal delay={0.05}>
                 <KpiCard
@@ -478,7 +547,7 @@ export default function LandlordDashboard() {
               </Reveal>
               <Reveal delay={0.15}>
                 <KpiCard
-                  icon={DollarSign}
+                  icon={CustomMoneyIcon}
                   label="Monthly Revenue"
                   value={`KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K`}
                   trend={{ value: 12, isPositive: true }}
@@ -495,7 +564,7 @@ export default function LandlordDashboard() {
               </Reveal>
             </div>
 
-            {/* ── Main Grid ────────────────────────────────────── */}
+            {/* -- Main Grid -------------------------------------- */}
             <div className="grid lg:grid-cols-3 gap-6">
 
               {/* Property Analytics — left 2/3 */}
@@ -652,7 +721,7 @@ export default function LandlordDashboard() {
                     <CardHeader className="px-6 pt-6 pb-3">
                       <div className="flex items-center justify-between">
                         <CardTitle className="text-base font-medium flex items-center gap-2">
-                          <Wrench className="h-4 w-4 text-[#1B5E45]" />
+                          <CustomWrenchIcon className="h-4 w-4 text-[#1B5E45]" />
                           Support Tickets
                         </CardTitle>
                         <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-50 border-0 text-[10px] font-medium px-2.5 rounded-full">
@@ -729,7 +798,7 @@ export default function LandlordDashboard() {
                     <CardContent className="px-6 pb-5 space-y-2">
                       {[
                         { label: "Add New Tenant", icon: Users, href: "/landlord/tenants" },
-                        { label: "Record Payment", icon: DollarSign, href: "/landlord/payments" },
+                        { label: "Record Payment", icon: CustomMoneyIcon, href: "/landlord/payments" },
                         { label: "Generate Report", icon: BarChart3, href: "/landlord/reports" },
                         { label: "View All Properties", icon: Building2, href: "/landlord/properties" },
                       ].map((action) => (
@@ -751,14 +820,26 @@ export default function LandlordDashboard() {
               </div>
             </div>
 
-            {/* ── Recent Transactions ──────────────────────────── */}
+            {/* -- Recent Transactions ---------------------------- */}
             <Reveal delay={0.3}>
               <Card className="rounded-2xl border-border shadow-sm bg-white">
                 <CardHeader className="px-6 pt-6 pb-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <CardTitle className="text-base font-medium flex items-center gap-2">
-                        <Receipt className="h-4 w-4 text-[#1B5E45]" />
+                        <div
+                          className="h-4 w-4 bg-[#1B5E45]"
+                          style={{
+                            WebkitMaskImage: 'url(/bill.png)',
+                            WebkitMaskSize: 'contain',
+                            WebkitMaskPosition: 'center',
+                            WebkitMaskRepeat: 'no-repeat',
+                            maskImage: 'url(/bill.png)',
+                            maskSize: 'contain',
+                            maskPosition: 'center',
+                            maskRepeat: 'no-repeat',
+                          }}
+                        />
                         Recent Transactions
                       </CardTitle>
                       <CardDescription className="text-xs mt-0.5">
@@ -806,7 +887,19 @@ export default function LandlordDashboard() {
                           <TableCell className="py-4">
                             <div className="flex items-center gap-3">
                               <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center shrink-0">
-                                <Receipt className="h-4 w-4 text-[#1B5E45]" />
+                                <div
+                                  className="h-[18px] w-[18px] bg-[#1B5E45]"
+                                  style={{
+                                    WebkitMaskImage: 'url(/bill.png)',
+                                    WebkitMaskSize: 'contain',
+                                    WebkitMaskPosition: 'center',
+                                    WebkitMaskRepeat: 'no-repeat',
+                                    maskImage: 'url(/bill.png)',
+                                    maskSize: 'contain',
+                                    maskPosition: 'center',
+                                    maskRepeat: 'no-repeat',
+                                  }}
+                                />
                               </div>
                               <div>
                                 <p className="text-xs font-mono font-medium text-foreground leading-tight">

@@ -49,7 +49,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// ─── MOCK DATA ───────────────────────────────────────────────────────────────
+// --- MOCK DATA ---------------------------------------------------------------
 const MOCK_DOCS = [
   {
     id: "1",
@@ -153,7 +153,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Safety: "bg-red-50 text-red-600 border-red-200",
 };
 
-// ─── REVEAL ANIMATION ────────────────────────────────────────────────────────
+// --- REVEAL ANIMATION --------------------------------------------------------
 function Reveal({
   children,
   delay = 0,
@@ -178,7 +178,7 @@ function Reveal({
   );
 }
 
-// ─── DOCUMENT PREVIEW MODAL ──────────────────────────────────────────────────
+// --- DOCUMENT PREVIEW MODAL --------------------------------------------------
 function DocumentPreviewModal({
   doc,
   onClose,
@@ -297,7 +297,7 @@ function DocumentPreviewModal({
   );
 }
 
-// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
+// --- MAIN PAGE ---------------------------------------------------------------
 export default function TenantDocumentsPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");

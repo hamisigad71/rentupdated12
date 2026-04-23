@@ -5,22 +5,114 @@ import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/s
 import { TenantSidebar } from "./TenantSidebar";
 import { Separator } from "@/components/ui/separator";
 import BottomNav, { NavItem } from "./BottomNav";
-import { Home, CreditCard, MessageSquare, FileText, User } from "lucide-react";
+import { CreditCard, MessageSquare, FileText, User, Camera } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+
+const CustomHomeIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+
+const CustomMoneyIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomChatIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomDocumentIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/document.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/document.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomUserIcon = () => (
+  <div 
+    className="bg-current"
+    style={{
+      width: 20,
+      height: 20,
+      WebkitMaskImage: 'url(/user.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/user.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
 
 const tenantItems: NavItem[] = [
-  { label: "Home", href: "/tenant", icon: <Home size={20} /> },
+  { label: "Home", href: "/tenant", icon: <CustomHomeIcon /> },
   {
     label: "Payments",
     href: "/tenant/payments",
-    icon: <CreditCard size={20} />,
+    icon: <CustomMoneyIcon />,
   },
   {
     label: "Alerts",
     href: "/tenant/complaints",
-    icon: <MessageSquare size={20} />,
+    icon: <CustomChatIcon />,
   },
-  { label: "Files", href: "/tenant/documents", icon: <FileText size={20} /> },
-  { label: "Profile", href: "/tenant/profile", icon: <User size={20} /> },
+  { label: "Files", href: "/tenant/documents", icon: <CustomDocumentIcon /> },
+  { label: "Profile", href: "/tenant/profile", icon: <CustomUserIcon /> },
 ];
 
 export default function TenantLayout({
@@ -28,6 +120,19 @@ export default function TenantLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { profileImage, updateProfileImage } = useAuth();
+  
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <SidebarProvider>
       <div className="flex h-full w-full bg-background overflow-hidden relative">
@@ -60,11 +165,19 @@ export default function TenantLayout({
                   Premium Tenant
                 </span>
               </div>
-              <div className="h-10 w-10 rounded-full border-2 border-primary/20 bg-muted/50 p-0.5 shadow-inner">
-                <div className="h-full w-full rounded-full bg-linear-to-br from-primary/10 to-primary/30 flex items-center justify-center text-primary">
-                  SM
+              <label className="h-10 w-10 rounded-full border-2 border-primary/20 bg-muted/50 p-0.5 shadow-inner cursor-pointer relative group overflow-hidden block">
+                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+                <div className="h-full w-full rounded-full bg-linear-to-br from-primary/10 to-primary/30 flex items-center justify-center text-primary overflow-hidden relative">
+                  {profileImage ? (
+                    <img src={profileImage} alt="Profile" className="h-full w-full object-cover" />
+                  ) : (
+                    <User className="h-5 w-5 group-hover:opacity-0 transition-opacity" />
+                  )}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <Camera className="h-4 w-4 text-white" />
+                  </div>
                 </div>
-              </div>
+              </label>
             </div>
           </header>
           <main id="main-scroll-container" className="flex-1 overflow-auto bg-background px-[4px] sm:px-4 no-scrollbar relative mb-20 md:mb-0">

@@ -15,6 +15,71 @@ import {
   LogOut,
 } from "lucide-react";
 import Logo from "./Logo";
+
+const CustomHomeIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/home.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/home.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/wallet.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomChatIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/chat (1).png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
+const CustomUserIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/user.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/user.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
 import {
   Sidebar,
 
@@ -34,17 +99,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const mainItems = [
-  { label: "Dashboard",  href: "/landlord",            icon: Home },
+  { label: "Dashboard",  href: "/landlord",            icon: CustomHomeIcon },
   { label: "Buildings",  href: "/landlord/buildings",  icon: Building2 },
   { label: "Units",      href: "/landlord/units",      icon: Building2 },
   { label: "Tenants",    href: "/landlord/tenants",    icon: Users },
-  { label: "Payments",   href: "/landlord/payments",   icon: CreditCard },
-  { label: "Complaints", href: "/landlord/complaints", icon: AlertCircle },
+  { label: "Payments",   href: "/landlord/payments",   icon: CustomMoneyIcon },
+  { label: "Complaints", href: "/landlord/complaints", icon: CustomChatIcon },
   { label: "Reports",    href: "/landlord/reports",    icon: BarChart3 },
 ];
 
 const footerItems = [
-  { label: "Profile",    href: "/landlord/profile",    icon: User },
+  { label: "Profile",    href: "/landlord/profile",    icon: CustomUserIcon },
   { label: "Settings",   href: "/landlord/settings",   icon: Settings },
   { label: "Help",       href: "/help",               icon: HelpCircle },
 ];

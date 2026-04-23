@@ -27,7 +27,6 @@ import {
   Plus,
   Filter,
   Calendar,
-  DollarSign,
   TrendingUp,
   AlertCircle,
   FileText,
@@ -43,6 +42,24 @@ import {
 } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+
+const CustomMoneyIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current inline-block ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url(/money.png)', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url(/money.png)', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+      width: className?.includes('w-') ? undefined : '1em',
+      height: className?.includes('h-') ? undefined : '1em',
+    }} 
+  />
+);
 
 export default function PaymentsPage() {
   const [search, setSearch] = useState("");
