@@ -177,9 +177,9 @@ function RegisterContent() {
   return (
     <div className="min-h-screen grid lg:grid-cols-[1fr_1.1fr] bg-[#FAFAF8]">
 
-      {/* -- Left: Form ------------------------------------------------- */}
-      <div className="overflow-y-auto flex flex-col px-[4px] py-12 sm:px-6 lg:px-[4px]4">
-        <div className="max-w-md w-full mx-auto">
+      {/* -- Left: Form Container ---------------------------------------- */}
+      <div className="overflow-y-auto flex flex-col items-center p-4 sm:p-8 lg:px-16 lg:py-12 w-full">
+        <div className="my-auto w-full max-w-[480px] bg-white rounded-2xl p-6 sm:p-10 xl:p-12 border border-[#E0E8E3] shadow-[0_8px_30px_rgba(27,94,69,0.04)] flex flex-col">
 
           {/* Wordmark */}
           <Link href="/" className="mb-10 block hover:opacity-80 transition-opacity">
