@@ -1052,7 +1052,7 @@ function SolutionsSection() {
                   : "bg-card border-border hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5",
               )}>
                 <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center mb-10 transition-transform group-hover:scale-105",card.accent?"bg-primary text-primary-foreground":"bg-primary/10 text-primary")}>
-                  <card.icon className="h-8 w-8" strokeWidth={1.6} />
+                  <card.icon className="h-8 w-8" />
                 </div>
                 <span className="text-[10px] uppercase tracking-[0.15em] text-primary">{card.role}</span>
                 <h3 className="text-2xl md:text-3xl tracking-tight mt-1 mb-5">{card.title}</h3>
