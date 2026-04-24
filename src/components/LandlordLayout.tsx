@@ -124,9 +124,9 @@ export default function LandlordLayout({ children }: { children: React.ReactNode
 
   return (
     <SidebarProvider>
-      <div className="flex h-full w-full bg-background/50">
+      <div className="flex h-[100dvh] w-full bg-background/50 overflow-hidden relative">
         <AppSidebar />
-        <SidebarInset className="flex flex-col flex-1 overflow-hidden">
+        <SidebarInset className="flex flex-col flex-1 w-full overflow-hidden">
           <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center justify-between gap-2 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="flex items-center gap-2">
                <SidebarTrigger className="-ml-1" />
