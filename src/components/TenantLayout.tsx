@@ -33,11 +33,11 @@ const CustomMoneyIcon = () => (
     style={{
       width: 20,
       height: 20,
-      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskImage: 'url("/money (3).png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/wallet.png)', 
+      maskImage: 'url("/money (3).png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',
@@ -51,11 +51,11 @@ const CustomChatIcon = () => (
     style={{
       width: 20,
       height: 20,
-      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskImage: 'url("/chat.png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/chat (1).png")', 
+      maskImage: 'url("/chat.png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',
@@ -135,7 +135,7 @@ export default function TenantLayout({
 
   return (
     <SidebarProvider>
-      <div className="flex h-full w-full bg-background overflow-hidden relative">
+      <div className="flex h-[100dvh] w-full bg-background overflow-hidden relative">
         <TenantSidebar />
         <SidebarInset className="flex flex-col flex-1 w-full overflow-hidden">
           <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center justify-between gap-2 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">

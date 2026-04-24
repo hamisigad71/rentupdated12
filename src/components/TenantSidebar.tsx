@@ -35,11 +35,11 @@ const CustomMoneyIcon = ({ className }: { className?: string }) => (
   <div 
     className={`bg-current ${className || ''}`}
     style={{
-      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskImage: 'url("/money (3).png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/wallet.png)', 
+      maskImage: 'url("/money (3).png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',
@@ -51,11 +51,11 @@ const CustomChatIcon = ({ className }: { className?: string }) => (
   <div 
     className={`bg-current ${className || ''}`}
     style={{
-      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskImage: 'url("/chat.png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/chat (1).png")', 
+      maskImage: 'url("/chat.png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',
@@ -117,11 +117,11 @@ const CustomNotificationIcon = ({ className }: { className?: string }) => (
   <div 
     className={`bg-current ${className || ''}`}
     style={{
-      WebkitMaskImage: 'url("/ringing.png")', 
+      WebkitMaskImage: 'url("/bell.png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/ringing.png")', 
+      maskImage: 'url("/bell.png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',

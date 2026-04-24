@@ -70,11 +70,11 @@ const CustomWalletIcon = ({ className }: { className?: string }) => (
   <div 
     className={`bg-current self-center shrink-0 ${className || ''}`}
     style={{
-      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskImage: 'url("/money (3).png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/wallet.png)', 
+      maskImage: 'url("/money (3).png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',

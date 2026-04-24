@@ -67,11 +67,11 @@ const CustomMoneyIcon = ({ className }: { className?: string }) => (
   <div 
     className={`bg-current ${className || ''}`}
     style={{
-      WebkitMaskImage: 'url(/wallet.png)', 
+      WebkitMaskImage: 'url("/money (3).png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/wallet.png)', 
+      maskImage: 'url("/money (3).png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',
@@ -131,11 +131,11 @@ const CustomChatIcon = ({ className }: { className?: string }) => (
   <div 
     className={`bg-current ${className || ''}`}
     style={{
-      WebkitMaskImage: 'url("/chat (1).png")', 
+      WebkitMaskImage: 'url("/chat.png")', 
       WebkitMaskSize: 'contain', 
       WebkitMaskPosition: 'center', 
       WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/chat (1).png")', 
+      maskImage: 'url("/chat.png")', 
       maskSize: 'contain', 
       maskPosition: 'center', 
       maskRepeat: 'no-repeat',
@@ -253,13 +253,13 @@ function StatCard({
         <div className="flex items-start justify-between mb-3 sm:mb-5">
           <div
             className={cn(
-              "h-8 w-8 sm:h-11 sm:w-11 rounded-lg sm:rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
+              "h-10 w-10 sm:h-11 sm:w-11 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
               accent ? "bg-white/15" : "bg-[#E8F5EE]",
             )}
           >
             <Icon
               className={cn(
-                "h-4 w-4 sm:h-5 sm:w-5",
+                "h-5 w-5 sm:h-5 sm:w-5",
                 accent ? "text-white" : "text-[#1B5E45]",
               )}
               strokeWidth={1.8}
@@ -1110,7 +1110,7 @@ export default function TenantDashboard() {
                             "w-full rounded-xl h-9 text-xs bg-white border-border hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE]  flex items-center justify-center",
                           )}
                         >
-                          <MessageSquare className="h-3.5 w-3.5 mr-2 text-[#1B5E45]" />
+                          <CustomChatIcon className="h-4 w-4 mr-2 text-[#1B5E45]" />
                           Message Manager
                         </Link>
                         <Link
