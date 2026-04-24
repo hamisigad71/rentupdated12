@@ -1174,10 +1174,17 @@ function SolutionsSection() {
   return (
     <section className="py-12 md:py-16 bg-background">
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
-        <Reveal className="text-center mb-20">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Built for Both Sides</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em] mt-2">Dual Portals. One Powerful Engine.</h2>
-          <p className="mt-5 text-lg text-muted-foreground max-w-xl mx-auto font-light">Purpose-built experiences that serve every stakeholder — flawlessly.</p>
+        <Reveal className="text-center mb-16 sm:mb-20">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E0E8E3] shadow-sm mb-6">
+            <div className="h-1.5 w-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
+            <span className="text-[10px] text-[#1B5E45] font-medium uppercase tracking-[0.2em] pt-[1px]">Built for Both Sides</span>
+          </div>
+          <h2 className="text-xl min-[400px]:text-[22px] sm:text-4xl md:text-5xl tracking-tighter md:tracking-[-0.03em] font-medium text-[#1A1A1A] max-w-2xl mx-auto whitespace-nowrap sm:whitespace-normal">
+            Dual Portals. <span className="bg-gradient-to-r from-[#1B5E45] via-[#246B4F] to-[#3DBE7A] bg-clip-text text-transparent">One Powerful Engine.</span>
+          </h2>
+          <p className="mt-5 text-base sm:text-lg text-[#6B7280] max-w-xl mx-auto font-light leading-relaxed">
+            Purpose-built experiences that serve every stakeholder — flawlessly. Eliminate friction across your entire property portfolio.
+          </p>
         </Reveal>
         <div className="grid md:grid-cols-2 gap-6">
           {[
@@ -1228,8 +1235,8 @@ function SolutionsSection() {
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {card.features.map((f,j) => (
                     <div key={j} className={cn("flex items-center gap-2.5 text-sm ",card.accent?"text-foreground/80":"text-foreground/80")}>
-                      <div className="h-6 w-6 rounded-lg bg-primary/12 flex items-center justify-center shrink-0">
-                        <f.icon className="h-3.5 w-3.5 text-primary" />
+                      <div className="h-8 w-8 sm:h-6 sm:w-6 rounded-lg bg-primary/12 flex items-center justify-center shrink-0">
+                        <f.icon className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-primary" />
                       </div>
                       {f.text}
                     </div>
@@ -1273,7 +1280,7 @@ function HowItWorksSection() {
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
         <Reveal className="text-center mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Simple Process</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-[-0.03em]">Up & running<br />in under 10 minutes.</h2>
+          <h2 className="text-xl min-[400px]:text-[22px] sm:text-4xl md:text-5xl tracking-tighter md:tracking-[-0.03em] whitespace-nowrap sm:whitespace-normal">Up & running in under 10 minutes.</h2>
         </Reveal>
         <Reveal className="flex justify-center mb-16">
           <div className="inline-flex items-center gap-1 p-1.5 rounded-2xl bg-foreground/6 border border-border">
