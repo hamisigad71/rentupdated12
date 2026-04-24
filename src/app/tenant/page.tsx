@@ -494,6 +494,22 @@ const CustomNotificationIcon = ({ className }: { className?: string }) => (
   />
 );
 
+const CustomWifiIcon = ({ className }: { className?: string }) => (
+  <div 
+    className={`bg-current ${className || ''}`}
+    style={{
+      WebkitMaskImage: 'url("/wifi.png")', 
+      WebkitMaskSize: 'contain', 
+      WebkitMaskPosition: 'center', 
+      WebkitMaskRepeat: 'no-repeat',
+      maskImage: 'url("/wifi.png")', 
+      maskSize: 'contain', 
+      maskPosition: 'center', 
+      maskRepeat: 'no-repeat',
+    }} 
+  />
+);
+
 export default function TenantDashboard() {
   const { userName } = useAuth();
   const [mounted, setMounted] = React.useState(false);
@@ -888,7 +904,7 @@ export default function TenantDashboard() {
                           color: "text-sky-600 bg-sky-50",
                         },
                         {
-                          icon: Sparkles,
+                          icon: CustomWifiIcon,
                           title: "New Gym Equipment Installed",
                           desc: "The fitness center has new equipment available now",
                           color: "text-[#1B5E45] bg-[#E8F5EE]",
@@ -1061,14 +1077,14 @@ export default function TenantDashboard() {
                   <Card className="rounded-2xl border-border shadow-sm bg-white">
                     <CardHeader className="pb-4 px-6 pt-6">
                       <CardTitle className="text-base flex items-center gap-2">
-                        <Sparkles className="h-4 w-4 text-[#1B5E45]" />
+                        <CustomWifiIcon className="h-5 w-5 text-[#1B5E45]" />
                         Building Amenities
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="px-6 pb-6">
                       <div className="grid grid-cols-2 gap-3">
                         {[
-                          { icon: Wifi, label: "High-Speed WiFi" },
+                          { icon: CustomWifiIcon, label: "High-Speed WiFi" },
                           { icon: Car, label: "Parking" },
                           { icon: Dumbbell, label: "Fitness Center" },
                           { icon: Home, label: "Rooftop Lounge" },
@@ -1079,8 +1095,8 @@ export default function TenantDashboard() {
                             key={i}
                             className="flex items-center gap-2.5 p-3 rounded-xl bg-[#FAFAF8] border border-border"
                           >
-                            <div className="h-7 w-7 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
-                              <a.icon className="h-3.5 w-3.5 text-[#1B5E45]" />
+                            <div className="h-8 w-8 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
+                              <a.icon className="h-4.5 w-4.5 text-[#1B5E45]" />
                             </div>
                             <span className="text-xs text-foreground leading-tight">
                               {a.label}

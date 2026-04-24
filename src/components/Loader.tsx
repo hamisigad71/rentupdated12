@@ -11,9 +11,37 @@ export default function Loader({ show }: { show: boolean }) {
           initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }}
-          className="fixed inset-0 z-200 flex flex-col items-center justify-center"
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center"
           style={{ background: "#F7F8F5" }}
         >
+          {/* Native CSS Animations for high-performance non-blocking rotations */}
+          <style jsx global>{`
+            @keyframes spin-clockwise {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+            @keyframes spin-counter-clockwise {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(-360deg); }
+            }
+            .animate-spin-slow {
+              animation: spin-clockwise 12s linear infinite;
+            }
+            .animate-spin-reverse {
+              animation: spin-counter-clockwise 8s linear infinite;
+            }
+            .animate-orbit {
+              animation: spin-clockwise 3s linear infinite;
+            }
+            .animate-progress {
+              animation: progress-slide 1.6s ease-in-out infinite;
+            }
+            @keyframes progress-slide {
+              0% { transform: translateX(-100%); }
+              100% { transform: translateX(100%); }
+            }
+          `}</style>
+
           {/* Subtle paper texture overlay */}
           <div
             className="absolute inset-0 pointer-events-none"
@@ -39,10 +67,8 @@ export default function Loader({ show }: { show: boolean }) {
             <div className="relative flex items-center justify-center mb-10">
 
               {/* Outer rotating ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                className="absolute"
+              <div
+                className="absolute animate-spin-slow"
                 style={{
                   width: 120,
                   height: 120,
@@ -54,10 +80,8 @@ export default function Loader({ show }: { show: boolean }) {
               />
 
               {/* Inner counter-rotating ring */}
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute"
+              <div
+                className="absolute animate-spin-reverse"
                 style={{
                   width: 96,
                   height: 96,
@@ -97,10 +121,8 @@ export default function Loader({ show }: { show: boolean }) {
               </motion.div>
 
               {/* Orbiting dot */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute"
+              <div
+                className="absolute animate-orbit"
                 style={{ width: 120, height: 120 }}
               >
                 <div
@@ -115,7 +137,7 @@ export default function Loader({ show }: { show: boolean }) {
                     background: "#1B5E45",
                   }}
                 />
-              </motion.div>
+              </div>
             </div>
 
             {/* Wordmark */}
@@ -174,16 +196,9 @@ export default function Loader({ show }: { show: boolean }) {
                   borderRadius: 99,
                 }}
               >
-                <motion.div
-                  animate={{ x: ["-100%", "100%"] }}
-                  transition={{
-                    duration: 1.6,
-                    repeat: Infinity,
-                    ease: [0.4, 0, 0.6, 1],
-                  }}
+                <div
+                  className="absolute inset-0 animate-progress"
                   style={{
-                    position: "absolute",
-                    inset: 0,
                     borderRadius: 99,
                     background: "linear-gradient(90deg, transparent, #3DBE7A, #1B5E45, transparent)",
                   }}
