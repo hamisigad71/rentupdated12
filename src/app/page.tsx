@@ -555,7 +555,7 @@ function HeroCarousel() {
 
   return (
     <section
-      className="relative min-h-[55dvh] md:min-h-dvh flex items-end md:items-center overflow-hidden"
+      className="relative mx-0 md:mx-6 lg:mx-8 mt-0 md:mt-4 rounded-b-3xl md:rounded-3xl border-x-0 md:border border-b border-[#E0E8E3] shadow-2xl shadow-[#1B5E45]/10 min-h-[75dvh] md:min-h-[calc(100dvh-4rem)] flex items-end md:items-center overflow-hidden bg-black transition-all duration-500"
 
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -597,7 +597,7 @@ function HeroCarousel() {
       </div>
 
       {/* -- Main content ------------------------------------------------ */}
-      <div className="w-full relative z-10 px-0 md:px-10 max-w-7xl mx-auto pb-24 md:pb-20">
+      <div className="w-full relative z-10 px-8 md:px-12 max-w-7xl mx-auto pb-24 md:pb-20">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(55dvh)] md:min-h-[calc(100dvh-4rem)]">
 
 
@@ -751,7 +751,7 @@ function HeroCarousel() {
           />
         </div>
 
-        <div className="w-full max-w-7xl mx-auto px-0 md:px-10">
+        <div className="w-full max-w-7xl mx-auto px-8 md:px-12">
           <div className="flex items-center justify-between py-5 gap-6">
 
             {/* Slide pills */}
