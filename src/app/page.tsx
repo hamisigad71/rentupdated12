@@ -991,32 +991,14 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const minDisplay = 4500; // minimum ms to show the loader
-    const start = Date.now();
-
-    const hide = () => {
-      const elapsed = Date.now() - start;
-      const remaining = Math.max(0, minDisplay - elapsed);
-      setTimeout(() => setIsLoading(false), remaining);
-    };
-
-    if (document.readyState === "complete") {
-      // Page already loaded (e.g. fast cache hit)
-      hide();
-    } else {
-      window.addEventListener("load", hide, { once: true });
-      // Safety fallback in case load never fires
-      const fallback = setTimeout(hide, 8000);
-      return () => {
-        window.removeEventListener("load", hide);
-        clearTimeout(fallback);
-      };
-    }
+    // Safety fallback in case video never ends or fires event
+    const fallback = setTimeout(() => setIsLoading(false), 15000);
+    return () => clearTimeout(fallback);
   }, []);
 
   return (
     <>
-      <Loader show={isLoading} />
+      <Loader show={isLoading} onVideoEnd={() => setIsLoading(false)} />
       <div className={cn("flex min-h-screen flex-col bg-background", isLoading ? "h-screen overflow-hidden" : "")}>
         <Navbar className="px-4 sm:px-6 lg:px-8" />
         <main className="flex-1 overflow-y-auto overflow-x-hidden">
