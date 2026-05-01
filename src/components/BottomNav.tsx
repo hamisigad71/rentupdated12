@@ -74,7 +74,7 @@ export default function BottomNav({ items }: BottomNavProps) {
                     {React.cloneElement(item.icon as React.ReactElement<any>, { size: 18 })}
                   </div>
                   <span className={cn(
-                    "text-[10px] font-bold mt-1 transition-colors duration-300",
+                    "text-[10px] font-medium mt-1 transition-colors duration-300",
                     isActive ? "text-emerald-deep" : "text-emerald-deep/40 group-hover:text-emerald-deep/60"
                   )}>
                     {item.label}

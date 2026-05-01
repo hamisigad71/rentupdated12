@@ -77,6 +77,8 @@ const CustomAlertIcon = ({ className }: { className?: string }) => (
   />
 )
 
+import StatCard from "@/components/StatCard";
+
 export default function PaymentsPage() {
   const [search, setSearch] = useState("");
   const stats = getLandlordStats();
@@ -88,10 +90,11 @@ export default function PaymentsPage() {
   );
 
   const totalCollected = mockPayments.filter(p => p.status === 'completed').reduce((s, p) => s + p.amount, 0);
+  const collectionRate = Math.round((totalCollected / (totalCollected + stats.totalArrears)) * 100);
 
   return (
     <LandlordLayout>
-      <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -118,38 +121,52 @@ export default function PaymentsPage() {
         </div>
 
         {/* Financial KPIs */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-           {[
-             { label: "Total Revenue", val: `KSh ${totalCollected.toLocaleString()}`, icon: TrendingUp, color: "primary", sub: "Net Collections (MTD)" },
-             { label: "Pending Receipts", val: `KSh ${(stats.totalArrears / 2).toLocaleString()}`, icon: Clock, color: "accent", sub: "Expected Inflow" },
-             { label: "Arrears Exposure", val: `KSh ${stats.totalArrears.toLocaleString()}`, icon: CustomAlertIcon, color: "destructive", sub: "Overdue Obligations" },
-           ].map((stat, i) => (
-             <motion.div
-               key={i}
-               initial={{ opacity: 0, y: 20 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ delay: i * 0.1 }}
-               className="group relative p-8 rounded-2xl border border-foreground/5 bg-background shadow-2xl hover:border-primary/10 transition-all overflow-hidden"
-             >
-               <div className="absolute top-0 right-0 -m-8 h-32 w-32 rounded-full bg-primary/5 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity" />
-               <div className="flex items-start justify-between mb-6">
-                  <div className={cn(
-                    "h-14 w-14 rounded-2xl flex items-center justify-center border transition-all",
-                    stat.color === 'primary' ? "bg-primary/5 border-primary/10 text-primary" : 
-                    stat.color === 'destructive' ? "bg-destructive/5 border-destructive/10 text-destructive" :
-                    "bg-brand-accent/5 border-brand-accent/10 text-brand-accent"
-                  )}>
-                    <stat.icon className="h-7 w-7" />
-                  </div>
-                  <Badge variant="ghost" className="text-[8px]  uppercase text-muted-foreground/30">Live Update</Badge>
-               </div>
-               <p className="text-xl tracking-tight mb-1 uppercase leading-none font-money">{stat.val}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+           <StatCard 
+             variant="dark"
+             label="Total Revenue" 
+             value={
                <div className="flex flex-col">
-                  <span className="text-[11px]  uppercase text-muted-foreground/60">{stat.label}</span>
-                  <span className="text-[9px] text-muted-foreground/30 uppercase tracking-[0.2em]">{stat.sub}</span>
+                 <span className="text-sm font-medium text-white/50 mb-1">KES</span>
+                 <span>{totalCollected.toLocaleString()}</span>
                </div>
-             </motion.div>
-           ))}
+             }
+             icon={TrendingUp}
+             trend={{ value: "+8.2%", label: "Added this month", type: "pill" }}
+           />
+           <StatCard 
+             label="Collection Rate" 
+             value={
+               <div className="flex items-baseline gap-1">
+                 <span>{collectionRate}</span>
+                 <span className="text-lg text-muted-foreground/40">%</span>
+               </div>
+             }
+             icon={CheckCircle2}
+             trend={{ value: "+2.1% Improvement", label: "", isPositive: true }}
+           />
+           <StatCard 
+             label="Pending Receipts" 
+             value={
+               <div className="flex flex-col">
+                 <span className="text-xs font-medium text-muted-foreground/30 mb-1">KES</span>
+                 <span>{(stats.totalArrears / 2).toLocaleString()}</span>
+               </div>
+             }
+             icon={Clock}
+             trend={{ value: "Stable", label: "Compared to last month", isNeutral: true }}
+           />
+           <StatCard 
+             label="Arrears Exposure" 
+             value={
+               <div className="flex flex-col">
+                 <span className="text-xs font-medium text-muted-foreground/30 mb-1">KES</span>
+                 <span className="text-brand-red">{stats.totalArrears.toLocaleString()}</span>
+               </div>
+             }
+             icon={CustomAlertIcon}
+             trend={{ value: "14 pending", label: "Needs action", isNegative: true }}
+           />
         </div>
 
         {/* Global Filter Bar */}

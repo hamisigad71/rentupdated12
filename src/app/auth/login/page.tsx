@@ -37,18 +37,18 @@ const CustomHomeIcon = ({ className }: { className?: string }) => (
 /* -- hero content ------------------------------------------------------ */
 const HERO = {
   landlord: {
-    label: "Property Owners",
+    
     headline: "Manage your entire Property in one place.",
     body: "Track rent, monitor maintenance requests, verify tenants, and generate financial reports — all from a single unified dashboard.",
     stat: [{ v: "2,400+", l: "Properties managed" }, { v: "98%", l: "Collection rate" }, { v: "< 2h", l: "Avg. response time" }],
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
+    image: "/qw2.png",
   },
   tenant: {
     label: "Residents",
     headline: "Your home, fully managed from your phone.",
     body: "Pay rent instantly via M-Pesa, submit maintenance requests, track their progress, and communicate directly with your landlord.",
     stat: [{ v: "5,100+", l: "Happy tenants" }, { v: "< 24h", l: "Maintenance SLA" }, { v: "4.8★", l: "Satisfaction score" }],
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2070&auto=format&fit=crop",
+    image: "/qw3.png",
   },
 };
 
@@ -191,70 +191,67 @@ function HeroPanel({ role }: { role: "landlord" | "tenant" }) {
   const h = HERO[role];
   return (
     <div className="hidden lg:flex flex-col relative overflow-hidden bg-[#0d1f17]">
-      {/* Full background image */}
+      {/* Full background image - Premium Ken Burns effect */}
       <AnimatePresence mode="wait">
-        <motion.img key={role}
-          initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <motion.div
+          key={role}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
-          src={h.image} alt="" aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0"
+        >
+          <motion.img
+            initial={{ scale: 1.15 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 10, ease: "linear" }}
+            src={h.image}
+            alt=""
+            aria-hidden
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
       </AnimatePresence>
 
-      {/* Layered dark overlay — keeps text readable */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/20" />
-      <div className="absolute inset-0 bg-linear-to-r from-black/30 to-transparent" />
+      {/* Multilayered Gradient Overlay for Text Visibility - REMOVED for clarity */}
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col justify-between h-full p-12">
+      <div className="relative z-10 flex flex-col justify-between h-full p-16">
         {/* Top: wordmark */}
-        <Link href="/" className="hover:opacity-80 transition-opacity">
-          <Logo size="sm" light />
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link href="/" className="hover:opacity-80 transition-opacity">
+            <Logo size="sm" light />
+          </Link>
+        </div>
 
-        {/* Center: headline card */}
+        {/* Center: Content area (Simplified) */}
         <AnimatePresence mode="wait">
-          <motion.div key={role}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-8">
-
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#3DBE7A]/20 border border-[#3DBE7A]/30">
-              <div className="h-1.5 w-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
-              <span className="text-[11px] text-[#3DBE7A] uppercase tracking-wider">{h.label}</span>
-            </div>
-
-            <div>
-              <h2 className="text-3xl text-white leading-tight tracking-tight">{h.headline}</h2>
-              <p className="text-[#7FD9A8]/70 text-[15px] leading-relaxed mt-4 max-w-sm">{h.body}</p>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              {h.stat.map((s, i) => (
-                <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                  <p className="text-2xl text-white">{s.v}</p>
-                  <p className="text-[11px] text-white/40 mt-0.5">{s.l}</p>
-                </div>
-              ))}
-            </div>
+          <motion.div 
+            key={role}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-xl"
+          >
+            {/* All previously headline/body/stats removed for maximum minimalism */}
           </motion.div>
         </AnimatePresence>
 
         {/* Bottom: trust badges */}
-        <div className="space-y-3">
-          <p className="text-[11px] text-white/30 uppercase tracking-wider">Trusted & Secure</p>
-          <div className="flex flex-col gap-2">
-            {TRUST.map((t, i) => (
-              <div key={i} className="flex items-center gap-2.5">
-                <CheckCircle2 className="h-3.5 w-3.5 text-[#3DBE7A] shrink-0" />
-                <span className="text-[12px] text-white/60">{t}</span>
-              </div>
-            ))}
+        <div className="flex items-end justify-between">
+          <div className="space-y-4">
+            <p className="text-[10px] text-white/30 uppercase tracking-[0.25em] font-bold">Security Infrastructure</p>
+            <div className="flex items-center gap-8">
+              {TRUST.map((t, i) => (
+                <div key={i} className="flex items-center gap-2.5 group">
+                  <div className="p-1 rounded-lg bg-[#3DBE7A]/10 border border-[#3DBE7A]/20 group-hover:bg-[#3DBE7A]/20 transition-colors">
+                    <CheckCircle2 className="h-4 w-4 text-[#3DBE7A]" />
+                  </div>
+                  <span className="text-[12px] text-white/50 group-hover:text-white/80 transition-colors">{t}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

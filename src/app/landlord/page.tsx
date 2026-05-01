@@ -67,6 +67,7 @@ import {
   Tooltip as RechartsTooltip, 
   ResponsiveContainer 
 } from "recharts";
+import StatCard from "@/components/StatCard";
 
 function CustomLandlordIcon({ className }: { className?: string }) {
   return (
@@ -276,7 +277,7 @@ function HeroMiniStat({
         />
       </div>
       <div>
-        <p className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground leading-none mb-0.5">
+        <p className="text-[10px] font-normal uppercase tracking-widest text-muted-foreground leading-none mb-0.5">
           {label}
         </p>
         <p
@@ -292,106 +293,6 @@ function HeroMiniStat({
   );
 }
 
-// --- Overview Card --------------------------------------------------------
-function OverviewCard({
-  label,
-  value,
-  trend,
-  subtext,
-  isNegative = false,
-  icon: Icon,
-  variant = "default",
-}: {
-  label: string;
-  value: React.ReactNode;
-  trend?: string;
-  subtext?: string;
-  isNegative?: boolean;
-  icon?: React.ElementType;
-  variant?: "default" | "dark";
-}) {
-  const isDark = variant === "dark";
-
-  return (
-    <Card 
-      className={cn(
-        "relative rounded-[24px] sm:rounded-3xl overflow-hidden h-full flex flex-col justify-between transition-all duration-300 hover:shadow-md group min-h-[130px] sm:min-h-[160px]",
-        isDark 
-          ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-xl shadow-[#062b1e]/20" 
-          : "bg-white border-black/[0.04] shadow-sm hover:border-black/[0.08]"
-      )}
-    >
-      {/* Optional Sparkline Decor for Dark Card */}
-      {isDark && (
-        <div className="absolute bottom-10 left-0 right-0 h-10 sm:h-12 pointer-events-none opacity-40">
-          <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full stroke-emerald-400 fill-none" strokeWidth="0.5">
-            <path d="M0 20 Q 20 18, 30 15 T 60 10 T 100 5" />
-          </svg>
-        </div>
-      )}
-      
-      <CardContent className="p-3.5 sm:p-5 flex flex-col justify-between h-full relative z-10 w-full">
-        {/* Top Row: Label & Icon */}
-        <div className="flex items-start justify-between mb-2 sm:mb-4">
-          <p className={cn(
-            "text-[9px] sm:text-[10px] font-bold uppercase tracking-wider sm:tracking-widest mt-0.5 sm:mt-1 pr-2 leading-snug",
-            isDark ? "text-white/60" : "text-muted-foreground/70"
-          )}>
-            {label}
-          </p>
-          {Icon && (
-            <div className={cn(
-               "h-7 w-7 sm:h-9 sm:w-9 rounded-xl sm:rounded-[14px] flex items-center justify-center shrink-0 transition-colors duration-300",
-               isDark 
-                 ? "bg-white/10 text-white group-hover:bg-white/20" 
-                 : "bg-[#F8F9F7] text-[#1B5E45]/80 border border-black/[0.03] group-hover:bg-[#E8F5EE] group-hover:text-[#1B5E45]"
-            )}>
-              <Icon className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" strokeWidth={isDark ? 2 : 1.5} />
-            </div>
-          )}
-        </div>
-
-        {/* Middle Row: Value */}
-        <div className="mt-auto mb-2 sm:mb-3">
-          <div className={cn(
-             "text-xl sm:text-[28px] font-extrabold tracking-tight tabular-nums leading-none",
-             isDark ? "text-white" : "text-foreground"
-          )}>
-            {value}
-          </div>
-        </div>
-
-        {/* Bottom Row: Trend / Subtext */}
-        <div className="flex items-center gap-1.5 mt-auto pt-1">
-           {trend && (
-             <span className={cn(
-               "inline-flex items-center text-[9px] font-bold",
-               isDark 
-                 ? cn("px-1.5 py-0.5 rounded-md", isNegative ? "bg-rose-500/20 text-rose-300" : "bg-emerald-500/20 text-emerald-300")
-                 : (isNegative ? "text-rose-600" : "text-[#1B5E45]")
-             )}>
-               {/* Icon logic: arrow for percentages, dot for status */}
-               {trend.includes('%') ? (
-                 <svg className="w-2.5 h-2.5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-               ) : (
-                 <div className={cn("h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full mr-1 sm:mr-1.5", isNegative ? "bg-rose-500" : "bg-[#3DBE7A]")} />
-               )}
-               {trend}
-             </span>
-           )}
-           {subtext && (
-             <span className={cn(
-               "text-[9px] font-medium",
-               isDark ? "text-white/50" : "text-muted-foreground/60"
-             )}>
-               {subtext}
-             </span>
-           )}
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
 
 // --- Portfolio Card --------------------------------------------------------
 function PortfolioCard({
@@ -442,37 +343,72 @@ function PortfolioCard({
           </motion.svg>
         </div>
 
-        <div className="relative z-10 space-y-6">
-          <div className="flex items-start justify-between">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+          {/* Main Info */}
+          <div className="lg:col-span-3 space-y-6">
             <div className="flex flex-col">
               <div className="flex items-center gap-2 mb-2">
-                <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm shadow-inner overflow-hidden">
+                <div className="p-2 rounded-xl bg-white/10 backdrop-blur-md shadow-inner">
                   <Wallet className="h-4 w-4 text-[#3DBE7A]" />
                 </div>
-                <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider">Total Portfolio Value</p>
+                <p className="text-white/70 text-[11px] font-medium uppercase tracking-wider">Total Portfolio Value</p>
               </div>
-              <div className="flex flex-wrap items-baseline gap-2">
-                <span className="text-2xl font-black text-white/90">KES</span>
-                <h2 className="text-4xl font-black tracking-tight text-white drop-shadow-sm">
+              <div className="flex flex-wrap items-baseline gap-3">
+                <span className="text-2xl font-medium text-white/80">KES</span>
+                <h2 className="text-4xl sm:text-5xl font-medium tracking-tight text-white drop-shadow-md">
                   {value.replace('KES', '').trim()}
                 </h2>
               </div>
             </div>
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
-              className="bg-emerald-500/20 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-2 flex items-center gap-2 shadow-lg"
-            >
-              <TrendingUp className="h-4 w-4 text-[#3DBE7A]" />
-              <span className="text-xs font-bold text-[#3DBE7A]">{trend}</span>
-            </motion.div>
+            
+            <div className="flex items-center gap-4">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                className="bg-emerald-500/20 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-2 flex items-center gap-2 shadow-lg"
+              >
+                <TrendingUp className="h-4 w-4 text-[#3DBE7A]" />
+                <span className="text-xs font-medium text-[#3DBE7A]">{trend}</span>
+              </motion.div>
+              <div className="flex items-center gap-2">
+                <motion.div 
+                  animate={{ opacity: [1, 0.5, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="h-2 w-2 rounded-full bg-[#3DBE7A] shadow-[0_0_10px_#3DBE7A]" 
+                />
+                <p className="text-white/50 text-[11px] font-medium uppercase tracking-widest">Across {properties} properties</p>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <motion.div 
-              animate={{ opacity: [1, 0.5, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="h-2 w-2 rounded-full bg-[#3DBE7A] shadow-[0_0_10px_#3DBE7A]" 
-            />
-            <p className="text-white/50 text-[11px] font-bold uppercase tracking-widest">Across {properties} properties</p>
+
+          {/* Desktop Insights Divider */}
+          <div className="hidden lg:block h-32 w-px bg-white/10" />
+
+          {/* New Portfolio Insights Panel */}
+          <div className="lg:col-span-1 hidden lg:grid grid-cols-1 gap-4">
+            <div className="space-y-1">
+              <p className="text-white/40 text-[9px] uppercase tracking-widest">Occupancy</p>
+              <p className="text-xl font-medium text-white">89.2%</p>
+              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-[#3DBE7A] w-[89%]" />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <p className="text-white/40 text-[9px] uppercase tracking-widest">Avg. Yield</p>
+              <p className="text-xl font-medium text-white">12.4%</p>
+              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-emerald-400 w-[72%]" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-1 hidden lg:grid grid-cols-1 gap-4">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm">
+              <p className="text-white/40 text-[9px] uppercase tracking-widest mb-1">Efficiency</p>
+              <div className="flex items-center justify-between text-white">
+                <span className="text-xl font-medium text-white">96%</span>
+                <div className="h-8 w-8 rounded-full border-2 border-[#3DBE7A] border-t-transparent animate-spin-slow" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -559,13 +495,13 @@ export default function LandlordDashboard() {
             </div>
           </header>
 
-          <main className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+          <main className="max-w-7xl mx-auto px-4 sm:px-8 py-6 space-y-8">
             
             {/* -- Greeting + Notification -- */}
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-muted-foreground text-xs font-medium mb-1">Hello, {userName || "User"}</p>
-                <h1 className="text-xl font-bold text-foreground">Landlord Dashboard</h1>
+                <p className="text-muted-foreground text-xs font-normal mb-1">Hello, {userName || "User"}</p>
+                <h1 className="text-xl font-medium text-foreground">Landlord Dashboard</h1>
               </div>
               <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-border/40 bg-white shadow-sm">
                 <Bell className="h-5 w-5 text-muted-foreground" />
@@ -579,58 +515,53 @@ export default function LandlordDashboard() {
               trend="+12.5%" 
             />
 
-            {/* -- Overview Grid -- */}
+            {/* -- Overview Grid -------------------------------------------------------- */}
             <section className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-foreground">Overview</h3>
-                <span className="text-[11px] font-bold text-[#3DBE7A] bg-[#E8F5EE] px-2.5 py-1 rounded-full">
+                <h3 className="text-base font-medium text-foreground">Overview</h3>
+                <span className="text-[11px] font-medium text-[#3DBE7A] bg-[#E8F5EE] px-2.5 py-1 rounded-full">
                   This Month
                 </span>
               </div>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                <OverviewCard 
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <StatCard 
                   label="Total Rent Collected" 
                   value={
                     <div className="flex flex-col">
-                      <span className="text-sm sm:text-base font-bold text-white/90">KES</span>
-                      <span className="text-3xl sm:text-4xl">{(stats.monthlyIncome * 0.9).toLocaleString()}</span>
+                      <span className="text-sm font-medium text-white/50 mb-1">KES</span>
+                      <span>{(stats.monthlyIncome * 0.9).toLocaleString()}</span>
                     </div>
                   }
                   variant="dark"
                   icon={Receipt}
-                  trend="+8.2%" 
-                  subtext="This month"
+                  trend={{ value: "+8.2%", label: "This month", type: "pill" }}
                 />
-                <OverviewCard 
+                <StatCard 
                   label="Pending Rent" 
                   value={
                     <div className="flex flex-col">
-                      <span className="text-xs sm:text-sm font-bold text-muted-foreground mr-1">KES</span>
+                      <span className="text-sm font-medium text-muted-foreground/30 mb-1">KES</span>
                       <span>{(stats.monthlyIncome * 0.1).toLocaleString()}</span>
                     </div>
                   }
-                  trend="-2.1%" 
-                  subtext="Awaiting clearance"
-                  isNegative 
+                  trend={{ value: "-2.1%", label: "Awaiting clearance", isNegative: true }}
                   icon={Clock}
                 />
-                <OverviewCard 
+                <StatCard 
                   label="Occupancy Rate" 
                   value={
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-3xl sm:text-4xl text-foreground">{occupancyRate}</span>
-                      <span className="text-lg font-bold text-muted-foreground/60">%</span>
+                    <div className="flex items-baseline gap-1">
+                      <span>{occupancyRate}</span>
+                      <span className="text-lg text-muted-foreground/40">%</span>
                     </div>
                   }
-                  trend="+4.5%" 
-                  subtext="vs last month"
+                  trend={{ value: "+4.5%", label: "vs last month", isPositive: true }}
                   icon={Users}
                 />
-                <OverviewCard 
+                <StatCard 
                   label="Properties" 
                   value={stats.totalBuildings} 
-                  trend="+2" 
-                  subtext="New acquisitions"
+                  trend={{ value: "+2", label: "New acquisitions", isNeutral: true }}
                   icon={Building2}
                 />
               </div>
@@ -639,66 +570,67 @@ export default function LandlordDashboard() {
             {/* -- Rent Collection Trend -- */}
             <section className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-foreground">Rent Collection Trend</h3>
-                <div className="flex items-center gap-1 text-[10px] font-bold text-[#3DBE7A] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
+                <h3 className="text-base font-medium text-foreground">Rent Collection Trend</h3>
+                <div className="flex items-center gap-1 text-[10px] font-medium text-[#3DBE7A] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
                   <TrendingUp className="h-2.5 w-2.5" />
                   +8.2%
                 </div>
               </div>
-              <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden p-4">
-                <div className="h-[200px] w-full mt-4">
+              <Card className="rounded-[32px] border-border/40 bg-white shadow-sm overflow-hidden p-6 sm:p-8">
+                <div className="h-[250px] lg:h-[400px] w-full mt-4">
                   <TrendsAreaChart />
                 </div>
               </Card>
             </section>
 
-            {/* -- Recent Transactions -- */}
-            <section className="space-y-4 pb-12">
-              <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-foreground">Recent Transactions</h3>
-                <Link href="/landlord/payments" className="text-xs font-medium text-[#3DBE7A]">
-                  View all
-                </Link>
-              </div>
-              <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden flex flex-col">
-                {recentPayments.map((payment, i) => (
-                  <TransactionItem key={i} payment={payment} />
-                ))}
-              </Card>
-            </section>
-
             {/* -- Split Layout for Radar & Maintenance -- */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
-              <section className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
+              <section className="lg:col-span-2 space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-foreground">Needs Attention</h3>
-                  <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200">Urgent</Badge>
-                </div>
-                <div className="space-y-3">
-                  <MaintenanceItem type="Plumbing Issue" property="Sunset Villas 3B" status="urgent" />
-                  <MaintenanceItem type="HVAC Repair" property="Greenwood Unit 12" status="normal" />
-                </div>
-              </section>
-
-              <section className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-foreground">Lease Radar</h3>
-                  <Link href="/landlord/tenants" className="text-xs font-medium text-[#3DBE7A]">
-                    See all
+                  <h3 className="text-base font-medium text-foreground">Recent Transactions</h3>
+                  <Link href="/landlord/payments" className="text-xs font-normal text-[#3DBE7A]">
+                    View all
                   </Link>
                 </div>
-                <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden min-h-[160px]">
-                  <LeaseRadarItem name="John Doe" unit="Greenwood 4A" days={14} />
-                  <LeaseRadarItem name="Sarah Smith" unit="Greenwood 2B" days={28} />
-                  <LeaseRadarItem name="Michael Johnson" unit="Oceanview 12C" days={45} />
+                <Card className="rounded-[32px] border-border/40 bg-white shadow-sm overflow-hidden flex flex-col">
+                  {recentPayments.map((payment, i) => (
+                    <TransactionItem key={i} payment={payment} />
+                  ))}
                 </Card>
               </section>
+
+              <div className="space-y-8">
+                <section className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-base font-medium text-foreground">Needs Attention</h3>
+                    <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200">Urgent</Badge>
+                  </div>
+                  <div className="space-y-3">
+                    <MaintenanceItem type="Plumbing Issue" property="Sunset Villas 3B" status="urgent" />
+                    <MaintenanceItem type="HVAC Repair" property="Greenwood Unit 12" status="normal" />
+                  </div>
+                </section>
+
+                <section className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-base font-medium text-foreground">Lease Radar</h3>
+                    <Link href="/landlord/tenants" className="text-xs font-normal text-[#3DBE7A]">
+                      See all
+                    </Link>
+                  </div>
+                  <Card className="rounded-[32px] border-border/40 bg-white shadow-sm overflow-hidden min-h-[160px]">
+                    <LeaseRadarItem name="John Doe" unit="Greenwood 4A" days={14} />
+                    <LeaseRadarItem name="Sarah Smith" unit="Greenwood 2B" days={28} />
+                    <LeaseRadarItem name="Michael Johnson" unit="Oceanview 12C" days={45} />
+                  </Card>
+                </section>
+              </div>
             </div>
 
             {/* -- Property Performance Table -- */}
             <section className="space-y-4 pb-12">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-foreground">Property Performance</h3>
+                <h3 className="text-base font-medium text-foreground">Property Performance</h3>
               </div>
               <PropertyPerformance />
             </section>
@@ -770,11 +702,11 @@ function TransactionItem({ payment }: { payment: any }) {
         
         {/* Left Text Detail */}
         <div className="flex flex-col gap-0.5">
-          <h4 className="text-[13px] sm:text-[14px] font-extrabold text-foreground tracking-tight">
+          <h4 className="text-[13px] sm:text-[14px] font-medium text-foreground tracking-tight">
             {payment.type || "Rent Payment"}
           </h4>
-          <p className="text-[10px] sm:text-[11px] font-medium text-muted-foreground/80 mt-0.5">
-            <span className="font-semibold text-muted-foreground">M-Pesa</span>
+          <p className="text-[10px] sm:text-[11px] font-normal text-muted-foreground/80 mt-0.5">
+            <span className="font-medium text-muted-foreground">M-Pesa</span>
             <span className="mx-1.5 opacity-50">•</span>
             {new Date(payment.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
           </p>
@@ -784,12 +716,12 @@ function TransactionItem({ payment }: { payment: any }) {
       {/* Right Flex Group */}
       <div className="flex flex-col items-end gap-1">
         <div className="flex items-baseline gap-1">
-          <span className="text-[9px] sm:text-[10px] font-bold text-muted-foreground/60 uppercase">Kes</span>
-          <span className="text-[13px] sm:text-[15px] font-extrabold text-foreground tracking-tight tabular-nums mt-0.5">
+          <span className="text-[9px] sm:text-[10px] font-medium text-muted-foreground/60 uppercase">Kes</span>
+          <span className="text-[13px] sm:text-[15px] font-medium text-foreground tracking-tight tabular-nums mt-0.5">
             {payment.amount.toLocaleString()}
           </span>
         </div>
-        <span className="inline-flex items-center text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-[#E8F5EE] text-[#3DBE7A]">
+        <span className="inline-flex items-center text-[9px] font-medium px-1.5 py-0.5 rounded-md bg-[#E8F5EE] text-[#3DBE7A]">
           <div className="h-1.5 w-1.5 rounded-full mr-1.5 bg-[#3DBE7A]" />
           Paid
         </span>
@@ -806,32 +738,32 @@ function PropertyPerformance() {
     { name: "Ocean", occ: 85, revenue: 320000 },
   ];
   return (
-    <Card className="rounded-[24px] border-black/[0.04] bg-white shadow-sm overflow-hidden p-1">
+    <Card className="rounded-[32px] border-border/40 bg-white shadow-sm overflow-hidden p-2 sm:p-4">
       <Table>
         <TableHeader>
           <TableRow className="border-border/40 hover:bg-transparent">
-            <TableHead className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Property</TableHead>
-            <TableHead className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground w-24">Occupancy</TableHead>
-            <TableHead className="text-right text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Revenue</TableHead>
+            <TableHead className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground px-4 py-4">Property</TableHead>
+            <TableHead className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground w-24 px-4 py-4">Occupancy</TableHead>
+            <TableHead className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground text-right px-4 py-4">Revenue</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {properties.map((p, i) => (
             <TableRow key={i} className="border-border/20 hover:bg-[#F0F5F1]/30 border-b last:border-0 transition-colors">
               <TableCell className="py-3">
-                 <p className="text-[13px] font-extrabold text-foreground">{p.name}</p>
-                 <p className="text-[10px] font-medium text-muted-foreground/60">{Math.floor(p.revenue / 25000)} Units</p>
+                 <p className="text-[13px] font-medium text-foreground">{p.name}</p>
+                 <p className="text-[10px] font-normal text-muted-foreground/60">{Math.floor(p.revenue / 25000)} Units</p>
               </TableCell>
               <TableCell className="py-3">
                  <div className="flex flex-col gap-1.5">
-                   <span className={cn("text-[11px] font-bold font-mono", p.occ < 90 ? "text-amber-600" : "text-[#1B5E45]")}>{p.occ}%</span>
+                   <span className={cn("text-[11px] font-medium font-mono", p.occ < 90 ? "text-amber-600" : "text-[#1B5E45]")}>{p.occ}%</span>
                    <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
                      <div className={cn("h-full rounded-full", p.occ < 90 ? "bg-amber-400" : "bg-[#3DBE7A]")} style={{ width: `${p.occ}%` }} />
                    </div>
                  </div>
               </TableCell>
               <TableCell className="text-right py-3">
-                 <p className="text-[13px] font-bold tabular-nums">KES {(p.revenue).toLocaleString()}</p>
+                 <p className="text-[13px] font-medium tabular-nums">KES {(p.revenue).toLocaleString()}</p>
               </TableCell>
             </TableRow>
           ))}
@@ -854,17 +786,17 @@ function MaintenanceItem({ type, property, status }: { type: string, property: s
            <Wrench className="h-4.5 w-4.5 sm:h-5 sm:w-5" strokeWidth={1.5} />
         </div>
         <div className="flex flex-col gap-0.5">
-          <h4 className="text-[13px] sm:text-[14px] font-extrabold text-foreground tracking-tight">
+          <h4 className="text-[13px] sm:text-[14px] font-medium text-foreground tracking-tight">
             {type}
           </h4>
-          <p className="text-[10px] sm:text-[11px] font-medium text-muted-foreground/80 mt-0.5">
-            <span className="font-semibold text-muted-foreground">{property}</span>
+          <p className="text-[10px] sm:text-[11px] font-normal text-muted-foreground/80 mt-0.5">
+            <span className="font-medium text-muted-foreground">{property}</span>
             <span className="mx-1.5 opacity-50">•</span>
             Just now
           </p>
         </div>
       </div>
-      <Button variant="ghost" size="sm" className="h-8 text-xs font-bold rounded-full bg-[#F8F9F7] border border-black/[0.04] hover:bg-gray-100 px-3">
+      <Button variant="ghost" size="sm" className="h-8 text-xs font-medium rounded-full bg-[#F8F9F7] border border-black/[0.04] hover:bg-gray-100 px-3">
         Review
       </Button>
     </div>
@@ -881,13 +813,13 @@ function LeaseRadarItem({ name, unit, days }: { name: string, unit: string, days
           <Users className="h-4 w-4 text-gray-500" />
         </div>
         <div>
-          <p className="text-xs font-bold text-foreground">{name}</p>
+          <p className="text-xs font-medium text-foreground">{name}</p>
           <p className="text-[10px] text-muted-foreground">{unit}</p>
         </div>
       </div>
       <div className="flex items-center gap-2">
         <span className={cn(
-          "text-[10px] font-bold px-2 py-0.5 rounded-full",
+          "text-[10px] font-medium px-2 py-0.5 rounded-full",
           isUrgent ? "bg-red-50 text-red-600" : "bg-orange-50 text-orange-600"
         )}>
           {days} Days

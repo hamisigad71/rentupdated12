@@ -991,14 +991,13 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Safety fallback in case video never ends or fires event
-    const fallback = setTimeout(() => setIsLoading(false), 15000);
-    return () => clearTimeout(fallback);
+    const timer = setTimeout(() => setIsLoading(false), 5000);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-      <Loader show={isLoading} onVideoEnd={() => setIsLoading(false)} />
+      <Loader show={isLoading} />
       <div className={cn("flex min-h-screen flex-col bg-background", isLoading ? "h-screen overflow-hidden" : "")}>
         <Navbar className="px-4 sm:px-6 lg:px-8" />
         <main className="flex-1 overflow-y-auto overflow-x-hidden">

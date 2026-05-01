@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import StatCard from "@/components/StatCard";
 
 const CustomWrenchIcon = ({ className }: { className?: string }) => (
   <div 
@@ -124,6 +125,10 @@ export default function ComplaintsPage() {
     return matchesTab && matchesSearch;
   });
 
+  const highRiskCount = mockComplaints.filter(c => c.priority === 'high').length;
+  const inProgressCount = mockComplaints.filter(c => c.status === 'in-progress').length;
+  const resolvedCount = mockComplaints.filter(c => c.status === 'resolved').length;
+
   const getPriorityColor = (p: string) => {
     switch (p) {
       case 'high': return 'text-destructive border-destructive/20 bg-destructive/5';
@@ -142,7 +147,7 @@ export default function ComplaintsPage() {
 
   return (
     <LandlordLayout>
-      <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12 space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -159,14 +164,39 @@ export default function ComplaintsPage() {
           </div>
           
           <div className="flex items-center gap-3">
-             <div className="flex items-center gap-2 px-6 h-12 rounded-xl bg-destructive/5 border border-destructive/10">
-                <CustomAlertIcon className="h-5 w-5 animate-pulse" />
-                <span className="text-xs uppercase text-destructive ">{stats.activeComplaints} High Risk Tickets</span>
-             </div>
              <Button className="h-12 rounded-xl px-6 bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all uppercase text-xs ">
                 <Plus className="h-4 w-4 mr-2" /> Log Incident
              </Button>
           </div>
+        </div>
+
+        {/* Financial KPIs */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+           <StatCard 
+             variant="dark"
+             label="Total Incidents" 
+             value={mockComplaints.length}
+             icon={ShieldAlert}
+             trend={{ value: "+2", label: "Added today", type: "pill" }}
+           />
+           <StatCard 
+             label="High Risk" 
+             value={highRiskCount}
+             icon={AlertCircle}
+             trend={{ value: "Priority 1", label: "Needs immediate action", isNegative: true }}
+           />
+           <StatCard 
+             label="In Progress" 
+             value={inProgressCount}
+             icon={Activity}
+             trend={{ value: "Active", label: "Technicians assigned", isPositive: true }}
+           />
+           <StatCard 
+             label="Resolved (MTD)" 
+             value={resolvedCount}
+             icon={CheckCircle2}
+             trend={{ value: "+12.5%", label: "Resolution rate", isPositive: true }}
+           />
         </div>
 
         {/* Operational Flow Controls */}
@@ -214,73 +244,76 @@ export default function ComplaintsPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="group flex flex-col rounded-2xl border border-foreground/5 bg-background shadow-2xl overflow-hidden hover:border-primary/20 transition-all hover:shadow-primary/[0.02]"
+                  className="group flex flex-col rounded-3xl border border-black/[0.04] bg-white shadow-sm overflow-hidden hover:border-primary/20 hover:shadow-xl hover:shadow-primary/[0.03] transition-all duration-500"
                 >
-                  <div className="p-8 space-y-6">
+                  <div className="p-6 md:p-8 space-y-6">
                     <div className="flex items-start justify-between">
-                       <div className="h-14 w-1 flex rounded-full bg-primary/20 group-hover:bg-primary transition-colors" />
+                       <div className="h-12 w-1 flex rounded-full bg-primary/20 group-hover:bg-primary transition-colors duration-500" />
                        <div className="flex-1 px-4">
-                          <div className="flex items-center gap-2 mb-1">
-                             <Badge variant="outline" className={cn("text-[8px] uppercase h-5 px-2 border rounded-lg", getPriorityColor(comp.priority))}>
+                          <div className="flex items-center gap-2 mb-1.5">
+                             <Badge variant="outline" className={cn(
+                               "text-[9px] font-bold uppercase tracking-wider h-5 px-2 border rounded-lg", 
+                               getPriorityColor(comp.priority)
+                             )}>
                                 {comp.priority} Risk
                              </Badge>
-                             <span className="text-[9px] text-muted-foreground/30 uppercase ">{comp.createdDate}</span>
+                             <span className="text-[10px] font-medium text-muted-foreground/30 uppercase tracking-tight">{comp.createdDate}</span>
                           </div>
-                          <h3 className="text-sm tracking-tight uppercase group-hover:text-primary transition-colors leading-tight truncate">
+                          <h3 className="text-base font-semibold tracking-tight uppercase group-hover:text-primary transition-colors leading-tight truncate">
                              {comp.title}
                           </h3>
                        </div>
-                       <Badge className={cn(
-                          "rounded-xl h-10 w-10 p-0 border flex items-center justify-center transition-all",
+                       <div className={cn(
+                          "rounded-2xl h-11 w-11 border flex items-center justify-center transition-all duration-500",
                           comp.status === 'resolved' ? "bg-primary/5 border-primary/20 text-primary" : 
                           comp.status === 'in-progress' ? "bg-amber-500/5 border-amber-500/20 text-amber-500" :
-                          "bg-foreground/5 border-foreground/5 text-muted-foreground/40"
+                          "bg-muted/50 border-black/[0.03] text-muted-foreground/40 group-hover:bg-primary/5 group-hover:border-primary/10 group-hover:text-primary"
                        )}>
                           {getStatusIcon(comp.status)}
-                       </Badge>
+                       </div>
                     </div>
 
-                    <p className="text-[11px] text-muted-foreground/60 leading-relaxed uppercase tracking-tight line-clamp-2">
+                    <p className="text-[12px] text-muted-foreground/60 leading-relaxed uppercase tracking-tight line-clamp-2 min-h-[32px]">
                        {comp.description}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-3 py-4 border-y border-foreground/5">
-                       <div className="space-y-1">
-                          <p className="text-[8px] uppercase text-muted-foreground/30">Resident Entity</p>
-                          <div className="flex items-center gap-2 text-xs uppercase truncate">
-                             <CustomTenantIcon className="h-3 w-3 text-primary/40" /> {comp.tenantName}
+                    <div className="grid grid-cols-2 gap-4 py-5 border-y border-black/[0.04]">
+                       <div className="space-y-1.5">
+                          <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/30">Resident Entity</p>
+                          <div className="flex items-center gap-2 text-[11px] font-medium uppercase truncate text-foreground/80">
+                             <CustomTenantIcon className="h-3.5 w-3.5 text-primary/40" /> {comp.tenantName}
                           </div>
                        </div>
-                       <div className="space-y-1">
-                          <p className="text-[8px] uppercase text-muted-foreground/30">Asset Node</p>
-                          <div className="flex items-center gap-2 text-xs uppercase truncate">
-                             <CustomHomeIcon className="h-3 w-3 text-primary/40" /> {comp.unitId}
+                       <div className="space-y-1.5">
+                          <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/30">Asset Node</p>
+                          <div className="flex items-center gap-2 text-[11px] font-medium uppercase truncate text-foreground/80">
+                             <CustomHomeIcon className="h-3.5 w-3.5 text-primary/40" /> {comp.unitId}
                           </div>
                        </div>
                     </div>
 
                     <div className="flex items-center gap-3">
-                       <div className="flex-1 h-12 px-6 rounded-xl bg-foreground/[0.02] border border-foreground/5 flex items-center gap-3">
-                          <CustomWrenchIcon className="h-3.5 w-3.5 text-muted-foreground/30" />
-                          <span className="text-[9px] uppercase text-muted-foreground/40">{comp.category}</span>
+                       <div className="flex-1 h-12 px-6 rounded-2xl bg-muted/30 border border-black/[0.02] flex items-center gap-3 group-hover:bg-primary/[0.02] transition-colors">
+                          <CustomWrenchIcon className="h-4 w-4 text-primary/30" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/50">{comp.category}</span>
                        </div>
-                       <Button variant="outline" size="icon" className="h-12 w-12 rounded-xl border-foreground/5 hover:bg-primary/5 hover:text-primary hover:border-primary/20 shadow-xl transition-all">
-                          <CustomChatIcon className="h-4 w-4" />
+                       <Button variant="outline" size="icon" className="h-12 w-12 rounded-2xl border-black/[0.05] hover:bg-primary/5 hover:text-primary hover:border-primary/20 shadow-sm transition-all duration-300">
+                          <CustomChatIcon className="h-4.5 w-4.5" />
                        </Button>
                     </div>
 
-                    <div className="flex gap-3 mt-2">
+                    <div className="flex gap-3 pt-2">
                        {comp.status !== 'resolved' ? (
-                         <Button className="flex-1 h-14 rounded-2xl bg-[#0F0F0F] text-white shadow-2xl hover:bg-primary transition-all uppercase text-xs tracking-[0.2em] group">
+                         <Button className="flex-1 h-14 rounded-2xl bg-primary text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 transition-all duration-300 uppercase text-[10px] font-bold tracking-[0.2em] group">
                             Mark Resolved <CheckCircle2 className="ml-2 h-4 w-4 group-hover:scale-125 transition-transform" />
                          </Button>
                        ) : (
-                         <Button variant="outline" className="flex-1 h-14 rounded-2xl border-foreground/5 uppercase text-xs tracking-[0.2em]">
+                         <Button variant="outline" className="flex-1 h-14 rounded-2xl border-black/[0.05] bg-muted/20 text-muted-foreground/60 uppercase text-[10px] font-bold tracking-[0.2em] hover:bg-muted/30 transition-all">
                             Issue Closed <ChevronRight className="ml-2 h-4 w-4" />
                          </Button>
                        )}
-                       <Button variant="ghost" className="h-14 w-14 rounded-2xl border border-foreground/5 hover:bg-foreground/[0.02]">
-                          <MoreHorizontal className="h-5 w-5" />
+                       <Button variant="ghost" className="h-14 w-14 rounded-2xl border border-black/[0.05] hover:bg-muted/50 transition-all">
+                          <MoreHorizontal className="h-5 w-5 text-muted-foreground/40" />
                        </Button>
                     </div>
                   </div>
