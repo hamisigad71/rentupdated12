@@ -128,6 +128,106 @@ const CustomCheckIcon = ({ className }: { className?: string }) => (
     }} 
   />
 )
+// --- Overview Card --------------------------------------------------------
+function OverviewCard({
+  label,
+  value,
+  trend,
+  subtext,
+  isNegative = false,
+  icon: Icon,
+  variant = "default",
+}: {
+  label: string;
+  value: React.ReactNode;
+  trend?: string;
+  subtext?: string;
+  isNegative?: boolean;
+  icon?: React.ElementType;
+  variant?: "default" | "dark";
+}) {
+  const isDark = variant === "dark";
+
+  return (
+    <Card 
+      className={cn(
+        "relative rounded-[24px] sm:rounded-3xl overflow-hidden h-full flex flex-col justify-between transition-all duration-300 hover:shadow-md group min-h-[130px] sm:min-h-[160px]",
+        isDark 
+          ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-xl shadow-[#062b1e]/20" 
+          : "bg-white border-black/[0.04] shadow-sm hover:border-black/[0.08]"
+      )}
+    >
+      {/* Optional Sparkline Decor for Dark Card */}
+      {isDark && (
+        <div className="absolute bottom-10 left-0 right-0 h-10 sm:h-12 pointer-events-none opacity-40">
+          <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full stroke-emerald-400 fill-none" strokeWidth="0.5">
+            <path d="M0 20 Q 20 18, 30 15 T 60 10 T 100 5" />
+          </svg>
+        </div>
+      )}
+      
+      <CardContent className="p-3.5 sm:p-5 flex flex-col justify-between h-full relative z-10 w-full">
+        {/* Top Row: Label & Icon */}
+        <div className="flex items-start justify-between mb-2 sm:mb-4">
+          <p className={cn(
+            "text-[9px] sm:text-[10px] font-bold uppercase tracking-wider sm:tracking-widest mt-0.5 sm:mt-1 pr-2 leading-snug",
+            isDark ? "text-white/60" : "text-muted-foreground/70"
+          )}>
+            {label}
+          </p>
+          {Icon && (
+            <div className={cn(
+               "h-7 w-7 sm:h-9 sm:w-9 rounded-xl sm:rounded-[14px] flex items-center justify-center shrink-0 transition-colors duration-300",
+               isDark 
+                 ? "bg-white/10 text-white group-hover:bg-white/20" 
+                 : "bg-[#F8F9F7] text-[#1B5E45]/80 border border-black/[0.03] group-hover:bg-[#E8F5EE] group-hover:text-[#1B5E45]"
+            )}>
+              <Icon className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" strokeWidth={isDark ? 2 : 1.5} />
+            </div>
+          )}
+        </div>
+
+        {/* Middle Row: Value */}
+        <div className="mt-auto mb-2 sm:mb-3">
+          <div className={cn(
+             "text-xl sm:text-[28px] font-extrabold tracking-tight tabular-nums leading-none",
+             isDark ? "text-white" : "text-foreground"
+          )}>
+            {value}
+          </div>
+        </div>
+
+        {/* Bottom Row: Trend / Subtext */}
+        <div className="flex items-center gap-1.5 mt-auto pt-1">
+           {trend && (
+             <span className={cn(
+               "inline-flex items-center text-[9px] font-bold",
+               isDark 
+                 ? cn("px-1.5 py-0.5 rounded-md", isNegative ? "bg-rose-500/20 text-rose-300" : "bg-emerald-500/20 text-emerald-300")
+                 : (isNegative ? "text-rose-600" : "text-[#1B5E45]")
+             )}>
+               {/* Icon logic: arrow for percentages, dot for status */}
+               {trend.includes('%') ? (
+                 <svg className="w-2.5 h-2.5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+               ) : (
+                 <div className={cn("h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full mr-1 sm:mr-1.5", isNegative ? "bg-rose-500" : "bg-[#3DBE7A]")} />
+               )}
+               {trend}
+             </span>
+           )}
+           {subtext && (
+             <span className={cn(
+               "text-[9px] font-medium",
+               isDark ? "text-white/50" : "text-muted-foreground/60"
+             )}>
+               {subtext}
+             </span>
+           )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
  
 export default function TenantsPage() {
   const [search, setSearch] = useState("");
@@ -207,65 +307,51 @@ export default function TenantsPage() {
           </div>
 
           {/* Statistics Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                label: "Total Tenants",
-                value: totalTenants,
-                icon: CustomTenantIcon,
-                color: "#1B5E45",
-                bgColor: "#E8F5EE",
-              },
-              {
-                label: "Active Leases",
-                value: activeTenants,
-                icon: CustomCheckIcon,
-                color: "#3DBE7A",
-                bgColor: "#E8F5EE",
-              },
-              {
-                label: "Collection Rate",
-                value: `${collectionRate}%`,
-                icon: CustomAnalyticIcon,
-                color: "#1B5E45",
-                bgColor: "#E8F5EE",
-              },
-              {
-                label: "Total Arrears",
-                value: `KSh ${(totalArrears / 1000).toFixed(0)}K`,
-                icon: CustomAlertIcon,
-                color: "#EF4444",
-                bgColor: "#FEE2E2",
-              },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Card className="border-[#E8F5EE] bg-white hover:shadow-md transition-shadow">
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                        style={{ backgroundColor: stat.bgColor, color: stat.color }}
-                      >
-                        <stat.icon className="w-5 h-5 sm:w-7 sm:h-7" />
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[10px] sm:text-xs text-[#6B7280]">{stat.label}</p>
-                      <h3 className="text-lg sm:text-2xl text-[#1A1A1A]">{stat.value}</h3>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <OverviewCard 
+              label="Total Tenants" 
+              value={totalTenants}
+              variant="dark"
+              icon={Users}
+              trend="+3"
+              subtext="Added this month"
+            />
+            <OverviewCard 
+              label="Active Leases" 
+              value={activeTenants}
+              trend="Stable"
+              subtext="Compared to last month"
+              icon={CheckCircle2}
+            />
+            <OverviewCard 
+              label="Collection Rate" 
+              value={
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-3xl sm:text-4xl text-foreground">{collectionRate}</span>
+                  <span className="text-lg font-bold text-muted-foreground/60">%</span>
+                </div>
+              }
+              trend="+2.1%"
+              subtext="Improvement"
+              icon={TrendingUp}
+            />
+            <OverviewCard 
+              label="Total Arrears" 
+              value={
+                <div className="flex flex-col">
+                  <span className="text-sm sm:text-base font-bold text-muted-foreground mr-1">KES</span>
+                  <span className="text-2xl sm:text-3xl text-rose-600">{(totalArrears / 1000).toFixed(0)}K</span>
+                </div>
+              }
+              trend="14 pending"
+              isNegative={true}
+              subtext="Needs action"
+              icon={AlertCircle}
+            />
           </div>
 
           {/* Filters Section */}
-          <Card className="border-[#E8F5EE] bg-white">
+          <Card className="rounded-[24px] sm:rounded-[32px] border-black/[0.04] bg-white shadow-sm hover:shadow-md transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex flex-col lg:flex-row gap-4">
                 <div className="relative flex-1">
@@ -313,7 +399,7 @@ export default function TenantsPage() {
           </Card>
 
           {/* Tenants Table */}
-          <Card className="border-[#E8F5EE] bg-white">
+          <Card className="rounded-[24px] sm:rounded-[32px] border-black/[0.04] bg-white shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
@@ -490,7 +576,7 @@ export default function TenantsPage() {
 
       {/* Tenant Profile Modal */}
       <Dialog open={showProfile} onOpenChange={setShowProfile}>
-        <DialogContent className="max-w-3xl max-h-[90vh] p-0 overflow-hidden bg-white">
+        <DialogContent className="max-w-3xl max-h-[90vh] p-0 overflow-hidden bg-white sm:rounded-[32px]">
           <div className="flex flex-col h-full">
             
             {/* Modal Header */}
@@ -660,7 +746,7 @@ export default function TenantsPage() {
 
       {/* Add Tenant Modal */}
       <Dialog open={showAddTenant} onOpenChange={setShowAddTenant}>
-        <DialogContent className="max-w-2xl bg-white">
+        <DialogContent className="max-w-2xl bg-white sm:rounded-[32px]">
           <DialogHeader>
             <DialogTitle className="text-xl text-[#1A1A1A]">
               Add New Tenant

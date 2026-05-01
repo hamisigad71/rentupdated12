@@ -124,6 +124,107 @@ function FormField({
   );
 }
 
+// --- Overview Card --------------------------------------------------------
+function OverviewCard({
+  label,
+  value,
+  trend,
+  subtext,
+  isNegative = false,
+  icon: Icon,
+  variant = "default",
+}: {
+  label: string;
+  value: React.ReactNode;
+  trend?: string;
+  subtext?: string;
+  isNegative?: boolean;
+  icon?: React.ElementType;
+  variant?: "default" | "dark";
+}) {
+  const isDark = variant === "dark";
+
+  return (
+    <Card 
+      className={cn(
+        "relative rounded-[24px] sm:rounded-3xl overflow-hidden h-full flex flex-col justify-between transition-all duration-300 hover:shadow-md group min-h-[130px] sm:min-h-[160px]",
+        isDark 
+          ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-xl shadow-[#062b1e]/20" 
+          : "bg-white border-black/[0.04] shadow-sm hover:border-black/[0.08]"
+      )}
+    >
+      {/* Optional Sparkline Decor for Dark Card */}
+      {isDark && (
+        <div className="absolute bottom-10 left-0 right-0 h-10 sm:h-12 pointer-events-none opacity-40">
+          <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full stroke-emerald-400 fill-none" strokeWidth="0.5">
+            <path d="M0 20 Q 20 18, 30 15 T 60 10 T 100 5" />
+          </svg>
+        </div>
+      )}
+      
+      <CardContent className="p-3.5 sm:p-5 flex flex-col justify-between h-full relative z-10 w-full">
+        {/* Top Row: Label & Icon */}
+        <div className="flex items-start justify-between mb-2 sm:mb-4">
+          <p className={cn(
+            "text-[9px] sm:text-[10px] font-bold uppercase tracking-wider sm:tracking-widest mt-0.5 sm:mt-1 pr-2 leading-snug",
+            isDark ? "text-white/60" : "text-muted-foreground/70"
+          )}>
+            {label}
+          </p>
+          {Icon && (
+            <div className={cn(
+               "h-7 w-7 sm:h-9 sm:w-9 rounded-xl sm:rounded-[14px] flex items-center justify-center shrink-0 transition-colors duration-300",
+               isDark 
+                 ? "bg-white/10 text-white group-hover:bg-white/20" 
+                 : "bg-[#F8F9F7] text-[#1B5E45]/80 border border-black/[0.03] group-hover:bg-[#E8F5EE] group-hover:text-[#1B5E45]"
+            )}>
+              <Icon className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" strokeWidth={isDark ? 2 : 1.5} />
+            </div>
+          )}
+        </div>
+
+        {/* Middle Row: Value */}
+        <div className="mt-auto mb-2 sm:mb-3">
+          <div className={cn(
+             "text-xl sm:text-[28px] font-extrabold tracking-tight tabular-nums leading-none",
+             isDark ? "text-white" : "text-foreground"
+          )}>
+            {value}
+          </div>
+        </div>
+
+        {/* Bottom Row: Trend / Subtext */}
+        <div className="flex items-center gap-1.5 mt-auto pt-1">
+           {trend && (
+             <span className={cn(
+               "inline-flex items-center text-[9px] font-bold",
+               isDark 
+                 ? cn("px-1.5 py-0.5 rounded-md", isNegative ? "bg-rose-500/20 text-rose-300" : "bg-emerald-500/20 text-emerald-300")
+                 : (isNegative ? "text-rose-600" : "text-[#1B5E45]")
+             )}>
+               {/* Icon logic: arrow for percentages, dot for status */}
+               {trend.includes('%') ? (
+                 <svg className="w-2.5 h-2.5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+               ) : (
+                 <div className={cn("h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full mr-1 sm:mr-1.5", isNegative ? "bg-rose-500" : "bg-[#3DBE7A]")} />
+               )}
+               {trend}
+             </span>
+           )}
+           {subtext && (
+             <span className={cn(
+               "text-[9px] font-medium",
+               isDark ? "text-white/50" : "text-muted-foreground/60"
+             )}>
+               {subtext}
+             </span>
+           )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function BuildingsPage() {
   const router = useRouter();
   const [buildings, setBuildings] = useState(mockBuildings);
@@ -256,61 +357,46 @@ export default function BuildingsPage() {
           </div>
 
           {/* Property KPIs */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                label: "Total Properties",
-                value: buildings.length,
-                icon: CustomLandlordIcon,
-                color: "#1B5E45",
-                bgColor: "#E8F5EE",
-              },
-              {
-                label: "Total Units",
-                value: totalUnits,
-                icon: CustomHomeIcon,
-                color: "#3DBE7A",
-                bgColor: "#E8F5EE",
-              },
-              {
-                label: "Occupancy Rate",
-                value: `${PropertyOccupancy}%`,
-                icon: Target,
-                color: "#1B5E45",
-                bgColor: "#E8F5EE",
-              },
-              {
-                label: "Monthly Revenue",
-                value: `KSh ${(totalRevenue / 1000).toFixed(0)}K`,
-                icon: CustomAnalyticIcon,
-                color: "#3DBE7A",
-                bgColor: "#E8F5EE",
-              },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Card className="border-[#E8F5EE] bg-white hover:shadow-md transition-shadow">
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
-                        style={{ backgroundColor: stat.bgColor, color: stat.color }}
-                      >
-                        <stat.icon className="w-5 h-5 sm:w-7 sm:h-7" />
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[10px] sm:text-xs text-[#6B7280]">{stat.label}</p>
-                      <h3 className="text-lg sm:text-2xl text-[#1A1A1A]">{stat.value}</h3>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <OverviewCard 
+              label="Total Properties" 
+              value={buildings.length}
+              variant="dark"
+              icon={Building2}
+              trend="+2"
+              subtext="Added recently"
+            />
+            <OverviewCard 
+              label="Total Units" 
+              value={totalUnits}
+              trend="+15"
+              subtext="Recently mapped"
+              icon={Home}
+            />
+            <OverviewCard 
+              label="Occupancy Rate" 
+              value={
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-3xl sm:text-4xl text-foreground">{PropertyOccupancy}</span>
+                  <span className="text-lg font-bold text-muted-foreground/60">%</span>
+                </div>
+              }
+              trend="+4.5%"
+              subtext="vs last month"
+              icon={Target}
+            />
+            <OverviewCard 
+              label="Monthly Revenue" 
+              value={
+                <div className="flex flex-col">
+                  <span className="text-sm sm:text-base font-bold text-muted-foreground mr-1">KES</span>
+                  <span className="text-2xl sm:text-3xl">{(totalRevenue / 1000).toFixed(0)}K</span>
+                </div>
+              }
+              trend="+12%"
+              subtext="Projected"
+              icon={BarChart3}
+            />
           </div>
 
           {/* Properties Grid */}
@@ -329,45 +415,38 @@ export default function BuildingsPage() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ delay: i * 0.05 }}
                   >
-                    <Card className="border-[#E8F5EE] bg-white hover:shadow-lg transition-all overflow-hidden group">
+                    <Card className="rounded-[24px] sm:rounded-[32px] border-black/[0.04] bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden group">
                       {/* Property Image */}
-                      <div className="relative h-48 overflow-hidden bg-[#F4F4F0]">
+                      <div className="relative h-56 overflow-hidden bg-[#F4F4F0]">
                         <img
                           src={building.image}
                           alt={building.name}
-                          className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
                         
                         {/* Occupancy Badge */}
                         <div className="absolute top-4 right-4">
-                          <Badge className="bg-white/90 text-[#1B5E45] border-white/20 backdrop-blur-sm hover:bg-white">
+                          <Badge className="bg-white/95 text-[#1B5E45] border-white/20 backdrop-blur-md shadow-sm font-bold tracking-tight px-3 py-1">
                             {occupancyRate}% Occupied
                           </Badge>
                         </div>
 
                         {/* Location */}
                         <div className="absolute bottom-4 left-4 right-4">
-                          <div className="flex items-center gap-2 text-white text-sm">
-                            <MapPin className="w-4 h-4" />
-                            <span className=" truncate">{building.address}</span>
+                          <h3 className="text-white text-xl font-extrabold tracking-tight mb-1 group-hover:text-emerald-300 transition-colors">
+                            {building.name}
+                          </h3>
+                          <div className="flex items-center gap-1.5 text-white/80 text-xs font-medium">
+                            <MapPin className="w-3.5 h-3.5" />
+                            <span className="truncate">{building.address}</span>
                           </div>
                         </div>
                       </div>
 
-                      <CardContent className="p-6 space-y-5">
-                        {/* Property Name */}
-                        <div>
-                          <h3 className="text-lg text-[#1A1A1A] mb-1 group-hover:text-[#1B5E45] transition-colors">
-                            {building.name}
-                          </h3>
-                          <p className="text-xs text-[#6B7280]">
-                            Built {building.yearBuilt}
-                          </p>
-                        </div>
-
+                      <CardContent className="p-5 sm:p-6 space-y-5">
                         {/* Stats Grid */}
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-3 gap-2">
                           {[
                             { label: "Units", value: building.units },
                             { label: "Occupied", value: building.occupiedUnits },
@@ -375,10 +454,10 @@ export default function BuildingsPage() {
                           ].map((stat, idx) => (
                             <div
                               key={idx}
-                              className="p-3 rounded-xl bg-[#FAFAF8] border border-[#E8F5EE] text-center"
+                              className="p-3 rounded-2xl bg-[#F8F9F7] border border-black/[0.03] text-center"
                             >
-                              <p className="text-xs text-[#6B7280] mb-1">{stat.label}</p>
-                              <p className="text-lg text-[#1A1A1A]">{stat.value}</p>
+                              <p className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{stat.label}</p>
+                              <p className="text-lg font-extrabold text-[#1A1A1A] tracking-tight">{stat.value}</p>
                             </div>
                           ))}
                         </div>
@@ -386,21 +465,21 @@ export default function BuildingsPage() {
                         {/* Occupancy Progress */}
                         <OccupancyProgress percentage={occupancyRate} />
 
-                        <Separator className="bg-[#F4F4F0]" />
+                        <Separator className="bg-black/[0.02]" />
 
                         {/* Actions */}
                         <div className="flex gap-3">
                           <Button
                             onClick={() => router.push(`/landlord/buildings/${building.id}`)}
-                            className="flex-1 bg-[#1B5E45] hover:bg-[#246B4F] text-white "
+                            className="flex-1 bg-gradient-to-br from-[#0c4a34] to-[#062b1e] hover:from-[#1B5E45] hover:to-[#0c4a34] text-white rounded-xl shadow-md font-bold tracking-tight h-11"
                           >
                             View Details
-                            <ChevronRight className="w-4 h-4 ml-2" />
+                            <ChevronRight className="w-4 h-4 ml-1.5 opacity-70" />
                           </Button>
                           <Button
                             variant="outline"
                             size="icon"
-                            className="border-[#E8F5EE] hover:bg-[#E8F5EE] hover:border-[#1B5E45]/20"
+                            className="rounded-xl border-black/[0.06] hover:bg-[#E8F5EE] hover:text-[#1B5E45] shadow-sm h-11 w-11"
                             onClick={() => {
                               setSelectedBuilding(building);
                               setShowLedger(true);
@@ -422,15 +501,15 @@ export default function BuildingsPage() {
               whileHover={{ y: -4 }}
               className="cursor-pointer"
             >
-              <Card className="border-2 border-dashed border-[#E8F5EE] bg-[#FAFAF8] hover:border-[#1B5E45]/30 hover:bg-[#E8F5EE] transition-all h-full min-h-[400px]">
+              <Card className="rounded-[24px] sm:rounded-[32px] border-2 border-dashed border-black/[0.08] bg-transparent hover:bg-black/[0.02] hover:border-[#1B5E45]/30 transition-all duration-300 h-full min-h-[400px]">
                 <CardContent className="flex flex-col items-center justify-center h-full p-6 text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-[#E8F5EE] flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 rounded-3xl bg-white shadow-sm border border-black/[0.04] flex items-center justify-center mb-6 hover:scale-110 transition-transform duration-300">
                     <Plus className="w-8 h-8 text-[#1B5E45]" />
                   </div>
-                  <h3 className="text-lg text-[#1A1A1A] mb-2">
+                  <h3 className="text-xl font-extrabold text-[#1A1A1A] tracking-tight mb-2">
                     Add New Property
                   </h3>
-                  <p className="text-sm text-[#6B7280]">
+                  <p className="text-sm font-medium text-[#6B7280]">
                     Register a new building to your Property
                   </p>
                 </CardContent>

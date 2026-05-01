@@ -5,114 +5,23 @@ import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/s
 import { TenantSidebar } from "./TenantSidebar";
 import { Separator } from "@/components/ui/separator";
 import BottomNav, { NavItem } from "./BottomNav";
-import { CreditCard, MessageSquare, FileText, User, Camera } from "lucide-react";
+import { CreditCard, MessageSquare, FileText, User, Camera, Home } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-const CustomHomeIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/home.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/home.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-
-const CustomMoneyIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url("/money (3).png")', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/money (3).png")', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomChatIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url("/chat.png")', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/chat.png")', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomDocumentIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/document.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/document.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomUserIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/user.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/user.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
 const tenantItems: NavItem[] = [
-  { label: "Home", href: "/tenant", icon: <CustomHomeIcon /> },
+  { label: "Home", href: "/tenant", icon: <Home /> },
   {
     label: "Payments",
     href: "/tenant/payments",
-    icon: <CustomMoneyIcon />,
+    icon: <CreditCard />,
   },
   {
     label: "Alerts",
     href: "/tenant/complaints",
-    icon: <CustomChatIcon />,
+    icon: <MessageSquare />,
   },
-  { label: "Files", href: "/tenant/documents", icon: <CustomDocumentIcon /> },
-  { label: "Profile", href: "/tenant/profile", icon: <CustomUserIcon /> },
+  { label: "Files", href: "/tenant/documents", icon: <FileText /> },
+  { label: "Profile", href: "/tenant/profile", icon: <User /> },
 ];
 
 export default function TenantLayout({

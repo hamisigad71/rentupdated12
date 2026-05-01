@@ -855,9 +855,9 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
           { label: "Assets",       val: "1,200+" },
           { label: "Markets",      val: "14" },
         ].map((s, i) => (
-          <div key={i} className="text-center p-3 rounded-xl bg-[#FAFAF8] border border-[#E0E8E3]">
+          <div key={i} className="text-center p-3 rounded-2xl bg-[#FAFAF8] border border-[#E0E8E3]">
             <p className="text-[9px] uppercase tracking-widest text-[#6B7280] mb-1">{s.label}</p>
-            <p className="text-lg md:text-xl font-normal text-[#1A1A1A] tracking-tight">{s.val}</p>
+            <p className="text-lg md:text-xl font-medium text-[#1A1A1A] tracking-tight">{s.val}</p>
           </div>
         ))}
       </div>
@@ -874,23 +874,40 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
       </div>
       <div className="grid grid-cols-2 gap-3 mb-5">
         {[
-          { icon: CustomMoneyIcon,    label: "Revenue",  val: "KSh 4.2M", delta: "+18%" },
-          { icon: CustomHomeIcon,     label: "Units",    val: "1,247",    delta: "+34" },
-          { icon: CustomWalletIcon,   label: "Vacancy",  val: "6.0%",     delta: "-2.1%" },
-          { icon: CustomAnalyticIcon, label: "Requests", val: "384",      delta: "-12%" },
+          { icon: CustomMoneyIcon,    label: "Revenue",  val: "KSh 4.2M", delta: "+18%", variant: "dark" },
+          { icon: CustomHomeIcon,     label: "Units",    val: "1,247",    delta: "+34", variant: "light" },
+          { icon: CustomWalletIcon,   label: "Vacancy",  val: "6.0%",     delta: "-2.1%", variant: "light" },
+          { icon: CustomAnalyticIcon, label: "Requests", val: "384",      delta: "-12%", variant: "light" },
         ].map((s, i) => (
-          <div key={i} className="rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] p-4">
-            <div className="flex items-center justify-between mb-2.5">
-              <s.icon className="h-6 w-6 text-[#1B5E45]" />
-              <span className="text-[9px] font-normal text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">{s.delta}</span>
+          <div key={i} className={cn(
+             "rounded-2xl p-4 transition-all duration-300 shadow-sm relative overflow-hidden",
+             s.variant === "dark" 
+                ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent"
+                : "border border-[#E0E8E3] bg-[#FAFAF8]"
+          )}>
+            {s.variant === "dark" && (
+              <div className="absolute bottom-5 left-0 right-0 h-6 pointer-events-none opacity-40">
+                <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full stroke-emerald-400 fill-none" strokeWidth="0.5">
+                  <path d="M0 20 Q 20 18, 30 15 T 60 10 T 100 5"></path>
+                </svg>
+              </div>
+            )}
+            <div className="flex items-center justify-between mb-2.5 relative z-10">
+              <div className={cn("h-6 w-6 rounded-md flex items-center justify-center", s.variant === "dark" ? "bg-white/10" : "")}>
+                <s.icon className={cn("h-4 w-4", s.variant === "dark" ? "text-white" : "text-[#1B5E45]")} />
+              </div>
+              <span className={cn(
+                "text-[9px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-1",
+                s.variant === "dark" ? "bg-emerald-500/20 text-emerald-300" : "bg-[#E8F5EE] text-[#1B5E45]"
+              )}>{s.delta}</span>
             </div>
-            <p className="text-base md:text-xl font-normal tracking-tight text-[#1A1A1A] font-money">{s.val}</p>
-            <p className="text-[8px] sm:text-[9px] md:text-[10px] text-[#6B7280] mt-0.5">{s.label}</p>
+            <p className={cn("text-base md:text-xl font-bold tracking-tight font-money relative z-10", s.variant === "dark" ? "text-white" : "text-[#1A1A1A]")}>{s.val}</p>
+            <p className={cn("text-[8px] sm:text-[9px] md:text-[10px] mt-0.5 uppercase tracking-wider relative z-10", s.variant === "dark" ? "text-white/60" : "text-[#6B7280]")}>{s.label}</p>
           </div>
         ))}
       </div>
-      <div className="rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] p-4">
-        <p className="text-[10px] font-normal uppercase tracking-widest text-[#6B7280] mb-3">Revenue Trend</p>
+      <div className="rounded-2xl border border-[#E0E8E3] bg-[#FAFAF8] p-4 shadow-sm">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280] mb-3">Revenue Trend</p>
         <div className="flex items-end gap-1.5 h-14">
           {[40,55,45,68,72,65,88,76,92,85,95,100].map((h, i) => (
             <motion.div
@@ -898,7 +915,7 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
               initial={{ height: 0 }}
               animate={{ height: `${h}%` }}
               transition={{ delay: 0.35 + i * 0.04, duration: 0.5 }}
-              className={cn("flex-1 rounded-t-sm", i === 11 ? "bg-[#3DBE7A]" : "bg-[#3DBE7A]/20")}
+              className={cn("flex-1 rounded-[4px]", i === 11 ? "bg-[#3DBE7A]" : "bg-[#3DBE7A]/20")}
             />
           ))}
         </div>
@@ -923,15 +940,15 @@ function DashboardPreviewCard({ slide }: { slide: number }) {
           { icon: CustomChatIcon,       label: "Open Request", val: "Plumbing",   sub: "In Progress",    color: "text-amber-600" },
           { icon: CustomDocumentIcon,   label: "Lease Expires", val: "Dec 31, 2026", sub: "14 months",   color: "text-[#1A1A1A]" },
         ].map((item, i) => (
-          <div key={i} className="flex items-center gap-3.5 p-3.5 rounded-xl border border-[#E0E8E3] bg-[#FAFAF8] hover:bg-white hover:border-[#C4D4C9] transition-all">
+          <div key={i} className="flex items-center gap-3.5 p-3.5 rounded-2xl border border-black/[0.04] bg-[#FAFAF8] shadow-sm hover:bg-white hover:border-[#C4D4C9] transition-all">
             <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center flex-shrink-0">
-              <item.icon className="h-6 w-6 text-[#1B5E45]" />
+              <item.icon className="h-4.5 w-4.5 text-[#1B5E45]" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] text-[#6B7280]">{item.label}</p>
-              <p className={cn("text-sm font-normal truncate", item.color, item.val.includes('KSh') && "font-money")}>{item.val}</p>
+              <p className="text-[10px] font-bold tracking-wider uppercase text-[#6B7280]">{item.label}</p>
+              <p className={cn("text-sm font-bold truncate", item.color, item.val.includes('KSh') && "font-money")}>{item.val}</p>
             </div>
-            <p className="text-[9px] text-[#6B7280]">{item.sub}</p>
+            <p className="text-[9px] font-medium text-[#6B7280]">{item.sub}</p>
           </div>
         ))}
       </div>
@@ -1217,36 +1234,40 @@ function SolutionsSection() {
           ].map((card,i) => (
             <Reveal key={i} delay={i*0.15}>
               <div className={cn(
-                "group h-full rounded-3xl p-6 md:p-10 border transition-all duration-500 hover:-translate-y-1",
+                "group h-full rounded-[2rem] p-6 md:p-10 border transition-all duration-500 hover:-translate-y-1",
                 card.accent
-                  ? "bg-primary/5 text-foreground border-primary/20 shadow-2xl shadow-primary/5 hover:border-primary/30 hover:shadow-primary/10"
-                  : "bg-card border-border hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5",
+                  ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-[#0c4a34]/20 text-white shadow-2xl"
+                  : "bg-[#FAFAF8] border-[#E0E8E3] hover:border-[#C4D4C9] hover:shadow-xl hover:shadow-[#1B5E45]/5",
               )}>
                 <div className="flex items-center justify-between mb-8">
-                  <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105",card.accent?"bg-primary text-primary-foreground":"bg-primary/10 text-primary")}>
+                  <div className={cn("h-16 w-16 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105",card.accent?"bg-white/10 text-white":"bg-[#E8F5EE] text-[#1B5E45]")}>
                     <card.icon className="h-8 w-8" />
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] uppercase tracking-[0.15em] text-primary block">{card.role}</span>
-                    <h3 className="text-2xl md:text-3xl tracking-tight mt-1 font-semibold">{card.title}</h3>
+                    <span className={cn("text-[10px] uppercase tracking-[0.15em] block", card.accent ? "text-emerald-300" : "text-[#1B5E45]")}>{card.role}</span>
+                    <h3 className={cn("text-2xl md:text-3xl tracking-tight mt-1 font-semibold", card.accent ? "text-white" : "text-[#1A1A1A]")}>{card.title}</h3>
                   </div>
                 </div>
-                <p className={cn("text-base leading-relaxed mb-8",card.accent?"text-muted-foreground":"text-muted-foreground")}>{card.desc}</p>
+                <p className={cn("text-base leading-relaxed mb-8",card.accent?"text-white/70":"text-[#6B7280]")}>{card.desc}</p>
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {card.features.map((f,j) => (
-                    <div key={j} className={cn("flex items-center gap-2.5 text-sm ",card.accent?"text-foreground/80":"text-foreground/80")}>
-                      <div className="h-8 w-8 sm:h-6 sm:w-6 rounded-lg bg-primary/12 flex items-center justify-center shrink-0">
-                        <f.icon className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-primary" />
+                    <div key={j} className={cn("flex items-center gap-2.5 text-sm ",card.accent?"text-white/80":"text-[#4B5563]")}>
+                      <div className={cn("h-8 w-8 sm:h-6 sm:w-6 rounded-lg flex items-center justify-center shrink-0", card.accent ? "bg-white/10" : "bg-[#E8F5EE]")}>
+                        <f.icon className={cn("h-4 w-4 sm:h-3.5 sm:w-3.5", card.accent ? "text-emerald-300" : "text-[#1B5E45]")} />
                       </div>
                       {f.text}
                     </div>
                   ))}
                 </div>
                 <Link href={card.href}>
-                  <Button variant={card.accent?"default":"default"} className="h-13 px-8 rounded-2xl font-normal w-full group/btn">
+                  <button className={cn("h-13 px-8 rounded-2xl font-normal w-full group/btn flex items-center justify-center transition-all",
+                    card.accent 
+                      ? "bg-white text-[#1B5E45] hover:bg-[#E8F5EE]" 
+                      : "bg-[#1B5E45] text-white hover:bg-[#246B4F]"
+                  )}>
                     Access Portal
                     <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </Reveal>
@@ -1268,10 +1289,10 @@ function HowItWorksSection() {
       {icon:CustomTrackIcon,step:"04",title:"Track & Grow",desc:"Monitor occupancy, yields, and maintenance from one dashboard. Export compliance reports with one click."},
     ],
     tenant:[
-      {icon:HomeIcon,step:"01",title:"Receive Your Invite",desc:"Your landlord sends a digital invite. Verify your identity and sign your lease entirely online — no paper needed."},
-      {icon:CreditCard,step:"02",title:"Set Up Payments",desc:"Link your M-Pesa or bank account. Enable auto-pay reminders to never miss a rent deadline again."},
+      {icon:CustomHomeIcon,step:"01",title:"Receive Your Invite",desc:"Your landlord sends a digital invite. Verify your identity and sign your lease entirely online — no paper needed."},
+      {icon:CustomCreditCardIcon,step:"02",title:"Set Up Payments",desc:"Link your M-Pesa or bank account. Enable auto-pay reminders to never miss a rent deadline again."},
       {icon:CustomWrenchIcon,step:"03",title:"Submit Requests",desc:"Log maintenance issues with photos directly from your phone. Track resolution status in real time."},
-      {icon:FileText,step:"04",title:"Manage Your Tenancy",desc:"Access all your documents, payment history, and communications in one secure, beautiful dashboard."},
+      {icon:CustomDocumentIcon,step:"04",title:"Manage Your Tenancy",desc:"Access all your documents, payment history, and communications in one secure, beautiful dashboard."},
     ],
   };
   return (
@@ -1323,22 +1344,30 @@ function FeatureCard({ f, i }: { f: any, i: number }) {
   
   return (
     <Reveal key={i} delay={i*0.05} className={cn(f.large?"col-span-2 row-span-1":"col-span-1")}>
-      <div className={cn("h-full rounded-3xl p-7 border border-border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl group flex flex-col",f.bg,f.bg==="bg-foreground text-background"&&"border-foreground",f.bg==="bg-primary text-primary-foreground"&&"border-primary shadow-lg shadow-primary/20")}>
-        <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-105 shrink-0",f.bg==="bg-foreground text-background"?"bg-primary/15":f.bg==="bg-primary text-primary-foreground"?"bg-primary-foreground/15":f.bg==="bg-emerald-soft"?"bg-primary/15":"bg-primary/8")}>
-          <f.icon className={cn("h-5 w-5",f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground":"text-primary")} />
+      <div className={cn("h-full rounded-3xl p-7 border transition-all duration-300 hover:-translate-y-0.5 group flex flex-col",
+        f.bg === "dark" ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-[#0c4a34]/20 shadow-2xl" : 
+        f.bg === "primary" ? "bg-[#1B5E45] border-transparent text-white shadow-[#1B5E45]/20 shadow-xl" :
+        "bg-[#FAFAF8] border-[#E0E8E3] hover:border-[#C4D4C9] hover:shadow-xl hover:shadow-[#1B5E45]/5"
+      )}>
+        <div className={cn("h-11 w-11 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-105 shrink-0",
+          f.bg === "dark" || f.bg === "primary" ? "bg-white/10" : "bg-[#E8F5EE]"
+        )}>
+          <f.icon className={cn("h-5 w-5", f.bg === "dark" || f.bg === "primary" ? "text-white" : "text-[#1B5E45]")} />
         </div>
-        <h4 className="text-sm md:text-base mb-2 font-medium shrink-0">{f.title}</h4>
+        <h4 className={cn("text-sm md:text-base mb-2 font-medium shrink-0", f.bg === "dark" || f.bg === "primary" ? "text-white" : "text-[#1A1A1A]")}>{f.title}</h4>
         <div className="relative flex-grow">
           <p className={cn(
             "text-sm leading-relaxed transition-all duration-300",
             !isExpanded && "line-clamp-3 md:line-clamp-none",
-            f.bg==="bg-foreground text-background"?"text-background/60":f.bg==="bg-primary text-primary-foreground"?"text-primary-foreground/70":"text-muted-foreground"
+            f.bg === "dark" || f.bg === "primary" ? "text-white/70" : "text-[#6B7280]"
           )}>
             {f.desc}
           </p>
           <button 
             onClick={() => setIsExpanded(!isExpanded)}
-            className="md:hidden mt-3 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 opacity-60 hover:opacity-100 transition-opacity"
+            className={cn("md:hidden mt-3 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 opacity-60 hover:opacity-100 transition-opacity",
+              f.bg === "dark" || f.bg === "primary" ? "text-white" : "text-[#1B5E45]"
+            )}
           >
             {isExpanded ? (
               <>Show Less <ChevronUp className="h-3 w-3" /></>
@@ -1354,14 +1383,14 @@ function FeatureCard({ f, i }: { f: any, i: number }) {
 
 function FeatureGridSection() {
   const features = [
-    {icon:CustomUserIcon,   title:"Bank-Grade Security",    desc:"256-bit AES encryption, zero-trust architecture, and SOC 2 Type II compliance protect every transaction.", large:true, bg:"bg-foreground text-background"},
-    {icon:CustomSmartphoneIcon,title:"Mobile-First Design",   desc:"Full functionality from any device. Native app experience in the browser.",                                  large:false,bg:"bg-card"},
-    {icon:CustomResponseTimeIcon,      title:"< 14 Min Response",      desc:"Our automated workflows ensure maintenance and support requests are acknowledged fast.",                      large:false,bg:"bg-emerald-soft"},
-    {icon:CustomMoneyExchangeIcon,    title:"Multi-Currency & M-Pesa", desc:"Accept payments in KSh, USD, or GBP. M-Pesa integration built-in with instant reconciliation.",             large:false,bg:"bg-card"},
-    {icon:CustomAnalyticIcon,title:"Real-Time Reporting",    desc:"Live dashboards, PDF exports, and scheduled email reports keep all stakeholders informed.",                   large:false,bg:"bg-card"},
-    {icon:CustomRingingIcon,     title:"Smart Notifications",    desc:"Automated rent reminders, maintenance updates, and lease renewal alerts — all customisable.",                 large:true, bg:"bg-primary text-primary-foreground"},
-    {icon:CustomAwardIcon,    title:"Compliance Ready",       desc:"Audit trails, digital signatures, and document retention built for regulatory requirements.",                  large:false,bg:"bg-card"},
-    {icon:CustomSupportIcon,title:"24/7 Priority Support",desc:"Dedicated account managers and round-the-clock technical support for enterprise clients.",               large:false,bg:"bg-card"},
+    {icon:CustomUserIcon,   title:"Bank-Grade Security",    desc:"256-bit AES encryption, zero-trust architecture, and SOC 2 Type II compliance protect every transaction.", large:true, bg:"dark"},
+    {icon:CustomSmartphoneIcon,title:"Mobile-First Design",   desc:"Full functionality from any device. Native app experience in the browser.",                                  large:false,bg:"default"},
+    {icon:CustomResponseTimeIcon,      title:"< 14 Min Response",      desc:"Our automated workflows ensure maintenance and support requests are acknowledged fast.",                      large:false,bg:"default"},
+    {icon:CustomMoneyExchangeIcon,    title:"Multi-Currency & M-Pesa", desc:"Accept payments in KSh, USD, or GBP. M-Pesa integration built-in with instant reconciliation.",             large:false,bg:"default"},
+    {icon:CustomAnalyticIcon,title:"Real-Time Reporting",    desc:"Live dashboards, PDF exports, and scheduled email reports keep all stakeholders informed.",                   large:false,bg:"default"},
+    {icon:CustomRingingIcon,     title:"Smart Notifications",    desc:"Automated rent reminders, maintenance updates, and lease renewal alerts — all customisable.",                 large:true, bg:"primary"},
+    {icon:CustomAwardIcon,    title:"Compliance Ready",       desc:"Audit trails, digital signatures, and document retention built for regulatory requirements.",                  large:false,bg:"default"},
+    {icon:CustomSupportIcon,title:"24/7 Priority Support",desc:"Dedicated account managers and round-the-clock technical support for enterprise clients.",               large:false,bg:"default"},
   ];
   return (
     <section className="py-12 md:py-16 bg-background">
@@ -1505,33 +1534,43 @@ function PricingSection() {
         <div className="grid md:grid-cols-3 gap-6">
           {plans.map((plan,i) => (
             <Reveal key={i} delay={i*0.1}>
-              <div className={cn("relative h-full rounded-3xl p-8 border transition-all duration-300 flex flex-col",plan.highlight?"bg-foreground text-background border-foreground shadow-2xl scale-[1.02]":"bg-card border-border hover:border-primary/20 hover:shadow-lg")}>
-                {plan.highlight && <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-primary text-primary-foreground text-xs uppercase tracking-widest shadow-lg">Most Popular</div>}
+              <div className={cn("relative h-full rounded-[2rem] p-8 border transition-all duration-300 flex flex-col hover:-translate-y-1",
+                plan.highlight 
+                  ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-[#0c4a34]/30 shadow-2xl scale-[1.02] text-white" 
+                  : "bg-[#FAFAF8] border-[#E0E8E3] hover:border-[#C4D4C9] hover:shadow-xl text-[#1A1A1A]"
+              )}>
+                {plan.highlight && <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-[#3DBE7A] text-white text-[10px] sm:text-xs uppercase tracking-widest shadow-lg whitespace-nowrap">Most Popular</div>}
                 <div className="mb-6">
-                  <h3 className="text-lg md:text-xl mb-1">{plan.name}</h3>
-                  <p className={cn("text-sm",plan.highlight?"text-background/60":"text-muted-foreground")}>{plan.desc}</p>
+                  <h3 className="text-xl md:text-2xl mb-1 font-semibold">{plan.name}</h3>
+                  <p className={cn("text-sm leading-relaxed",plan.highlight?"text-white/70":"text-[#6B7280]")}>{plan.desc}</p>
                 </div>
                 <div className="mb-6">
                   {plan.price ? (
                     <div className="flex items-end gap-1">
                       <span className="text-3xl md:text-4xl tracking-tight font-money">KSh {plan.price.toLocaleString()}</span>
-                      <span className={cn("text-sm mb-1.5",plan.highlight?"text-background/50":"text-muted-foreground")}>/mo</span>
+                      <span className={cn("text-sm mb-1.5",plan.highlight?"text-white/50":"text-[#9CA3AF]")}>/mo</span>
                     </div>
-                  ) : <p className="text-2xl md:text-3xl">Custom</p>}
-                  <p className="text-xs mt-1.5 text-primary">{plan.units}</p>
+                  ) : <p className="text-3xl md:text-4xl">Custom</p>}
+                  <p className={cn("text-xs md:text-sm mt-1.5", plan.highlight ? "text-emerald-300" : "text-[#1B5E45]")}>{plan.units}</p>
                 </div>
-                <ul className="space-y-3 mb-8 flex-1">
+                <ul className="space-y-3.5 mb-10 flex-1">
                   {plan.features.map((f,j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm">
-                      <CheckCheck className="h-4 w-4 text-primary shrink-0" />
-                      <span className={plan.highlight?"text-background/80":""}>{f}</span>
+                    <li key={j} className="flex items-center gap-3 text-sm md:text-base">
+                      <div className={cn("h-5 w-5 rounded-full flex items-center justify-center shrink-0", plan.highlight ? "bg-white/10" : "bg-[#E8F5EE]")}>
+                         <CheckCircle2 className={cn("h-3 w-3", plan.highlight ? "text-emerald-400" : "text-[#1B5E45]")} />
+                      </div>
+                      <span className={plan.highlight?"text-white/90":"text-[#4B5563]"}>{f}</span>
                     </li>
                   ))}
                 </ul>
                 <Link href={plan.price?"/auth/register":"/contact"}>
-                  <Button variant={plan.highlight?"secondary":"default"} className="w-full h-13 rounded-2xl font-normal text-sm md:text-base">
+                  <button className={cn("w-full h-13 rounded-2xl font-normal text-sm md:text-base flex items-center justify-center transition-all",
+                    plan.highlight 
+                      ? "bg-white text-[#1B5E45] hover:bg-[#E8F5EE]" 
+                      : "bg-[#1B5E45] text-white hover:bg-[#246B4F]"
+                  )}>
                     {plan.cta}<ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </Reveal>
@@ -1548,31 +1587,36 @@ function PricingSection() {
 // --- FINAL CTA ---------------------------------------------------------------
 function FinalCTASection() {
   return (
-    <section className="py-32 bg-foreground relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.06]">
+    <section className="py-32 bg-gradient-to-br from-[#0c4a34] to-[#062b1e] relative overflow-hidden">
+      <div className="absolute inset-0 opacity-10 mix-blend-overlay">
         <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80" alt="" className="w-full h-full object-cover" />
       </div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(61,190,122,0.08),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(61,190,122,0.15),transparent)]" />
       <div className="container px-4 sm:px-6 md:px-8 max-w-4xl mx-auto text-center relative z-10 space-y-10">
         <Reveal>
-          <span className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/8 text-primary text-xs font-normal uppercase tracking-widest mb-4">Ready when you are</span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl tracking-[-0.04em] text-background leading-tight">Start building<br />your legacy today.</h2>
-          <p className="text-lg text-background/50 max-w-lg mx-auto font-light mt-5">Join 2,000+ property professionals who manage their Propertys with confidence on Nova.</p>
+          <span className="inline-block px-4 py-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/10 text-emerald-300 text-xs font-normal uppercase tracking-[0.2em] mb-6">Ready when you are</span>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl tracking-[-0.04em] text-white leading-tight font-medium">Start building<br />your legacy today.</h2>
+          <p className="text-lg text-white/70 max-w-lg mx-auto font-light mt-5">Join 2,000+ property professionals who manage their properties with confidence on Nova.</p>
         </Reveal>
         <Reveal delay={0.2} className="flex flex-row gap-3 sm:gap-4 justify-center items-center">
           <Link href="/auth/register" className="flex-1 sm:flex-none">
-            <Button size="lg" className="h-16 w-full sm:w-auto px-6 rounded-3xl text-[10px] sm:text-sm md:text-base shadow-2xl shadow-primary/30 hover:scale-[1.03] transition-all">
-              Get Started — Free<ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5" />
-            </Button>
+            <button className="h-16 flex items-center justify-center w-full sm:w-auto px-8 rounded-full text-xs sm:text-sm md:text-base shadow-2xl shadow-emerald-900/50 hover:scale-[1.03] transition-all bg-white text-[#0c4a34] font-medium group">
+              Get Started — Free<ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
+            </button>
           </Link>
-          <Button size="lg" variant="outline" className="flex-1 sm:flex-none h-16 w-full sm:w-auto px-6 rounded-3xl border border-background/10 text-background bg-transparent hover:bg-background/5 text-[10px] sm:text-sm md:text-base font-normal">
-            Schedule a Demo<Calendar className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5" />
-          </Button>
+          <button className="flex-1 flex items-center justify-center sm:flex-none h-16 w-full sm:w-auto px-8 rounded-full border border-white/20 text-white bg-white/5 backdrop-blur-md hover:bg-white/10 text-xs sm:text-sm md:text-base font-normal transition-all">
+            Schedule a Demo<CustomCalendarIcon className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 text-white" />
+          </button>
         </Reveal>
         <Reveal delay={0.35}>
-          <div className="flex flex-wrap justify-center gap-8 text-sm text-background/40 ">
+          <div className="flex flex-wrap justify-center gap-8 text-sm text-white/50">
             {["14-day free trial","No credit card","Cancel anytime","Free data migration"].map(item => (
-              <div key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" />{item}</div>
+              <div key={item} className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded-full bg-emerald-400/20 flex items-center justify-center">
+                  <CheckCircle2 className="h-2.5 w-2.5 text-emerald-300" />
+                </div>
+                {item}
+              </div>
             ))}
           </div>
         </Reveal>

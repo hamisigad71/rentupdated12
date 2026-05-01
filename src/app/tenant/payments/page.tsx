@@ -4,233 +4,120 @@ import React, { useState, useRef, useEffect } from "react";
 import TenantLayout from "@/components/TenantLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView, Variants } from "framer-motion";
 import {
-  CreditCard,
-  Smartphone,
-  Building2,
-  ShieldCheck,
-  Clock,
-  History,
-  CheckCircle2,
   Calendar,
-  Lock,
-  Zap,
   ArrowRight,
-  DollarSign,
-  TrendingUp,
-  ChevronRight,
-  Download,
-  Check,
-  Home,
   Receipt,
-  AlertCircle,
-  Banknote,
-  FileText,
+  Download,
   Copy,
-  MapPin,
-  Activity,
-  Info,
-  X,
-  BadgeCheck
+  Check,
+  ChevronRight,
+  Lock,
+  Smartphone,
+  CreditCard,
+  Building2,
+  Bell,
+  ArrowLeft,
+  Search,
+  Loader2,
+  TrendingUp,
+  Clock,
 } from "lucide-react";
-import Logo from "@/components/Logo";
 import { mockPayments, mockTenants } from "@/data/mockData";
-import { useAction } from "@/context/ActionContext";
-import { LOADER_DURATION } from "@/utils/constants";
+import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
-const CustomMoneyIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/money.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/money.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
+// ─────────────────────────────────────────────────────────────────────────────
+// DESIGN SYSTEM NOTES
+// ─────────────────────────────────────────────────────────────────────────────
+// • 8pt grid spacing throughout (p-4=16px, p-6=24px, p-8=32px, gap-4=16px)
+// • Elevation layers: bg-[#F7F8F6] → bg-white → card → elevated card
+// • Color hierarchy: emerald-deep (primary) > emerald-mid > emerald-bright (accent) > emerald-soft (surface)
+// • Border approach: border-black/[0.06] for subtle separators, border-emerald-deep/20 for active states
+// • Typography: font-bold headings, font-medium labels, font-normal body — NO font-semibold sprawl
+// • Transitions: duration-200 default, duration-300 for larger elements
+// ─────────────────────────────────────────────────────────────────────────────
 
-const CustomWalletIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url("/money (3).png")', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/money (3).png")', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
+// --- Stagger container variants for framer-motion ---
+const containerVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+    },
+  },
+};
 
-const CustomTransferenceIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/transference.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/transference.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
-const CustomTransactionIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/transaction.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/transaction.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomCreditCardIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/credit-card.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/credit-card.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomDocumentIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/document.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/document.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomSmartphoneIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/smartphone.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/smartphone.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomGlobalAccessIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/global-access.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/global-access.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomCalendarIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current self-center shrink-0 ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/calendar.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/calendar.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-// --- REVEAL ANIMATION --------------------------------------------------------
+// --- Reveal: viewport-triggered fade-up ─────────────────────────────────────
 function Reveal({
   children,
   delay = 0,
-  className = "",
+  className,
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
       className={className}
+      initial={{ opacity: 0, y: 18 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
 
-// --- PAYMENT METHOD BUTTON ---------------------------------------------------
-function PaymentMethodButton({
+// --- Section label — consistent typographic component ───────────────────────
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-3">
+      {children}
+    </p>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PAYMENT METHOD TILE
+// Stripe-style selectable tile: icon + label + active ring
+// ─────────────────────────────────────────────────────────────────────────────
+function PaymentMethodTile({
   id,
   label,
-  subtitle,
+  sublabel,
   icon: Icon,
   active,
   onClick,
 }: {
   id: string;
   label: string;
-  subtitle: string;
+  sublabel: string;
   icon: React.ElementType;
   active: boolean;
   onClick: () => void;
@@ -239,692 +126,488 @@ function PaymentMethodButton({
     <button
       onClick={onClick}
       className={cn(
-        "relative w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left group",
+        // Base — clean white tile with soft border
+        "relative flex flex-col items-start gap-3 p-4 rounded-2xl border transition-all duration-200 w-full text-left group",
         active
-          ? "border-[#1B5E45] bg-[#E8F5EE]"
-          : "border-[#E8F5EE] bg-white hover:border-[#1B5E45]/30 hover:bg-[#FAFAF8]"
+          ? // Active — emerald ring + tinted surface
+            "border-emerald-deep/30 bg-emerald-soft/60 shadow-sm shadow-emerald-deep/5 ring-2 ring-emerald-deep/10"
+          : // Idle — neutral, inviting hover
+            "border-black/[0.06] bg-white hover:border-emerald-deep/20 hover:bg-emerald-soft/20 hover:shadow-sm"
       )}
     >
+      {/* Icon container */}
       <div
         className={cn(
-          "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors",
+          "h-9 w-9 rounded-xl flex items-center justify-center transition-colors duration-200",
           active
-            ? "bg-[#1B5E45] text-white"
-            : "bg-[#E8F5EE] text-[#1B5E45] group-hover:bg-[#1B5E45] group-hover:text-white"
+            ? "bg-emerald-deep text-white"
+            : "bg-emerald-soft text-emerald-deep group-hover:bg-emerald-deep/10"
         )}
       >
-        <Icon className="w-5 h-5" />
+        <Icon className="h-4 w-4" />
       </div>
-      <div className="flex-1 min-w-0">
-        <p className={cn("text-sm ", active ? "text-[#1B5E45]" : "text-[#1A1A1A]")}>
+
+      {/* Labels */}
+      <div>
+        <p className={cn("text-sm font-bold leading-tight", active ? "text-emerald-deep" : "text-foreground")}>
           {label}
         </p>
-        <p className="text-xs text-[#6B7280]">{subtitle}</p>
+        <p className="text-[10px] text-muted-foreground mt-0.5 leading-snug">{sublabel}</p>
       </div>
-      {active && (
-        <div className="w-5 h-5 bg-[#1B5E45] rounded-full flex items-center justify-center shrink-0">
-          <Check className="w-3 h-3 text-white" />
-        </div>
-      )}
+
+      {/* Active check indicator — top-right */}
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute top-3 right-3 h-5 w-5 bg-emerald-deep rounded-full flex items-center justify-center shadow-sm"
+          >
+            <Check className="h-2.5 w-2.5 text-white" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </button>
   );
 }
 
-// --- MAIN PAGE ---------------------------------------------------------------
-export default function TenantPaymentsPage() {
-  const currentTenant = mockTenants[0];
-  const tenantPayments = mockPayments.filter((p) => p.tenantId === currentTenant.id);
+// ─────────────────────────────────────────────────────────────────────────────
+// TRANSACTION ROW
+// Clean list item with proper visual hierarchy
+// ─────────────────────────────────────────────────────────────────────────────
+function TransactionRow({
+  payment,
+  index,
+}: {
+  payment: { month: string; date: string; amount: number; status?: string };
+  index: number;
+}) {
+  return (
+    <motion.div
+      variants={itemVariants}
+      className={cn(
+        "flex items-center justify-between px-5 py-4 transition-colors duration-200 group cursor-default",
+        "hover:bg-emerald-soft/30",
+        // Subtle separator except last item
+        index !== 0 && "border-t border-black/[0.04]"
+      )}
+    >
+      {/* Left: icon + info */}
+      <div className="flex items-center gap-3.5">
+        <div className="h-10 w-10 rounded-xl bg-emerald-soft flex items-center justify-center shrink-0 group-hover:bg-emerald-soft/80 transition-colors">
+          <Receipt className="h-4.5 w-4.5 text-emerald-deep" />
+        </div>
+        <div>
+          <p className="text-sm font-bold text-foreground leading-tight">{payment.month} Rent</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5 flex items-center gap-1">
+            <Clock className="h-3 w-3 inline" />
+            {payment.date}
+          </p>
+        </div>
+      </div>
 
-  const [paymentMethod, setPaymentMethod] = useState<"mpesa" | "card" | "bank">("mpesa");
-  const [amount, setAmount] = useState(
-    currentTenant.arrears > 0 ? currentTenant.arrears : currentTenant.rent
+      {/* Right: amount + badge */}
+      <div className="text-right">
+        <p className="text-sm font-bold text-foreground tabular-nums">
+          KSh {payment.amount.toLocaleString()}
+        </p>
+        <div className="flex items-center justify-end mt-1">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-soft text-emerald-deep text-[9px] font-bold uppercase tracking-wide border border-emerald-bright/10">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-bright inline-block" />
+            Paid
+          </span>
+        </div>
+      </div>
+    </motion.div>
   );
-  const [referenceId, setReferenceId] = useState("");
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN PAGE
+// ─────────────────────────────────────────────────────────────────────────────
+export default function TenantPaymentsPage() {
+  const { userName } = useAuth();
+  const [paymentMethod, setPaymentMethod] = useState<"mpesa" | "card" | "bank">("mpesa");
+  const currentTenant = mockTenants[0];
+  const [amount, setAmount] = useState(currentTenant.rent);
+  const [phone, setPhone] = useState("");
+  const [referenceId] = useState(
+    `PAY-${Math.random().toString(36).substring(7).toUpperCase()}`
+  );
+  const [isProcessing, setIsProcessing] = useState(false);
   const [copied, setCopied] = useState(false);
-  const { showAction, updateAction, hideAction } = useAction();
 
-  useEffect(() => {
-    setReferenceId(`REF-${currentTenant.id.split("-").pop()}-${new Date().getMonth() + 1}`);
-  }, [currentTenant.id]);
+  const handlePayment = () => {
+    setIsProcessing(true);
+    setTimeout(() => {
+      setIsProcessing(false);
+      // Success logic here
+    }, 2500);
+  };
 
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const copyRef = () => {
+    navigator.clipboard.writeText(referenceId);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePayment = () => {
-    showAction({
-      title: "Processing Payment",
-      message: "Connecting to secure payment gateway...",
-      color: "green",
-      icon: "published_with_changes",
-    });
-    setTimeout(() => {
-      updateAction({
-        title: "Payment Successful",
-        message: "Your payment has been processed successfully.",
-        color: "green",
-        icon: "check_circle",
-      });
-      setTimeout(() => hideAction(), 1600);
-    }, LOADER_DURATION - 600);
-  };
-
-  const paymentProgress = Math.min(100, Math.round((currentTenant.paidAmount / currentTenant.rent) * 100));
-  const isFullyPaid = currentTenant.arrears === 0;
-  const totalPaidThisYear = tenantPayments
-    .filter((p) => p.status === "completed")
-    .reduce((sum, p) => sum + p.amount, 0);
+  const quickAmounts = [currentTenant.rent, 5000, 10000];
 
   return (
     <TenantLayout>
       <TooltipProvider>
-        <div className="min-h-screen" style={{ backgroundColor: "#FAFAF8" }}>
-          
-          {/* Breadcrumb Navigation */}
-          <div className="sticky top-0 z-40 border-b border-[#E8F5EE] bg-white/90 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-[4px] sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-sm">
-                <Home className="w-4 h-4 text-[#1B5E45]" />
-                <ChevronRight className="w-3.5 h-3.5 text-[#6B7280]" />
-                <span className="text-[#6B7280]">Dashboard</span>
-                <ChevronRight className="w-3.5 h-3.5 text-[#6B7280]" />
-                <span className=" text-[#1A1A1A]">Payments</span>
+        {/* ── Page shell: off-white background for breathing room ── */}
+        <div className="min-h-screen bg-[#F6F7F5] pb-28">
+
+          {/* ────────────────────────────────────────────────────────────
+              HEADER — glassmorphic, premium spacing, clean hierarchy
+          ──────────────────────────────────────────────────────────── */}
+          <header className="sticky top-0 z-40 bg-white/75 backdrop-blur-lg border-b border-black/[0.06] shadow-[0_1px_0_0_rgba(0,0,0,0.04)]">
+            <div className="max-w-3xl mx-auto px-5 h-14 flex items-center justify-between">
+              {/* Breadcrumb */}
+              <div className="flex items-center gap-1.5 text-sm">
+                <Link
+                  href="/tenant"
+                  className="h-8 w-8 rounded-lg flex items-center justify-center text-muted-foreground hover:bg-black/5 hover:text-foreground transition-colors duration-150"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/40" />
+                <span className="font-bold text-foreground text-[13px]">Payments</span>
               </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-[#E8F5EE] hover:bg-[#E8F5EE] "
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Export
-              </Button>
+
+              {/* Actions */}
+              <div className="flex items-center gap-1">
+                <Tooltip>
+                  <TooltipTrigger render={<span />}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-9 w-9 rounded-xl text-muted-foreground hover:bg-black/5 hover:text-foreground transition-colors"
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="text-xs">
+                    Download statement
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </div>
-          </div>
+          </header>
 
-          <main className="max-w-7xl mx-auto px-[4px] sm:px-6 lg:px-8 py-8 space-y-6">
-            
-            {/* Page Header */}
+          {/* ────────────────────────────────────────────────────────────
+              MAIN CONTENT
+          ──────────────────────────────────────────────────────────── */}
+          <main className="max-w-3xl mx-auto px-4 pt-7 pb-8 space-y-5">
+
+            {/* ── BALANCE HERO CARD ──────────────────────────────────────
+                Dark emerald hero with layered depth, NOT a heavy solid block.
+                Uses gradient + noise layer for premium feel.
+            ────────────────────────────────────────────────────────── */}
             <Reveal>
-              <Card className="border-[#E8F5EE] bg-white overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#1B5E45] via-[#3DBE7A] to-[#E8F5EE]" />
-                <CardContent className="p-6 lg:p-8">
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
-                    
-                    {/* Left: Page Info */}
-                    <div className="flex items-start gap-5">
-                      <div className="w-16 h-8 rounded-sm bg-[#E8F5EE] border-2 border-[#1B5E45]/3 flex items-center justify-center">
-                        <CustomWalletIcon className="w-7 h-7 text-[#1B5E45]" />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-[#1B5E45]/20 hover:bg-[#E8F5EE]">
-                            <ShieldCheck className="w-3 h-3 mr-1" />
-                            Secure Payment Portal
-                          </Badge>
-                          <Badge variant="outline" className="border-[#E8F5EE] text-[#6B7280]">
-                            <Lock className="w-3 h-3 mr-1" />
-                            AES-256 Encrypted
-                          </Badge>
-                        </div>
-                        
-                        <h1 className="text-3xl text-[#1A1A1A] mb-3">
-                          Payments & Billing
-                        </h1>
-                        
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-[#6B7280]">
-                          <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-[#1B5E45]" />
-                            <span>Unit {currentTenant.unitId}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-[#1B5E45]" />
-                            <span>Next due: Apr 1, 2025</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Receipt className="w-4 h-4 text-[#1B5E45]" />
-                            <span className="font-mono text-[#1A1A1A]">
-                              {referenceId}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+              <div className="relative overflow-hidden rounded-3xl bg-emerald-deep shadow-xl shadow-emerald-deep/20">
+                {/* Layered depth overlays */}
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-mid/40 via-transparent to-emerald-deep/60 pointer-events-none" />
+                <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-emerald-bright/10 blur-3xl pointer-events-none" />
+                <div className="absolute -left-6 -bottom-10 h-40 w-40 rounded-full bg-white/[0.03] blur-2xl pointer-events-none" />
 
-                    {/* Right: Balance Card */}
-                    <div className="lg:w-64 shrink-0">
-                      <div
-                        className={cn(
-                          "rounded-xl border p-5",
-                          isFullyPaid
-                            ? "border-[#1B5E45]/20 bg-[#E8F5EE]"
-                            : "border-red-200 bg-red-50"
-                        )}
-                      >
-                        <div className="flex items-center justify-between mb-3">
-                          <p className="text-xs text-[#6B7280] uppercase">
-                            Outstanding Balance
-                          </p>
-                          <Badge
-                            className={cn(
-                              isFullyPaid
-                                ? "bg-[#1B5E45] text-white"
-                                : "bg-red-600 text-white"
-                            )}
-                          >
-                            {isFullyPaid ? "Settled" : "Overdue"}
-                          </Badge>
-                        </div>
-                        <p
-                          className={cn(
-                            "text-3xl mb-3 font-money",
-                            isFullyPaid ? "text-[#1A1A1A]" : "text-red-600"
-                          )}
-                        >
-                          KSh {currentTenant.arrears.toLocaleString()}
-                        </p>
-                        <Button
-                          onClick={handlePayment}
-                          className={cn(
-                            "w-full ",
-                            isFullyPaid
-                              ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
-                              : "bg-red-600 hover:bg-red-700 text-white"
-                          )}
-                        >
-                          {isFullyPaid ? "Make Payment" : "Settle Now"}
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </div>
+                <div className="relative p-7 space-y-7">
+                  {/* Top row: amount + secure badge */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-white/50 text-[10px] font-bold uppercase tracking-widest mb-2">
+                        Amount Due
+                      </p>
+                      <h2 className="text-[2.25rem] font-bold tracking-tight text-white leading-none">
+                        KSh {currentTenant.rent.toLocaleString()}
+                      </h2>
+                    </div>
+                    {/* Secure badge — refined glass pill */}
+                    <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1.5 shrink-0">
+                      <Lock className="h-3 w-3 text-emerald-bright" />
+                      <span className="text-[10px] font-bold text-white/80 uppercase tracking-tight">
+                        Secured
+                      </span>
                     </div>
                   </div>
 
-                  <Separator className="my-6 bg-[#E8F5EE]" />
+                  {/* Hairline divider */}
+                  <div className="h-px bg-white/10" />
 
-                  {/* Payment Progress */}
-                  <div className="flex flex-col lg:flex-row lg:items-end gap-6">
-                    <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                      {[
-                        {
-                          label: "Monthly Rent",
-                          value: `KSh ${currentTenant.rent.toLocaleString()}`,
-                          icon: Banknote,
-                        },
-                        {
-                          label: "Arrears",
-                          value: isFullyPaid ? "Clear" : `KSh ${currentTenant.arrears.toLocaleString()}`,
-                          icon: CustomWalletIcon,
-                        },
-                        {
-                          label: "Paid This Year",
-                          value: `KSh ${totalPaidThisYear.toLocaleString()}`,
-                          icon: TrendingUp,
-                        },
-                        {
-                          label: "Last Payment",
-                          value: tenantPayments[0]?.date || "—",
-                          icon: Activity,
-                        },
-                      ].map((stat, i) => (
-                        <div key={i} className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <stat.icon className="w-4 h-4 text-[#1B5E45]" />
-                            <p className="text-xs text-[#6B7280]">{stat.label}</p>
-                          </div>
-                          <p className={cn("text-lg text-[#1A1A1A]", typeof stat.value === 'string' && stat.value.includes('KSh') && "font-money")}>{stat.value}</p>
-                        </div>
+                  {/* Bottom row: meta info */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-white/40 text-[9px] uppercase font-bold tracking-wider mb-1">Due Date</p>
+                      <p className="text-sm font-bold text-white">Apr 1, 2025</p>
+                    </div>
+                    <div>
+                      <p className="text-white/40 text-[9px] uppercase font-bold tracking-wider mb-1">Room</p>
+                      <p className="text-sm font-bold text-white">{currentTenant.roomNumber}</p>
+                    </div>
+                    <div>
+                      <p className="text-white/40 text-[9px] uppercase font-bold tracking-wider mb-1">Ref</p>
+                      <button
+                        onClick={copyRef}
+                        className="flex items-center gap-1 group"
+                      >
+                        <p className="text-sm font-bold text-white/80 font-mono truncate max-w-[80px]">
+                          {referenceId}
+                        </p>
+                        {copied ? (
+                          <Check className="h-3 w-3 text-emerald-bright shrink-0" />
+                        ) : (
+                          <Copy className="h-3 w-3 text-white/30 group-hover:text-white/70 shrink-0 transition-colors" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* ── PAYMENT FORM CARD ─────────────────────────────────────
+                Clean white card wrapping the full checkout flow.
+                Three visual sections inside: amount → method → action.
+                Matches the "one card checkout" pattern of Stripe/Linear.
+            ──────────────────────────────────────────────────────────── */}
+            <Reveal delay={0.08}>
+              <Card className="rounded-3xl border border-black/[0.06] bg-white shadow-sm overflow-hidden">
+                <CardContent className="p-0 divide-y divide-black/[0.04]">
+
+                  {/* ── Section 1: Amount ──────────────────────────────── */}
+                  <div className="p-6 space-y-4">
+                    <SectionLabel>Payment Amount</SectionLabel>
+
+                    {/* Big amount input — fintech style */}
+                    <div className="relative flex items-center gap-0 rounded-2xl border border-black/[0.08] bg-[#F8F9F7] focus-within:border-emerald-deep/30 focus-within:ring-2 focus-within:ring-emerald-deep/10 transition-all duration-200">
+                      <span className="pl-5 text-xl font-bold text-emerald-deep/60 select-none shrink-0">
+                        KSh
+                      </span>
+                      <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => setAmount(Number(e.target.value))}
+                        className="flex-1 h-16 pl-2.5 pr-5 bg-transparent text-[1.75rem] font-bold text-foreground focus:outline-none tabular-nums"
+                        placeholder="0"
+                      />
+                    </div>
+
+                    {/* Quick-select chips */}
+                    <div className="flex flex-wrap gap-2">
+                      {quickAmounts.map((val) => (
+                        <button
+                          key={val}
+                          onClick={() => setAmount(val)}
+                          className={cn(
+                            "h-8 px-4 rounded-full text-[11px] font-bold transition-all duration-200 border",
+                            amount === val
+                              ? "bg-emerald-deep text-white border-emerald-deep shadow-sm shadow-emerald-deep/20"
+                              : "bg-white border-black/[0.08] text-muted-foreground hover:border-emerald-deep/20 hover:text-emerald-deep"
+                          )}
+                        >
+                          KSh {val.toLocaleString()}
+                        </button>
                       ))}
                     </div>
+                  </div>
 
-                    <div className="lg:w-64 space-y-2">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className=" text-[#6B7280]">Payment Completion</span>
-                        <span className=" text-[#1B5E45]">{paymentProgress}%</span>
-                      </div>
-                      <Progress value={paymentProgress} className="h-2 bg-[#F4F4F0]" />
-                      <p className="text-xs text-[#6B7280]">
-                        {paymentProgress}% of this month's rent settled
-                      </p>
+                  {/* ── Section 2: Payment Method ──────────────────────── */}
+                  <div className="p-6 space-y-4">
+                    <SectionLabel>Payment Method</SectionLabel>
+
+                    {/* 3-column tile grid — Stripe-style selectable tiles */}
+                    <div className="grid grid-cols-3 gap-3">
+                      <PaymentMethodTile
+                        id="mpesa"
+                        label="M-PESA"
+                        sublabel="STK push"
+                        icon={Smartphone}
+                        active={paymentMethod === "mpesa"}
+                        onClick={() => setPaymentMethod("mpesa")}
+                      />
+                      <PaymentMethodTile
+                        id="card"
+                        label="Card"
+                        sublabel="Visa / MC"
+                        icon={CreditCard}
+                        active={paymentMethod === "card"}
+                        onClick={() => setPaymentMethod("card")}
+                      />
+                      <PaymentMethodTile
+                        id="bank"
+                        label="Bank"
+                        sublabel="Transfer"
+                        icon={Building2}
+                        active={paymentMethod === "bank"}
+                        onClick={() => setPaymentMethod("bank")}
+                      />
                     </div>
                   </div>
+
+                  {/* ── Section 3: Method-specific input + CTA ────────── */}
+                  <AnimatePresence mode="wait">
+                    {paymentMethod === "mpesa" && (
+                      <motion.div
+                        key="mpesa"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                        className="p-6 space-y-5"
+                      >
+                        {/* Phone input */}
+                        <div className="space-y-2">
+                          <SectionLabel>M-PESA Phone Number</SectionLabel>
+                          <div className="relative flex items-center rounded-2xl border border-black/[0.08] bg-[#F8F9F7] focus-within:border-emerald-deep/30 focus-within:ring-2 focus-within:ring-emerald-deep/10 transition-all duration-200 overflow-hidden">
+                            {/* Country code prefix */}
+                            <div className="flex items-center gap-2 pl-4 pr-3 border-r border-black/[0.06] shrink-0">
+                              <span className="text-base">🇰🇪</span>
+                              <span className="text-sm font-bold text-muted-foreground">+254</span>
+                            </div>
+                            <input
+                              type="tel"
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
+                              placeholder="712 345 678"
+                              className="flex-1 h-14 px-4 bg-transparent text-sm font-bold text-foreground focus:outline-none placeholder:text-muted-foreground/40 placeholder:font-normal"
+                            />
+                          </div>
+                          <p className="text-[11px] text-muted-foreground px-1">
+                            You'll receive an STK push notification to authorise the payment.
+                          </p>
+                        </div>
+
+                        {/* Primary CTA — rich gradient, strong visual weight */}
+                        <button
+                          onClick={handlePayment}
+                          disabled={isProcessing}
+                          className={cn(
+                            "w-full h-14 rounded-2xl flex items-center justify-center gap-2.5 text-white font-bold text-[15px] transition-all duration-200 relative overflow-hidden",
+                            "bg-emerald-deep shadow-lg shadow-emerald-deep/25",
+                            // Subtle internal gradient for depth
+                            "bg-gradient-to-b from-emerald-mid to-emerald-deep",
+                            isProcessing
+                              ? "opacity-80 cursor-not-allowed"
+                              : "hover:shadow-xl hover:shadow-emerald-deep/30 hover:-translate-y-0.5 active:translate-y-0 active:shadow-md"
+                          )}
+                        >
+                          {/* Subtle sheen overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-2xl" />
+
+                          {isProcessing ? (
+                            <>
+                              <Loader2 className="h-4.5 w-4.5 animate-spin" />
+                              <span>Connecting to M-PESA…</span>
+                            </>
+                          ) : (
+                            <>
+                              <span>Pay KSh {amount.toLocaleString()}</span>
+                              <ArrowRight className="h-4.5 w-4.5" />
+                            </>
+                          )}
+                        </button>
+                      </motion.div>
+                    )}
+
+                    {paymentMethod === "card" && (
+                      <motion.div
+                        key="card"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                        className="p-6"
+                      >
+                        <div className="flex flex-col items-center justify-center py-6 gap-3 text-center">
+                          <div className="h-12 w-12 rounded-2xl bg-emerald-soft flex items-center justify-center">
+                            <CreditCard className="h-5 w-5 text-emerald-deep" />
+                          </div>
+                          <p className="text-sm font-bold text-foreground">Card payments coming soon</p>
+                          <p className="text-xs text-muted-foreground max-w-[240px]">
+                            We're adding Visa and Mastercard support. Use M-PESA in the meantime.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {paymentMethod === "bank" && (
+                      <motion.div
+                        key="bank"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                        className="p-6"
+                      >
+                        <div className="flex flex-col items-center justify-center py-6 gap-3 text-center">
+                          <div className="h-12 w-12 rounded-2xl bg-emerald-soft flex items-center justify-center">
+                            <Building2 className="h-5 w-5 text-emerald-deep" />
+                          </div>
+                          <p className="text-sm font-bold text-foreground">Bank transfers coming soon</p>
+                          <p className="text-xs text-muted-foreground max-w-[240px]">
+                            Direct bank transfer support is on the roadmap. Use M-PESA for now.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </CardContent>
               </Card>
             </Reveal>
 
-            {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-3 gap-6">
-              
-              {/* Left: Payment Form */}
-              <div className="lg:col-span-2 space-y-6">
-                
-                {/* Amount Input */}
-                <Reveal delay={0.1}>
-                  <Card className="border-[#E8F5EE] bg-white">
-                    <CardHeader>
-                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <CustomMoneyIcon className="w-5 h-5 text-[#1B5E45]" />
-                        Payment Amount
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-lg text-[#1B5E45] font-money">
-                          KSh
-                        </div>
-                        <Input
-                          type="number"
-                          value={amount}
-                          onChange={(e) => setAmount(Number(e.target.value))}
-                          className="pl-16 h-14 text-2xl border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45] font-money"
-                        />
-                      </div>
+            {/* ── RECENT TRANSACTIONS ───────────────────────────────────
+                Contained card with header + list.
+                Items use internal dividers — NO heavy borders between rows.
+                Proper visual hierarchy: title > date, amount > badge.
+            ──────────────────────────────────────────────────────────── */}
+            <Reveal delay={0.16}>
+              <Card className="rounded-3xl border border-black/[0.06] bg-white shadow-sm overflow-hidden">
+                {/* Card header */}
+                <div className="flex items-center justify-between px-5 pt-5 pb-3">
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/60 mb-0.5">
+                      Recent History
+                    </p>
+                    <h3 className="text-base font-bold text-foreground leading-tight">
+                      Transactions
+                    </h3>
+                  </div>
+                  <Link
+                    href="/tenant/payments/history"
+                    className="flex items-center gap-1 text-[12px] font-bold text-emerald-deep hover:text-emerald-mid transition-colors duration-150"
+                  >
+                    View all
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
 
-                      <div className="space-y-2">
-                        <p className="text-xs text-[#6B7280]">Quick select:</p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          {[
-                            { label: "Full Rent", value: currentTenant.rent },
-                            { label: "Half", value: Math.round(currentTenant.rent / 2) },
-                            { label: "Arrears", value: currentTenant.arrears },
-                            { label: "KSh 5,000", value: 5000 },
-                          ].map((quick) => (
-                            <Button
-                              key={quick.label}
-                              variant={amount === quick.value ? "default" : "outline"}
-                              size="sm"
-                              onClick={() => setAmount(quick.value)}
-                              className={cn(
-                                amount === quick.value
-                                  ? "bg-[#1B5E45] hover:bg-[#246B4F] text-white"
-                                  : "border-[#E8F5EE] hover:bg-[#E8F5EE]"
-                              )}
-                            >
-                              {quick.label}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
+                {/* Transaction list with stagger animation */}
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="show"
+                  className="pb-2"
+                >
+                  {mockPayments.slice(0, 3).map((p, i) => (
+                    <TransactionRow key={i} payment={p} index={i} />
+                  ))}
+                </motion.div>
+              </Card>
+            </Reveal>
 
-                      <div className="flex items-center justify-between p-4 rounded-lg bg-[#E8F5EE] border border-[#1B5E45]/10">
-                        <div>
-                          <p className="text-xs text-[#6B7280]">Payment Reference</p>
-                          <p className="text-sm text-[#1A1A1A] font-mono">
-                            {referenceId}
-                          </p>
-                        </div>
-                        <Tooltip>
-                          <TooltipTrigger render={<span />}>
-                            <Button
-                              size="icon"
-                              variant="ghost"
-                              onClick={() => handleCopy(referenceId)}
-                              className="hover:bg-white"
-                            >
-                              {copied ? (
-                                <Check className="w-4 h-4 text-[#1B5E45]" />
-                              ) : (
-                                <Copy className="w-4 h-4 text-[#6B7280]" />
-                              )}
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>{copied ? "Copied!" : "Copy"}</TooltipContent>
-                        </Tooltip>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Reveal>
-
-                {/* Payment Method */}
-                <Reveal delay={0.15}>
-                  <Card className="border-[#E8F5EE] bg-white">
-                    <CardHeader>
-                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <CustomWalletIcon className="w-5 h-5 text-[#1B5E45]" />
-                        Payment Method
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="grid sm:grid-cols-3 gap-3">
-                        <PaymentMethodButton
-                          id="mpesa"
-                          label="M-PESA"
-                          subtitle="Instant mobile money"
-                          icon={CustomTransactionIcon}
-                          active={paymentMethod === "mpesa"}
-                          onClick={() => setPaymentMethod("mpesa")}
-                        />
-                        <PaymentMethodButton
-                          id="card"
-                          label="Card"
-                          subtitle="Visa & Mastercard"
-                          icon={CustomCreditCardIcon}
-                          active={paymentMethod === "card"}
-                          onClick={() => setPaymentMethod("card")}
-                        />
-                        <PaymentMethodButton
-                          id="bank"
-                          label="Bank Transfer"
-                          subtitle="Direct bank wire"
-                          icon={CustomTransferenceIcon}
-                          active={paymentMethod === "bank"}
-                          onClick={() => setPaymentMethod("bank")}
-                        />
-                      </div>
-
-                      <Separator className="bg-[#E8F5EE]" />
-
-                      <AnimatePresence mode="wait">
-                        {paymentMethod === "mpesa" && (
-                          <motion.div
-                            key="mpesa"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="space-y-4"
-                          >
-                            <div>
-                              <label className="block text-xs text-[#4B5563] uppercase mb-2">
-                                M-PESA Phone Number
-                              </label>
-                              <div className="relative">
-                                <CustomSmartphoneIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 text-[#1B5E45]" />
-                                <Input
-                                  type="tel"
-                                  placeholder="0712 345 678"
-                                  className="pl-12 border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
-                                />
-                              </div>
-                            </div>
-                            <div className="flex items-start gap-3 p-4 rounded-lg bg-[#E8F5EE]">
-                              <Info className="w-4 h-4 text-[#1B5E45] shrink-0 mt-0.5" />
-                              <p className="text-xs text-[#1B5E45]">
-                                An STK push will be sent to your phone. Confirm the prompt to complete payment.
-                              </p>
-                            </div>
-                            <Button
-                              onClick={handlePayment}
-                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white "
-                            >
-                              Send STK Push · <span className="font-money">KSh {amount.toLocaleString()}</span>
-                              <ArrowRight className="w-4 h-4 ml-2" />
-                            </Button>
-                          </motion.div>
-                        )}
-
-                        {paymentMethod === "card" && (
-                          <motion.div
-                            key="card"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="space-y-4"
-                          >
-                            <div>
-                              <label className="block text-xs text-[#4B5563] uppercase mb-2">
-                                Card Number
-                              </label>
-                              <Input
-                                type="text"
-                                placeholder="4242 4242 4242 4242"
-                                className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45] font-mono"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-xs text-[#4B5563] uppercase mb-2">
-                                Cardholder Name
-                              </label>
-                              <Input
-                                type="text"
-                                placeholder="John Doe"
-                                className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
-                              />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <label className="block text-xs text-[#4B5563] uppercase mb-2">
-                                  Expiry
-                                </label>
-                                <Input
-                                  type="text"
-                                  placeholder="MM/YY"
-                                  className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-xs text-[#4B5563] uppercase mb-2">
-                                  CVV
-                                </label>
-                                <Input
-                                  type="password"
-                                  placeholder="•••"
-                                  className="border-[#E8F5EE] bg-[#FAFAF8] focus:border-[#1B5E45]"
-                                />
-                              </div>
-                            </div>
-                            <Button
-                              onClick={handlePayment}
-                              className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white "
-                            >
-                              Pay Securely · <span className="font-money">KSh {amount.toLocaleString()}</span>
-                              <ArrowRight className="w-4 h-4 ml-2" />
-                            </Button>
-                          </motion.div>
-                        )}
-
-                        {paymentMethod === "bank" && (
-                          <motion.div
-                            key="bank"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="space-y-4"
-                          >
-                            <div className="rounded-lg border border-[#E8F5EE] bg-[#FAFAF8] divide-y divide-[#E8F5EE]">
-                              {[
-                                { label: "Bank", value: "Equity Bank" },
-                                { label: "Account Name", value: "Nova Realty Ltd" },
-                                { label: "Account No.", value: "880977221100" },
-                                { label: "Reference", value: referenceId },
-                              ].map((row) => (
-                                <div key={row.label} className="flex items-center justify-between p-3">
-                                  <span className="text-xs text-[#6B7280] ">{row.label}</span>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-sm text-[#1A1A1A] font-mono">
-                                      {row.value}
-                                    </span>
-                                    <Button
-                                      size="icon"
-                                      variant="ghost"
-                                      onClick={() => handleCopy(row.value)}
-                                      className="h-6 w-6"
-                                    >
-                                      <Copy className="w-3 h-3" />
-                                    </Button>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                            <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-50 border border-amber-200">
-                              <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                              <p className="text-xs text-amber-700">
-                                Use the reference code when transferring. Allow 1-2 business days for processing.
-                              </p>
-                            </div>
-                            <Button
-                              onClick={handlePayment}
-                              variant="outline"
-                              className="w-full border-[#1B5E45] text-[#1B5E45] hover:bg-[#E8F5EE] "
-                            >
-                              Confirm Transfer · <span className="font-money">KSh {amount.toLocaleString()}</span>
-                            </Button>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </CardContent>
-                  </Card>
-                </Reveal>
-
-                {/* Transaction History */}
-                <Reveal delay={0.2}>
-                  <Card className="border-[#E8F5EE] bg-white">
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                          <History className="w-5 h-5 text-[#1B5E45]" />
-                          Transaction History
-                        </CardTitle>
-                        <Button variant="ghost" size="sm" className="text-[#1B5E45] hover:bg-[#E8F5EE]">
-                          View All
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-1">
-                        {tenantPayments.slice(0, 5).map((payment, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center justify-between p-3 rounded-lg hover:bg-[#FAFAF8] transition-colors"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
-                                <div
-                                  className="w-[18px] h-[18px] bg-[#1B5E45]"
-                                  style={{
-                                    WebkitMaskImage: 'url(/bill.png)',
-                                    WebkitMaskSize: 'contain',
-                                    WebkitMaskPosition: 'center',
-                                    WebkitMaskRepeat: 'no-repeat',
-                                    maskImage: 'url(/bill.png)',
-                                    maskSize: 'contain',
-                                    maskPosition: 'center',
-                                    maskRepeat: 'no-repeat',
-                                  }}
-                                />
-                              </div>
-                              <div>
-                                <p className="text-sm text-[#1A1A1A]">{payment.month}</p>
-                                <p className="text-xs text-[#6B7280]">{payment.date}</p>
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <p className="text-sm text-[#1B5E45] font-money">
-                                KSh {payment.amount.toLocaleString()}
-                              </p>
-                              <Badge className="bg-[#E8F5EE] text-[#1B5E45] text-xs">M-PESA</Badge>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Reveal>
+            {/* ── PAYMENT SECURITY FOOTNOTE ─────────────────────────────
+                Light note for trust-building — common in fintech
+            ──────────────────────────────────────────────────────────── */}
+            <Reveal delay={0.22}>
+              <div className="flex items-center justify-center gap-2 text-[11px] text-muted-foreground/50 py-2">
+                <Lock className="h-3 w-3" />
+                <span>256-bit SSL encrypted · Powered by Safaricom M-PESA</span>
               </div>
+            </Reveal>
 
-              {/* Right Sidebar */}
-              <div className="space-y-6">
-                
-                {/* Payment Summary */}
-                <Reveal delay={0.1}>
-                  <Card className="border-[#E8F5EE] bg-white">
-                    <CardHeader>
-                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <CustomDocumentIcon className="w-5 h-5 text-[#1B5E45]" />
-                        Payment Summary
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-3">
-                        {[
-                          { label: "Subtotal", value: `KSh ${amount.toLocaleString()}` },
-                          { label: "Processing Fee", value: "KSh 0" },
-                          { label: "VAT (0%)", value: "KSh 0" },
-                        ].map((row) => (
-                          <div key={row.label} className="flex items-center justify-between text-sm">
-                            <span className="text-[#6B7280]">{row.label}</span>
-                            <span className="text-[#1A1A1A] font-money">{row.value}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <Separator className="bg-[#E8F5EE]" />
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-[#1A1A1A]">Total</span>
-                        <span className="text-lg text-[#1B5E45] font-money">
-                          KSh {amount.toLocaleString()}
-                        </span>
-                      </div>
-                      <Button
-                        onClick={handlePayment}
-                        className="w-full bg-[#1B5E45] hover:bg-[#246B4F] text-white "
-                      >
-                        Confirm & Pay
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                      <p className="text-center text-xs text-[#6B7280] flex items-center justify-center gap-1">
-                        <Lock className="w-3 h-3" />
-                        Secured by 256-bit SSL encryption
-                      </p>
-                    </CardContent>
-                  </Card>
-                </Reveal>
-
-                {/* Security Features */}
-                <Reveal delay={0.15}>
-                  <Card className="border-[#E8F5EE] bg-white">
-                    <CardHeader>
-                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <CustomGlobalAccessIcon className="w-5 h-5 text-[#1B5E45]" />
-                        Security & Trust
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {[
-                        { icon: Lock, title: "End-to-End Encrypted", desc: "AES-256 GCM encryption" },
-                        { icon: Zap, title: "Instant Verification", desc: "Real-time confirmation" },
-                        { icon: ShieldCheck, title: "PCI-DSS Compliant", desc: "Level 1 Certified" },
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-start gap-3">
-                          <div className="w-9 h-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center shrink-0">
-                            <item.icon className="w-4 h-4 text-[#1B5E45]" />
-                          </div>
-                          <div>
-                            <p className="text-sm text-[#1A1A1A]">{item.title}</p>
-                            <p className="text-xs text-[#6B7280]">{item.desc}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </Reveal>
-
-                {/* Billing Schedule */}
-                <Reveal delay={0.2}>
-                  <Card className="border-[#E8F5EE] bg-[#E8F5EE]">
-                    <CardHeader>
-                      <CardTitle className="text-lg text-[#1A1A1A] flex items-center gap-2">
-                        <CustomCalendarIcon className="w-5 h-5 text-[#1B5E45]" />
-                        Billing Schedule
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {[
-                        { label: "Rent Due Date", value: "1st of every month" },
-                        { label: "Late Fee After", value: "5th of the month" },
-                        { label: "Next Due", value: "Apr 1, 2025" },
-                        { label: "Lease End", value: "Mar 14, 2027" },
-                      ].map((row) => (
-                        <div key={row.label} className="flex items-center justify-between text-sm">
-                          <span className="text-[#6B7280]">{row.label}</span>
-                          <span className=" text-[#1A1A1A]">{row.value}</span>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </Reveal>
-              </div>
-            </div>
           </main>
         </div>
       </TooltipProvider>

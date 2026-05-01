@@ -58,6 +58,14 @@ import {
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { 
+  AreaChart, 
+  Area, 
+  XAxis, 
+  YAxis, 
+  Tooltip as RechartsTooltip, 
+  ResponsiveContainer 
+} from "recharts";
 
 function CustomLandlordIcon({ className }: { className?: string }) {
   return (
@@ -283,85 +291,139 @@ function HeroMiniStat({
   );
 }
 
-// --- KPI Card --------------------------------------------------------------
-function KpiCard({
+// --- Overview Card --------------------------------------------------------
+function OverviewCard({
   label,
   value,
-  icon: Icon,
   trend,
-  accent = false,
-  danger = false,
+  subtext,
+  isNegative = false,
+  icon: Icon,
+  variant = "default",
 }: {
   label: string;
-  value: string | number;
-  icon: React.ElementType;
-  trend?: { value: number; isPositive: boolean };
-  accent?: boolean;
-  danger?: boolean;
+  value: React.ReactNode;
+  trend?: string;
+  subtext?: string;
+  isNegative?: boolean;
+  icon?: React.ElementType;
+  variant?: "default" | "dark";
 }) {
+  const isDark = variant === "dark";
+
   return (
-    <Card
+    <Card 
       className={cn(
-        "rounded-2xl border shadow-sm hover:shadow-md transition-all duration-300 group overflow-hidden relative",
-        accent
-          ? "bg-[#1B5E45] border-[#1B5E45]"
-          : "bg-white border-border",
+        "relative rounded-[24px] sm:rounded-3xl overflow-hidden h-full flex flex-col justify-between transition-all duration-300 hover:shadow-md group min-h-[130px] sm:min-h-[160px]",
+        isDark 
+          ? "bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-xl shadow-[#062b1e]/20" 
+          : "bg-white border-black/[0.04] shadow-sm hover:border-black/[0.08]"
       )}
     >
-      {accent && (
-        <div className="pointer-events-none absolute -top-8 -right-8 h-32 w-32 rounded-full bg-white/5" />
+      {/* Optional Sparkline Decor for Dark Card */}
+      {isDark && (
+        <div className="absolute bottom-10 left-0 right-0 h-10 sm:h-12 pointer-events-none opacity-40">
+          <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full stroke-emerald-400 fill-none" strokeWidth="0.5">
+            <path d="M0 20 Q 20 18, 30 15 T 60 10 T 100 5" />
+          </svg>
+        </div>
       )}
-      <CardContent className="p-5">
-        <div className="flex items-start justify-between mb-4">
-          <div
-            className={cn(
-              "h-12 w-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105",
-              accent ? "bg-white/15" : danger ? "bg-red-50" : "bg-[#E8F5EE]",
-            )}
-          >
-            <Icon
-              className={cn(
-                "h-7 w-7",
-                accent ? "text-white" : danger ? "text-red-500" : "text-[#1B5E45]",
-              )}
-            />
-          </div>
-          {trend && (
-            <span
-              className={cn(
-                "inline-flex items-center text-[10px] font-medium px-2 py-1 rounded-full",
-                trend.isPositive
-                  ? "bg-[#E8F5EE] text-[#1B5E45]"
-                  : "bg-red-50 text-red-600",
-              )}
-            >
-              {trend.isPositive ? (
-                <TrendingUp className="h-2.5 w-2.5 mr-1" />
-              ) : (
-                <TrendingDown className="h-2.5 w-2.5 mr-1" />
-              )}
-              {trend.value}%
-            </span>
+      
+      <CardContent className="p-3.5 sm:p-5 flex flex-col justify-between h-full relative z-10 w-full">
+        {/* Top Row: Label & Icon */}
+        <div className="flex items-start justify-between mb-2 sm:mb-4">
+          <p className={cn(
+            "text-[9px] sm:text-[10px] font-bold uppercase tracking-wider sm:tracking-widest mt-0.5 sm:mt-1 pr-2 leading-snug",
+            isDark ? "text-white/60" : "text-muted-foreground/70"
+          )}>
+            {label}
+          </p>
+          {Icon && (
+            <div className={cn(
+               "h-7 w-7 sm:h-9 sm:w-9 rounded-xl sm:rounded-[14px] flex items-center justify-center shrink-0 transition-colors duration-300",
+               isDark 
+                 ? "bg-white/10 text-white group-hover:bg-white/20" 
+                 : "bg-[#F8F9F7] text-[#1B5E45]/80 border border-black/[0.03] group-hover:bg-[#E8F5EE] group-hover:text-[#1B5E45]"
+            )}>
+              <Icon className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" strokeWidth={isDark ? 2 : 1.5} />
+            </div>
           )}
         </div>
-        <p
-          className={cn(
-            "text-xl sm:text-2xl font-medium tracking-tight whitespace-nowrap truncate",
-            accent ? "text-white" : danger ? "text-red-600" : "text-foreground",
-          )}
-        >
-          {value}
-        </p>
-        <p
-          className={cn(
-            "text-xs font-medium mt-1",
-            accent ? "text-white/60" : "text-muted-foreground",
-          )}
-        >
-          {label}
-        </p>
+
+        {/* Middle Row: Value */}
+        <div className="mt-auto mb-2 sm:mb-3">
+          <div className={cn(
+             "text-xl sm:text-[28px] font-extrabold tracking-tight tabular-nums leading-none",
+             isDark ? "text-white" : "text-foreground"
+          )}>
+            {value}
+          </div>
+        </div>
+
+        {/* Bottom Row: Trend / Subtext */}
+        <div className="flex items-center gap-1.5 mt-auto pt-1">
+           {trend && (
+             <span className={cn(
+               "inline-flex items-center text-[9px] font-bold",
+               isDark 
+                 ? cn("px-1.5 py-0.5 rounded-md", isNegative ? "bg-rose-500/20 text-rose-300" : "bg-emerald-500/20 text-emerald-300")
+                 : (isNegative ? "text-rose-600" : "text-[#1B5E45]")
+             )}>
+               {/* Icon logic: arrow for percentages, dot for status */}
+               {trend.includes('%') ? (
+                 <svg className="w-2.5 h-2.5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+               ) : (
+                 <div className={cn("h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full mr-1 sm:mr-1.5", isNegative ? "bg-rose-500" : "bg-[#3DBE7A]")} />
+               )}
+               {trend}
+             </span>
+           )}
+           {subtext && (
+             <span className={cn(
+               "text-[9px] font-medium",
+               isDark ? "text-white/50" : "text-muted-foreground/60"
+             )}>
+               {subtext}
+             </span>
+           )}
+        </div>
       </CardContent>
     </Card>
+  );
+}
+
+// --- Portfolio Card --------------------------------------------------------
+function PortfolioCard({
+  value,
+  properties,
+  trend,
+}: {
+  value: string;
+  properties: number;
+  trend: string;
+}) {
+  return (
+    <Reveal>
+      <div className="relative overflow-hidden rounded-[32px] bg-emerald-deep p-6 shadow-xl shadow-emerald-deep/20 text-white group">
+        {/* Background gradient effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-mid/40 to-transparent" />
+        <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-emerald-bright/10 blur-3xl group-hover:bg-emerald-bright/20 transition-all duration-700" />
+        
+        <div className="relative space-y-6">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-white/70 text-xs font-medium mb-1.5">Total Portfolio Value</p>
+              <h2 className="text-3xl font-bold tracking-tight text-white">{value}</h2>
+            </div>
+            <div className="bg-emerald-bright/20 backdrop-blur-md border border-white/10 rounded-full px-3 py-1 flex items-center gap-1">
+              <TrendingUp className="h-3 w-3 text-emerald-bright" />
+              <span className="text-[11px] font-bold text-emerald-bright">{trend}</span>
+            </div>
+          </div>
+          <p className="text-white/60 text-xs font-medium">Across {properties} properties</p>
+        </div>
+      </div>
+    </Reveal>
   );
 }
 
@@ -444,639 +506,378 @@ export default function LandlordDashboard() {
             </div>
           </header>
 
-          <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-8">
+          <main className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+            
+            {/* -- Greeting + Notification -- */}
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-muted-foreground text-xs font-medium mb-1">Hello, {userName || "User"}</p>
+                <h1 className="text-xl font-bold text-foreground">Landlord Dashboard</h1>
+              </div>
+              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full border border-border/40 bg-white shadow-sm">
+                <Bell className="h-5 w-5 text-muted-foreground" />
+              </Button>
+            </div>
 
-            {/* == HERO ==================================================== */}
-            <Reveal>
-              <div className="relative overflow-hidden rounded-2xl bg-white border border-border shadow-sm">
-                {/* Decorative circles */}
-                <div className="pointer-events-none absolute top-0 right-0 w-[360px] h-[360px] rounded-full bg-[#E8F5EE]/60 translate-x-1/2 -translate-y-1/2" />
-                <div className="pointer-events-none absolute bottom-0 left-1/3 w-48 h-48 rounded-full bg-[#E8F5EE]/30 translate-y-1/2" />
-                <div className="pointer-events-none absolute top-1/2 right-1/4 w-24 h-24 rounded-full bg-[#3DBE7A]/8 -translate-y-1/2" />
+            {/* -- Portfolio Card -- */}
+            <PortfolioCard 
+              value={`KES ${(stats.monthlyIncome * 51).toLocaleString()}`} 
+              properties={stats.totalBuildings} 
+              trend="+12.5%" 
+            />
 
-                {/* Accent strip */}
-                <div className="h-1 w-full bg-gradient-to-r from-[#1B5E45] via-[#3DBE7A] to-[#E8F5EE]" />
-
-                <div className="relative p-7 md:p-8">
-
-                  {/* Top: identity + alert */}
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
-                    <div className="flex items-start gap-5">
-                      {/* Initials avatar */}
-                      <div className="shrink-0 h-16 w-16 rounded-2xl bg-[#E8F5EE] border-2 border-[#1B5E45]/15 flex items-center justify-center shadow-sm">
-                        <span className="text-2xl font-medium text-[#1B5E45] tracking-tight select-none">
-                          {(userName || "P").charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                          <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-[#1B5E45]">
-                            {greeting}
-                          </span>
-                          <span className="w-1 h-1 bg-[#1B5E45]/30 rounded-full" />
-                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#3DBE7A] animate-pulse" />
-                            Property Active
-                          </span>
-                        </div>
-
-                        <h1 className="text-2xl md:text-3xl font-medium text-[#1A1A1A] tracking-tight">
-                          {userName || "Property Manager"}
-                        </h1>
-
-                        <div className="grid grid-cols-2 gap-x-3 gap-y-2.5 mt-5 sm:mt-4 sm:flex sm:flex-col sm:gap-2.5 -ml-[84px] sm:ml-0 w-[calc(100%+84px)] sm:w-auto">
-                          <div className="contents sm:flex sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-1.5">
-                            <span className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-muted-foreground max-w-full overflow-hidden">
-                              <CustomLandlordIcon className="h-3.5 w-3.5 text-[#1B5E45] shrink-0" />
-                              <span className="truncate">{stats.totalBuildings} Properties</span>
-                            </span>
-                            <span className="w-px h-3.5 bg-border hidden sm:block" />
-                            <span className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-muted-foreground max-w-full overflow-hidden">
-                              <CustomHomeIcon className="h-3.5 w-3.5 text-[#1B5E45] shrink-0" />
-                              <span className="truncate">{stats.totalUnits} Total Units</span>
-                            </span>
-                            <span className="w-px h-3.5 bg-border hidden sm:block" />
-                            <span className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-muted-foreground max-w-full overflow-hidden">
-                              <Calendar className="h-3.5 w-3.5 text-[#1B5E45] shrink-0" />
-                              <span className="truncate">{today}</span>
-                            </span>
-                          </div>
-
-                          <div className="contents sm:flex sm:items-center sm:gap-2 sm:flex-wrap">
-                            <span className="inline-flex items-center gap-1.5 text-[10px] font-medium bg-[#E8F5EE] text-[#1B5E45] px-2.5 py-1.5 sm:py-1 rounded-lg sm:rounded-full justify-start w-full sm:w-auto overflow-hidden">
-                              <CheckCircle2 className="h-3 w-3 shrink-0" />
-                              <span className="truncate">{occupancyRate}% Occupied</span>
-                            </span>
-                            {stats.tenantsInArrears > 0 && (
-                              <span className="inline-flex items-center gap-1.5 text-[10px] font-medium bg-red-50 text-red-600 px-2.5 py-1.5 sm:py-1 rounded-lg sm:rounded-full justify-start w-full sm:w-auto overflow-hidden">
-                                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse shrink-0" />
-                                <span className="truncate">{stats.tenantsInArrears} Arrears</span>
-                              </span>
-                            )}
-                            <span className="inline-flex items-center gap-1.5 text-[10px] font-medium bg-amber-50 text-amber-700 px-2.5 py-1.5 sm:py-1 rounded-lg sm:rounded-full justify-start w-full sm:w-auto overflow-hidden">
-                              <Clock className="h-3 w-3 shrink-0" />
-                              <span className="truncate">{recentComplaints.length} Open Tickets</span>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+            {/* -- Overview Grid -- */}
+            <section className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-foreground">Overview</h3>
+                <span className="text-[11px] font-bold text-[#3DBE7A] bg-[#E8F5EE] px-2.5 py-1 rounded-full">
+                  This Month
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <OverviewCard 
+                  label="Total Rent Collected" 
+                  value={
+                    <div className="flex flex-col">
+                      <span className="text-sm sm:text-base font-bold text-white/90">KES</span>
+                      <span className="text-3xl sm:text-4xl">{(stats.monthlyIncome * 0.9).toLocaleString()}</span>
                     </div>
-
-                    {/* Revenue card */}
-                    <div className="shrink-0 lg:max-w-[220px] w-full lg:w-auto">
-                      <div className="rounded-xl border border-[#1B5E45]/12 bg-[#F0F5F1] p-4">
-                        <div className="flex items-center justify-between mb-3">
-                          <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-[#1B5E45]/60">
-                            Monthly Revenue
-                          </p>
-                          <span className="text-[10px] font-medium text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full flex items-center gap-1">
-                            <TrendingUp className="h-2.5 w-2.5" />
-                            +12%
-                          </span>
-                        </div>
-                        <p className="text-3xl font-medium text-[#1A1A1A] tracking-tight leading-none">
-                          KSh {(stats.monthlyIncome / 1000).toFixed(0)}K
-                        </p>
-                        <p className="text-xs font-medium text-muted-foreground mt-1.5 flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          Current billing period
-                        </p>
-                        <Link
-                          href="/landlord/payments"
-                          className={cn(
-                            buttonVariants({ size: "sm" }),
-                            "mt-3.5 w-full rounded-lg bg-[#1B5E45] hover:bg-[#246B4F] text-white font-medium text-xs h-9 flex items-center justify-center gap-1.5 shadow-sm",
-                          )}
-                        >
-                          View Payments
-                          <ArrowRight className="h-3.5 w-3.5" />
-                        </Link>
-                      </div>
+                  }
+                  variant="dark"
+                  icon={Receipt}
+                  trend="+8.2%" 
+                  subtext="This month"
+                />
+                <OverviewCard 
+                  label="Pending Rent" 
+                  value={
+                    <div className="flex flex-col">
+                      <span className="text-xs sm:text-sm font-bold text-muted-foreground mr-1">KES</span>
+                      <span>{(stats.monthlyIncome * 0.1).toLocaleString()}</span>
                     </div>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="my-6 border-t border-dashed border-border" />
-
-                  {/* Bottom: mini stats + occupancy bar */}
-                  <div className="flex flex-col lg:flex-row lg:items-end gap-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
-                      <HeroMiniStat
-                        icon={CustomLandlordIcon}
-                        label="Properties"
-                        value={`${stats.totalBuildings} Buildings`}
-                        highlight
-                      />
-                      <HeroMiniStat
-                        icon={CustomTenantIcon}
-                        label="Occupied Units"
-                        value={`${stats.occupiedUnits} / ${stats.totalUnits}`}
-                      />
-                      <HeroMiniStat
-                        icon={CustomHomeIcon}
-                        label="Vacant"
-                        value={`${stats.vacantUnits} Units`}
-                      />
-                      <HeroMiniStat
-                        icon={CustomAlertIcon}
-                        label="In Arrears"
-                        value={`${stats.tenantsInArrears} Tenants`}
-                        danger={stats.tenantsInArrears > 0}
-                      />
+                  }
+                  trend="-2.1%" 
+                  subtext="Awaiting clearance"
+                  isNegative 
+                  icon={Clock}
+                />
+                <OverviewCard 
+                  label="Occupancy Rate" 
+                  value={
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-3xl sm:text-4xl text-foreground">{occupancyRate}</span>
+                      <span className="text-lg font-bold text-muted-foreground/60">%</span>
                     </div>
+                  }
+                  trend="+4.5%" 
+                  subtext="vs last month"
+                  icon={Users}
+                />
+                <OverviewCard 
+                  label="Properties" 
+                  value={stats.totalBuildings} 
+                  trend="+2" 
+                  subtext="New acquisitions"
+                  icon={Building2}
+                />
+              </div>
+            </section>
 
-                    {/* Occupancy progress */}
-                    <div className="lg:w-56 shrink-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-                          Occupancy Rate
-                        </span>
-                        <span className="text-[10px] font-medium text-[#1B5E45]">
-                          {occupancyRate}%
-                        </span>
-                      </div>
-                      <div className="h-2 w-full bg-[#E8F5EE] rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-gradient-to-r from-[#1B5E45] to-[#3DBE7A] rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${occupancyRate}%` }}
-                          transition={{ duration: 1.3, ease: "easeOut", delay: 0.4 }}
-                        />
-                      </div>
-                      <p className="text-[10px] text-muted-foreground mt-1.5">
-                        {stats.occupiedUnits} leased · {stats.vacantUnits} vacant
-                      </p>
-                    </div>
-                  </div>
+            {/* -- Rent Collection Trend -- */}
+            <section className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-foreground">Rent Collection Trend</h3>
+                <div className="flex items-center gap-1 text-[10px] font-bold text-[#3DBE7A] bg-[#E8F5EE] px-2 py-0.5 rounded-full">
+                  <TrendingUp className="h-2.5 w-2.5" />
+                  +8.2%
                 </div>
               </div>
-            </Reveal>
-
-            {/* -- KPI Cards -------------------------------------- */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <Reveal delay={0.05}>
-                <KpiCard
-                  icon={CustomHomeIcon}
-                  label="Total Units"
-                  value={stats.totalUnits}
-                  trend={{ value: 4, isPositive: true }}
-                  accent
-                />
-              </Reveal>
-              <Reveal delay={0.1}>
-                <KpiCard
-                  icon={CustomTenantIcon}
-                  label="Occupied Units"
-                  value={stats.occupiedUnits}
-                  trend={{ value: 2, isPositive: true }}
-                />
-              </Reveal>
-              <Reveal delay={0.15}>
-                <KpiCard
-                  icon={CustomMoneyIcon}
-                  label="Monthly Revenue"
-                  value={`KSh ${(stats.monthlyIncome / 1000).toFixed(0)}K`}
-                  trend={{ value: 12, isPositive: true }}
-                />
-              </Reveal>
-              <Reveal delay={0.2}>
-                <KpiCard
-                  icon={CustomAlertIcon}
-                  label="Tenants in Arrears"
-                  value={stats.tenantsInArrears}
-                  trend={{ value: 8, isPositive: false }}
-                  danger
-                />
-              </Reveal>
-            </div>
-
-            {/* -- Main Grid -------------------------------------- */}
-            <div className="grid lg:grid-cols-3 gap-6">
-
-              {/* Property Analytics — left 2/3 */}
-              <Reveal delay={0.2} className="lg:col-span-2">
-                <Card className="rounded-2xl border-border shadow-sm bg-white h-full">
-                  <CardHeader className="px-6 pt-6 pb-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="text-base font-medium text-foreground">
-                          Property Overview
-                        </CardTitle>
-                        <CardDescription className="text-xs mt-0.5">
-                          Performance metrics and occupancy analytics
-                        </CardDescription>
-                      </div>
-                      <Link
-                        href="/landlord/reports"
-                        className="text-xs font-medium text-[#1B5E45] hover:underline flex items-center gap-0.5"
-                      >
-                        View Reports <ChevronRight className="h-3.5 w-3.5" />
-                      </Link>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="px-6 pb-6 space-y-6">
-
-                    {/* Occupancy bar */}
-                    <div className="space-y-3">
-                      <div className="flex items-end justify-between">
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-1">Occupancy Rate</p>
-                          <p className="text-3xl font-medium text-foreground tracking-tight">
-                            {stats.occupiedUnits}
-                            <span className="text-lg text-muted-foreground font-normal ml-2">
-                              of {stats.totalUnits} units
-                            </span>
-                          </p>
-                        </div>
-                        <Badge className="bg-[#E8F5EE] text-[#1B5E45] border-0 hover:bg-[#E8F5EE] font-medium text-xs">
-                          {occupancyRate}% Occupied
-                        </Badge>
-                      </div>
-                      <div className="h-2.5 w-full rounded-full bg-[#E8F5EE] overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${occupancyRate}%` }}
-                          transition={{ duration: 1.5, ease: "easeOut" }}
-                          className="h-full rounded-full bg-gradient-to-r from-[#1B5E45] to-[#3DBE7A]"
-                        />
-                      </div>
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <span className="w-2 h-2 rounded-full bg-[#1B5E45]" />
-                          {stats.occupiedUnits} Leased
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <span className="w-2 h-2 rounded-full bg-[#E8F5EE] border border-border" />
-                          {stats.vacantUnits} Vacant
-                        </span>
-                      </div>
-                    </div>
-
-                    <Separator />
-
-                    {/* Charts row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                      {/* Revenue trend bars */}
-                      <div className="p-5 rounded-xl border border-border bg-[#FAFAF8] space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] flex items-center justify-center">
-                              <BarChart3 className="h-4 w-4 text-[#1B5E45]" />
-                            </div>
-                            <div>
-                              <p className="text-xs text-muted-foreground">Revenue Trend</p>
-                              <p className="text-sm font-medium text-foreground">6-Month View</p>
-                            </div>
-                          </div>
-                          <span className="text-[10px] font-medium text-[#1B5E45] bg-[#E8F5EE] px-2 py-0.5 rounded-full flex items-center gap-1">
-                            <TrendingUp className="h-2.5 w-2.5" /> +12%
-                          </span>
-                        </div>
-                        <div className="flex items-end gap-1.5 h-16 mt-2">
-                          {[35, 42, 65, 55, 80, 100].map((h, i) => (
-                            <div key={i} className="flex-1 h-full flex items-end">
-                              <motion.div
-                                initial={{ height: 0 }}
-                                animate={{ height: `${h}%` }}
-                                transition={{ delay: i * 0.1, duration: 0.8 }}
-                                className={cn(
-                                  "w-full rounded-t-md transition-opacity hover:opacity-80",
-                                  i === 5 ? "bg-[#1B5E45]" : "bg-[#C4D4C9]",
-                                )}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                        <div className="flex items-center justify-between text-[10px] text-muted-foreground">
-                          {["Nov", "Dec", "Jan", "Feb", "Mar", "Apr"].map((m) => (
-                            <span key={m}>{m}</span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Arrears aging */}
-                      <div className="p-5 rounded-xl border border-border bg-[#FAFAF8] space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="h-9 w-9 rounded-lg bg-red-50 flex items-center justify-center">
-                              <Activity className="h-4 w-4 text-red-600" />
-                            </div>
-                            <div>
-                              <p className="text-xs text-muted-foreground">Arrears Aging</p>
-                              <p className="text-sm font-medium text-foreground">Outstanding</p>
-                            </div>
-                          </div>
-                          <span className="text-[10px] font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded-full">
-                            {stats.tenantsInArrears} Accounts
-                          </span>
-                        </div>
-                        <div className="space-y-3">
-                          {[
-                            { label: "30+ Days", amount: "KSh 124,000", pct: 65, color: "bg-amber-400" },
-                            { label: "60+ Days", amount: "KSh 45,000", pct: 35, color: "bg-red-500" },
-                          ].map((row) => (
-                            <div key={row.label} className="space-y-1.5">
-                              <div className="flex items-center justify-between">
-                                <span className="text-xs text-muted-foreground">{row.label}</span>
-                                <span className="text-xs font-medium text-foreground">{row.amount}</span>
-                              </div>
-                              <div className="h-1.5 w-full rounded-full bg-red-50 overflow-hidden">
-                                <motion.div
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${row.pct}%` }}
-                                  transition={{ duration: 1.2, ease: "easeOut" }}
-                                  className={cn("h-full rounded-full", row.color)}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Reveal>
-
-              {/* Right sidebar */}
-              <div className="space-y-6">
-
-                {/* Support Tickets */}
-                <Reveal delay={0.25}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-white">
-                    <CardHeader className="px-6 pt-6 pb-3">
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-base font-medium flex items-center gap-2">
-                          <CustomWrenchIcon className="h-5 w-5 text-[#1B5E45]" />
-                          Support Tickets
-                        </CardTitle>
-                        <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-50 border-0 text-[10px] font-medium px-2.5 rounded-full">
-                          {recentComplaints.length} Open
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="px-6 pb-5 space-y-2">
-                      {recentComplaints.map((ticket) => (
-                        <Link
-                          key={ticket.id}
-                          href={`/landlord/complaints/${ticket.id}`}
-                          className="block"
-                        >
-                          <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#FAFAF8] border border-border hover:border-[#1B5E45]/20 hover:bg-[#F0F5F1] transition-all group">
-                            <div
-                              className={cn(
-                                "h-8 w-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5",
-                                ticket.status === "in-progress"
-                                  ? "bg-[#E8F5EE] text-[#1B5E45]"
-                                  : "bg-amber-50 text-amber-600",
-                              )}
-                            >
-                              {ticket.status === "in-progress" ? (
-                                <Activity className="h-4 w-4" />
-                              ) : (
-                                <CustomAlertIcon className="h-4 w-4" />
-                              )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-foreground leading-tight truncate">
-                                {ticket.title}
-                              </p>
-                              <div className="flex items-center gap-2 mt-1 flex-wrap">
-                                <span className="text-xs text-muted-foreground">{ticket.tenantName}</span>
-                                <span
-                                  className={cn(
-                                    "text-[10px] font-medium px-[4px].5 py-0.5 rounded-full",
-                                    ticket.priority === "high"
-                                      ? "bg-red-50 text-red-600"
-                                      : "bg-[#E8F5EE] text-[#1B5E45]",
-                                  )}
-                                >
-                                  {ticket.category}
-                                </span>
-                              </div>
-                            </div>
-                            <ChevronRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-[#1B5E45] transition-colors shrink-0 mt-1" />
-                          </div>
-                        </Link>
-                      ))}
-                      <Link
-                        href="/landlord/complaints"
-                        className={cn(
-                          buttonVariants({ variant: "outline", size: "sm" }),
-                          "w-full mt-2 rounded-xl h-9 border-border text-xs font-medium hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45] flex items-center justify-center",
-                        )}
-                      >
-                        View All Tickets <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                      </Link>
-                    </CardContent>
-                  </Card>
-                </Reveal>
-
-                {/* Quick Actions */}
-                <Reveal delay={0.3}>
-                  <Card className="rounded-2xl border-border shadow-sm bg-white">
-                    <CardHeader className="px-6 pt-6 pb-3">
-                      <CardTitle className="text-base font-medium flex items-center gap-2">
-                        <Zap className="h-4 w-4 text-[#1B5E45]" />
-                        Quick Actions
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-6 pb-5 space-y-2">
-                      {[
-                        { label: "Add New Tenant", icon: CustomTenantIcon, href: "/landlord/tenants" },
-                        { label: "Record Payment", icon: CustomMoneyIcon, href: "/landlord/payments" },
-                        { label: "Generate Report", icon: CustomAnalyticIcon, href: "/landlord/reports" },
-                        { label: "View All Properties", icon: CustomLandlordIcon, href: "/landlord/properties" },
-                      ].map((action) => (
-                        <Link key={action.label} href={action.href}>
-                          <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-border bg-[#FAFAF8] hover:border-[#1B5E45]/30 hover:bg-[#F0F5F1] transition-all group cursor-pointer">
-                            <div className="h-9 w-9 rounded-lg bg-[#E8F5EE] text-[#1B5E45] flex items-center justify-center group-hover:bg-[#1B5E45] group-hover:text-white transition-all shrink-0">
-                              <action.icon className="h-5 w-5" />
-                            </div>
-                            <span className="text-sm font-medium text-foreground group-hover:text-[#1B5E45] transition-colors">
-                              {action.label}
-                            </span>
-                            <ChevronRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-[#1B5E45] ml-auto transition-colors" />
-                          </div>
-                        </Link>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </Reveal>
-              </div>
-            </div>
-
-            {/* -- Recent Transactions ---------------------------- */}
-            <Reveal delay={0.3}>
-              <Card className="rounded-2xl border-border shadow-sm bg-white">
-                <CardHeader className="px-6 pt-6 pb-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-base font-medium flex items-center gap-2">
-                        <div
-                          className="h-5 w-5 bg-[#1B5E45]"
-                          style={{
-                            WebkitMaskImage: 'url(/bill.png)',
-                            WebkitMaskSize: 'contain',
-                            WebkitMaskPosition: 'center',
-                            WebkitMaskRepeat: 'no-repeat',
-                            maskImage: 'url(/bill.png)',
-                            maskSize: 'contain',
-                            maskPosition: 'center',
-                            maskRepeat: 'no-repeat',
-                          }}
-                        />
-                        Recent Transactions
-                      </CardTitle>
-                      <CardDescription className="text-xs mt-0.5">
-                        Latest payment activity across all properties
-                      </CardDescription>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-9 px-4 rounded-xl border-border text-xs font-medium hover:bg-[#E8F5EE] hover:border-[#1B5E45]/30 hover:text-[#1B5E45]"
-                    >
-                      <Download className="h-3.5 w-3.5 mr-2" />
-                      Export
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent className="px-6 pb-4">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="bg-[#FAFAF8] hover:bg-[#FAFAF8] border-border">
-                        <TableHead className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70 h-10">
-                          Transaction
-                        </TableHead>
-                        <TableHead className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70 h-10">
-                          Tenant
-                        </TableHead>
-                        <TableHead className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70 h-10">
-                          Unit
-                        </TableHead>
-                        <TableHead className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70 h-10 text-right">
-                          Amount
-                        </TableHead>
-                        <TableHead className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground/70 h-10 text-center">
-                          Status
-                        </TableHead>
-                        <TableHead className="w-10 h-10" />
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {recentPayments.map((payment) => (
-                        <TableRow
-                          key={payment.id}
-                          className="hover:bg-[#FAFAF8] transition-colors border-border group"
-                        >
-                          <TableCell className="py-4">
-                            <div className="flex items-center gap-3">
-                              <div className="h-9 w-9 rounded-xl bg-[#E8F5EE] flex items-center justify-center shrink-0">
-                                <div
-                                  className="h-[18px] w-[18px] bg-[#1B5E45]"
-                                  style={{
-                                    WebkitMaskImage: 'url(/bill.png)',
-                                    WebkitMaskSize: 'contain',
-                                    WebkitMaskPosition: 'center',
-                                    WebkitMaskRepeat: 'no-repeat',
-                                    maskImage: 'url(/bill.png)',
-                                    maskSize: 'contain',
-                                    maskPosition: 'center',
-                                    maskRepeat: 'no-repeat',
-                                  }}
-                                />
-                              </div>
-                              <div>
-                                <p className="text-xs font-mono font-medium text-foreground leading-tight">
-                                  {payment.id}
-                                </p>
-                                <p className="text-[10px] text-muted-foreground mt-0.5">
-                                  {payment.date}
-                                </p>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell className="py-4">
-                            <div className="flex items-center gap-2.5">
-                              <div className="h-8 w-8 rounded-xl bg-[#F0F5F1] flex items-center justify-center text-[#1B5E45] text-xs font-medium shrink-0">
-                                {payment.tenantName.charAt(0)}
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium text-foreground leading-tight">
-                                  {payment.tenantName}
-                                </p>
-                                <p className="text-[10px] text-muted-foreground">
-                                  {payment.month}
-                                </p>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell className="py-4">
-                            <span className="text-sm text-muted-foreground font-medium">
-                              {payment.unitId}
-                            </span>
-                          </TableCell>
-                          <TableCell className="py-4 text-right">
-                            <p className="text-sm font-medium text-[#1B5E45]">
-                              KSh {payment.amount.toLocaleString()}
-                            </p>
-                          </TableCell>
-                          <TableCell className="py-4 text-center">
-                            <span
-                              className={cn(
-                                "inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full capitalize",
-                                payment.status === "completed"
-                                  ? "bg-[#E8F5EE] text-[#1B5E45]"
-                                  : "bg-red-50 text-red-600",
-                              )}
-                            >
-                              {payment.status === "completed" ? (
-                                <CheckCircle2 className="h-3 w-3" />
-                              ) : (
-                                <Clock className="h-3 w-3" />
-                              )}
-                              {payment.status}
-                            </span>
-                          </TableCell>
-                          <TableCell className="py-4">
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#E8F5EE] text-muted-foreground hover:text-[#1B5E45]"
-                                >
-                                  <Eye className="h-3.5 w-3.5" />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>View details</TooltipContent>
-                            </Tooltip>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                  <div className="border-t border-border pt-4 flex justify-center">
-                    <Link
-                      href="/landlord/payments"
-                      className={cn(
-                        buttonVariants({ variant: "ghost", size: "sm" }),
-                        "text-[#1B5E45] hover:bg-[#E8F5EE] rounded-xl h-9 px-5 text-sm font-medium",
-                      )}
-                    >
-                      View All Transactions
-                      <ArrowUpRight className="h-3.5 w-3.5 ml-1.5" />
-                    </Link>
-                  </div>
-                </CardContent>
+              <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden p-4">
+                <div className="h-[200px] w-full mt-4">
+                  <TrendsAreaChart />
+                </div>
               </Card>
-            </Reveal>
+            </section>
+
+            {/* -- Recent Transactions -- */}
+            <section className="space-y-4 pb-12">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-foreground">Recent Transactions</h3>
+                <Link href="/landlord/payments" className="text-xs font-medium text-[#3DBE7A]">
+                  View all
+                </Link>
+              </div>
+              <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden flex flex-col">
+                {recentPayments.map((payment, i) => (
+                  <TransactionItem key={i} payment={payment} />
+                ))}
+              </Card>
+            </section>
+
+            {/* -- Split Layout for Radar & Maintenance -- */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
+              <section className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-foreground">Needs Attention</h3>
+                  <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200">Urgent</Badge>
+                </div>
+                <div className="space-y-3">
+                  <MaintenanceItem type="Plumbing Issue" property="Sunset Villas 3B" status="urgent" />
+                  <MaintenanceItem type="HVAC Repair" property="Greenwood Unit 12" status="normal" />
+                </div>
+              </section>
+
+              <section className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-foreground">Lease Radar</h3>
+                  <Link href="/landlord/tenants" className="text-xs font-medium text-[#3DBE7A]">
+                    See all
+                  </Link>
+                </div>
+                <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden min-h-[160px]">
+                  <LeaseRadarItem name="John Doe" unit="Greenwood 4A" days={14} />
+                  <LeaseRadarItem name="Sarah Smith" unit="Greenwood 2B" days={28} />
+                  <LeaseRadarItem name="Michael Johnson" unit="Oceanview 12C" days={45} />
+                </Card>
+              </section>
+            </div>
+
+            {/* -- Property Performance Table -- */}
+            <section className="space-y-4 pb-12">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-foreground">Property Performance</h3>
+              </div>
+              <PropertyPerformance />
+            </section>
+
+            {/* -- Split Layout for Radar & Maintenance -- */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
+              <section className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-foreground">Needs Attention</h3>
+                  <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200">Urgent</Badge>
+                </div>
+                <div className="space-y-3">
+                  <MaintenanceItem type="Plumbing Issue" property="Sunset Villas 3B" status="urgent" />
+                  <MaintenanceItem type="HVAC Repair" property="Greenwood Unit 12" status="normal" />
+                </div>
+              </section>
+
+              <section className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-foreground">Lease Radar</h3>
+                  <Link href="/landlord/tenants" className="text-xs font-medium text-[#3DBE7A]">
+                    See all
+                  </Link>
+                </div>
+                <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden min-h-[160px]">
+                  <LeaseRadarItem name="John Doe" unit="Greenwood 4A" days={14} />
+                  <LeaseRadarItem name="Sarah Smith" unit="Greenwood 2B" days={28} />
+                  <LeaseRadarItem name="Michael Johnson" unit="Oceanview 12C" days={45} />
+                </Card>
+              </section>
+            </div>
+
+            {/* -- Property Performance Table -- */}
+            <section className="space-y-4 pb-12">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold text-foreground">Property Performance</h3>
+              </div>
+              <PropertyPerformance />
+            </section>
 
           </main>
         </div>
       </TooltipProvider>
     </LandlordLayout>
+  );
+}
+// --- Chart Component -----------------------------------------------------
+const chartData = [
+  { name: "Jan", value: 400000 },
+  { name: "Feb", value: 800000 },
+  { name: "Mar", value: 1200000 },
+  { name: "Apr", value: 900000 },
+  { name: "May", value: 1800000 },
+];
+
+function TrendsAreaChart() {
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart data={chartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+        <defs>
+          <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#3DBE7A" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#3DBE7A" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <XAxis 
+          dataKey="name" 
+          axisLine={false} 
+          tickLine={false} 
+          tick={{ fontSize: 10, fill: "#94a3b8" }} 
+          dy={10}
+        />
+        <YAxis 
+          axisLine={false} 
+          tickLine={false} 
+          tick={{ fontSize: 10, fill: "#94a3b8" }} 
+          tickFormatter={(value) => value === 0 ? "0" : `${value / 1000000}M`}
+        />
+        <RechartsTooltip 
+          contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+        />
+        <Area 
+          type="monotone" 
+          dataKey="value" 
+          stroke="#3DBE7A" 
+          strokeWidth={3}
+          fillOpacity={1} 
+          fill="url(#colorValue)" 
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+}
+
+// --- Transaction Item -----------------------------------------------------
+function TransactionItem({ payment }: { payment: any }) {
+  return (
+    <div className="group flex items-center justify-between p-4 sm:p-5 border-b border-black/[0.04] last:border-0 hover:bg-[#F8F9F7]/50 transition-all duration-300">
+      <div className="flex items-center gap-3.5 sm:gap-4">
+        {/* Icon Container */}
+        <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-[12px] sm:rounded-[14px] bg-white sm:bg-[#F8F9F7] border border-black/[0.03] flex items-center justify-center shrink-0 group-hover:bg-[#E8F5EE] transition-colors duration-300">
+          <Receipt className="h-4.5 w-4.5 sm:h-5 sm:w-5 text-[#1B5E45]/80 group-hover:text-[#1B5E45] transition-colors" strokeWidth={1.5} />
+        </div>
+        
+        {/* Left Text Detail */}
+        <div className="flex flex-col gap-0.5">
+          <h4 className="text-[13px] sm:text-[14px] font-extrabold text-foreground tracking-tight">
+            {payment.type || "Rent Payment"}
+          </h4>
+          <p className="text-[10px] sm:text-[11px] font-medium text-muted-foreground/80 mt-0.5">
+            <span className="font-semibold text-muted-foreground">M-Pesa</span>
+            <span className="mx-1.5 opacity-50">•</span>
+            {new Date(payment.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+          </p>
+        </div>
+      </div>
+      
+      {/* Right Flex Group */}
+      <div className="flex flex-col items-end gap-1">
+        <div className="flex items-baseline gap-1">
+          <span className="text-[9px] sm:text-[10px] font-bold text-muted-foreground/60 uppercase">Kes</span>
+          <span className="text-[13px] sm:text-[15px] font-extrabold text-foreground tracking-tight tabular-nums mt-0.5">
+            {payment.amount.toLocaleString()}
+          </span>
+        </div>
+        <span className="inline-flex items-center text-[9px] font-bold px-1.5 py-0.5 rounded-md bg-[#E8F5EE] text-[#3DBE7A]">
+          <div className="h-1.5 w-1.5 rounded-full mr-1.5 bg-[#3DBE7A]" />
+          Paid
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// --- Property Performance -------------------------------------------------
+function PropertyPerformance() {
+  const properties = [
+    { name: "Greenwood Heights", occ: 92, revenue: 450000 },
+    { name: "Sunset Villas", occ: 100, revenue: 600000 },
+    { name: "Ocean", occ: 85, revenue: 320000 },
+  ];
+  return (
+    <Card className="rounded-[24px] border-black/[0.04] bg-white shadow-sm overflow-hidden p-1">
+      <Table>
+        <TableHeader>
+          <TableRow className="border-border/40 hover:bg-transparent">
+            <TableHead className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Property</TableHead>
+            <TableHead className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground w-24">Occupancy</TableHead>
+            <TableHead className="text-right text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Revenue</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {properties.map((p, i) => (
+            <TableRow key={i} className="border-border/20 hover:bg-[#F0F5F1]/30 border-b last:border-0 transition-colors">
+              <TableCell className="py-3">
+                 <p className="text-[13px] font-extrabold text-foreground">{p.name}</p>
+                 <p className="text-[10px] font-medium text-muted-foreground/60">{Math.floor(p.revenue / 25000)} Units</p>
+              </TableCell>
+              <TableCell className="py-3">
+                 <div className="flex flex-col gap-1.5">
+                   <span className={cn("text-[11px] font-bold font-mono", p.occ < 90 ? "text-amber-600" : "text-[#1B5E45]")}>{p.occ}%</span>
+                   <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                     <div className={cn("h-full rounded-full", p.occ < 90 ? "bg-amber-400" : "bg-[#3DBE7A]")} style={{ width: `${p.occ}%` }} />
+                   </div>
+                 </div>
+              </TableCell>
+              <TableCell className="text-right py-3">
+                 <p className="text-[13px] font-bold tabular-nums">KES {(p.revenue).toLocaleString()}</p>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Card>
+  );
+}
+
+// --- Maintenance Item -----------------------------------------------------
+function MaintenanceItem({ type, property, status }: { type: string, property: string, status: string }) {
+  const isUrgent = status === "urgent";
+  return (
+    <div className="group flex items-center justify-between p-3 sm:p-4 rounded-[20px] sm:rounded-2xl bg-white border border-black/[0.04] shadow-sm hover:shadow-md hover:border-amber-500/20 transition-all duration-300">
+      <div className="flex items-center gap-3.5 sm:gap-4">
+        <div className={cn(
+          "h-10 w-10 sm:h-11 sm:w-11 rounded-[12px] sm:rounded-[14px] flex items-center justify-center shrink-0 transition-colors duration-300",
+          isUrgent ? "bg-amber-50 border border-amber-100 text-amber-600" : "bg-blue-50 border border-blue-100 text-blue-600"
+        )}>
+           <Wrench className="h-4.5 w-4.5 sm:h-5 sm:w-5" strokeWidth={1.5} />
+        </div>
+        <div className="flex flex-col gap-0.5">
+          <h4 className="text-[13px] sm:text-[14px] font-extrabold text-foreground tracking-tight">
+            {type}
+          </h4>
+          <p className="text-[10px] sm:text-[11px] font-medium text-muted-foreground/80 mt-0.5">
+            <span className="font-semibold text-muted-foreground">{property}</span>
+            <span className="mx-1.5 opacity-50">•</span>
+            Just now
+          </p>
+        </div>
+      </div>
+      <Button variant="ghost" size="sm" className="h-8 text-xs font-bold rounded-full bg-[#F8F9F7] border border-black/[0.04] hover:bg-gray-100 px-3">
+        Review
+      </Button>
+    </div>
+  );
+}
+
+// --- Lease Radar Item -----------------------------------------------------
+function LeaseRadarItem({ name, unit, days }: { name: string, unit: string, days: number }) {
+  const isUrgent = days <= 30;
+  return (
+    <div className="flex items-center justify-between p-3 border-b border-border/40 last:border-0 hover:bg-gray-50/50 transition-colors">
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
+          <Users className="h-4 w-4 text-gray-500" />
+        </div>
+        <div>
+          <p className="text-xs font-bold text-foreground">{name}</p>
+          <p className="text-[10px] text-muted-foreground">{unit}</p>
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className={cn(
+          "text-[10px] font-bold px-2 py-0.5 rounded-full",
+          isUrgent ? "bg-red-50 text-red-600" : "bg-orange-50 text-orange-600"
+        )}>
+          {days} Days
+        </span>
+        <Button variant="outline" size="icon" className="h-6 w-6 rounded-full border-black/[0.05]">
+          <ArrowRight className="h-3 w-3" />
+        </Button>
+      </div>
+    </div>
   );
 }

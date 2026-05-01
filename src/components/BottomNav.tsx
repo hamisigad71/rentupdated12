@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export interface NavItem {
   label: string;
@@ -48,25 +49,13 @@ export default function BottomNav({ items }: BottomNavProps) {
     <AnimatePresence>
       {isVisible && (
         <motion.div 
-          initial={{ y: 100, opacity: 0, scale: 0.95 }}
-          animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: 100, opacity: 0, scale: 0.95 }}
-          transition={{ 
-            duration: 0.5, 
-            ease: [0.16, 1, 0.3, 1], // Custom quintic ease-out
-            opacity: { duration: 0.3 }
-          }}
-          className="md:hidden fixed bottom-6 left-0 right-0 z-50 px-6 pb-2 pointer-events-none"
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          className="md:hidden fixed bottom-4 left-0 right-0 z-50 px-4 pointer-events-none"
         >
           <nav
-            className="flex items-center justify-around p-2 pointer-events-auto rounded-[24px]"
-            style={{
-              background: "rgba(255, 255, 255, 0.8)",
-              backdropFilter: "blur(20px) saturate(180%)",
-              WebkitBackdropFilter: "blur(20px) saturate(180%)",
-              border: "1px solid rgba(255, 255, 255, 0.3)",
-              boxShadow: "0 12px 40px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.2)",
-            }}
+            className="flex items-center justify-around p-2 pointer-events-auto rounded-[28px] border border-white/20 bg-white/70 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)]"
           >
             {items.map((item) => {
               const isActive = pathname === item.href;
@@ -74,25 +63,21 @@ export default function BottomNav({ items }: BottomNavProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex flex-col items-center justify-center py-2 px-[4px] rounded-xl transition-all duration-300 w-full"
-                  style={{
-                    color: isActive ? "#3DBE7A" : "#1B5E45",
-                    background: isActive ? "rgba(61, 190, 122, 0.15)" : "transparent",
-                  }}
+                  className="relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 w-full group"
                 >
                   <div
-                    className={`transition-transform duration-300 ${isActive ? "scale-110" : "scale-100"}`}
+                    className={cn(
+                      "p-2 rounded-xl transition-all duration-300",
+                      isActive ? "bg-emerald-deep text-white shadow-lg shadow-emerald-deep/20" : "text-emerald-deep/60 group-hover:text-emerald-deep/80"
+                    )}
                   >
-                    {item.icon}
+                    {React.cloneElement(item.icon as React.ReactElement<any>, { size: 20 })}
                   </div>
-                  <span
-                    className={`text-[10px] mt-1 tracking-tight transition-all duration-300 ${isActive ? "opacity-100 text-[#3DBE7A]" : "opacity-60 text-[#1B5E45]"}`}
-                  >
-                    {item.label}
-                  </span>
-                  {/* Active dot indicator */}
                   {isActive && (
-                    <div className="w-1 h-1 rounded-full mt-0.5 bg-[#3DBE7A]" />
+                    <motion.div 
+                      layoutId="active-pill"
+                      className="absolute -bottom-1 w-1 h-1 rounded-full bg-emerald-deep"
+                    />
                   )}
                 </Link>
               );

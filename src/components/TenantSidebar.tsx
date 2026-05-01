@@ -15,86 +15,6 @@ import {
 } from "lucide-react";
 import Logo from "./Logo";
 
-const CustomHomeIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/home.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/home.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomMoneyIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url("/money (3).png")', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/money (3).png")', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomChatIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url("/chat.png")', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/chat.png")', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomDocumentIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/document.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/document.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
-const CustomUserIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/user.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/user.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
 import {
   Sidebar,
   SidebarContent,
@@ -112,33 +32,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-
-const CustomNotificationIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url("/bell.png")', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url("/bell.png")', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
 const mainItems = [
-  { label: "Dashboard",   href: "/tenant",            icon: CustomHomeIcon },
-  { label: "Payments",    href: "/tenant/payments",   icon: CustomMoneyIcon },
-  { label: "Complaints",  href: "/tenant/complaints", icon: CustomChatIcon },
-  { label: "Documents",   href: "/tenant/documents",  icon: CustomDocumentIcon },
-  { label: "Alerts",      href: "/tenant/alerts",     icon: CustomNotificationIcon },
+  { label: "Dashboard",   href: "/tenant",            icon: Home },
+  { label: "Payments",    href: "/tenant/payments",   icon: CreditCard },
+  { label: "Complaints",  href: "/tenant/complaints", icon: MessageSquare },
+  { label: "Documents",   href: "/tenant/documents",  icon: FileText },
+  { label: "Alerts",      href: "/tenant/alerts",     icon: Bell },
 ];
 
 const footerItems = [
-  { label: "Profile",    href: "/tenant/profile",    icon: CustomUserIcon },
+  { label: "Profile",    href: "/tenant/profile",    icon: User },
   { label: "Settings",   href: "/tenant/settings",   icon: Settings },
   { label: "Help Center", href: "/help",               icon: HelpCircle },
 ];
@@ -169,7 +72,7 @@ export function TenantSidebar() {
                   <SidebarMenuButton
                     render={
                       <Link href={item.href}>
-                        <item.icon className={pathname === item.href ? "text-[#1B5E45] h-5 w-5" : "text-[#1B5E45]/50 h-5 w-5"} />
+                        <item.icon className={pathname === item.href ? "text-emerald-deep h-5 w-5" : "text-emerald-deep/50 h-5 w-5"} />
                         <span className="font-normal group-data-[collapsible=icon]:hidden text-[13px]">{item.label}</span>
                       </Link>
                     }
@@ -190,7 +93,7 @@ export function TenantSidebar() {
               <SidebarMenuButton
                 render={
                   <Link href={item.href}>
-                    <item.icon className={pathname === item.href ? "text-[#1B5E45] h-5 w-5" : "text-[#1B5E45]/50 h-5 w-5"} />
+                    <item.icon className={pathname === item.href ? "text-emerald-deep h-5 w-5" : "text-emerald-deep/50 h-5 w-5"} />
                     <span className="text-[13px] font-normal group-data-[collapsible=icon]:hidden ">{item.label}</span>
                   </Link>
                 }
@@ -202,7 +105,7 @@ export function TenantSidebar() {
           ))}
         </SidebarMenu>
         <div className="group-data-[collapsible=icon]:hidden space-y-2">
-          <Button className="w-full gap-2 rounded-xl h-11 bg-[#1B5E45] text-white shadow-lg shadow-[#1B5E45]/20 hover:bg-[#246B4F] hover:shadow-xl active:scale-95 transition-all text-sm">
+          <Button className="w-full gap-2 rounded-xl h-11 bg-emerald-deep text-white shadow-lg shadow-emerald-deep/20 hover:bg-emerald-mid hover:shadow-xl active:scale-95 transition-all text-sm">
             <Zap className="h-4 w-4" />
             <span>Fast Pay Rent</span>
           </Button>

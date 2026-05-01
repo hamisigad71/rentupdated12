@@ -32,21 +32,7 @@ const HERO = {
   },
 };
 
-const CustomHomeIcon = ({ className }: { className?: string }) => (
-  <div 
-    className={`bg-current ${className || ''}`}
-    style={{
-      WebkitMaskImage: 'url(/home.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/home.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
+
 
 /* -- Field wrapper ----------------------------------------------------- */
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -92,7 +78,7 @@ function RoleSelector({ onSelect }: { onSelect: (r: "landlord" | "tenant") => vo
         <div className="grid sm:grid-cols-2 gap-4">
           {([
             { r: "landlord", t: "I'm a Landlord", d: "I own or manage rental properties", icon: Building2, features: ["List properties", "Collect rent", "Screen tenants"] },
-            { r: "tenant",   t: "I'm a Tenant",   d: "I'm looking to rent or already renting", icon: CustomHomeIcon, features: ["Find a home", "Pay rent", "Request maintenance"] },
+            { r: "tenant",   t: "I'm a Tenant",   d: "I'm looking to rent or already renting", icon: Home, features: ["Find a home", "Pay rent", "Request maintenance"] },
           ] as const).map(box => (
             <button key={box.r} onClick={() => onSelect(box.r)}
               className="group text-left p-6 rounded-2xl border-2 border-[#E0E8E3] bg-white hover:border-[#1B5E45] hover:shadow-xl hover:shadow-[#1B5E45]/10 hover:-translate-y-1 transition-all duration-300">
@@ -189,7 +175,7 @@ function RegisterContent() {
           {/* Heading */}
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F5EE] border border-[#C4D4C9] mb-4">
-              {role === "landlord" ? <Building2 className="h-3.5 w-3.5 text-[#1B5E45]" /> : <CustomHomeIcon className="h-3.5 w-3.5 text-[#1B5E45]" />}
+              {role === "landlord" ? <Building2 className="h-3.5 w-3.5 text-[#1B5E45]" /> : <Home className="h-3.5 w-3.5 text-[#1B5E45]" />}
               <span className="text-[11px] text-[#1B5E45]">{role === "landlord" ? "Landlord" : "Tenant"} Account</span>
             </div>
             <h1 className="text-2xl text-[#1A1A1A] tracking-tight">Create your account</h1>
@@ -273,7 +259,7 @@ function RegisterContent() {
                       </Field>
                       <Field label="Unit">
                         <div className="relative group">
-                          <CustomHomeIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF] group-focus-within:text-[#1B5E45] transition-colors" />
+                          <Home className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9CA3AF] group-focus-within:text-[#1B5E45] transition-colors" />
                           <select name="unitId" required disabled={!form.buildingId} value={form.unitId} onChange={handleChange}
                             className="w-full pl-11 pr-4 py-3 rounded-xl border border-[#E0E8E3] bg-white text-sm text-[#1A1A1A] outline-none focus:border-[#1B5E45] focus:shadow-[0_0_0_3px_rgba(27,94,69,0.1)] transition-all shadow-sm appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
                             <option value="">{form.buildingId ? "Select unit" : "Choose building first"}</option>

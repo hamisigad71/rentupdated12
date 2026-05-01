@@ -7,105 +7,15 @@ import Logo from "./Logo";
 import { Navbar } from "./Navbar";
 import { Separator } from "@/components/ui/separator";
 import BottomNav, { NavItem } from "./BottomNav";
-import { Building2, Users, BarChart2, User, Camera } from "lucide-react";
+import { Building2, Users, BarChart2, User, Camera, Home } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-const CustomHomeIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/home.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/home.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
- 
-const CustomLandlordIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/residential.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/residential.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
- 
-const CustomTenantIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/tenant.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/tenant.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
- 
-const CustomAnalyticIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/analytic.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/analytic.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
- 
-const CustomUserIcon = () => (
-  <div 
-    className="bg-current"
-    style={{
-      width: 20,
-      height: 20,
-      WebkitMaskImage: 'url(/user.png)', 
-      WebkitMaskSize: 'contain', 
-      WebkitMaskPosition: 'center', 
-      WebkitMaskRepeat: 'no-repeat',
-      maskImage: 'url(/user.png)', 
-      maskSize: 'contain', 
-      maskPosition: 'center', 
-      maskRepeat: 'no-repeat',
-    }} 
-  />
-);
-
 const landlordItems: NavItem[] = [
-  { label: "Home", href: "/landlord", icon: <CustomHomeIcon /> },
-  { label: "Properties", href: "/landlord/buildings", icon: <CustomLandlordIcon /> },
-  { label: "Tenants", href: "/landlord/tenants", icon: <CustomTenantIcon /> },
-  { label: "Analysis", href: "/landlord/reports", icon: <CustomAnalyticIcon /> },
-  { label: "Profile", href: "/landlord/profile", icon: <CustomUserIcon /> },
+  { label: "Home", href: "/landlord", icon: <Home /> },
+  { label: "Properties", href: "/landlord/buildings", icon: <Building2 /> },
+  { label: "Tenants", href: "/landlord/tenants", icon: <Users /> },
+  { label: "Analysis", href: "/landlord/reports", icon: <BarChart2 /> },
+  { label: "Profile", href: "/landlord/profile", icon: <User /> },
 ];
 
 export default function LandlordLayout({ children }: { children: React.ReactNode }) {
