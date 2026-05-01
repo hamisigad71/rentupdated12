@@ -28,6 +28,7 @@ import {
   Receipt,
   Eye,
   FileText,
+  Wallet,
 } from "lucide-react";
 import { getLandlordStats, mockPayments, mockComplaints } from "@/data/mockData";
 import { useAuth } from "@/context/AuthContext";
@@ -404,23 +405,75 @@ function PortfolioCard({
 }) {
   return (
     <Reveal>
-      <div className="relative overflow-hidden rounded-[32px] bg-emerald-deep p-6 shadow-xl shadow-emerald-deep/20 text-white group">
-        {/* Background gradient effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-mid/40 to-transparent" />
-        <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-emerald-bright/10 blur-3xl group-hover:bg-emerald-bright/20 transition-all duration-700" />
+      <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#0c4a34] to-[#062b1e] p-8 shadow-xl shadow-emerald-900/40 text-white group min-h-[220px] flex flex-col justify-center">
+        {/* Pulsing Glow Effect */}
+        <motion.div 
+          initial={{ opacity: 0.3, scale: 0.8 }}
+          animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.8, 1.1, 0.8] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 50% 50%, rgba(61,190,122,0.15) 0%, transparent 70%)"
+          }}
+        />
+
+        {/* Dynamic Background Effects */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent opacity-50" />
+        <div className="absolute -right-8 -top-8 h-48 w-48 rounded-full bg-emerald-500/15 blur-3xl group-hover:bg-emerald-500/25 transition-all duration-700" />
         
-        <div className="relative space-y-6">
+        {/* Animated Wavy Decorator */}
+        <div className="absolute bottom-0 left-0 w-full h-32 opacity-20 pointer-events-none">
+          <motion.svg
+            className="w-[200%] h-full text-[#3DBE7A]"
+            viewBox="0 0 1440 320"
+            preserveAspectRatio="none"
+            initial={{ x: 0 }}
+            animate={{ x: "-50%" }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          >
+            <path
+              fill="currentColor"
+              d="M0,160L48,176C96,192,192,224,288,229.3C384,235,480,213,576,181.3C672,149,768,107,864,106.7C960,107,1056,149,1152,154.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+            />
+            <path
+              fill="currentColor"
+              d="M1440,160L1488,176C1536,192,1632,224,1728,229.3C1824,235,1920,213,2016,181.3C2112,149,2208,107,2304,106.7C2400,107,2496,149,2592,154.7C2688,160,2784,128,2832,112L2880,96L2880,320L2832,320C2784,320,2688,320,2592,320C2496,320,2400,320,2304,320C2208,320,2112,320,2016,320C1920,320,1824,320,1728,320C1632,320,1536,320,1488,320L1440,320Z"
+            />
+          </motion.svg>
+        </div>
+
+        <div className="relative z-10 space-y-6">
           <div className="flex items-start justify-between">
-            <div>
-              <p className="text-white/70 text-xs font-medium mb-1.5">Total Portfolio Value</p>
-              <h2 className="text-3xl font-bold tracking-tight text-white">{value}</h2>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm shadow-inner overflow-hidden">
+                  <Wallet className="h-4 w-4 text-[#3DBE7A]" />
+                </div>
+                <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider">Total Portfolio Value</p>
+              </div>
+              <div className="flex flex-wrap items-baseline gap-2">
+                <span className="text-2xl font-black text-white/90">KES</span>
+                <h2 className="text-4xl font-black tracking-tight text-white drop-shadow-sm">
+                  {value.replace('KES', '').trim()}
+                </h2>
+              </div>
             </div>
-            <div className="bg-emerald-bright/20 backdrop-blur-md border border-white/10 rounded-full px-3 py-1 flex items-center gap-1">
-              <TrendingUp className="h-3 w-3 text-emerald-bright" />
-              <span className="text-[11px] font-bold text-emerald-bright">{trend}</span>
-            </div>
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              className="bg-emerald-500/20 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-2 flex items-center gap-2 shadow-lg"
+            >
+              <TrendingUp className="h-4 w-4 text-[#3DBE7A]" />
+              <span className="text-xs font-bold text-[#3DBE7A]">{trend}</span>
+            </motion.div>
           </div>
-          <p className="text-white/60 text-xs font-medium">Across {properties} properties</p>
+          <div className="flex items-center gap-2">
+            <motion.div 
+              animate={{ opacity: [1, 0.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="h-2 w-2 rounded-full bg-[#3DBE7A] shadow-[0_0_10px_#3DBE7A]" 
+            />
+            <p className="text-white/50 text-[11px] font-bold uppercase tracking-widest">Across {properties} properties</p>
+          </div>
         </div>
       </div>
     </Reveal>
@@ -650,41 +703,6 @@ export default function LandlordDashboard() {
               <PropertyPerformance />
             </section>
 
-            {/* -- Split Layout for Radar & Maintenance -- */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
-              <section className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-foreground">Needs Attention</h3>
-                  <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200">Urgent</Badge>
-                </div>
-                <div className="space-y-3">
-                  <MaintenanceItem type="Plumbing Issue" property="Sunset Villas 3B" status="urgent" />
-                  <MaintenanceItem type="HVAC Repair" property="Greenwood Unit 12" status="normal" />
-                </div>
-              </section>
-
-              <section className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-foreground">Lease Radar</h3>
-                  <Link href="/landlord/tenants" className="text-xs font-medium text-[#3DBE7A]">
-                    See all
-                  </Link>
-                </div>
-                <Card className="rounded-[24px] border-border/40 bg-white shadow-sm overflow-hidden min-h-[160px]">
-                  <LeaseRadarItem name="John Doe" unit="Greenwood 4A" days={14} />
-                  <LeaseRadarItem name="Sarah Smith" unit="Greenwood 2B" days={28} />
-                  <LeaseRadarItem name="Michael Johnson" unit="Oceanview 12C" days={45} />
-                </Card>
-              </section>
-            </div>
-
-            {/* -- Property Performance Table -- */}
-            <section className="space-y-4 pb-12">
-              <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-foreground">Property Performance</h3>
-              </div>
-              <PropertyPerformance />
-            </section>
 
           </main>
         </div>

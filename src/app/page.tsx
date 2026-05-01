@@ -597,7 +597,7 @@ function HeroCarousel() {
       </div>
 
       {/* -- Main content ------------------------------------------------ */}
-      <div className="container relative z-10 px-6 md:px-10 max-w-7xl mx-auto w-full pb-24 md:pb-20">
+      <div className="w-full relative z-10 px-0 md:px-10 max-w-7xl mx-auto pb-24 md:pb-20">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(55dvh)] md:min-h-[calc(100dvh-4rem)]">
 
 
@@ -751,7 +751,7 @@ function HeroCarousel() {
           />
         </div>
 
-        <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+        <div className="w-full max-w-7xl mx-auto px-0 md:px-10">
           <div className="flex items-center justify-between py-5 gap-6">
 
             {/* Slide pills */}
@@ -991,7 +991,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const minDisplay = 1500; // minimum ms to show the loader
+    const minDisplay = 4500; // minimum ms to show the loader
     const start = Date.now();
 
     const hide = () => {
