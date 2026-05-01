@@ -308,13 +308,20 @@ export default function TenantPaymentsPage() {
                 Uses gradient + noise layer for premium feel.
             ────────────────────────────────────────────────────────── */}
             <Reveal>
-              <div className="relative overflow-hidden rounded-3xl bg-emerald-deep shadow-xl shadow-emerald-deep/20">
+              <div className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#0c4a34] to-[#062b1e] border-transparent shadow-xl shadow-[#062b1e]/20">
                 {/* Layered depth overlays */}
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-mid/40 via-transparent to-emerald-deep/60 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-mid/40 via-transparent to-emerald-deep/60 pointer-events-none opacity-40" />
                 <div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-emerald-bright/10 blur-3xl pointer-events-none" />
                 <div className="absolute -left-6 -bottom-10 h-40 w-40 rounded-full bg-white/[0.03] blur-2xl pointer-events-none" />
 
-                <div className="relative p-7 space-y-7">
+                {/* PREMIUM WAVY DECOR (matches complaints card) */}
+                <div className="absolute bottom-10 left-0 right-0 h-12 pointer-events-none opacity-40">
+                  <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full stroke-emerald-400 fill-none" strokeWidth="0.5">
+                    <path d="M0 20 Q 20 18, 30 15 T 60 10 T 100 5" />
+                  </svg>
+                </div>
+
+                <div className="relative p-7 space-y-7 z-10">
                   {/* Top row: amount + secure badge */}
                   <div className="flex items-start justify-between gap-4">
                     <div>

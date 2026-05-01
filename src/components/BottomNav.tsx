@@ -63,7 +63,7 @@ export default function BottomNav({ items }: BottomNavProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="relative flex flex-col items-center justify-center p-2 rounded-2xl transition-all duration-300 w-full group"
+                  className="relative flex flex-col items-center justify-center p-1 rounded-2xl transition-all duration-300 w-full group"
                 >
                   <div
                     className={cn(
@@ -71,8 +71,14 @@ export default function BottomNav({ items }: BottomNavProps) {
                       isActive ? "bg-emerald-deep text-white shadow-lg shadow-emerald-deep/20" : "text-emerald-deep/60 group-hover:text-emerald-deep/80"
                     )}
                   >
-                    {React.cloneElement(item.icon as React.ReactElement<any>, { size: 20 })}
+                    {React.cloneElement(item.icon as React.ReactElement<any>, { size: 18 })}
                   </div>
+                  <span className={cn(
+                    "text-[10px] font-bold mt-1 transition-colors duration-300",
+                    isActive ? "text-emerald-deep" : "text-emerald-deep/40 group-hover:text-emerald-deep/60"
+                  )}>
+                    {item.label}
+                  </span>
                   {isActive && (
                     <motion.div 
                       layoutId="active-pill"
