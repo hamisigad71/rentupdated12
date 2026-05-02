@@ -991,7 +991,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 5000);
+    const timer = setTimeout(() => setIsLoading(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -1143,22 +1143,22 @@ function MetricBar() {
     { val: 98,   suffix: "%",    label: "Collection Rate",    icon: CustomCreditCardIcon,decimals: 0 },
   ];
   return (
-    <section className="bg-primary/5 py-14 text-foreground relative overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle_at_20%_50%,#3DBE7A,transparent_50%),radial-gradient(circle_at_80%_50%,#246B4F,transparent_50%)]" />
+    <section className="bg-[#F8FBFA] py-20 text-foreground relative overflow-hidden border-y border-[#E0E8E3]/50">
+      <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_20%_50%,#3DBE7A,transparent_50%),radial-gradient(circle_at_80%_50%,#C5A572,transparent_50%)]" />
       <div className="container px-4 sm:px-6 md:px-8 max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-10">
+        <div className="grid grid-cols-2 min-[450px]:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-12">
           {stats.map((s,i) => (
             <Reveal key={i} delay={i*0.08} className="text-center group">
-              <div className="flex justify-center mb-3">
-                <div className="h-11 w-11 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <s.icon className="h-6 w-6 text-primary" />
+              <div className="flex justify-center mb-6">
+                <div className="h-14 w-14 rounded-2xl bg-white shadow-sm border border-[#E0E8E3] flex items-center justify-center group-hover:border-[#C5A572]/30 group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-500">
+                  <s.icon className="h-7 w-7 text-[#C5A572]" />
                 </div>
               </div>
-              <p className="text-2xl sm:text-3xl md:text-4xl tracking-tighter tabular-nums">
+              <p className="text-2xl sm:text-3xl md:text-4xl tracking-tighter tabular-nums font-medium text-[#1A1A1A]">
                 <Counter to={s.val} suffix={s.suffix} decimals={s.decimals} />
               </p>
-              <div className="h-px w-8 bg-primary/30 mx-auto my-3" />
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-normal">{s.label}</p>
+              <div className="h-[2px] w-8 bg-[#C5A572]/20 mx-auto my-4 group-hover:w-12 group-hover:bg-[#C5A572]/40 transition-all duration-500" />
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#6B7280] font-normal leading-relaxed">{s.label}</p>
             </Reveal>
           ))}
         </div>

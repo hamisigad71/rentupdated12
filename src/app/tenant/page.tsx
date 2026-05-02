@@ -177,15 +177,7 @@ daysLeft: number;
 return (
 <Reveal>
 <div className="relative overflow-hidden rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-[#0c4a34] to-[#062b1e] p-6 shadow-xl shadow-[#062b1e]/20 text-white group border-transparent">
-<div className="absolute inset-0 bg-gradient-to-br from-emerald-mid/40 to-transparent opacity-40 pointer-events-none" />
-<div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-emerald-bright/10 blur-3xl group-hover:bg-emerald-bright/20 transition-all duration-700 pointer-events-none" />
 
-{/* PREMIUM WAVY DECOR */}
-<div className="absolute bottom-10 left-0 right-0 h-12 pointer-events-none opacity-40">
-  <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="w-full h-full stroke-emerald-400 fill-none" strokeWidth="0.5">
-    <path d="M0 20 Q 20 18, 30 15 T 60 10 T 100 5" />
-  </svg>
-</div>
 
     <div className="relative space-y-6 z-10">
       <div className="flex items-start justify-between">
